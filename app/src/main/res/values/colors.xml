@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="Green_ipca">#0A5133</color>
 
+    <color name="background_color">#0A5133</color>
 </resources>
