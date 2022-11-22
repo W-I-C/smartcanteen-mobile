@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmartCanteen</string>
+    <string name="main_trades">Trocas Disponíveis</string>
+    <string name="main_bar_meals">Refeições do Bar</string>
+    <string name="main_orders">As tuas Encomendas</string>
+    <string name="main_search_meals">Pesquisar Refeições</string>
+</resources>
