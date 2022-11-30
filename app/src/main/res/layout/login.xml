@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/WIC_LOGO"/>
+        android:src="@drawable/wic_logo"/>
 
     <TextView
         android:id="@+id/login_email_textview"
@@ -27,6 +27,7 @@
         android:layout_marginTop="40dp"
         android:textSize="18sp"
         android:text="Email:"
+        android:textColor="#808080"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_ipca_image"/>
 
@@ -40,10 +41,10 @@
         android:background="@drawable/edit_text_style"
         android:inputType="textEmailAddress"
         android:hint=".ipca.pt"
+        android:textColorHint="#808080"
         android:drawableLeft="@drawable/person"
         android:paddingLeft="20dp"
         android:drawablePadding="10dp"
-        android:="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_email_textview"/>
@@ -53,6 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Password:"
+        android:textColor="#808080"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="20dp"
         android:textSize="17sp"
@@ -73,6 +75,7 @@
         android:drawableLeft="@drawable/lock"
         android:drawablePadding="10dp"
         android:hint="***********"
+        android:textColorHint="#808080"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
