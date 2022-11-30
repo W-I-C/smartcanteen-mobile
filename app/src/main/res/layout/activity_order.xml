@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+
+        android:id="@+id/main_Encomenda_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" Encomenda "
+        android:textAlignment="center"
+        android:textColor="@color/Green_ipca"
+        android:textSize="30sp"
+        android:paddingTop="50dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+
+        android:id="@+id/main_timeToOrder_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" Hora de levantamento "
+        android:paddingLeft="20dp"
+        android:textColor="@color/Green_ipca"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/main_Encomenda_textview"
+        tools:ignore="MissingConstraints" />
+
+    <TimePicker
+        app:layout_constraintTop_toBottomOf="@+id/main_timeToOrder_textview"
+        android:id="@+id/timePicker1"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:timePickerMode="spinner"/>
+
+    <TextView
+
+        android:id="@+id/main_choose_cantine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" Cantina "
+        android:paddingLeft="20dp"
+        android:textColor="@color/Green_ipca"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/timePicker1"
+        tools:ignore="MissingConstraints" />
+    <EditText
+
+        android:id="@+id/main_button_select_cantine"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:drawableBottom="@drawable/rounded_button_style"
+        android:src="@drawable/rounded_button_style"
+        android:hint="Instituto"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/main_choose_cantine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/edit_text_style"
+
+        />
+
+    <TextView
+
+        android:id="@+id/main_choose_take"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" Levar? "
+        android:paddingLeft="20dp"
+        android:textColor="@color/Green_ipca"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/main_button_select_cantine"
+        tools:ignore="MissingConstraints" />
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        app:layout_constraintTop_toBottomOf="@+id/main_choose_take"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/main_choose_button_radiu_take"
+        >
+
+        <RadioButton android:id="@+id/levar_sim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sim"
+            android:onClick="onRadioButtonClicked"
+            android:layout_marginRight="50dp"/>
+        <RadioButton android:id="@+id/levar_nao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Não"
+
+            android:onClick="onRadioButtonClicked"/>
+    </RadioGroup>
+
+    <TextView
+
+        android:id="@+id/main_method_payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" Método de pagamento "
+        android:paddingLeft="20dp"
+        android:textColor="@color/Green_ipca"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/main_choose_button_radiu_take"
+        tools:ignore="MissingConstraints" />
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        app:layout_constraintTop_toBottomOf="@+id/main_method_payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/main_choose_button_radiu_payment"
+        >
+
+        <RadioButton android:id="@+id/mbWay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MBWAy"
+            android:onClick="onRadioButtonClicked"
+            android:layout_marginRight="50dp"/>
+        <RadioButton android:id="@+id/MB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MB"
+            android:onClick="onRadioButtonClicked"/>
+    </RadioGroup>
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:textColorHint="@color/white"
+        android:hint="Pagar"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/rounded_button_style"
+        android:textAlignment="center"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

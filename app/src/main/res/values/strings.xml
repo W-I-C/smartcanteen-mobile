@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">SmartCanteen</string>
+    <string name="app_name" translatable="false">SmartCanteen</string>
+    <string name="main_trades">Available Trades</string>
+    <string name="main_bar_meals">Bar Meals</string>
+    <string name="main_orders">Your Orders</string>
     <string name="login" translatable="false">Login</string>
     <string name="email" translatable="false">Email</string>
     <string name="password" translatable="false">Password</string>
+    <string name="main_search_meals">Search Meals</string>
 </resources>
