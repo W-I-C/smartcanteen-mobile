@@ -1,6 +1,5 @@
 package pt.ipca.smartcanteen
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.ListView
@@ -14,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.my_orders)
         /** Trades **/
-        val tradeMealsRecyclerView = findViewById<RecyclerView>(R.id.main_available_trades_rv)
+       /* val tradeMealsRecyclerView = findViewById<RecyclerView>(R.id.main_available_trades_rv)
         val tradeMeals = mutableListOf<Meal>(
             Meal("Francesinha", 5.0, 15),
             Meal("Panado", 3.5, 5),
@@ -55,6 +54,6 @@ class MainActivity : AppCompatActivity() {
         ordersLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         ordersRecyclerView.layoutManager = ordersLinearLayoutManager
         ordersRecyclerView.itemAnimator = DefaultItemAnimator()
-        ordersRecyclerView.adapter = ordersAdapter
+        ordersRecyclerView.adapter = ordersAdapter*/
     }
 }
