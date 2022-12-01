@@ -9,7 +9,7 @@
     android:background="@drawable/my_order_card">
 
     <ImageView
-        android:id='@+id/my_orders_card_image'
+        android:id='@+id/my_exchanges_card_image'
         android:layout_width="120dp"
         android:layout_height="match_parent"
         android:layout_marginRight="100dp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/my_orders_card_name"
+        android:id="@+id/my_exchanges_card_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
@@ -26,11 +26,25 @@
         android:textColor="@color/black"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
-        app:layout_constraintLeft_toRightOf="@id/my_orders_card_image"
+        app:layout_constraintLeft_toRightOf="@id/my_exchanges_card_image"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <Button
+        android:id="@+id/bSearch"
+        android:layout_width="48dp"
+        android:layout_height="35dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:drawableLeft="@drawable/close"
+        android:background="@android:color/transparent"
+        app:layout_constraintLeft_toRightOf="@id/my_exchanges_card_name"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
     <TextView
-        android:id="@+id/my_orders_card_quantity"
+        android:id="@+id/my_exchanges_card_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
@@ -38,11 +52,11 @@
         android:textColor="#808080"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintLeft_toRightOf="@id/my_orders_card_image"
-        app:layout_constraintTop_toBottomOf="@id/my_orders_card_name"/>
+        app:layout_constraintLeft_toRightOf="@id/my_exchanges_card_image"
+        app:layout_constraintTop_toBottomOf="@id/my_exchanges_card_name"/>
 
     <TextView
-        android:id="@+id/my_orders_card_price"
+        android:id="@+id/my_exchanges_card_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
@@ -50,11 +64,11 @@
         android:textColor="#808080"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintLeft_toRightOf="@id/my_orders_card_image"
-        app:layout_constraintTop_toBottomOf="@id/my_orders_card_quantity"/>
+        app:layout_constraintLeft_toRightOf="@id/my_exchanges_card_image"
+        app:layout_constraintTop_toBottomOf="@id/my_exchanges_card_quantity"/>
 
     <TextView
-        android:id="@+id/my_orders_card_state"
+        android:id="@+id/my_exchanges_card_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
@@ -63,8 +77,8 @@
         android:textColor="#808080"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="43dp"
-        app:layout_constraintLeft_toRightOf="@id/my_orders_card_quantity"
+        android:layout_marginTop="78dp"
+        app:layout_constraintLeft_toRightOf="@id/my_exchanges_card_price"
         app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
