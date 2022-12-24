@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MyOrdersActivity">
-    
+    tools:context=".UndeliveredOrdersActivity">
+
     <TextView
-        android:id="@+id/myorders_title"
+        android:id="@+id/undelivered_orders_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:text="Minhas encomendas"
+        android:text="Encomendas"
         android:textAlignment="center"
         android:layout_marginTop="20dp"
         android:textColor="@color/background_color"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/myorders_recycler_view"
+        android:id="@+id/undelivered_orders_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="100dp"
@@ -30,7 +30,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/myorders_title"
+        app:layout_constraintTop_toBottomOf="@id/undelivered_orders_title"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
