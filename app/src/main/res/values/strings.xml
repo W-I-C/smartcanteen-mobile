@@ -5,7 +5,39 @@
     <string name="main_orders">Your Orders</string>
     <string name="login" translatable="false">Login</string>
     <string name="email" translatable="false">Email</string>
+    <string name="login_email" translatable="false">Email:</string>
     <string name="password" translatable="false">Password</string>
+    <string name="login_password" translatable="false">Password:</string>
     <string name="main_search_meals">Search Meals</string>
     <string name="trade">Trade</string>
+    <string name="id" translatable="false">Id</string>
+    <string name="consumer_name">Consumer Name</string>
+    <string name="state">State</string>
+    <string name="orders">Orders</string>
+    <string name="my_orders">My orders</string>
+    <string name="quantity">Quantity</string>
+    <string name="price">Price</string>
+    <string name="my_trades">My trades</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="ingredients_change">Change of ingredients</string>
+    <string name="exchange_payment">Exchange payment</string>
+    <string name="payment_method">Payment method</string>
+    <string name="total" translatable="false">Total</string>
+    <string name="general">General</string>
+    <string name="direct_trade">Direct trade</string>
+    <string name="consumer_email">Consumer email</string>
+    <string name="confirm">Confirm</string>
+    <string name="profile">Profile</string>
+    <string name="name">Name</string>
+    <string name="preferred_canteen">Preferred canteen</string>
+    <string name="institute">Institute</string>
+    <string name="order">Order</string>
+    <string name="take">Take?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="canteen">Canteen</string>
+    <string name="pick_up_time">Pick-up time</string>
+    <string name="cart">Cart</string>
+    <string name="pay">Pay</string>
 </resources>

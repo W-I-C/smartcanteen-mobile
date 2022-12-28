@@ -29,7 +29,7 @@
         android:layout_marginTop="30dp"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:text="Email:"
+        android:text="@string/login_email"
         android:textColor="@color/background_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_ipca_image"/>
@@ -55,7 +55,7 @@
         android:id="@+id/login_password_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Password:"
+        android:text="@string/login_password"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="40dp"
         android:textSize="22sp"

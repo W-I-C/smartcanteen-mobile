@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:text="Minhas trocas"
+        android:text="@string/my_trades"
         android:textAlignment="center"
         android:layout_marginTop="20dp"
         android:textColor="@color/background_color"

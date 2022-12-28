@@ -1,9 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SmartCanteen</string>
     <string name="main_trades">Trocas Disponíveis</string>
     <string name="main_bar_meals">Refeições do Bar</string>
     <string name="main_orders">As tuas Encomendas</string>
     <string name="main_search_meals">Pesquisar Refeições</string>
-    <string name="trade">Trocar</string>
+    <string name="trade">Troca</string>
+    <string name="consumer_name">Nome Consumidor</string>
+    <string name="state">Estado</string>
+    <string name="orders">Encomendas</string>
+    <string name="my_orders">Minhas encomendas</string>
+    <string name="quantity">Quantidade</string>
+    <string name="price">Preço</string>
+    <string name="general">Geral</string>
+    <string name="direct_trade">Troca direta</string>
+    <string name="consumer_email">Email consumidor</string>
+    <string name="confirm">Confirmar</string>
+    <string name="profile">Perfil</string>
+    <string name="name">Nome</string>
+    <string name="preferred_canteen">Cantina preferencial</string>
+    <string name="institute">Instituto</string>
+    <string name="order">Encomenda</string>
+    <string name="take">Levar?</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="canteen">Cantina</string>
+    <string name="pick_up_time">Hora de levantamento</string>
+    <string name="cart">Carrinho</string>
+    <string name="pay">Pagar</string>
+    <string name="my_trades">Minhas trocas</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="ingredients_change">Alteração de ingredientes</string>
+    <string name="exchange_payment">Pagamento da troca</string>
+    <string name="payment_method">Método de pagamento</string>
 </resources>
