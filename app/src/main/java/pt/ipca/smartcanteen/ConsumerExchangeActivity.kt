@@ -1,8 +1,10 @@
 package pt.ipca.smartcanteen
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Spinner
@@ -69,5 +71,11 @@ class ConsumerExchangeActivity : AppCompatActivity() {
                 spinner_direct.visibility = View.GONE
             }
         }
+    }
+
+    fun doCancel(view: View){
+        println("aqui")
+        var intent = Intent(this@ConsumerExchangeActivity, MyOrdersActivity::class.java)
+        startActivity(intent)
     }
 }
