@@ -33,4 +33,5 @@
     <string name="ingredients_change">Alteração de ingredientes</string>
     <string name="exchange_payment">Pagamento da troca</string>
     <string name="payment_method">Método de pagamento</string>
+    <string name="favorites">Favoritos</string>
 </resources>

@@ -81,11 +81,12 @@
         tools:ignore="MissingConstraints" />
 
     <Button
+        android:id="@+id/exchange_payment_pay"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:padding="10dp"
         android:textColorHint="@color/white"
-        android:hint="Pagar"
+        android:hint="@string/pay"
         android:textSize="16sp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="30dp"
@@ -100,11 +101,12 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:padding="10dp"
-        android:hint="Cancelar"
+        android:hint="@string/cancel"
         android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="30dp"
         android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/button_grey"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"

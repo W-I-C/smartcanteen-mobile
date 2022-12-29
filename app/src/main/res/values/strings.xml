@@ -40,4 +40,5 @@
     <string name="pick_up_time">Pick-up time</string>
     <string name="cart">Cart</string>
     <string name="pay">Pay</string>
+    <string name="favorites">Favorites</string>
 </resources>
