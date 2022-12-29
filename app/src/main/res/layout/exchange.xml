@@ -86,6 +86,7 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <Button
+        android:id="@+id/exchange_confirm"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:padding="10dp"
@@ -102,6 +103,7 @@
         />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/exchange_cancel"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:padding="10dp"
@@ -109,6 +111,7 @@
         android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="30dp"
+        android:onClick="doCancel"
         android:layout_marginBottom="30dp"
         android:background="@drawable/button_grey"
         android:textAlignment="center"
