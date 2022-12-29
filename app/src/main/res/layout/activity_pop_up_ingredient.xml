@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="700dp"
+    android:layout_gravity="bottom"
+    android:background="@drawable/create_ingredient"
+
+
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <TextView
+        android:paddingTop="10dp"
+        android:id="@+id/text_ingredient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ingrediente de alteração"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/text_ingredient"
+        android:id="@+id/name_ingredient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nome do ingrediente"
+        android:textAlignment="textStart"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/black"
+        />
+    <EditText
+        app:layout_constraintTop_toBottomOf="@+id/name_ingredient"
+        android:id="@+id/cart_name_ingredient"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+
+        android:background="@drawable/edit_text_style"
+
+        />
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/cart_name_ingredient"
+        android:id="@+id/dosage_ingredient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dosagem do ingrediente"
+        android:textAlignment="textStart"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/black"
+        />
+    <EditText
+        app:layout_constraintTop_toBottomOf="@+id/dosage_ingredient"
+        android:id="@+id/cart_dosage_ingredient"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+
+        android:background="@drawable/edit_text_style"
+
+        />
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/cart_dosage_ingredient"
+        android:id="@+id/increment_limit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Limite Incrementar"
+        android:textAlignment="textStart"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/black"
+        />
+    <EditText
+        app:layout_constraintTop_toBottomOf="@+id/increment_limit"
+        android:id="@+id/cart_increment_limit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+
+        android:background="@drawable/edit_text_style"
+
+        />
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/cart_increment_limit"
+        android:id="@+id/decrement_limit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Limite Decrementar"
+        android:textAlignment="textStart"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/black"
+        />
+    <EditText
+        app:layout_constraintTop_toBottomOf="@+id/decrement_limit"
+        android:id="@+id/cart_decrement_limit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+
+        android:background="@drawable/edit_text_style"
+
+        />
+    <TextView
+        android:paddingLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/can_increment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pode incrementar?"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/cart_decrement_limit"
+        tools:ignore="MissingConstraints" />
+
+    <ImageButton
+        android:id="@+id/button_can_increment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/cart_decrement_limit"
+        app:layout_constraintLeft_toRightOf="@+id/can_increment"
+        android:background="@drawable/check_box"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+       android:id="@+id/choose_can_decrement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/can_increment"
+        android:text="Pode Decrementar?"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:paddingLeft="20dp"
+        android:layout_marginTop="15dp"
+        tools:ignore="MissingConstraints" />
+
+    <ImageButton
+        android:id="@+id/button_can_decrement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/button_can_increment"
+        app:layout_constraintLeft_toRightOf="@+id/choose_can_decrement"
+        android:background="@drawable/check_box"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/choose_can_remove"
+        android:text="Pode Remover?"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/choose_can_decrement"
+        android:paddingLeft="20dp"
+        android:layout_marginTop="13dp"
+        tools:ignore="MissingConstraints" />
+
+    <ImageButton
+        android:id="@+id/button_can_remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/button_can_decrement"
+        app:layout_constraintLeft_toRightOf="@+id/choose_can_remove"
+        android:background="@drawable/check_box"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:hint="Cancelar"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="80dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/button_grey"
+        android:textAlignment="center"
+        android:layout_marginLeft="200dp"
+        />
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:textColorHint="@color/white"
+        android:hint="Guardar"
+        android:layout_marginRight="200dp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="80dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/rounded_button_style"
+        android:textAlignment="center"
+        />
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
