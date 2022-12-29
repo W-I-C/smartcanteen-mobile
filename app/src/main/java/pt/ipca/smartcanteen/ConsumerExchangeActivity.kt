@@ -49,8 +49,8 @@ class ConsumerExchangeActivity : AppCompatActivity() {
             if (checkBox1.isChecked) {
                 spinner_general.visibility = View.VISIBLE
                 checkBox2.isChecked = false
-                editText.visibility = View.INVISIBLE
-                spinner_direct.visibility = View.INVISIBLE
+                editText.visibility = View.GONE
+                spinner_direct.visibility = View.GONE
             } else {
                 spinner_general.visibility = View.GONE
             }
@@ -63,7 +63,7 @@ class ConsumerExchangeActivity : AppCompatActivity() {
                 editText.visibility = View.VISIBLE
                 spinner_direct.visibility = View.VISIBLE
                 checkBox1.isChecked = false
-                spinner_general.visibility = View.INVISIBLE
+                spinner_general.visibility = View.GONE
             } else {
                 editText.visibility = View.GONE
                 spinner_direct.visibility = View.GONE
