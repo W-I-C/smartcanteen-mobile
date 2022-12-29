@@ -12,7 +12,7 @@
         android:layout_height="200dp"
         android:drawableRight="@drawable/edit"
         android:background="@color/cardview_dark_background"
-     />
+        tools:ignore="MissingConstraints" />
 
    <ImageView
        android:layout_width="wrap_content"
@@ -163,7 +163,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cart_description"
         android:background="@color/white"
         android:id="@+id/possible_Changes"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:text="Alterações possiveis:"
@@ -171,7 +171,16 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:textColor="@color/black"
-        android:drawableEnd="@drawable/add_symbol"/>
+        tools:ignore="MissingConstraints" />
+    <ImageButton
+        app:layout_constraintTop_toBottomOf="@+id/cart_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/add_symbol"
+
+        android:onClick="addIngredient"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/card_add_ingredient_recycler_view"
