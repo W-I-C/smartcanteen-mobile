@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/meal_bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bottom_sheet_meal_background"
+    app:behavior_peekHeight="1000dp">
+
+    <TextView
+        android:id="@+id/meal_bottom_sheet_bar"
+        android:layout_width="62dp"
+        android:layout_height="4dp"
+        android:background="@drawable/scroll_bottom_sheet_rectangle"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    
+    <ImageView
+        android:id="@+id/meal_bottom_sheet_image"
+        android:layout_width="363dp"
+        android:layout_height="233dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/scroll_bottom_sheet_rectangle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meal_bottom_sheet_bar"/>
+
+    <TextView
+        android:id="@+id/meal_bottom_sheet_heart_circle"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:background="@drawable/bottom_sheet_like_circle"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintEnd_toEndOf="@id/meal_bottom_sheet_image"
+        app:layout_constraintBottom_toBottomOf="@id/meal_bottom_sheet_image"/>
+
+    <TextView
+        android:id="@+id/meal_bottom_sheet_heart"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:background="@drawable/bottom_sheet_heart_selector"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="6dp"
+        app:layout_constraintEnd_toEndOf="@id/meal_bottom_sheet_heart_circle"
+        app:layout_constraintBottom_toBottomOf="@id/meal_bottom_sheet_heart_circle"/>
+
+    <TextView
+        android:id="@+id/meal_bottom_sheet_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Nome da Refeição"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/meal_bottom_sheet_image"
+        app:layout_constraintTop_toBottomOf="@+id/meal_bottom_sheet_image"/>
+
+    <TextView
+        android:id="@+id/meal_bottom_sheet_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="10min"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        app:layout_constraintRight_toLeftOf="@id/meal_bottom_sheet_clock"
+        app:layout_constraintTop_toBottomOf="@+id/meal_bottom_sheet_image"/>
+
+    <TextView
+        android:id="@+id/meal_bottom_sheet_clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/clock"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@id/meal_bottom_sheet_image"
+        app:layout_constraintTop_toBottomOf="@+id/meal_bottom_sheet_image"/>
+
+    <TextView
+        android:id="@+id/meal_bottom_sheet_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:text="0.00€"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/background_color"
+        app:layout_constraintStart_toStartOf="@id/meal_bottom_sheet_name"
+        app:layout_constraintTop_toBottomOf="@+id/meal_bottom_sheet_name"/>
+
+    <TextView
+        android:id="@+id/meal_bottom_sheet_description"
+        android:layout_width="331dp"
+        android:layout_height="166dp"
+        android:layout_marginTop="5dp"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam odio quam, luctus ut elementum sollicitudin, convallis a elit. Phasellus placerat semper feugiat. Nam gravida porta urna. Curabitur ac tincidunt quam. Praesent scelerisque ultrices nisi, vel condimentum ante tristique a. Donec venenatis ullamcorper magna. Suspendisse sed purus vel nisi cursus dignissim. Mauris et imperdiet ante, in tincidunt turpis. Curabitur sed tortor ante."
+        android:textSize="14sp"
+        android:textColor="#515050"
+        app:layout_constraintStart_toStartOf="@id/meal_bottom_sheet_price"
+        app:layout_constraintTop_toBottomOf="@+id/meal_bottom_sheet_price"/>
+
+    <TextView
+        android:id="@+id/meal_bottom_sheet_text_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:layout_marginRight="4dp"
+        android:text="Qtd:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="#515050"
+        app:layout_constraintRight_toLeftOf="@id/meal_bottom_sheet_text_quantity_number"
+        app:layout_constraintTop_toBottomOf="@+id/meal_bottom_sheet_description"/>
+
+    <TextView
+        android:id="@+id/meal_bottom_sheet_text_quantity_number"
+        android:layout_width="60dp"
+        android:layout_height="37dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:text="0"
+        android:textColor="@color/black"
+        android:background="@drawable/text_quantity"
+        android:textAlignment="center"
+        android:layout_marginTop="15dp"
+        android:paddingTop="10dp"
+        app:layout_constraintRight_toLeftOf="@+id/meal_bottom_sheet_quantity_increment"
+        app:layout_constraintTop_toBottomOf="@+id/meal_bottom_sheet_description"
+        />
+
+    <Button
+        android:id="@+id/meal_bottom_sheet_quantity_increment"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:onClick="increment"
+        android:background="@drawable/increment_circle"
+        app:layout_constraintEnd_toEndOf="@+id/meal_bottom_sheet_image"
+        app:layout_constraintTop_toBottomOf="@+id/meal_bottom_sheet_description"
+        />
+
+    <Button
+        android:id="@+id/meal_bottom_sheet_quantity_decrement"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:onClick="decrement"
+        android:background="@drawable/decrement_circle"
+        android:layout_marginLeft="40dp"
+        android:backgroundTint="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/meal_bottom_sheet_image"
+        app:layout_constraintTop_toBottomOf="@+id/meal_bottom_sheet_quantity_increment"
+        />
+
+    <Button
+        android:id="@+id/meal_bottom_sheet_change_ingredient"
+        android:layout_width="181dp"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:textColorHint="@color/white"
+        android:hint="@string/ingredients_change"
+        android:textSize="13sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_button_style"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <Button
+        android:id="@+id/meal_bottom_sheet_add_cart"
+        android:layout_width="181dp"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:textColorHint="@color/white"
+        android:hint="@string/add_cart"
+        android:textSize="13sp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_button_style"
+        android:textAlignment="center"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
