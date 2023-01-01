@@ -1,5 +1,6 @@
 package pt.ipca.smartcanteen
 
+import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -31,9 +32,11 @@ class MenuMealsActivity : AppCompatActivity() {
             bottomSheetDialog.setContentView(bottomSheetView)
             bottomSheetDialog.show()
 
-            val buttonIncrement = bottomSheetView.findViewById<View>(R.id.meal_bottom_sheet_quantity_increment)
-            val buttonDecrement = bottomSheetView.findViewById<View>(R.id.meal_bottom_sheet_quantity_decrement)
+            val buttonIncrement = bottomSheetView.findViewById<Button>(R.id.meal_bottom_sheet_quantity_increment)
+            val buttonDecrement = bottomSheetView.findViewById<Button>(R.id.meal_bottom_sheet_quantity_decrement)
             val quantity = bottomSheetView.findViewById<TextView>(R.id.meal_bottom_sheet_text_quantity_number)
+            val ingredientsChange = bottomSheetView.findViewById<Button>(R.id.meal_bottom_sheet_change_ingredient)
+            val favoriteHeart = bottomSheetView.findViewById<TextView>(R.id.meal_bottom_sheet_heart)
 
             buttonIncrement.setOnClickListener {
                 var count: Int = quantity.text.toString().toInt()
@@ -48,6 +51,22 @@ class MenuMealsActivity : AppCompatActivity() {
                     quantity.text = count.toString()
                 }
             }
+
+            ingredientsChange.setOnClickListener {
+                var intent = Intent(this@MenuMealsActivity, IngredientsChangeActivity::class.java)
+                startActivity(intent)
+            }
+
+            var isChecked: Boolean = false
+            favoriteHeart.setOnClickListener {
+                isChecked = !isChecked
+                if (isChecked) {
+                    favoriteHeart.setBackgroundResource(R.drawable.favorite_heart)
+                } else {
+                    favoriteHeart.setBackgroundResource(R.drawable.bottom_sheet_heart_not_clicked)
+                }
+            }
+
         }
 
         // TODO: tem que receber aqui também os dados da ementa
