@@ -84,7 +84,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
-        android:id="@+id/login_button_login"
+        android:id="@+id/my_orders_card_button_trade"
         android:layout_width="70dp"
         android:layout_height="28dp"
         android:layout_marginLeft="20dp"

@@ -18,6 +18,7 @@ class ConsumerExchangeActivity : AppCompatActivity() {
     private val editText: EditText by lazy {findViewById<View>(R.id.exchange_email_edittext) as EditText}
     private val spinner_general: Spinner by lazy {findViewById<View>(R.id.exchange_general_spinner) as Spinner}
     private val spinner_direct: Spinner by lazy {findViewById<View>(R.id.exchange_direct_spinner) as Spinner}
+    private val cancelButton: Button by lazy {findViewById<View>(R.id.exchange_cancel) as Button}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +44,10 @@ class ConsumerExchangeActivity : AppCompatActivity() {
                 listOf("MBWAY", "Multibanco", "MBWAY", "Multibanco", "MBWAY", "Multibanco",)
             )
             spinner_direct.adapter = adapter
+        }
+
+        cancelButton.setOnClickListener {
+            finish()
         }
     }
 

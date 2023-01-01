@@ -2,12 +2,16 @@ package pt.ipca.smartcanteen
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MyOrdersActivity : AppCompatActivity() {
+    private val buttonTrade: Button by lazy {findViewById<View>(R.id.my_orders_card_button_trade) as Button }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.my_orders)
@@ -48,6 +52,18 @@ class MyOrdersActivity : AppCompatActivity() {
             }
             startActivity(intent)
         }
+
+        //myOrdersAdapter.onButtonTradeClick= {
+        //    var intent = Intent(this@MyOrdersActivity, ConsumerExchangeActivity::class.java)
+        //    startActivity(intent)
+        //}
+
+
+    }
+
+    fun doTrade(view: View) {
+        var intent = Intent(this@MyOrdersActivity, ConsumerExchangeActivity::class.java)
+        startActivity(intent)
     }
 }
 
