@@ -1,12 +1,16 @@
 package pt.ipca.smartcanteen
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class UndeliveredOrdersActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.undelivered_orders)
@@ -34,6 +38,15 @@ class UndeliveredOrdersActivity : AppCompatActivity() {
         undeliveredOrdersRecyclerView.layoutManager = linearLayoutManager
         undeliveredOrdersRecyclerView.itemAnimator = DefaultItemAnimator()
         undeliveredOrdersRecyclerView.adapter = undeliveredOrdersAdater
+
+        undeliveredOrdersAdater.onItemClick = { order ->
+            val intent = Intent(this, DetailedActivity::class.java).apply {
+                putExtra("order_identifier", order.identifier)
+                putExtra("order_name", order.name)
+                putExtra("order_state", order.state)
+            }
+            startActivity(intent)
+        }
     }
 }
 

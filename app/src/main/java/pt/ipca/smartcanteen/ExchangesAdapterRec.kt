@@ -6,9 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ExchangesAdapterRec(private var exchangesList: MutableList<Exchange>) :
     RecyclerView.Adapter<ExchangesAdapterRecVIewHolder>() {
+
+    var onItemClick : ((Exchange) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExchangesAdapterRecVIewHolder {
         val inflater = LayoutInflater.from(parent.context)
-            return ExchangesAdapterRecVIewHolder(inflater,parent)
+        return ExchangesAdapterRecVIewHolder(inflater,parent)
     }
 
     override fun onBindViewHolder(holder: ExchangesAdapterRecVIewHolder, position: Int) {
@@ -18,6 +21,10 @@ class ExchangesAdapterRec(private var exchangesList: MutableList<Exchange>) :
         val price = "${exchange.price}€"
         val state = exchange.state
         holder.bindData(name,quantity,price,state)
+
+        holder.itemView.setOnClickListener{
+            onItemClick?.invoke(exchange)
+        }
     }
 
     override fun getItemCount(): Int {
