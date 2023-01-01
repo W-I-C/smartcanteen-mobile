@@ -1,5 +1,6 @@
 package pt.ipca.smartcanteen
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
@@ -21,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class Login : AppCompatActivity() {
 
+    private var sessionToken: String? = null
     private val email: EditText by lazy {findViewById<View>(R.id.login_email_edittext) as EditText};
     private val password: EditText by lazy {findViewById<View>(R.id.login_password_edittext) as EditText}
     private val button: Button by lazy {findViewById<View>(R.id.login_button_login) as Button}
@@ -58,7 +60,7 @@ class Login : AppCompatActivity() {
                             val body = LoginBody(emailText, passwordText)
 
                             // val BASE_URL = "http://192.168.1.106:3000"
-                            val BASE_URL = "http://localhost:3000"
+                            val BASE_URL = "http://10.0.2.2:3000"
 
                             // Cria um objeto Retrofit
                             val retrofit = Retrofit.Builder()
@@ -74,11 +76,30 @@ class Login : AppCompatActivity() {
                                     if (response.code() == 200) {
                                         Toast.makeText(this@Login, "Login realizado com sucesso!", Toast.LENGTH_LONG)
                                             .show()
+
+                                        // atribui o token de sessão à variável sessionToken - este token vamos recebê-lo depois do user estar autenticado
+                                        // vamos receber o token do user.body
+                                        // sessionToken = response.body()?.token
+
+                                        // guarda o token de sessão no Shared Preferences
+                                        // Context.MODE_PRIVATE inidca que este arquivo de preferências só pode ser acedido pela nossa aplicação
+                                        // sharedPreferences permite guardar dados na forma chave-valor para manter as informações mesmo quando a app é fechada ou o dispositivo reiniciado
+                                        // val sharedPreferences = getSharedPreferences("smartcanteen", Context.MODE_PRIVATE)
+                                        // val editor = sharedPreferences.edit()
+                                        // é armazenado o sessionToken na sharedPreferences
+                                        // editor.putString("sessionToken", sessionToken)
+                                        // editor.apply()
+
+
+
                                         // TODO - ver o role da pessoa e reencaminhar para o sítio certo
                                         var intent = Intent(this@Login, MainActivity::class.java)
                                         startActivity(intent)
 
                                         // TODO - guardar o token de sessão gerado para posteriormente ser possível fazer pedidos
+                                    } else {
+                                        Toast.makeText(this@Login, "123", Toast.LENGTH_LONG)
+                                            .show()
                                     }
                                 }
 

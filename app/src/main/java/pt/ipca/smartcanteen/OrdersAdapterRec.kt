@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 
 class OrdersAdapterRec(private var ordersList: MutableList<Order>) :
     RecyclerView.Adapter<OrdersAdapterRecViewHolder>() {
+
+    var onItemClick : ((Order) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrdersAdapterRecViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return OrdersAdapterRecViewHolder(inflater,parent)
@@ -18,6 +21,10 @@ class OrdersAdapterRec(private var ordersList: MutableList<Order>) :
         val price = "${order.price}€"
         val state = order.state
         holder.bindData(name,quantity,price,state)
+
+        holder.itemView.setOnClickListener{
+            onItemClick?.invoke(order)
+        }
     }
 
     override fun getItemCount(): Int {

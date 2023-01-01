@@ -1,5 +1,6 @@
 package pt.ipca.smartcanteen
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -24,6 +25,16 @@ class MyExchangesActivity : AppCompatActivity() {
         myExchangesRecyclerView.layoutManager = linearLayoutManager
         myExchangesRecyclerView.itemAnimator = DefaultItemAnimator()
         myExchangesRecyclerView.adapter = myExchangesAdapter
+
+        myExchangesAdapter.onItemClick = { exchange ->
+            val intent = Intent(this, DetailedMyTradeActivity::class.java).apply {
+                putExtra("exchange_name", exchange.name)
+                putExtra("exchange_price", exchange.price)
+                putExtra("exchange_quantity", exchange.quantity)
+                putExtra("exchange_state", exchange.state)
+            }
+            startActivity(intent)
+        }
     }
 }
 

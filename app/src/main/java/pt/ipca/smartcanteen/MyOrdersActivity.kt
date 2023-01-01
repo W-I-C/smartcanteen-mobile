@@ -1,5 +1,6 @@
 package pt.ipca.smartcanteen
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -37,6 +38,16 @@ class MyOrdersActivity : AppCompatActivity() {
         myOrdersRecyclerView.layoutManager = linearLayoutManager
         myOrdersRecyclerView.itemAnimator = DefaultItemAnimator()
         myOrdersRecyclerView.adapter = myOrdersAdapter
+
+        myOrdersAdapter.onItemClick = { order ->
+            val intent = Intent(this, DetailedMyOrderActivity::class.java).apply {
+                putExtra("order_name", order.name)
+                putExtra("order_price", order.price)
+                putExtra("order_quantity", order.quantity)
+                putExtra("order_state", order.state)
+            }
+            startActivity(intent)
+        }
     }
 }
 
