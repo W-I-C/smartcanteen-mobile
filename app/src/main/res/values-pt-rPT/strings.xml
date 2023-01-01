@@ -34,4 +34,5 @@
     <string name="exchange_payment">Pagamento da troca</string>
     <string name="payment_method">Método de pagamento</string>
     <string name="favorites">Favoritos</string>
+    <string name="add_cart">Adicionar ao carrinho</string>
 </resources>

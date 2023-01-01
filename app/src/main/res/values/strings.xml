@@ -41,4 +41,5 @@
     <string name="cart">Cart</string>
     <string name="pay">Pay</string>
     <string name="favorites">Favorites</string>
+    <string name="add_cart">Add to cart</string>
 </resources>
