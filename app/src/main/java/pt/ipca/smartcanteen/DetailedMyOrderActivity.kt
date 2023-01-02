@@ -10,13 +10,13 @@ class DetailedMyOrderActivity : AppCompatActivity() {
         setContentView(R.layout.detailed_my_order)
 
         // Recuperar os dados da Intent
-        val name = intent.getStringExtra("order_name")
+        val identifier = intent.getIntExtra("order_identifier", 0)
         val quantity = intent.getIntExtra("order_quantity", 0)
         val price = intent.getDoubleExtra("order_price", 0.0)
         val state = intent.getStringExtra("order_state")
 
         // Atualizar os campos de texto com os dados da Intent
-        findViewById<TextView>(R.id.detailed_my_order_name).text = name
+        findViewById<TextView>(R.id.detailed_my_order_identifier).text = identifier.toString()
         findViewById<TextView>(R.id.detailed_my_order_quantity).text = quantity.toString()
         findViewById<TextView>(R.id.detailed_my_order_price).text = price.toString()
         findViewById<TextView>(R.id.detailed_my_order_state).text = state

@@ -16,11 +16,11 @@ class ExchangesAdapterRec(private var exchangesList: MutableList<Exchange>) :
 
     override fun onBindViewHolder(holder: ExchangesAdapterRecVIewHolder, position: Int) {
         val exchange = exchangesList.get(position)
-        val name = exchange.name
+        val identifier = "${exchange.identifier}"
         val quantity = "${exchange.quantity} ${if(exchange.quantity > 1) "doses" else "dose"}"
         val price = "${exchange.price}€"
         val state = exchange.state
-        holder.bindData(name,quantity,price,state)
+        holder.bindData(identifier,quantity,price,state)
 
         holder.itemView.setOnClickListener{
             onItemClick?.invoke(exchange)

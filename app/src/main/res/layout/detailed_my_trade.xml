@@ -5,10 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id='@+id/detailed_my_trade_name'
+        android:id='@+id/detailed_my_trade_identifier'
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="@string/name"
+        android:text="@string/id"
         android:textSize="50sp"
         android:textColor="@color/black"
         android:gravity="center"
@@ -24,7 +24,7 @@
         android:textColor="@color/black"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detailed_my_trade_name" />
+        app:layout_constraintTop_toBottomOf="@+id/detailed_my_trade_identifier" />
 
     <TextView
         android:id='@+id/detailed_my_trade_price'

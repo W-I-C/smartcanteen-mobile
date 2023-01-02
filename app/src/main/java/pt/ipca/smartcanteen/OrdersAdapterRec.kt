@@ -18,11 +18,11 @@ class OrdersAdapterRec(private var ordersList: MutableList<Order>) :
 
     override fun onBindViewHolder(holder: OrdersAdapterRecViewHolder, position: Int) {
         val order = ordersList.get(position)
-        val name = order.name
+        val identifier = "${order.identifier}"
         val quantity = "${order.quantity} ${if(order.quantity > 1) "doses" else "dose"}"
         val price = "${order.price}€"
         val state = order.state
-        holder.bindData(name,quantity,price,state)
+        holder.bindData(identifier,quantity,price,state)
 
         holder.itemView.setOnClickListener{
             onItemClick?.invoke(order)
