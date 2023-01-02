@@ -22,18 +22,28 @@
         app:layout_constraintLeft_toLeftOf="parent"
         />
 
-    <Button
-        android:id="@+id/ingredients_change_card_1_decrement"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:onClick="decrement"
-        android:background="@drawable/decrement_circle"
+    <TextView
+        android:id="@+id/ingredients_change_card_1_decrement_circle"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:background="@drawable/bottom_sheet_quantity_circle"
         android:layout_marginLeft="40dp"
-        android:backgroundTint="@color/black"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/ingredients_change_card_1_name"
-    />
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ingredients_change_card_1_decrement"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:onClick="decrement"
+        android:background="@drawable/quantity_decrease"
+        android:layout_marginBottom="7dp"
+        android:layout_marginRight="6dp"
+        app:layout_constraintEnd_toEndOf="@+id/ingredients_change_card_1_decrement_circle"
+        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_1_decrement_circle"
+        />
 
     <TextView
         android:id="@+id/ingredients_change_card_1_quantity"
@@ -49,21 +59,33 @@
         android:textAlignment="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/ingredients_change_card_1_decrement"
+        app:layout_constraintLeft_toRightOf="@+id/ingredients_change_card_1_decrement_circle"
         />
 
-    <Button
-        android:id="@+id/ingredients_change_card_1_increment"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:onClick="increment"
-        android:background="@drawable/increment_circle"
+    <TextView
+        android:id="@+id/ingredients_change_card_1_increment_circle"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:background="@drawable/bottom_sheet_quantity_circle"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="5dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/ingredients_change_card_1_quantity"
         app:layout_constraintRight_toRightOf="parent"
         />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ingredients_change_card_1_increment"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:onClick="increment"
+        android:background="@drawable/quantity_increase"
+        android:layout_marginBottom="7dp"
+        android:layout_marginRight="6dp"
+        app:layout_constraintEnd_toEndOf="@+id/ingredients_change_card_1_increment_circle"
+        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_1_increment_circle"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

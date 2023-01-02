@@ -11,6 +11,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.view.LayoutInflater
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class MenuMealsActivity : AppCompatActivity() {
@@ -37,6 +39,7 @@ class MenuMealsActivity : AppCompatActivity() {
             val quantity = bottomSheetView.findViewById<TextView>(R.id.meal_bottom_sheet_text_quantity_number)
             val ingredientsChange = bottomSheetView.findViewById<Button>(R.id.meal_bottom_sheet_change_ingredient)
             val favoriteHeart = bottomSheetView.findViewById<TextView>(R.id.meal_bottom_sheet_heart)
+            val addToCart = bottomSheetView.findViewById<Button>(R.id.meal_bottom_sheet_add_cart)
 
             buttonIncrement.setOnClickListener {
                 var count: Int = quantity.text.toString().toInt()
@@ -65,6 +68,15 @@ class MenuMealsActivity : AppCompatActivity() {
                 } else {
                     favoriteHeart.setBackgroundResource(R.drawable.bottom_sheet_heart_not_clicked)
                 }
+            }
+
+            addToCart.setOnClickListener {
+                // TODO: falta chamar o POST para adicionar ao carrinho
+
+                // para fechar a botom sheet
+                bottomSheetDialog.dismiss()
+                Toast.makeText(this@MenuMealsActivity, "Refeição adicionada ao carrinho", Toast.LENGTH_LONG)
+                    .show()
             }
 
         }

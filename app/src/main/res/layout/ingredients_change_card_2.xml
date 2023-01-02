@@ -32,24 +32,37 @@
         android:textColor="@color/black"
         android:background="@drawable/text_quantity"
         android:layout_marginLeft="7dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginRight="15dp"
         android:textAlignment="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="@+id/ingredients_change_card_2_increment"
+        app:layout_constraintRight_toLeftOf="@+id/ingredients_change_card_2_increment"
         />
 
-    <Button
-        android:id="@+id/ingredients_change_card_2_increment"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:onClick="decrement"
-        android:background="@drawable/increment_circle"
+    <TextView
+        android:id="@+id/ingredients_change_card_2_increment_circle"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:background="@drawable/bottom_sheet_quantity_circle"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="5dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/ingredients_change_card_2_quantity"
         app:layout_constraintRight_toRightOf="parent"
         />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ingredients_change_card_2_increment"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:onClick="increment"
+        android:background="@drawable/quantity_increase"
+        android:layout_marginBottom="7dp"
+        android:layout_marginRight="6dp"
+        app:layout_constraintEnd_toEndOf="@+id/ingredients_change_card_2_increment_circle"
+        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_2_increment_circle"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

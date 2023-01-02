@@ -3,12 +3,7 @@ package pt.ipca.smartcanteen
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
 class ConsumerExchangeActivity : AppCompatActivity() {
@@ -19,6 +14,7 @@ class ConsumerExchangeActivity : AppCompatActivity() {
     private val spinner_general: Spinner by lazy {findViewById<View>(R.id.exchange_general_spinner) as Spinner}
     private val spinner_direct: Spinner by lazy {findViewById<View>(R.id.exchange_direct_spinner) as Spinner}
     private val cancelButton: Button by lazy {findViewById<View>(R.id.exchange_cancel) as Button}
+    private val confirmButton: Button by lazy {findViewById<View>(R.id.exchange_confirm) as Button}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +45,15 @@ class ConsumerExchangeActivity : AppCompatActivity() {
         cancelButton.setOnClickListener {
             finish()
         }
+
+        confirmButton.setOnClickListener {
+
+            // TODO: verificar se os spinners foram preenchidos
+
+            finish()
+            Toast.makeText(this@ConsumerExchangeActivity, "Encomenda colocada para troca com sucesso!", Toast.LENGTH_LONG)
+                .show()
+        }
     }
 
     fun checkBox1Clicked(view: View) {
@@ -78,9 +83,9 @@ class ConsumerExchangeActivity : AppCompatActivity() {
         }
     }
 
-    fun doCancel(view: View){
-        println("aqui")
-        var intent = Intent(this@ConsumerExchangeActivity, MyOrdersActivity::class.java)
-        startActivity(intent)
-    }
+    //fun doCancel(view: View){
+    //    println("aqui")
+    //    var intent = Intent(this@ConsumerExchangeActivity, MyOrdersActivity::class.java)
+    //    startActivity(intent)
+    //}
 }
