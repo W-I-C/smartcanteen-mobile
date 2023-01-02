@@ -3,9 +3,11 @@ package pt.ipca.smartcanteen
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.util.Patterns
 import android.view.View
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class Login : AppCompatActivity() {
 
     private var sessionToken: String? = null
+    private val checkBoxPassword: CheckBox by lazy {findViewById<View>(R.id.login_password_visibility_checkbox) as CheckBox };
     private val email: EditText by lazy {findViewById<View>(R.id.login_email_edittext) as EditText};
     private val password: EditText by lazy {findViewById<View>(R.id.login_password_edittext) as EditText}
     private val button: Button by lazy {findViewById<View>(R.id.login_button_login) as Button}
@@ -122,5 +125,16 @@ class Login : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    fun checkBoxPasswordClicked(view: View) {
+        checkBoxPassword.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                password.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            } else {
+                password.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            }
+        }
+
     }
 }

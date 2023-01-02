@@ -49,7 +49,8 @@
         android:drawablePadding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_email_textview"/>
+        app:layout_constraintTop_toBottomOf="@id/login_email_textview"
+        android:elevation="5dp" />
 
     <TextView
         android:id="@+id/login_password_textview"
@@ -82,7 +83,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_password_textview"
-        />
+        android:elevation="5dp"/>
+
+    <CheckBox
+        android:id="@+id/login_password_visibility_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:text="@string/show_password"
+        android:textSize="17sp"
+        android:button="@drawable/image_checkbox"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:paddingLeft="5dp"
+        android:onClick="checkBoxPasswordClicked"
+        app:layout_constraintLeft_toLeftOf="@id/login_password_edittext"
+        app:layout_constraintTop_toBottomOf="@id/login_password_edittext" />
 
     <Button
         android:id="@+id/login_button_login"
@@ -97,7 +112,7 @@
         android:onClick="doLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_password_edittext"
+        app:layout_constraintTop_toBottomOf="@id/login_password_visibility_checkbox"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -42,4 +42,5 @@
     <string name="pay">Pay</string>
     <string name="favorites">Favorites</string>
     <string name="add_cart">Add to cart</string>
+    <string name="show_password">Show Password</string>
 </resources>

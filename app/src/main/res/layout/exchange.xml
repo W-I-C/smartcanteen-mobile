@@ -41,7 +41,8 @@
         android:background="@drawable/spinner_style"
         app:layout_constraintTop_toBottomOf="@+id/exchange_general_checkbox"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:elevation="5dp"/>
 
     <CheckBox
         android:id="@+id/exchange_direct_checkbox"
@@ -71,7 +72,8 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/exchange_direct_checkbox"/>
+        app:layout_constraintTop_toBottomOf="@id/exchange_direct_checkbox"
+        android:elevation="5dp"/>
 
     <Spinner
         android:id="@+id/exchange_direct_spinner"
@@ -83,7 +85,8 @@
         android:background="@drawable/spinner_style"
         app:layout_constraintTop_toBottomOf="@+id/exchange_email_edittext"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:elevation="5dp"/>
 
     <Button
         android:id="@+id/exchange_confirm"

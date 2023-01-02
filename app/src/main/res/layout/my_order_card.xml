@@ -5,14 +5,14 @@
     android:layout_marginTop="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:elevation="5dp"
+    android:elevation="10dp"
     android:background="@drawable/my_order_card">
 
     <ImageView
         android:id='@+id/my_orders_card_image'
         android:layout_width="120dp"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:layout_marginRight="100dp"
         android:background="@drawable/my_order_card_image"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
         android:textStyle="bold"
         android:text="@string/id"
         android:textColor="@color/black"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         app:layout_constraintLeft_toRightOf="@id/my_orders_card_image"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -77,7 +77,7 @@
         android:textColor="@color/background_color"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="40dp"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintLeft_toRightOf="@id/my_orders_card_quantity"
         app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -85,15 +85,15 @@
 
     <Button
         android:id="@+id/my_orders_card_button_trade"
-        android:layout_width="70dp"
-        android:layout_height="28dp"
+        android:layout_width="80dp"
+        android:layout_height="35dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="28dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/rounded_button_style"
         android:hint="@string/trade"
-        android:textSize="10sp"
-        android:gravity="center"
+        android:textSize="13sp"
+        android:textAlignment="center"
         android:textColorHint="@color/white"
         android:onClick="doTrade"
         app:layout_constraintLeft_toRightOf="@id/my_orders_card_quantity"
