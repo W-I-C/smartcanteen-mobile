@@ -28,7 +28,7 @@
         />
 
     <TextView
-        android:id="@+id/my_orders_card_name"
+        android:id="@+id/my_orders_card_identifier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
@@ -51,7 +51,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="12dp"
         app:layout_constraintLeft_toRightOf="@id/my_orders_card_image"
-        app:layout_constraintTop_toBottomOf="@id/my_orders_card_name"/>
+        app:layout_constraintTop_toBottomOf="@id/my_orders_card_identifier"/>
 
     <TextView
         android:id="@+id/my_orders_card_price"
