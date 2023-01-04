@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 class MyOrdersActivity : AppCompatActivity() {
     private val buttonTrade: Button by lazy {findViewById<View>(R.id.my_orders_card_button_trade) as Button }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.my_orders)
 

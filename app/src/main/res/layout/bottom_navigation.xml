@@ -18,4 +18,12 @@
         app:itemIconTint="@color/background_color"
         />
 
+    <include layout="@layout/activity_cart" android:visibility="gone"/>
+    <!--TODO falta favorites-->
+    <include layout="@layout/activity_main" android:visibility="gone"/>
+    <include layout="@layout/my_orders" android:visibility="gone"/>
+    <include layout="@layout/activity_profile" android:visibility="gone"/>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
