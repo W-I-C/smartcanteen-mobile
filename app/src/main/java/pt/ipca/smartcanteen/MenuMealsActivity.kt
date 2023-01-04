@@ -32,6 +32,7 @@ class MenuMealsActivity : AppCompatActivity() {
             )
 
             bottomSheetDialog.setContentView(bottomSheetView)
+            bottomSheetDialog
             bottomSheetDialog.show()
 
             val buttonIncrement = bottomSheetView.findViewById<Button>(R.id.meal_bottom_sheet_quantity_increment)

@@ -63,7 +63,7 @@ class Login : AppCompatActivity() {
                             val body = LoginBody(emailText, passwordText)
 
                             // val BASE_URL = "http://192.168.1.106:3000"
-                            val BASE_URL = "http://10.0.2.2:3000"
+                            val BASE_URL = "https://smartcanteen-api.herokuapp.com"
 
                             // Cria um objeto Retrofit
                             val retrofit = Retrofit.Builder()
@@ -101,7 +101,7 @@ class Login : AppCompatActivity() {
 
                                         // TODO - guardar o token de sessão gerado para posteriormente ser possível fazer pedidos
                                     } else {
-                                        Toast.makeText(this@Login, "123", Toast.LENGTH_LONG)
+                                        Toast.makeText(this@Login, "Erro! Não foi possível realizar o login, tente novamente", Toast.LENGTH_LONG)
                                             .show()
                                     }
                                 }
