@@ -38,4 +38,6 @@
     <string name="show_password">Mostrar Palavra Passe</string>
     <string name="no_orders_placed">Não há encomendas feitas</string>
     <string name="no_trades_placed">Não há trocas feitas</string>
+    <string name="my_orders_lowercase">Minhas Encomendas</string>
+    <string name="my_trades_lowercase">Minhas Trocas</string>
 </resources>

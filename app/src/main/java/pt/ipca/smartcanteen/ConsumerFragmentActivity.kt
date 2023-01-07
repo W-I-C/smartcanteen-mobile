@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import pt.ipca.smartcanteen.consumer_fragments.MainFragment
 import pt.ipca.smartcanteen.consumer_fragments.MyOrdersCartFragment
+import pt.ipca.smartcanteen.consumer_fragments.MyOrdersFragment
 import pt.ipca.smartcanteen.consumer_fragments.ProfileFragment
 
 class ConsumerFragmentActivity : AppCompatActivity() {
@@ -38,7 +39,9 @@ class ConsumerFragmentActivity : AppCompatActivity() {
                     ft.commit()
                 }
                 R.id.menu_consumer_orders -> {
-
+                    val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+                    ft.replace(R.id.consumer_fragment_container, MyOrdersFragment())
+                    ft.commit()
                 }
                 R.id.menu_consumer_profile -> {
                     val ft: FragmentTransaction = supportFragmentManager.beginTransaction()

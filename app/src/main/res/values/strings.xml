@@ -47,4 +47,6 @@
     <string name="no_trades_placed">No trades placed</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="my_orders_lowercase">My Orders</string>
+    <string name="my_trades_lowercase">My Trades</string>
 </resources>

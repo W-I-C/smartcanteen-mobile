@@ -27,6 +27,10 @@ class OrdersAdapterRec(private var ordersList: List<RetroTrade>) :
             onItemClick?.invoke(ordersList[position])
         }
 
+        holder.setOnClickListener {
+            onButtonTradeClick?.invoke(it)
+        }
+
         //holder.buttonTrade.setOnClickListener {
         //    onButtonTradeClick?.invoke(it)
         //}
