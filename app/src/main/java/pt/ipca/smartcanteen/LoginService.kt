@@ -6,5 +6,5 @@ import retrofit2.http.POST
 
 interface LoginService {
     @POST("/api/v1/login")
-    fun login(@Body body: LoginBody): Call<LoginBody>
+    fun login(@Body body: LoginBody): Call<LoginResponse>
 }
