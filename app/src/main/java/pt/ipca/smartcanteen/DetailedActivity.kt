@@ -10,13 +10,13 @@ class DetailedActivity : AppCompatActivity() {
         setContentView(R.layout.detailed_order)
 
         // Recuperar os dados da Intent
-        val identifier = intent.getIntExtra("order_identifier", 0)
+        val nencomenda = intent.getIntExtra("order_nencomenda", 0)
         val name = intent.getStringExtra("order_name")
-        val state = intent.getStringExtra("order_state")
+        val statename = intent.getStringExtra("order_statename")
 
         // Atualizar os campos de texto com os dados da Intent
-        findViewById<TextView>(R.id.detailed_id).text = identifier.toString()
+        findViewById<TextView>(R.id.detailed_id).text = nencomenda.toString()
         findViewById<TextView>(R.id.detailed_name).text = name
-        findViewById<TextView>(R.id.detailed_state).text = state
+        findViewById<TextView>(R.id.detailed_state).text = statename
     }
 }

@@ -82,7 +82,11 @@ class Login : AppCompatActivity() {
                                         val token = loginBody?.token
                                         val role = loginBody?.role
 
-                                        val sp = getSharedPreferences(this@Login)
+                                        if(token != null){
+                                            Log.d("token", token)
+                                        }
+
+                                        val sp = SharedPreferencesHelper.getSharedPreferences(this@Login)
                                         sp.edit().putString("token", token).commit()
                                         
                                         if (role == "consumer") {
@@ -91,7 +95,7 @@ class Login : AppCompatActivity() {
                                             startActivity(intent)
                                         } else if (role == "employee") {
                                             // O usuário é um funcionário, então encaminhe-o para a tela específica para funcionários
-                                            var intent = Intent(this@Login, teste::class.java)
+                                            var intent = Intent(this@Login, UndeliveredOrdersActivity::class.java)
                                             startActivity(intent)
                                         } else {
                                             // O usuário não é nem consumidor nem funcionário, então exiba uma mensagem de erro
@@ -135,9 +139,5 @@ class Login : AppCompatActivity() {
             }
         }
 
-    }
-
-    fun getSharedPreferences(context: Context): SharedPreferences {
-        return context.getSharedPreferences(context.resources.getString(R.string.app_name), Context.MODE_PRIVATE)
     }
 }
