@@ -11,8 +11,8 @@ class UndeliveredOrdersAdapterRecViewOlder(inflater: LayoutInflater, val parent:
     val nameTv = itemView.findViewById<TextView>(R.id.undelivered_orders_card_name)
     val stateTv = itemView.findViewById<TextView>(R.id.undelivered_orders_card_state)
 
-    fun bindData(identifierText:String, nameText:String, stateText: String){
-        identifierTv.text = identifierText
+    fun bindData(identifierText:Int, nameText:String, stateText: String){
+        identifierTv.text = identifierText.toString()
         nameTv.text = nameText
         stateTv.text = stateText
     }
