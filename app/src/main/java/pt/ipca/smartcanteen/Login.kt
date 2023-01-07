@@ -2,8 +2,10 @@ package pt.ipca.smartcanteen
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Button
@@ -11,16 +13,12 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import okhttp3.MediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
 
 class Login : AppCompatActivity() {
 
@@ -74,39 +72,40 @@ class Login : AppCompatActivity() {
                             // Cria um objeto LoginService
                             val service = retrofit.create(LoginService::class.java)
                             val call = service.login(body)
-                            call.enqueue(object : Callback<LoginBody> {
-                                override fun onResponse(call: Call<LoginBody>, response: Response<LoginBody>) {
+                            call.enqueue(object : Callback<LoginResponse> {
+                                override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                                     if (response.code() == 200) {
                                         Toast.makeText(this@Login, "Login realizado com sucesso!", Toast.LENGTH_LONG)
                                             .show()
 
-                                        // atribui o token de sessão à variável sessionToken - este token vamos recebê-lo depois do user estar autenticado
-                                        // vamos receber o token do user.body
-                                        // sessionToken = response.body()?.token
+                                        val loginBody = response.body()
+                                        val token = loginBody?.token
+                                        val role = loginBody?.role
 
-                                        // guarda o token de sessão no Shared Preferences
-                                        // Context.MODE_PRIVATE inidca que este arquivo de preferências só pode ser acedido pela nossa aplicação
-                                        // sharedPreferences permite guardar dados na forma chave-valor para manter as informações mesmo quando a app é fechada ou o dispositivo reiniciado
-                                        // val sharedPreferences = getSharedPreferences("smartcanteen", Context.MODE_PRIVATE)
-                                        // val editor = sharedPreferences.edit()
-                                        // é armazenado o sessionToken na sharedPreferences
-                                        // editor.putString("sessionToken", sessionToken)
-                                        // editor.apply()
+                                        val sp = getSharedPreferences(this@Login)
+                                        sp.edit().putString("token", token).commit()
+                                        
+                                        if (role == "consumer") {
+                                            // O usuário é um consumidor, então encaminhe-o para a tela específica para consumidores
+                                            var intent = Intent(this@Login, MainActivity::class.java)
+                                            startActivity(intent)
+                                        } else if (role == "employee") {
+                                            // O usuário é um funcionário, então encaminhe-o para a tela específica para funcionários
+                                            var intent = Intent(this@Login, teste::class.java)
+                                            startActivity(intent)
+                                        } else {
+                                            // O usuário não é nem consumidor nem funcionário, então exiba uma mensagem de erro
+                                            Toast.makeText(this@Login, "Erro! Role não existe", Toast.LENGTH_LONG)
+                                                .show()
+                                        }
 
-
-
-                                        // TODO - ver o role da pessoa e reencaminhar para o sítio certo
-                                        var intent = Intent(this@Login, MainActivity::class.java)
-                                        startActivity(intent)
-
-                                        // TODO - guardar o token de sessão gerado para posteriormente ser possível fazer pedidos
                                     } else {
                                         Toast.makeText(this@Login, "Erro! Não foi possível realizar o login, tente novamente", Toast.LENGTH_LONG)
                                             .show()
                                     }
                                 }
 
-                                override fun onFailure(call: Call<LoginBody>, t: Throwable) {
+                                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                                     Toast.makeText(this@Login, "Erro! Tente novamente.", Toast.LENGTH_LONG)
                                         .show()
                                 }
@@ -136,5 +135,9 @@ class Login : AppCompatActivity() {
             }
         }
 
+    }
+
+    fun getSharedPreferences(context: Context): SharedPreferences {
+        return context.getSharedPreferences(context.resources.getString(R.string.app_name), Context.MODE_PRIVATE)
     }
 }
