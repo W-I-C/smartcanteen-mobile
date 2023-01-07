@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class ExchangesAdapterRec(private var exchangesList: MutableList<Exchange>) :
+class ExchangesAdapterRec(private var exchangesList: List<RetroTrade>) :
     RecyclerView.Adapter<ExchangesAdapterRecVIewHolder>() {
 
-    var onItemClick : ((Exchange) -> Unit)? = null
+    var onItemClick : ((RetroTrade) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExchangesAdapterRecVIewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -15,15 +15,14 @@ class ExchangesAdapterRec(private var exchangesList: MutableList<Exchange>) :
     }
 
     override fun onBindViewHolder(holder: ExchangesAdapterRecVIewHolder, position: Int) {
-        val exchange = exchangesList.get(position)
-        val identifier = "${exchange.identifier}"
-        val quantity = "${exchange.quantity} ${if(exchange.quantity > 1) "doses" else "dose"}"
-        val price = "${exchange.price}€"
-        val state = exchange.state
-        holder.bindData(identifier,quantity,price,state)
+        val nencomenda = exchangesList.get(position).nencomenda
+        val ticketamount = exchangesList.get(position).ticketamount
+        val total = exchangesList.get(position).total
+        val statename = exchangesList.get(position).statename
+        holder.bindData(nencomenda,ticketamount,total,statename)
 
-        holder.itemView.setOnClickListener{
-            onItemClick?.invoke(exchange)
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(exchangesList[position])
         }
     }
 

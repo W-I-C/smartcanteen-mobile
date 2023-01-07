@@ -12,10 +12,10 @@ class OrdersAdapterRecViewHolder(inflater: LayoutInflater, val parent: ViewGroup
     val priceTv = itemView.findViewById<TextView>(R.id.my_orders_card_price)
     val stateTv = itemView.findViewById<TextView>(R.id.my_orders_card_state)
 
-    fun bindData(identifierText:String, quantityText: String, priceText:String, stateText: String){
-        identifierTv.text=identifierText
-        quantityTv.text = quantityText
-        priceTv.text=priceText
+    fun bindData(identifierText: Int, quantityText: Int, priceText: Int, stateText: String){
+        identifierTv.text= identifierText.toString()
+        quantityTv.text = quantityText.toString()
+        priceTv.text= priceText.toString()
         stateTv.text=stateText
     }
 }

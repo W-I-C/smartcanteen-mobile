@@ -12,10 +12,10 @@ class DetailedMyTradeActivity : AppCompatActivity() {
         setContentView(R.layout.detailed_my_trade)
 
         // Recuperar os dados da Intent
-        val identifier = intent.getIntExtra("exchange_identifier", 0)
-        val quantity = intent.getIntExtra("exchange_quantity", 0)
-        val price = intent.getDoubleExtra("exchange_price", 0.0)
-        val state = intent.getStringExtra("exchange_state")
+        val identifier = intent.getIntExtra("trade_nencomenda", 0)
+        val quantity = intent.getIntExtra("trade_ticketamount", 0)
+        val price = intent.getIntExtra("trade_total", 0)
+        val state = intent.getStringExtra("trade_statename")
 
         // Atualizar os campos de texto com os dados da Intent
         findViewById<TextView>(R.id.detailed_my_trade_identifier).text = identifier.toString()

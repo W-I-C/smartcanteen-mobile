@@ -5,10 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class OrdersAdapterRec(private var ordersList: MutableList<Order>) :
+class OrdersAdapterRec(private var ordersList: List<RetroTrade>) :
     RecyclerView.Adapter<OrdersAdapterRecViewHolder>() {
 
-    var onItemClick : ((Order) -> Unit)? = null
+    var onItemClick : ((RetroTrade) -> Unit)? = null
     var onButtonTradeClick : ((View) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrdersAdapterRecViewHolder {
@@ -17,15 +17,14 @@ class OrdersAdapterRec(private var ordersList: MutableList<Order>) :
     }
 
     override fun onBindViewHolder(holder: OrdersAdapterRecViewHolder, position: Int) {
-        val order = ordersList.get(position)
-        val identifier = "${order.identifier}"
-        val quantity = "${order.quantity} ${if(order.quantity > 1) "doses" else "dose"}"
-        val price = "${order.price}€"
-        val state = order.state
-        holder.bindData(identifier,quantity,price,state)
+        val nencomenda = ordersList.get(position).nencomenda
+        val ticketamount = ordersList.get(position).ticketamount
+        val total = ordersList.get(position).total
+        val statename = ordersList.get(position).statename
+        holder.bindData(nencomenda,ticketamount,total,statename)
 
-        holder.itemView.setOnClickListener{
-            onItemClick?.invoke(order)
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(ordersList[position])
         }
 
         //holder.buttonTrade.setOnClickListener {

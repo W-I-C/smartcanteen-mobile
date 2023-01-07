@@ -37,4 +37,5 @@
     <string name="add_cart">Adicionar ao carrinho</string>
     <string name="show_password">Mostrar Palavra Passe</string>
     <string name="no_orders_placed">Não há encomendas feitas</string>
+    <string name="no_trades_placed">Não há trocas feitas</string>
 </resources>
