@@ -1,28 +1,36 @@
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.employee_fragments
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.EditText
+import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import pt.ipca.smartcanteen.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class UndeliveredOrdersActivity : AppCompatActivity() {
+class UndeliveredOrdersFragment : Fragment() {
 
-    private val textError: TextView by lazy {findViewById<TextView>(R.id.undelivered_orders_empty_message) as TextView }
-    private val undeliveredOrdersAdater: RecyclerView by lazy {findViewById<RecyclerView>(R.id.undelivered_orders_recycler_view) as RecyclerView }
+    private val textError: TextView by lazy { requireView().findViewById<TextView>(R.id.undelivered_orders_empty_message) as TextView }
+    private val undeliveredOrdersAdater: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.undelivered_orders_recycler_view) as RecyclerView }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.undelivered_orders)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.undelivered_orders, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val BASE_URL = "https://smartcanteen-api.herokuapp.com"
         var retrofit = Retrofit.Builder()
@@ -31,11 +39,12 @@ class UndeliveredOrdersActivity : AppCompatActivity() {
             .build()
         val service = retrofit.create(UndeliveredOrdersService::class.java)
 
-        val sp = SharedPreferencesHelper.getSharedPreferences(this@UndeliveredOrdersActivity)
+        val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
 
         var call =
-            service.seeUndeliveredOrders("Bearer $token").enqueue(object : Callback<List<RetroTicket>> {
+            service.seeUndeliveredOrders("Bearer $token").enqueue(object :
+                Callback<List<RetroTicket>> {
                 override fun onResponse(
                     call: Call<List<RetroTicket>>,
                     response: Response<List<RetroTicket>>
@@ -62,23 +71,17 @@ class UndeliveredOrdersActivity : AppCompatActivity() {
     }
 
     fun rebuildlist(adapter: UndeliveredOrdersAdaterRec) {
-        val linearLayoutManager = LinearLayoutManager(this@UndeliveredOrdersActivity)
+        val linearLayoutManager = LinearLayoutManager(requireContext())
         undeliveredOrdersAdater.layoutManager = linearLayoutManager
         undeliveredOrdersAdater.itemAnimator = DefaultItemAnimator()
         undeliveredOrdersAdater.adapter = adapter
 
-        adapter.onItemClick = this@UndeliveredOrdersActivity::onItemClick
-        //UndeliveredOrdersAdaterRec(retrofit2).onItemClick = { order ->
-        //    val intent = Intent(this, DetailedActivity::class.java).apply {
-        //        putExtra("order_nencomenda", order.nencomenda)
-        //        putExtra("order_name", order.name)
-        //        putExtra("order_statename", order.statename)
-        //    }
-        //    startActivity(intent)
+        adapter.onItemClick = this::onItemClick
+
     }
 
     fun onItemClick(order: RetroTicket) {
-        val intent = Intent(this, DetailedActivity::class.java).apply {
+        val intent = Intent(requireActivity(), DetailedActivity::class.java).apply {
             putExtra("order_nencomenda", order.nencomenda)
             putExtra("order_name", order.name)
             putExtra("order_statename", order.statename)
@@ -86,5 +89,3 @@ class UndeliveredOrdersActivity : AppCompatActivity() {
         startActivity(intent)
     }
 }
-
-

@@ -1,8 +1,6 @@
 package pt.ipca.smartcanteen
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -13,7 +11,6 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -91,11 +88,11 @@ class Login : AppCompatActivity() {
                                         
                                         if (role == "consumer") {
                                             // O usuário é um consumidor, então encaminhe-o para a tela específica para consumidores
-                                            var intent = Intent(this@Login, MyExchangesActivity::class.java)
+                                            var intent = Intent(this@Login, ConsumerFragmentActivity::class.java)
                                             startActivity(intent)
                                         } else if (role == "employee") {
                                             // O usuário é um funcionário, então encaminhe-o para a tela específica para funcionários
-                                            var intent = Intent(this@Login, UndeliveredOrdersActivity::class.java)
+                                            var intent = Intent(this@Login, EmployeeFragmentActivity::class.java)
                                             startActivity(intent)
                                         } else {
                                             // O usuário não é nem consumidor nem funcionário, então exiba uma mensagem de erro
