@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class UndeliveredOrdersActivity : AppCompatActivity() {
 
-    private val textError: TextView by lazy {findViewById<TextView>(R.id.empty_message) as TextView }
+    private val textError: TextView by lazy {findViewById<TextView>(R.id.undelivered_orders_empty_message) as TextView }
     private val undeliveredOrdersAdater: RecyclerView by lazy {findViewById<RecyclerView>(R.id.undelivered_orders_recycler_view) as RecyclerView }
 
     override fun onCreate(savedInstanceState: Bundle?) {

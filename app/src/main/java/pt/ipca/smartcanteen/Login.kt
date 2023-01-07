@@ -91,7 +91,7 @@ class Login : AppCompatActivity() {
                                         
                                         if (role == "consumer") {
                                             // O usuário é um consumidor, então encaminhe-o para a tela específica para consumidores
-                                            var intent = Intent(this@Login, MainActivity::class.java)
+                                            var intent = Intent(this@Login, MyExchangesActivity::class.java)
                                             startActivity(intent)
                                         } else if (role == "employee") {
                                             // O usuário é um funcionário, então encaminhe-o para a tela específica para funcionários
