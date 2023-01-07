@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 class ExchangesAdapterRec(private var exchangesList: List<RetroTrade>) :
     RecyclerView.Adapter<ExchangesAdapterRecVIewHolder>() {
 
-    var onItemClick : ((RetroTrade) -> Unit)? = null
+    var onItemTradesClick : ((RetroTrade) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExchangesAdapterRecVIewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -22,7 +22,7 @@ class ExchangesAdapterRec(private var exchangesList: List<RetroTrade>) :
         holder.bindData(nencomenda,ticketamount,total,statename)
 
         holder.itemView.setOnClickListener {
-            onItemClick?.invoke(exchangesList[position])
+            onItemTradesClick?.invoke(exchangesList[position])
         }
     }
 
