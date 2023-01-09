@@ -10,11 +10,11 @@
         android:id="@+id/bottom_navigation_consumer"
         android:layout_width="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:elevation="4dp"
         app:menu="@menu/consumer_bottom_navigation_menu"
         app:labelVisibilityMode="unlabeled"
-        app:itemIconSize="40dp"
+        app:itemIconSize="30dp"
         app:itemIconTint="@color/background_color"
         />
 
@@ -22,7 +22,7 @@
         android:id="@+id/consumer_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation_consumer">
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -64,7 +64,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MyOrdersActivity"
+            android:name=".DetailedMyTradeActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -95,16 +95,6 @@
         </activity>
         <activity
             android:name=".UndeliveredOrdersActivity"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".MyExchangesActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
