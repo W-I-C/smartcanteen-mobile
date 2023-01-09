@@ -9,6 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="Green_ipca">#0A5133</color>
     <color name="grey">#d3d3d3</color>
+    <color name="redButton">#FF8A8A</color>
+
 
     <color name="background_color">#0A5133</color>
 </resources>

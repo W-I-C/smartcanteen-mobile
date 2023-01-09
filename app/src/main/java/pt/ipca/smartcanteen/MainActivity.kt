@@ -1,6 +1,5 @@
 package pt.ipca.smartcanteen
 
-
 import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.ListView
@@ -57,6 +56,4 @@ class MainActivity : AppCompatActivity() {
         ordersRecyclerView.itemAnimator = DefaultItemAnimator()
         ordersRecyclerView.adapter = ordersAdapter
     }
-
-
 }

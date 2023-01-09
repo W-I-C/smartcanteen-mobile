@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:outlineSpotShadowColor="@color/white"
+        android:id='@+id/image_meal'
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:drawableRight="@drawable/edit"
+        android:background="@color/cardview_dark_background"
+        tools:ignore="MissingConstraints" />
+
+   <ImageView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:background="@drawable/edit"
+       app:layout_constraintBottom_toBottomOf="@+id/image_meal"
+       app:layout_constraintRight_toRightOf="@+id/image_meal"
+       android:layout_marginRight="5dp"
+       android:layout_marginBottom="20dp"
+       android:backgroundTint="@color/white"
+
+       />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/arrow_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/image_meal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="@color/white"
+
+        />
+
+
+ <Button
+     app:layout_constraintTop_toTopOf="parent"
+     android:layout_marginTop="5dp"
+     android:layout_marginRight="5dp"
+     android:id="@+id/save_button"
+     android:layout_width="100dp"
+     android:layout_height="50dp"
+     android:background="@drawable/rounded_button_style"
+     android:hint="Guardar"
+     android:textAlignment="center"
+     android:textColorHint="@color/white"
+     android:textSize="14sp"
+     app:layout_constraintRight_toRightOf="parent"
+      />
+
+    <ImageView
+        android:layout_marginTop="-20dp"
+        app:layout_constraintTop_toBottomOf="@+id/image_meal"
+        android:id="@+id/rounded_card"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="@drawable/cart_create_meal"
+
+        tools:layout_editor_absoluteX="-9dp" />
+
+    <TextView
+
+       app:layout_constraintTop_toBottomOf="@+id/image_meal"
+       android:background="@color/white"
+       android:id="@+id/meals_name"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:textSize="14sp"
+       android:text="Nome da refeição"
+       android:paddingLeft="20dp"
+       android:layout_marginTop="25dp"
+       android:textColor="@color/black"/>
+
+    <EditText
+            app:layout_constraintTop_toBottomOf="@+id/meals_name"
+            android:id="@+id/cart_text_meals_name"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+             android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+
+            android:background="@drawable/edit_text_style"
+
+
+          />
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/cart_text_meals_name"
+        android:background="@color/white"
+        android:id="@+id/preparation_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:text="Tempo de preparação"
+        android:paddingLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"/>
+
+    <EditText
+        app:layout_constraintTop_toBottomOf="@+id/preparation_time"
+        android:id="@+id/cart_preparation_time"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+
+        android:background="@drawable/edit_text_style"
+        />
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/cart_preparation_time"
+        android:background="@color/white"
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:text="Preço"
+        android:paddingLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"/>
+
+    <EditText
+        app:layout_constraintTop_toBottomOf="@+id/price"
+        android:id="@+id/cart_price"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+
+        android:background="@drawable/edit_text_style"
+        />
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/cart_price"
+        android:background="@color/white"
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:text="Descrição"
+        android:paddingLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"/>
+
+    <EditText
+        app:layout_constraintTop_toBottomOf="@+id/description"
+        android:id="@+id/cart_description"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+
+        android:background="@drawable/edit_text_style"
+        />
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/cart_description"
+        android:background="@color/white"
+        android:id="@+id/possible_Changes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:text="Alterações possiveis:"
+        android:paddingLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        tools:ignore="MissingConstraints" />
+    <ImageButton
+        app:layout_constraintTop_toBottomOf="@+id/cart_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/add_symbol"
+
+        android:onClick="addIngredient"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/card_add_ingredient_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/possible_Changes"
+        />
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
