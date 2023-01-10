@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         tradeMealsRecyclerView.layoutManager = linearLayoutManager
         tradeMealsRecyclerView.itemAnimator = DefaultItemAnimator()
         tradeMealsRecyclerView.adapter = tradeMealsAdapter
+
         /** Bar Meals **/
         val barMealsRecyclerView = findViewById<RecyclerView>(R.id.main_bar_meals_rv)
         val barMeals = mutableListOf<Meal>(
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
             Meal("Panado c/pão", 3.5, 5),
             Meal("Salada de Fruta", 1.5, 1),
         )
+
         var barMealsAdapter = MealsAdapterRec(barMeals)
         val barMealsLinearLayoutManager = LinearLayoutManager(applicationContext)
         barMealsLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -49,6 +51,7 @@ class MainActivity : AppCompatActivity() {
             Meal("Batatas Fritas", 3.5, 5),
             Meal("Wrap", 1.5, 1),
         )
+
         var ordersAdapter = MealsAdapterRec(orders)
         val ordersLinearLayoutManager = LinearLayoutManager(applicationContext)
         ordersLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
