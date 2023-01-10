@@ -57,7 +57,6 @@ class Login : AppCompatActivity() {
                             // é criado um objeto do tipo JSON
                             val body = LoginBody(emailText, passwordText)
 
-                            // val BASE_URL = "http://192.168.1.106:3000"
                             val BASE_URL = "https://smartcanteen-api.herokuapp.com"
 
                             // Cria um objeto Retrofit
@@ -65,6 +64,8 @@ class Login : AppCompatActivity() {
                                 .baseUrl(BASE_URL)
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build()
+
+                            // pedir sempre um novo token de sessão - evitar que chegue a um ponto e que diga unauthorized error
 
                             // Cria um objeto LoginService
                             val service = retrofit.create(LoginService::class.java)
@@ -85,7 +86,8 @@ class Login : AppCompatActivity() {
 
                                         val sp = SharedPreferencesHelper.getSharedPreferences(this@Login)
                                         sp.edit().putString("token", token).commit()
-                                        
+                                        sp.edit().putString("role", role).commit()
+
                                         if (role == "consumer") {
                                             // O usuário é um consumidor, então encaminhe-o para a tela específica para consumidores
                                             var intent = Intent(this@Login, ConsumerFragmentActivity::class.java)
