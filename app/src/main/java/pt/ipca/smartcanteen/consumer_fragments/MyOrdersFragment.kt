@@ -7,11 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.w3c.dom.Text
 import pt.ipca.smartcanteen.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,11 +27,15 @@ class MyOrdersFragment : Fragment() {
 
     // TODO: passar de myexchange para my_exchange
     private val ordersTextError: TextView by lazy {requireView().findViewById<TextView>(R.id.my_orders_empty_message) as TextView }
-    private val tradesTextError: TextView by lazy {requireView().findViewById<TextView>(R.id.myexchanges_empty_message) as TextView }
+    private val tradesTextError: TextView by lazy {requireView().findViewById<TextView>(R.id.my_exchanges_empty_message) as TextView }
     private val myOrdersAdater: RecyclerView by lazy {requireView().findViewById<RecyclerView>(R.id.my_orders_recycler_view) as RecyclerView }
-    private val myTradesAdater: RecyclerView by lazy {requireView().findViewById<RecyclerView>(R.id.myexchanges_recycler_view) as RecyclerView }
+    private val myTradesAdater: RecyclerView by lazy {requireView().findViewById<RecyclerView>(R.id.my_exchanges_recycler_view) as RecyclerView }
     private val buttonMyOrders: Button by lazy {requireView().findViewById<Button>(R.id.my_orders_button) as Button }
     private val buttonMyTrades: Button by lazy {requireView().findViewById<Button>(R.id.my_exchanges_button) as Button }
+    private val textTittle: TextView by lazy {requireView().findViewById<TextView>(R.id.my_orders_title) as TextView }
+    private val progressBar: ProgressBar by lazy {requireView().findViewById<ProgressBar>(R.id.my_orders_progress_bar) as ProgressBar }
+    private val textProgress: TextView by lazy {requireView().findViewById<TextView>(R.id.my_orders_progress_bar_text) as TextView }
+    private lateinit var loadingAlertDialog: AlertDialog
     //private val buttonTradeCard: Button by lazy {requireView().findViewById<Button>(R.id.my_orders_card_button_trade) as Button }
 
     override fun onCreateView(
@@ -40,94 +48,15 @@ class MyOrdersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        myOrders()
+
         buttonMyOrders.setOnClickListener {
-
-            tradesTextError.visibility = View.GONE
-            myTradesAdater.visibility = View.GONE
-
-            val BASE_URL = "https://smartcanteen-api.herokuapp.com"
-            var retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-
-            val service = retrofit.create(MyOrdersService::class.java)
-
-            val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
-            val token = sp.getString("token", null)
-
-            var call =
-                service.seeMyOrders("Bearer $token").enqueue(object :
-                    Callback<List<RetroTrade>> {
-                    override fun onResponse(
-                        call: Call<List<RetroTrade>>,
-                        response: Response<List<RetroTrade>>
-                    ) {
-                        if (response.code() == 200) {
-                            val retroFit2 = response.body()
-
-                            if (retroFit2 != null)
-                                if(retroFit2.isEmpty()){
-                                    ordersTextError.visibility = View.VISIBLE
-                                    myOrdersAdater.visibility = View.GONE
-                                } else {
-                                    myOrdersAdater.visibility = View.VISIBLE
-                                    ordersTextError.visibility = View.GONE
-                                    rebuildlistOrders(OrdersAdapterRec(retroFit2))
-                                }
-                        }
-                    }
-
-                    override fun onFailure(calll: Call<List<RetroTrade>>, t: Throwable) {
-                        print("error")
-                    }
-                })
+            myOrders()
         }
 
         buttonMyTrades.setOnClickListener{
-
-            ordersTextError.visibility = View.GONE
-            myOrdersAdater.visibility = View.GONE
-
-            val BASE_URL = "https://smartcanteen-api.herokuapp.com"
-            var retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-
-            val service = retrofit.create(MyTradesService::class.java)
-
-            val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
-            val token = sp.getString("token", null)
-
-            var call =
-                service.seeMyTrades("Bearer $token").enqueue(object :
-                    Callback<List<RetroTrade>> {
-                    override fun onResponse(
-                        call: Call<List<RetroTrade>>,
-                        response: Response<List<RetroTrade>>
-                    ) {
-                        if (response.code() == 200) {
-                            val retroFit2 = response.body()
-
-                            if (retroFit2 != null)
-                                if(retroFit2.isEmpty()){
-                                    tradesTextError.visibility = View.VISIBLE
-                                    myTradesAdater.visibility = View.GONE
-                                } else {
-                                    myTradesAdater.visibility = View.VISIBLE
-                                    tradesTextError.visibility = View.GONE
-                                    rebuildlistTrades(ExchangesAdapterRec(retroFit2))
-                                }
-                        }
-                    }
-
-                    override fun onFailure(calll: Call<List<RetroTrade>>, t: Throwable) {
-                        print("error")
-                    }
-                })
+            myTrades()
         }
-
     }
 
     fun rebuildlistOrders(adapter: OrdersAdapterRec) {
@@ -177,6 +106,112 @@ class MyOrdersFragment : Fragment() {
             putExtra("trade_statename", trade.statename)
         }
         startActivity(intent)
+    }
+
+    private fun myOrders(){
+        tradesTextError.visibility = View.GONE
+        myTradesAdater.visibility = View.GONE
+
+        textTittle.setText("Minhas Encomendas")
+
+        val BASE_URL = "https://smartcanteen-api.herokuapp.com"
+        var retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val service = retrofit.create(MyOrdersService::class.java)
+
+        val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
+        val token = sp.getString("token", null)
+
+        progressBar.visibility = View.VISIBLE
+        textProgress.visibility = View.VISIBLE
+
+        var call =
+            service.seeMyOrders("Bearer $token").enqueue(object :
+                Callback<List<RetroTrade>> {
+                override fun onResponse(
+                    call: Call<List<RetroTrade>>,
+                    response: Response<List<RetroTrade>>
+                ) {
+                    if (response.code() == 200) {
+                        progressBar.visibility = View.GONE
+                        textProgress.visibility = View.GONE
+                        val retroFit2 = response.body()
+
+                        if (retroFit2 != null)
+                            if(retroFit2.isEmpty()){
+                                ordersTextError.visibility = View.VISIBLE
+                                myOrdersAdater.visibility = View.GONE
+                            } else {
+                                myOrdersAdater.visibility = View.VISIBLE
+                                ordersTextError.visibility = View.GONE
+                                rebuildlistOrders(OrdersAdapterRec(retroFit2))
+                            }
+                    }
+                }
+
+                override fun onFailure(calll: Call<List<RetroTrade>>, t: Throwable) {
+                    progressBar.visibility = View.GONE
+                    textProgress.visibility = View.GONE
+                    Toast.makeText(requireContext(), "Erro! Tente novamente.", Toast.LENGTH_LONG)
+                        .show()
+                }
+            })
+    }
+
+    private fun myTrades(){
+        ordersTextError.visibility = View.GONE
+        myOrdersAdater.visibility = View.GONE
+
+        textTittle.setText("Minhas Trocas")
+
+        val BASE_URL = "https://smartcanteen-api.herokuapp.com"
+        var retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val service = retrofit.create(MyTradesService::class.java)
+
+        val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
+        val token = sp.getString("token", null)
+
+        progressBar.visibility = View.VISIBLE
+        textProgress.visibility = View.VISIBLE
+
+        var call =
+            service.seeMyTrades("Bearer $token").enqueue(object :
+                Callback<List<RetroTrade>> {
+                override fun onResponse(
+                    call: Call<List<RetroTrade>>,
+                    response: Response<List<RetroTrade>>
+                ) {
+                    if (response.code() == 200) {
+                        progressBar.visibility = View.GONE
+                        textProgress.visibility = View.GONE
+                        val retroFit2 = response.body()
+
+                        if (retroFit2 != null)
+                            if(retroFit2.isEmpty()){
+                                tradesTextError.visibility = View.VISIBLE
+                                myTradesAdater.visibility = View.GONE
+                            } else {
+                                myTradesAdater.visibility = View.VISIBLE
+                                tradesTextError.visibility = View.GONE
+                                rebuildlistTrades(ExchangesAdapterRec(retroFit2))
+                            }
+                    }
+                }
+
+                override fun onFailure(calll: Call<List<RetroTrade>>, t: Throwable) {
+                    progressBar.visibility = View.GONE
+                    textProgress.visibility = View.GONE
+                    Toast.makeText(requireContext(), "Erro! Tente novamente.", Toast.LENGTH_LONG)
+                        .show()
+                }
+            })
     }
 }
 
