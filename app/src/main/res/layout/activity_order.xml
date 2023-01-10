@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+
+    tools:context=".OrderActivity"
+    >
 
     <TextView
 
@@ -31,13 +34,32 @@
         tools:ignore="MissingConstraints" />
 
     <TimePicker
+        app:flow_horizontalAlign="center"
         app:layout_constraintTop_toBottomOf="@+id/main_timeToOrder_textview"
-        android:id="@+id/timePicker1"
-        android:layout_width="300dp"
+        android:id="@+id/timePicker"
+        android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:timePickerMode="spinner"/>
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/timePicker"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/textViewHour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/timePicker"
+        android:textSize="18dp"
+        android:paddingLeft="80dp" />
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/timePicker"
+        android:id="@+id/textViewhours"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:textAlignment="center"
+        android:textSize="18dp"
+        android:paddingLeft="80dp"/>
 
     <TextView
 
@@ -49,7 +71,7 @@
         android:textColor="@color/Green_ipca"
         android:textSize="20sp"
         android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/timePicker1"
+        app:layout_constraintTop_toBottomOf="@+id/textViewhours"
         tools:ignore="MissingConstraints" />
 
 
@@ -129,11 +151,13 @@
             android:text="MBWAy"
             android:onClick="onRadioButtonClicked"
             android:layout_marginRight="50dp"/>
-        <RadioButton android:id="@+id/MB"
+
+        <RadioButton
+            android:id="@+id/MB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MB"
-            android:onClick="onRadioButtonClicked"/>
+            android:onClick="onRadioButtonClicked"
+            android:text="MB" />
     </RadioGroup>
 
     <Button

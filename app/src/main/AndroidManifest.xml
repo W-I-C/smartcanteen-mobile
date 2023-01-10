@@ -13,7 +13,7 @@
         android:theme="@style/Theme.SmartCanteen"
         tools:targetApi="31">
         <activity
-            android:name=".Login"
+            android:name=".OrderActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
+       <!-- <activity
             android:name=".DetailedActivity"
             android:exported="false">
             <intent-filter>
@@ -122,7 +122,7 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-        </activity>
+        </activity>-->
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
