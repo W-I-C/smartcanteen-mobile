@@ -21,8 +21,6 @@ class OrderActivity : AppCompatActivity() {
         setContentView(R.layout.activity_order)
         OnClickTime()
 
-
-
         val spinner = findViewById<Spinner>(R.id.spinner)
 
         if (spinner != null) {
@@ -49,18 +47,18 @@ class OrderActivity : AppCompatActivity() {
 
      fun onRadioButtonClicked(view: View) {
         if(view is RadioButton){
-            val opcion=view.isChecked
+            val option=view.isChecked
             when(view.getId()){
-                R.id.levar_nao ->if(opcion){
+                R.id.levar_nao->if(option){
 
                 }
-                R.id.levar_sim ->if(opcion){
+                R.id.levar_sim->if(option){
 
                 }
-                R.id.MB ->if(opcion){
+                R.id.MB->if(option){
 
                 }
-                R.id.mbWay ->if(opcion){
+                R.id.mbWay->if(option){
 
                 }
 

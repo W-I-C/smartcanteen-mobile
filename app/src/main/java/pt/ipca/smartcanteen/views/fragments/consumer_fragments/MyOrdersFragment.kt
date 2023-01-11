@@ -2,6 +2,7 @@ package pt.ipca.smartcanteen.views.fragments.consumer_fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,13 +36,16 @@ class MyOrdersFragment : Fragment() {
     // TODO: passar de myexchange para my_exchange
     private val ordersTextError: TextView by lazy {requireView().findViewById<TextView>(R.id.my_orders_empty_message) as TextView }
     private val tradesTextError: TextView by lazy {requireView().findViewById<TextView>(R.id.my_exchanges_empty_message) as TextView }
-    private val myOrdersAdater: RecyclerView by lazy {requireView().findViewById<RecyclerView>(R.id.my_orders_recycler_view) as RecyclerView }
+    val myOrdersAdater: RecyclerView by lazy {requireView().findViewById<RecyclerView>(R.id.my_orders_recycler_view) as RecyclerView }
     private val myTradesAdater: RecyclerView by lazy {requireView().findViewById<RecyclerView>(R.id.my_exchanges_recycler_view) as RecyclerView }
     private val buttonMyOrders: Button by lazy {requireView().findViewById<Button>(R.id.my_orders_button) as Button }
     private val buttonMyTrades: Button by lazy {requireView().findViewById<Button>(R.id.my_exchanges_button) as Button }
     private val textTittle: TextView by lazy {requireView().findViewById<TextView>(R.id.my_orders_title) as TextView }
     private val progressBar: ProgressBar by lazy {requireView().findViewById<ProgressBar>(R.id.my_orders_progress_bar) as ProgressBar }
     private val textProgress: TextView by lazy {requireView().findViewById<TextView>(R.id.my_orders_progress_bar_text) as TextView }
+    var orders = ArrayList<RetroTrade>()
+    // val linearLayoutManager = LinearLayoutManager(requireContext())
+    val linearLayoutManager = LinearLayoutManager(activity)
     private lateinit var loadingAlertDialog: AlertDialog
     //private val buttonTradeCard: Button by lazy {requireView().findViewById<Button>(R.id.my_orders_card_button_trade) as Button }
 
@@ -67,13 +71,13 @@ class MyOrdersFragment : Fragment() {
     }
 
     fun rebuildlistOrders(adapter: OrdersAdapterRec) {
-        val linearLayoutManager = LinearLayoutManager(requireContext())
         myOrdersAdater.layoutManager = linearLayoutManager
         myOrdersAdater.itemAnimator = DefaultItemAnimator()
         myOrdersAdater.adapter = adapter
 
         adapter.onItemClick = this::onItemOrdersClick
         adapter.onButtonTradeClick = this::onButtonTradeClick
+        // adapter.onDeleteButtonClick = this::onDeleteButtonClick
     }
 
     fun onItemOrdersClick(order: RetroTrade) {
@@ -89,6 +93,12 @@ class MyOrdersFragment : Fragment() {
     fun onButtonTradeClick(view: View) {
         var intent = Intent(requireActivity(), ConsumerExchangeActivity::class.java)
         startActivity(intent)
+    }
+
+    fun onDeleteButtonClick(position: Int){
+        // val ticketid = orders[position].ticketid
+        val order = orders[position]
+        val ticketid = order.ticketid
     }
 
     fun doTrade(view: View) {
@@ -147,6 +157,13 @@ class MyOrdersFragment : Fragment() {
                         textProgress.visibility = View.GONE
                         val retroFit2 = response.body()
 
+                        response.body()?.forEach{ retroTrade ->
+                            Log.d("ticketid", retroTrade.ticketid)
+                            // Aqui você pode fazer alguma outra coisa com o ticketid, como por exemplo, remover a encomenda
+                        }
+
+
+
                         if (retroFit2 != null)
                             if(retroFit2.isEmpty()){
                                 ordersTextError.visibility = View.VISIBLE
@@ -154,7 +171,11 @@ class MyOrdersFragment : Fragment() {
                             } else {
                                 myOrdersAdater.visibility = View.VISIBLE
                                 ordersTextError.visibility = View.GONE
-                                rebuildlistOrders(OrdersAdapterRec(retroFit2))
+                                orders.clear()
+                                orders.addAll(retroFit2)
+
+                                rebuildlistOrders(OrdersAdapterRec(linearLayoutManager, sp, myOrdersAdater, orders))
+                                // rebuildlistOrders(OrdersAdapterRec(retroFit2))
                             }
                     }
                 }
