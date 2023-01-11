@@ -13,7 +13,7 @@
         android:theme="@style/Theme.SmartCanteen"
         tools:targetApi="31">
         <activity
-            android:name=".LoadingScreen"
+            android:name=".views.activities.LoadingScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Login"
+            android:name=".views.activities.Login"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +34,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".DetailedActivity"
+            android:name=".views.activities.DetailedActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,7 +44,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".IngredientsChangeActivity"
+            android:name=".views.activities.IngredientsChangeActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,7 +54,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ConsumerExchangeActivity"
+            android:name=".views.activities.ConsumerExchangeActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,7 +64,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".DetailedMyOrderActivity"
+            android:name=".views.activities.DetailedMyOrderActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -74,7 +74,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".DetailedMyTradeActivity"
+            android:name=".views.activities.DetailedMyTradeActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -84,7 +84,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".views.activities.MainActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -94,7 +94,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ConsumerFragmentActivity"
+            android:name=".views.fragments.consumer_fragments.ConsumerFragmentActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -104,7 +104,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".UndeliveredOrdersActivity"
+            android:name=".views.activities.UndeliveredOrdersActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -114,7 +114,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".EmployeeFragmentActivity"
+            android:name=".views.fragments.employee_fragments.EmployeeFragmentActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
