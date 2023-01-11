@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:elevation="50dp"
-    tools:context=".Login">
+    tools:context=".views.activities.Login">
 
     <ImageView
         android:id='@+id/login_ipca_image'
