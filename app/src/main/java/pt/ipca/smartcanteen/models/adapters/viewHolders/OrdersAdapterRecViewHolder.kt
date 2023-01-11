@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
@@ -24,7 +25,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class OrdersAdapterRecViewHolder(val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myOrdersAdapter: RecyclerView, inflater: LayoutInflater, val parent: ViewGroup):
+class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myOrdersAdapter: RecyclerView, inflater: LayoutInflater, val parent: ViewGroup):
     RecyclerView.ViewHolder(inflater.inflate(R.layout.my_order_card, parent, false)){
     val identifierTv = itemView.findViewById<TextView>(R.id.my_orders_card_identifier)
     val quantityTv = itemView.findViewById<TextView>(R.id.my_orders_card_quantity)
@@ -51,6 +52,9 @@ class OrdersAdapterRecViewHolder(val linearLayoutManager: LinearLayoutManager, v
 
             val token = sp.getString("token", null)
 
+            progressBar.visibility = View.VISIBLE
+            textProgress.visibility = View.VISIBLE
+
             service.removeTicket(ticketid,"Bearer $token").enqueue(object :
                 Callback<List<RetroTrade>> {
                 override fun onResponse(
@@ -58,17 +62,23 @@ class OrdersAdapterRecViewHolder(val linearLayoutManager: LinearLayoutManager, v
                     response: Response<List<RetroTrade>>
                 ) {
                     if (response.code() == 200) {
+
+                        progressBar.visibility = View.GONE
+                        textProgress.visibility = View.GONE
+
                         val retroFit2 = response.body()
                         println("Aqui")
                         if (retroFit2 != null)
-                            if(retroFit2.isEmpty()){
-                            } else {
-                                rebuildlistOrders(OrdersAdapterRec(linearLayoutManager, sp, myOrdersAdapter, retroFit2))
+                            if(!retroFit2.isEmpty()){
+                                rebuildlistOrders(OrdersAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdapter, retroFit2))
+                                // rebuildlistOrders(OrdersAdapterRec(retroFit2))
                             }
                     }
                 }
 
                 override fun onFailure(calll: Call<List<RetroTrade>>, t: Throwable) {
+                    progressBar.visibility = View.GONE
+                    textProgress.visibility = View.GONE
                     println("Erro")
                 }
             })
@@ -86,5 +96,11 @@ class OrdersAdapterRecViewHolder(val linearLayoutManager: LinearLayoutManager, v
         quantityTv.text = quantityText.toString()
         priceTv.text= priceText.toString()
         stateTv.text=stateText
+
+        if(stateText == "Entregue" || stateText == "Não Iniciado"){
+            deleteButton.visibility = Button.VISIBLE
+        } else {
+            deleteButton.visibility = Button.GONE
+        }
     }
 }

@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.models.adapters.viewHolders.OrdersAdapterRecViewHolder
 import pt.ipca.smartcanteen.models.RetroTrade
 
-class OrdersAdapterRec(val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myOrdersAdapter: RecyclerView, private var ordersList: List<RetroTrade>) :
+class OrdersAdapterRec(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myOrdersAdapter: RecyclerView, private var ordersList: List<RetroTrade>) :
     RecyclerView.Adapter<OrdersAdapterRecViewHolder>() {
 
     var onItemClick : ((RetroTrade) -> Unit)? = null
@@ -20,7 +22,7 @@ class OrdersAdapterRec(val linearLayoutManager: LinearLayoutManager, val sp: Sha
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrdersAdapterRecViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return OrdersAdapterRecViewHolder(linearLayoutManager, sp, myOrdersAdapter, inflater, parent)
+        return OrdersAdapterRecViewHolder(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdapter, inflater, parent)
     }
 
     override fun onBindViewHolder(holder: OrdersAdapterRecViewHolder, position: Int) {
