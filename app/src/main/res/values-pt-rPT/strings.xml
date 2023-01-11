@@ -40,4 +40,15 @@
     <string name="no_trades_placed">Não há trocas feitas</string>
     <string name="my_orders_lowercase">Minhas Encomendas</string>
     <string name="my_trades_lowercase">Minhas Trocas</string>
+    <string name="free">Gratuito</string>
+    <string name="ordernum">Enc. Nº</string>
+    <string name="qty">qnt</string>
+    <string name="change_ingredient">Ingrediente alteração</string>
+    <string name="ingredient_name">Nome do ingrediente</string>
+    <string name="ingredient_dosage">Dosagem do ingrediente</string>
+    <string name="increment_limit">Limite Incrementar</string>
+    <string name="decrement_limit">Limite Decrementar</string>
+    <string name="can_increment">Pode incrementar?</string>
+    <string name="can_decrement">Pode decrementar?</string>
+    <string name="can_remove">Pode remover?</string>
 </resources>

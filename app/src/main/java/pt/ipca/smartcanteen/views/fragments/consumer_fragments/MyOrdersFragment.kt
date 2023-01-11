@@ -83,7 +83,7 @@ class MyOrdersFragment : Fragment() {
 
     fun onItemOrdersClick(order: RetroTrade) {
         val intent = Intent(requireActivity(), DetailedMyOrderActivity::class.java).apply {
-            putExtra("order_nencomenda", order.nencomenda)
+            putExtra("order_nencomenda", order.norder)
             putExtra("order_ticketamount", order.ticketamount)
             putExtra("order_total", order.total)
             putExtra("order_statename", order.statename)
@@ -117,7 +117,7 @@ class MyOrdersFragment : Fragment() {
 
     fun onItemTradesClick(trade: RetroTrade) {
         val intent = Intent(requireActivity(), DetailedMyTradeActivity::class.java).apply {
-            putExtra("trade_nencomenda", trade.nencomenda)
+            putExtra("trade_nencomenda", trade.norder)
             putExtra("trade_ticketamount", trade.ticketamount)
             putExtra("trade_total", trade.total)
             putExtra("trade_statename", trade.statename)
