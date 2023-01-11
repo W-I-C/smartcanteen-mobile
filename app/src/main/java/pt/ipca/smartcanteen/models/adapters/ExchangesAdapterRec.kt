@@ -17,7 +17,7 @@ class ExchangesAdapterRec(private var exchangesList: List<RetroTrade>) :
     }
 
     override fun onBindViewHolder(holder: ExchangesAdapterRecViewHolder, position: Int) {
-        val nencomenda = exchangesList.get(position).nencomenda
+        val nencomenda = exchangesList.get(position).norder
         val ticketamount = exchangesList.get(position).ticketamount
         val total = exchangesList.get(position).total
         val statename = exchangesList.get(position).statename

@@ -21,7 +21,7 @@ class OrdersAdapterRecViewHolder(inflater: LayoutInflater, val parent: ViewGroup
         buttonTrade.setOnClickListener(listener)
     }
 
-    fun bindData(identifierText: Int, quantityText: Int, priceText: Int, stateText: String){
+    fun bindData(identifierText: Int, quantityText: Int, priceText: Float, stateText: String){
         identifierTv.text= identifierText.toString()
         quantityTv.text = quantityText.toString()
         priceTv.text= priceText.toString()

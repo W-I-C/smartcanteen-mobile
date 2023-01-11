@@ -19,7 +19,7 @@ class OrdersAdapterRec(private var ordersList: List<RetroTrade>) :
     }
 
     override fun onBindViewHolder(holder: OrdersAdapterRecViewHolder, position: Int) {
-        val nencomenda = ordersList.get(position).nencomenda
+        val nencomenda = ordersList.get(position).norder
         val ticketamount = ordersList.get(position).ticketamount
         val total = ordersList.get(position).total
         val statename = ordersList.get(position).statename
