@@ -218,6 +218,7 @@ class MyOrdersFragment : Fragment() {
                     response: Response<List<RetroTrade>>
                 ) {
                     if (response.code() == 200) {
+                        println("123")
                         progressBar.visibility = View.GONE
                         textProgress.visibility = View.GONE
                         val retroFit2 = response.body()
