@@ -21,8 +21,6 @@ class OrderActivity : AppCompatActivity() {
         setContentView(R.layout.activity_order)
         OnClickTime()
 
-
-
         val spinner = findViewById<Spinner>(R.id.spinner)
 
         if (spinner != null) {
