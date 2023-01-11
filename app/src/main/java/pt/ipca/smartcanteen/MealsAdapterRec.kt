@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class MealsAdapterRec(private var mealsList: MutableList<Meal>) :
+class MealsAdapterRec(private var mealsList: List<RetroMeal>) :
     RecyclerView.Adapter<MealsAdapterRecViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealsAdapterRecViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -15,7 +15,7 @@ class MealsAdapterRec(private var mealsList: MutableList<Meal>) :
         val meal = mealsList.get(position)
         val title = meal.name
         val price = "${meal.price}€"
-        val preptime = "${meal.prepTime}min"
+        val preptime = "${meal.preparationtime}min"
         holder.bindData(title,preptime,price)
     }
 
