@@ -76,7 +76,7 @@
         android:drawableBottom="@drawable/rounded_button_style"
         android:src="@drawable/rounded_button_style"
         android:drawableRight="@drawable/edit"
-        android:hint="@string/preferred_canteen"
+        android:hint="@string/institute"
         android:padding="10dp"
         app:layout_constraintTop_toBottomOf="@+id/main_Name_editText"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,7 +96,8 @@
         android:drawableBottom="@drawable/rounded_button_style"
         android:src="@drawable/rounded_button_style"
         android:drawableRight="@drawable/edit"
-        android:hint="@string/institute"
+
+        android:hint="@string/preferred_canteen"
         android:padding="10dp"
         app:layout_constraintTop_toBottomOf="@+id/main_PreferenceCantine_editText"
         app:layout_constraintEnd_toEndOf="parent"

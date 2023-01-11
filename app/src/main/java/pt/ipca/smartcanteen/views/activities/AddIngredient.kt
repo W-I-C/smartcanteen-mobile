@@ -8,7 +8,7 @@ class AddIngredient: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pop_up_ingredient)
+        setContentView(R.layout.activity_add_ingredient)
     }
 
 
