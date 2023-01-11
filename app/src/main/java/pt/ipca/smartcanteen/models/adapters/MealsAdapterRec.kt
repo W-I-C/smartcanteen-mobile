@@ -1,8 +1,9 @@
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.models.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import pt.ipca.smartcanteen.models.adapters.viewHolders.MealsAdapterRecViewHolder
 import pt.ipca.smartcanteen.models.RetroMeal
 
 class MealsAdapterRec(private var mealsList: List<RetroMeal>) :

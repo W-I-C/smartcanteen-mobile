@@ -1,13 +1,8 @@
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.views.activities
 
 import android.os.Bundle
-import android.widget.AdapterView
-import android.widget.ListView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import pt.ipca.smartcanteen.R
 
 
 class MainActivity : AppCompatActivity() {

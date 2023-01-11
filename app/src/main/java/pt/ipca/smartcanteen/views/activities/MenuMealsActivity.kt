@@ -1,9 +1,7 @@
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.views.activities
 
 import android.content.Intent
-import android.graphics.Point
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -12,8 +10,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import com.google.android.material.bottomsheet.BottomSheetBehavior
+import pt.ipca.smartcanteen.R
 
 class MenuMealsActivity : AppCompatActivity() {
 
@@ -24,7 +21,9 @@ class MenuMealsActivity : AppCompatActivity() {
         setContentView(R.layout.meals)
 
         button.setOnClickListener {
-            val bottomSheetDialog = BottomSheetDialog(this@MenuMealsActivity, R.style.BottomSheetDialogTheme)
+            val bottomSheetDialog = BottomSheetDialog(this@MenuMealsActivity,
+                R.style.BottomSheetDialogTheme
+            )
 
             val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
                 R.layout.meal_details,

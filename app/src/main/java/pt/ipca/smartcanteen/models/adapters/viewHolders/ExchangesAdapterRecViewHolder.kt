@@ -1,11 +1,12 @@
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.models.adapters.viewHolders
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import pt.ipca.smartcanteen.R
 
-class ExchangesAdapterRecVIewHolder(inflater: LayoutInflater, val parent: ViewGroup):
+class ExchangesAdapterRecViewHolder(inflater: LayoutInflater, val parent: ViewGroup):
     RecyclerView.ViewHolder(inflater.inflate(R.layout.my_exchange_card, parent, false)){
     val identifierTv = itemView.findViewById<TextView>(R.id.my_exchanges_card_identifier)
     val quantityTv = itemView.findViewById<TextView>(R.id.my_exchanges_card_quantity)

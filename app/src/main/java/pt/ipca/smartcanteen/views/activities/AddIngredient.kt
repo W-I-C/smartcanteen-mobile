@@ -1,7 +1,8 @@
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.views.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import pt.ipca.smartcanteen.R
 
 class AddIngredient: AppCompatActivity() {
 

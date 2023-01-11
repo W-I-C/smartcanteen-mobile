@@ -1,4 +1,4 @@
-package pt.ipca.smartcanteen.consumer_fragments
+package pt.ipca.smartcanteen.views.fragments.consumer_fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +13,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.*
+import pt.ipca.smartcanteen.models.RetroBar
+import pt.ipca.smartcanteen.models.RetroMeal
+import pt.ipca.smartcanteen.models.adapters.MealsAdapterRec
+import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
+import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.services.BarMealsService
+import pt.ipca.smartcanteen.services.CampusBarsService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

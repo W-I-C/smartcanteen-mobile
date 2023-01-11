@@ -1,4 +1,4 @@
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.views.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.LoginBody
 import pt.ipca.smartcanteen.models.LoginResponse
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper

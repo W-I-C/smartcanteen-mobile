@@ -1,9 +1,10 @@
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.models.adapters.viewHolders
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import pt.ipca.smartcanteen.R
 
 class UndeliveredOrdersAdapterRecViewHolder(inflater: LayoutInflater, val parent: ViewGroup):
     RecyclerView.ViewHolder(inflater.inflate(R.layout.undelivered_orders_card, parent, false)){

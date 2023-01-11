@@ -1,4 +1,4 @@
-package pt.ipca.smartcanteen.consumer_fragments
+package pt.ipca.smartcanteen.views.fragments.consumer_fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import pt.ipca.smartcanteen.MyOrderCart
-import pt.ipca.smartcanteen.MyOrdersCartRec
+import pt.ipca.smartcanteen.models.MyOrderCart
+import pt.ipca.smartcanteen.models.adapters.MyOrdersCartRec
 import pt.ipca.smartcanteen.R
 
 

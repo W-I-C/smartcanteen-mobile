@@ -1,9 +1,11 @@
 
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.models.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import pt.ipca.smartcanteen.models.MyOrderCart
+import pt.ipca.smartcanteen.models.adapters.viewHolders.MyOrdersCartRecViewHolder
 
 class MyOrdersCartRec(private var ordersList: MutableList<MyOrderCart>) :
     RecyclerView.Adapter<MyOrdersCartRecViewHolder>() {

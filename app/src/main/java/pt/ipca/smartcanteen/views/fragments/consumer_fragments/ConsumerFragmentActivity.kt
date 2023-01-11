@@ -1,11 +1,10 @@
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.views.fragments.consumer_fragments
 
-import android.R.attr.button
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.views.fragments.consumer_fragments.MainFragment
 import pt.ipca.smartcanteen.views.fragments.consumer_fragments.MyOrdersCartFragment
 import pt.ipca.smartcanteen.views.fragments.consumer_fragments.MyOrdersFragment

@@ -1,10 +1,10 @@
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.views.activities
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import pt.ipca.smartcanteen.R
 
 class ConsumerExchangeActivity : AppCompatActivity() {
 

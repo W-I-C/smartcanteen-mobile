@@ -1,5 +1,6 @@
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.services
 
+import pt.ipca.smartcanteen.models.RetroMeal
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header

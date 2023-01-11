@@ -1,14 +1,18 @@
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.views.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import pt.ipca.smartcanteen.R
+import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
+import pt.ipca.smartcanteen.models.adapters.UndeliveredOrdersAdaterRec
+import pt.ipca.smartcanteen.models.RetroTicket
+import pt.ipca.smartcanteen.services.UndeliveredOrdersService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

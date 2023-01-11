@@ -1,4 +1,4 @@
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.models
 
 import org.json.JSONArray
 import org.json.JSONObject
@@ -26,7 +26,7 @@ class Trade(var ticketid: String, var nencomenda: String, ticketamount: String, 
 
             for(i in 0 until array.length()){
                 val json = array.getJSONObject(i)
-                val trade = Trade.importFromJSON(json)
+                val trade = importFromJSON(json)
 
                 list.add(trade)
             }

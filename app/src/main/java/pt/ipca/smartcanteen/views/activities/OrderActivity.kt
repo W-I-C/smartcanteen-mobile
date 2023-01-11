@@ -1,4 +1,4 @@
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.views.activities
 
 import android.os.Bundle
 import android.view.View
@@ -6,12 +6,11 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.TimePicker
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import pt.ipca.smartcanteen.R
 
 class OrderActivity : AppCompatActivity() {
 
@@ -52,16 +51,16 @@ class OrderActivity : AppCompatActivity() {
         if(view is RadioButton){
             val opcion=view.isChecked
             when(view.getId()){
-                R.id.levar_nao->if(opcion){
+                R.id.levar_nao ->if(opcion){
 
                 }
-                R.id.levar_sim->if(opcion){
+                R.id.levar_sim ->if(opcion){
 
                 }
-                R.id.MB->if(opcion){
+                R.id.MB ->if(opcion){
 
                 }
-                R.id.mbWay->if(opcion){
+                R.id.mbWay ->if(opcion){
 
                 }
 

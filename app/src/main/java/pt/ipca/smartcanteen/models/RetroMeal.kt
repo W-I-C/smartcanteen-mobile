@@ -1,4 +1,4 @@
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.models
 
 import com.google.gson.annotations.SerializedName
 

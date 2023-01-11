@@ -1,4 +1,4 @@
-package pt.ipca.smartcanteen.consumer_fragments
+package pt.ipca.smartcanteen.views.fragments.consumer_fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,12 +11,19 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import org.w3c.dom.Text
 import pt.ipca.smartcanteen.*
+import pt.ipca.smartcanteen.models.RetroTrade
+import pt.ipca.smartcanteen.models.adapters.ExchangesAdapterRec
+import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
+import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
+import pt.ipca.smartcanteen.services.MyOrdersService
+import pt.ipca.smartcanteen.services.MyTradesService
+import pt.ipca.smartcanteen.views.activities.ConsumerExchangeActivity
+import pt.ipca.smartcanteen.views.activities.DetailedMyOrderActivity
+import pt.ipca.smartcanteen.views.activities.DetailedMyTradeActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

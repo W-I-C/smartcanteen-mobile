@@ -1,9 +1,10 @@
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.models.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import pt.ipca.smartcanteen.models.adapters.viewHolders.OrdersAdapterRecViewHolder
 import pt.ipca.smartcanteen.models.RetroTrade
 
 class OrdersAdapterRec(private var ordersList: List<RetroTrade>) :

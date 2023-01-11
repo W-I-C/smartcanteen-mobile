@@ -1,4 +1,4 @@
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.models
 
 import org.json.JSONArray
 import org.json.JSONObject
@@ -25,7 +25,7 @@ class UndeliveredOrder(var ticketid: String, var nencomenda: String, var name: S
 
             for(i in 0 until array.length()){
                 val json = array.getJSONObject(i)
-                val order = UndeliveredOrder.importFromJSON(json)
+                val order = importFromJSON(json)
 
                 list.add(order)
             }

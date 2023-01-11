@@ -1,4 +1,4 @@
-package pt.ipca.smartcanteen
+package pt.ipca.smartcanteen.models.helpers
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
