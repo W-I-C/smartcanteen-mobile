@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import pt.ipca.smartcanteen.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.LoginResponse
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper

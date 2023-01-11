@@ -13,7 +13,11 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import pt.ipca.smartcanteen.helpers.SharedPreferencesHelper
+import pt.ipca.smartcanteen.R
+import pt.ipca.smartcanteen.models.RetroTrade
+import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
+import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
+import pt.ipca.smartcanteen.services.MyOrdersService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

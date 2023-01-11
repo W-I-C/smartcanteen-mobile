@@ -12,7 +12,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import pt.ipca.smartcanteen.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.LoginBody
 import pt.ipca.smartcanteen.models.LoginResponse

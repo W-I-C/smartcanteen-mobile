@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.*
-import pt.ipca.smartcanteen.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.ExchangesAdapterRec
 import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
