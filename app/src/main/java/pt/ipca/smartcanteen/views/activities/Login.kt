@@ -12,6 +12,12 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import pt.ipca.smartcanteen.models.LoginBody
+import pt.ipca.smartcanteen.models.LoginResponse
+import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
+import pt.ipca.smartcanteen.services.LoginService
+import pt.ipca.smartcanteen.views.fragments.consumer_fragments.ConsumerFragmentActivity
+import pt.ipca.smartcanteen.views.fragments.employee_fragments.EmployeeFragmentActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

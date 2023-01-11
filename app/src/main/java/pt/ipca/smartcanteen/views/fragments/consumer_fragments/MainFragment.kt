@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.Toast
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +17,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
-import kotlin.math.log
 
 
 class MainFragment : Fragment() {
@@ -127,7 +124,7 @@ class MainFragment : Fragment() {
                                     ) {
 
                                         val barId = body[position].barid
-                                        getRefeicoesList(
+                                        getMealsList(
                                             barMealsRecyclerView,
                                             barMealsLinearLayoutManager,
                                             barId,
@@ -148,7 +145,51 @@ class MainFragment : Fragment() {
 
     }
 
-    private fun getRefeicoesList(
+    private fun getMealsList(
+        barMealsRecyclerView: RecyclerView,
+        barMealsLinearLayoutManager: LinearLayoutManager,
+        barId: String,
+        retrofit: Retrofit
+    ) {
+
+        val service = retrofit.create(BarMealsService::class.java)
+
+        val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
+        val token = sp.getString("token", null)
+
+
+        service.getBarMeals(barId, "Bearer $token").enqueue(object :
+            Callback<List<RetroMeal>> {
+            override fun onResponse(
+                call: Call<List<RetroMeal>>,
+                response: Response<List<RetroMeal>>
+            ) {
+                if (response.code() == 200) {
+                    val retroFit2 = response.body()
+
+                    if (retroFit2 != null) {
+                        if (retroFit2.isNotEmpty()) {
+                            /** Bar Meals **/
+
+                            val barMealsAdapter = MealsAdapterRec(retroFit2)
+
+                            barMealsRecyclerView.layoutManager = barMealsLinearLayoutManager
+                            barMealsRecyclerView.itemAnimator = DefaultItemAnimator()
+                            barMealsRecyclerView.adapter = barMealsAdapter
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<RetroMeal>>, t: Throwable) {
+                print("error")
+            }
+
+        })
+
+    }
+
+    private fun getTradeList(
         barMealsRecyclerView: RecyclerView,
         barMealsLinearLayoutManager: LinearLayoutManager,
         barId: String,

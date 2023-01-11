@@ -3,6 +3,7 @@ package pt.ipca.smartcanteen
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import pt.ipca.smartcanteen.models.RetroTrade
 
 class ExchangesAdapterRec(private var exchangesList: List<RetroTrade>) :
     RecyclerView.Adapter<ExchangesAdapterRecVIewHolder>() {

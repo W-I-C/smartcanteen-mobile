@@ -4,10 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import pt.ipca.smartcanteen.consumer_fragments.MainFragment
-import pt.ipca.smartcanteen.consumer_fragments.MyOrdersCartFragment
-import pt.ipca.smartcanteen.consumer_fragments.ProfileFragment
-import pt.ipca.smartcanteen.employee_fragments.UndeliveredOrdersFragment
+import pt.ipca.smartcanteen.views.fragments.consumer_fragments.MainFragment
+import pt.ipca.smartcanteen.views.fragments.consumer_fragments.MyOrdersCartFragment
+import pt.ipca.smartcanteen.views.fragments.consumer_fragments.ProfileFragment
+import pt.ipca.smartcanteen.views.fragments.employee_fragments.UndeliveredOrdersFragment
 
 class EmployeeFragmentActivity : AppCompatActivity() {
 

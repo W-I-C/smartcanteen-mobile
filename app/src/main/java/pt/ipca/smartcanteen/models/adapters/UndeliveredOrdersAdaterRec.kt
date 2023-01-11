@@ -3,6 +3,7 @@ package pt.ipca.smartcanteen
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import pt.ipca.smartcanteen.models.RetroTicket
 
 class UndeliveredOrdersAdaterRec(private val undeliveredOrdersList: List<RetroTicket>) :
     RecyclerView.Adapter<UndeliveredOrdersAdapterRecViewOlder>() {
