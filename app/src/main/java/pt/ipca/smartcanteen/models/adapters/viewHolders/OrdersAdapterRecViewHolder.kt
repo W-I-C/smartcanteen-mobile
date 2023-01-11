@@ -81,7 +81,7 @@ class OrdersAdapterRecViewHolder(val linearLayoutManager: LinearLayoutManager, v
         myOrdersAdapter.adapter = adapter
     }
 
-    fun bindData(identifierText: Int, quantityText: Int, priceText: Int, stateText: String){
+    fun bindData(identifierText: Int, quantityText: Int, priceText: Float, stateText: String){
         identifierTv.text= identifierText.toString()
         quantityTv.text = quantityText.toString()
         priceTv.text= priceText.toString()
