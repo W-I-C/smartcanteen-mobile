@@ -13,7 +13,7 @@ class ExchangesAdapterRecViewHolder(inflater: LayoutInflater, val parent: ViewGr
     val priceTv = itemView.findViewById<TextView>(R.id.my_exchanges_card_price)
     val stateTv = itemView.findViewById<TextView>(R.id.my_exchanges_card_state)
 
-    fun bindData(identifierText: Int, quantityText: Int, priceText:Int, stateText: String){
+    fun bindData(identifierText: Int, quantityText: Int, priceText:Float, stateText: String){
         identifierTv.text = identifierText.toString()
         quantityTv.text = quantityText.toString()
         priceTv.text=priceText.toString()

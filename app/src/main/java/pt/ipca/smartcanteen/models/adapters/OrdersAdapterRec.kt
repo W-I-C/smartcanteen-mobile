@@ -25,7 +25,7 @@ class OrdersAdapterRec(val linearLayoutManager: LinearLayoutManager, val sp: Sha
 
     override fun onBindViewHolder(holder: OrdersAdapterRecViewHolder, position: Int) {
         val ticketid = ordersList.get(position).ticketid
-        val nencomenda = ordersList.get(position).nencomenda
+        val nencomenda = ordersList.get(position).norder
         val ticketamount = ordersList.get(position).ticketamount
         val total = ordersList.get(position).total
         val statename = ordersList.get(position).statename

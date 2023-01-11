@@ -49,6 +49,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="my_orders_lowercase">My Orders</string>
     <string name="my_trades_lowercase">My Trades</string>
+    <string name="free">Free</string>
+    <string name="ordernum">Order N</string>
+    <string name="qty">qty</string>
     <string name="change_ingredient">Change Ingredient</string>
     <string name="ingredient_name">Ingredient name</string>
     <string name="ingredient_dosage">Ingredient Dosage</string>
