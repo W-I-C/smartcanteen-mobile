@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,6 +26,7 @@ class Login : AppCompatActivity() {
     private val email: EditText by lazy {findViewById<View>(R.id.login_email_edittext) as EditText};
     private val password: EditText by lazy {findViewById<View>(R.id.login_password_edittext) as EditText}
     private val button: Button by lazy {findViewById<View>(R.id.login_button_login) as Button}
+    private lateinit var loadingAlertDialog: AlertDialog
     // val myButton = findViewById<Button>(R.id.login_button_login)
 
     private fun validatePassword(password:String):Boolean{
@@ -37,6 +39,8 @@ class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login)
+
+        createLoadingAlertDialog()
 
         button.setOnClickListener {
             val emailText = email.text.toString()
@@ -58,7 +62,6 @@ class Login : AppCompatActivity() {
                             // é criado um objeto do tipo JSON
                             val body = LoginBody(emailText, passwordText)
 
-                            // val BASE_URL = "http://192.168.1.106:3000"
                             val BASE_URL = "https://smartcanteen-api.herokuapp.com"
 
                             // Cria um objeto Retrofit
@@ -67,14 +70,15 @@ class Login : AppCompatActivity() {
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build()
 
+                            loadingAlertDialog.show()
+
                             // Cria um objeto LoginService
                             val service = retrofit.create(LoginService::class.java)
                             val call = service.login(body)
                             call.enqueue(object : Callback<LoginResponse> {
                                 override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                                     if (response.code() == 200) {
-                                        Toast.makeText(this@Login, "Login realizado com sucesso!", Toast.LENGTH_LONG)
-                                            .show()
+                                        loadingAlertDialog.dismiss()
 
                                         val loginBody = response.body()
                                         val token = loginBody?.token
@@ -86,7 +90,8 @@ class Login : AppCompatActivity() {
 
                                         val sp = SharedPreferencesHelper.getSharedPreferences(this@Login)
                                         sp.edit().putString("token", token).commit()
-                                        
+                                        sp.edit().putString("role", role).commit()
+
                                         if (role == "consumer") {
                                             // O usuário é um consumidor, então encaminhe-o para a tela específica para consumidores
                                             var intent = Intent(this@Login, ConsumerFragmentActivity::class.java)
@@ -102,12 +107,14 @@ class Login : AppCompatActivity() {
                                         }
 
                                     } else {
+                                        loadingAlertDialog.dismiss()
                                         Toast.makeText(this@Login, "Erro! Não foi possível realizar o login, tente novamente", Toast.LENGTH_LONG)
                                             .show()
                                     }
                                 }
 
                                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                                    loadingAlertDialog.dismiss()
                                     Toast.makeText(this@Login, "Erro! Tente novamente.", Toast.LENGTH_LONG)
                                         .show()
                                 }
@@ -136,6 +143,13 @@ class Login : AppCompatActivity() {
                 password.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
             }
         }
+    }
 
+    private fun createLoadingAlertDialog() {
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        builder.setView(inflater.inflate(R.layout.loading_alert_dialog, null))
+        builder.setCancelable(false)
+        loadingAlertDialog = builder.create()
     }
 }
