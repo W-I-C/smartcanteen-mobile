@@ -1,13 +1,14 @@
 package pt.ipca.smartcanteen.views.fragments.consumer_fragments
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,7 @@ import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.MealsAdapterRec
 import pt.ipca.smartcanteen.models.adapters.MenuOrdersAdapterRec
 import pt.ipca.smartcanteen.models.adapters.TradeMealsAdapterRec
+import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.BarMealsService
@@ -33,17 +35,44 @@ import retrofit2.Retrofit
 
 class MainFragment : Fragment() {
 
+    private val tradesProgressBar: ProgressBar by lazy {requireView().findViewById<ProgressBar>(R.id.consumer_menu_trades_progress_bar) as ProgressBar }
+    private val tradesTextProgress: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_trades_progress_bar_text) as TextView }
+    private val mealsProgressBar: ProgressBar by lazy {requireView().findViewById<ProgressBar>(R.id.consumer_menu_meals_progress_bar) as ProgressBar }
+    private val mealsTextProgress: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_meals_progress_bar_text) as TextView }
+    private val ordersProgressBar: ProgressBar by lazy {requireView().findViewById<ProgressBar>(R.id.consumer_menu_orders_progress_bar) as ProgressBar }
+    private val ordersTextProgress: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_orders_progress_bar_text) as TextView }
+    private val logoutIc: ImageView by lazy {requireView().findViewById<ImageView>(R.id.main_logout) as ImageView }
+    private val notiIc: ImageView by lazy {requireView().findViewById<ImageView>(R.id.main_notification_bell) as ImageView }
+    private lateinit var loadingDialogManager :LoadingDialogManager
+
     override fun onCreateView(
         inflater: LayoutInflater, parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-
+        loadingDialogManager = LoadingDialogManager(inflater, requireActivity())
+        loadingDialogManager.createLoadingAlertDialog()
         return inflater.inflate(R.layout.activity_main, parent, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        ordersProgressBar.visibility = View.VISIBLE
+        ordersTextProgress.visibility = View.VISIBLE
+        tradesProgressBar.visibility = View.VISIBLE
+        tradesTextProgress.visibility = View.VISIBLE
+
+        logoutIc.setOnClickListener{
+            Toast.makeText(requireActivity(), "Logout", Toast.LENGTH_SHORT).show()
+        }
+
+        notiIc.setOnClickListener{
+            Toast.makeText(requireActivity(), "notifications", Toast.LENGTH_SHORT).show()
+        }
+
+        val retrofit = SmartCanteenRequests().retrofit
+
         val barSpinner: Spinner = view.findViewById<Spinner>(R.id.main_bar_select_sp)
 
         val barMealsRecyclerView = view.findViewById<RecyclerView>(R.id.main_bar_meals_rv)
@@ -59,15 +88,28 @@ class MainFragment : Fragment() {
         val ordersLinearLayoutManager = LinearLayoutManager(view.context)
         ordersLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
 
+        getTradeList(
+            tradeMealsRecyclerView,
+            tradeMealsLinearLayoutManager,
+            retrofit
+        )
+        tradesProgressBar.visibility = View.GONE
+        tradesTextProgress.visibility = View.GONE
+
+        getOrdersList(
+            ordersRecyclerView,
+            ordersLinearLayoutManager,
+            retrofit
+        )
+        ordersProgressBar.visibility = View.GONE
+        ordersTextProgress.visibility = View.GONE
+
         /** Get All Info **/
         getBarInfo(
             barSpinner,
             barMealsRecyclerView,
             barMealsLinearLayoutManager,
-            tradeMealsRecyclerView,
-            tradeMealsLinearLayoutManager,
-            ordersRecyclerView,
-            ordersLinearLayoutManager
+            retrofit
         )
     }
 
@@ -76,17 +118,16 @@ class MainFragment : Fragment() {
         spinner: Spinner,
         barMealsRecyclerView: RecyclerView,
         barMealsLinearLayoutManager: LinearLayoutManager,
-        tradeMealsRecyclerView: RecyclerView,
-        tradeMealsLinearLayoutManager: LinearLayoutManager,
-        ordersRecyclerView: RecyclerView,
-        ordersLinearLayoutManager: LinearLayoutManager
+        retrofit:Retrofit
     ) {
-        val retrofit = SmartCanteenRequests().retrofit
+
 
         val service = retrofit.create(CampusBarsService::class.java)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
+
+        loadingDialogManager.dialog.show()
 
         service.getCampusBars("Bearer $token").enqueue(object :
             Callback<List<RetroBar>> {
@@ -95,10 +136,12 @@ class MainFragment : Fragment() {
                 response: Response<List<RetroBar>>
             ) {
                 if (response.code() == 200) {
+                    loadingDialogManager.dialog.dismiss()
                     val body = response.body()
 
                     if (body != null) {
                         if (body.isNotEmpty()) {
+
                             Log.d("bar:", body.toString())
                             var adapter = getActivity()?.let {
                                 ArrayAdapter(
@@ -122,22 +165,22 @@ class MainFragment : Fragment() {
                                     ) {
 
                                         val barId = body[position].barid
+
+                                        mealsProgressBar.visibility = View.VISIBLE
+                                        mealsTextProgress.visibility = View.VISIBLE
+
+                                        barMealsRecyclerView.visibility = View.GONE
+                                        Log.d("spinner:","Before")
                                         getMealsList(
                                             barMealsRecyclerView,
                                             barMealsLinearLayoutManager,
                                             barId,
                                             retrofit
                                         )
-                                        getTradeList(
-                                            tradeMealsRecyclerView,
-                                            tradeMealsLinearLayoutManager,
-                                            retrofit
-                                        )
-                                        getOrdersList(
-                                            ordersRecyclerView,
-                                            ordersLinearLayoutManager,
-                                            retrofit
-                                        )
+                                        Log.d("spinner:","After")
+                                        barMealsRecyclerView.visibility = View.VISIBLE
+                                        mealsProgressBar.visibility = View.GONE
+                                        mealsTextProgress.visibility = View.GONE
                                     }
                                 }
                         }
@@ -261,7 +304,7 @@ class MainFragment : Fragment() {
                     Log.d("Encomendas: ", body.toString())
                     if (body != null) {
                         if (body.isNotEmpty()) {
-                            /** Campus orders **/
+                            /** my orders **/
                             var ordersAdapter = MenuOrdersAdapterRec(getString(R.string.qty),getString(R.string.ordernum),body)
 
                             ordersRecyclerView.layoutManager = ordersLinearLayoutManager
@@ -279,5 +322,6 @@ class MainFragment : Fragment() {
         })
 
     }
+
 }
 

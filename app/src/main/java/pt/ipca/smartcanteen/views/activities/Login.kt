@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.LoginBody
 import pt.ipca.smartcanteen.models.LoginResponse
+import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.services.LoginService
 import pt.ipca.smartcanteen.views.fragments.consumer_fragments.ConsumerFragmentActivity
@@ -33,7 +34,7 @@ class Login : AppCompatActivity() {
     private val email: EditText by lazy {findViewById<View>(R.id.login_email_edittext) as EditText};
     private val password: EditText by lazy {findViewById<View>(R.id.login_password_edittext) as EditText}
     private val button: Button by lazy {findViewById<View>(R.id.login_button_login) as Button}
-    private lateinit var loadingAlertDialog: AlertDialog
+    private lateinit var loadingDialogManager: LoadingDialogManager
     // val myButton = findViewById<Button>(R.id.login_button_login)
 
     private fun validatePassword(password:String):Boolean{
@@ -47,7 +48,8 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login)
 
-        createLoadingAlertDialog()
+        loadingDialogManager = LoadingDialogManager(layoutInflater, this)
+        loadingDialogManager.createLoadingAlertDialog()
 
         button.setOnClickListener {
             val emailText = email.text.toString()
@@ -77,7 +79,7 @@ class Login : AppCompatActivity() {
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build()
 
-                            loadingAlertDialog.show()
+                            loadingDialogManager.dialog.show()
 
                             // Cria um objeto LoginService
                             val service = retrofit.create(LoginService::class.java)
@@ -85,7 +87,7 @@ class Login : AppCompatActivity() {
                             call.enqueue(object : Callback<LoginResponse> {
                                 override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                                     if (response.code() == 200) {
-                                        loadingAlertDialog.dismiss()
+                                        loadingDialogManager.dialog.dismiss()
 
                                         val loginBody = response.body()
                                         val token = loginBody?.token
@@ -114,14 +116,14 @@ class Login : AppCompatActivity() {
                                         }
 
                                     } else {
-                                        loadingAlertDialog.dismiss()
+                                        loadingDialogManager.dialog.dismiss()
                                         Toast.makeText(this@Login, "Erro! Não foi possível realizar o login, tente novamente", Toast.LENGTH_LONG)
                                             .show()
                                     }
                                 }
 
                                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                                    loadingAlertDialog.dismiss()
+                                    loadingDialogManager.dialog.dismiss()
                                     Toast.makeText(this@Login, "Erro! Tente novamente.", Toast.LENGTH_LONG)
                                         .show()
                                 }
@@ -152,11 +154,5 @@ class Login : AppCompatActivity() {
         }
     }
 
-    private fun createLoadingAlertDialog() {
-        val builder = AlertDialog.Builder(this)
-        val inflater = layoutInflater
-        builder.setView(inflater.inflate(R.layout.loading_alert_dialog, null))
-        builder.setCancelable(false)
-        loadingAlertDialog = builder.create()
-    }
+
 }
