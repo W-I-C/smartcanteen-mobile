@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        /*
         /** Trades **/
         val tradeMealsRecyclerView = findViewById<RecyclerView>(R.id.main_available_trades_rv)
         val tradeMeals = mutableListOf<Meal>(
@@ -58,5 +59,7 @@ class MainActivity : AppCompatActivity() {
         ordersRecyclerView.layoutManager = ordersLinearLayoutManager
         ordersRecyclerView.itemAnimator = DefaultItemAnimator()
         ordersRecyclerView.adapter = ordersAdapter
+        */
+
     }
 }
