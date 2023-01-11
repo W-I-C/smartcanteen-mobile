@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatButton
         android:id='@+id/my_orders_card_delete'
         android:layout_width="30dp"
         android:layout_height="30dp"
