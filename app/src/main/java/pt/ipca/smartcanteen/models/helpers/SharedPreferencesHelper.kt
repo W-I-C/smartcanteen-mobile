@@ -2,6 +2,7 @@ package pt.ipca.smartcanteen.models.helpers
 
 import android.content.Context
 import android.content.SharedPreferences
+
 import pt.ipca.smartcanteen.R
 
 object SharedPreferencesHelper {
