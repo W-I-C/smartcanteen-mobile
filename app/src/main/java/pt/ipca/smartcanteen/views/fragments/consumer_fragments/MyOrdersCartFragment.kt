@@ -13,12 +13,25 @@ import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.models.MyOrderCart
 import pt.ipca.smartcanteen.models.adapters.MyOrdersCartRec
 import pt.ipca.smartcanteen.R
+import pt.ipca.smartcanteen.models.RetroCartMeals
+import pt.ipca.smartcanteen.models.RetroTicket
+import pt.ipca.smartcanteen.models.adapters.UndeliveredOrdersAdaterRec
+import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
+import pt.ipca.smartcanteen.services.RetroCartMealsService
+import pt.ipca.smartcanteen.services.UndeliveredOrdersService
 import pt.ipca.smartcanteen.views.activities.ConsumerExchangeActivity
 import pt.ipca.smartcanteen.views.activities.OrderActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class MyOrdersCartFragment : Fragment() {
     private val Finalizar: Button by lazy {requireView().findViewById<Button>(R.id.pay_button) as Button }
+
+    private val cartMeals: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.myorders_cart_recycler_view) as RecyclerView }
 
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -26,35 +39,53 @@ class MyOrdersCartFragment : Fragment() {
 
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val BASE_URL = "https://smartcanteen-api.herokuapp.com"
+        var retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val service = retrofit.create(RetroCartMealsService::class.java)
 
-            if (view != null) {
-                /** Orders **/
-                val myOrdersCartRecyclerView = view.findViewById<RecyclerView>(R.id.myorders_cart_recycler_view)
-                    val myOrders = mutableListOf<MyOrderCart>(
-                        MyOrderCart("Francesinha", 5, 15.0 ),
-                        MyOrderCart("Panado", 3, 5.0 ),
-                        MyOrderCart("Salada", 1, 1.0),
-                        MyOrderCart("Frango", 1, 2.0),
-                        MyOrderCart("Pizza", 1, 5.0),
+        val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
+        val token = sp.getString("token", null)
 
+        var call =
+            service.getMealsCart("Bearer $token").enqueue(object :
+                Callback<List<RetroCartMeals>> {
+                override fun onResponse(
+                    call: Call<List<RetroCartMeals>>,
+                    response: Response<List<RetroCartMeals>>
+                ) {
+                    if (response.code() == 200) {
+                        val retroFit2 = response.body()
 
-                        )
+                        if (retroFit2 != null)
+                            if(!retroFit2.isEmpty()){
 
-                    var myOrdersCartAdapter = MyOrdersCartRec(myOrders)
-                    val linearLayoutManager = LinearLayoutManager(view.context)
-                    myOrdersCartRecyclerView.layoutManager = linearLayoutManager
-                    myOrdersCartRecyclerView.itemAnimator = DefaultItemAnimator()
-                    myOrdersCartRecyclerView.adapter = myOrdersCartAdapter
-            }
+                                rebuildlist(MyOrdersCartRec(retroFit2))
+                            }
+                    }
+                }
+
+                override fun onFailure(calll: Call<List<RetroCartMeals>>, t: Throwable) {
+                    print("error")
+                }
+            })
+
         Finalizar.setOnClickListener {
             var intent = Intent(requireActivity(), OrderActivity::class.java)
             startActivity(intent)
         }
     }
+    fun rebuildlist(adapter: MyOrdersCartRec) {
+        val linearLayoutManager = LinearLayoutManager(requireContext())
+        cartMeals.layoutManager = linearLayoutManager
+        cartMeals.itemAnimator = DefaultItemAnimator()
+        cartMeals.adapter = adapter
 
+    }
 
 
 }
