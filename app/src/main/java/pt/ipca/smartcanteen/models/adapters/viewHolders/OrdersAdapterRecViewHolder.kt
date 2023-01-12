@@ -1,5 +1,8 @@
 package pt.ipca.smartcanteen.models.adapters.viewHolders
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,23 +22,22 @@ import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.OrdersService
+import pt.ipca.smartcanteen.views.activities.ConsumerTradeActivity
+import pt.ipca.smartcanteen.views.activities.TradePaymentActivity
+import pt.ipca.smartcanteen.views.fragments.employee_fragments.EmployeeFragmentActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myOrdersAdapter: RecyclerView, inflater: LayoutInflater, val parent: ViewGroup):
+class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myOrdersAdapter: RecyclerView, inflater: LayoutInflater, val parent: ViewGroup, private val activity: Activity, private val context: Context):
     RecyclerView.ViewHolder(inflater.inflate(R.layout.my_order_card, parent, false)){
     val identifierTv = itemView.findViewById<TextView>(R.id.my_orders_card_identifier)
     val quantityTv = itemView.findViewById<TextView>(R.id.my_orders_card_quantity)
     val priceTv = itemView.findViewById<TextView>(R.id.my_orders_card_price)
     val stateTv = itemView.findViewById<TextView>(R.id.my_orders_card_state)
 
-    val buttonTrade = itemView.findViewById<Button>(R.id.my_orders_card_button_trade)
+    val tradeButton = itemView.findViewById<Button>(R.id.my_orders_card_button_trade)
     val deleteButton = itemView.findViewById<Button>(R.id.my_orders_card_delete)
-
-    fun setOnClickListener(listener: (View) -> Unit) {
-        buttonTrade.setOnClickListener(listener)
-    }
 
     fun setDeleteClickListener(ticketid: String){
         deleteButton.setOnClickListener{
@@ -57,6 +60,8 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                 ) {
                     if (response.code() == 200) {
 
+                        Toast.makeText(context, "Encomenda removida com sucesso", Toast.LENGTH_SHORT).show()
+
                         myOrdersAdapter.visibility = View.VISIBLE
                         progressBar.visibility = View.GONE
                         textProgress.visibility = View.GONE
@@ -65,7 +70,7 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                         println("Aqui")
                         if (retroFit2 != null)
                             if(!retroFit2.isEmpty()){
-                                rebuildlistOrders(OrdersAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdapter, retroFit2))
+                                rebuildlistOrders(OrdersAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdapter, retroFit2, activity, context))
                                 // rebuildlistOrders(OrdersAdapterRec(retroFit2))
                             }
                     }
@@ -75,7 +80,7 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                     myOrdersAdapter.visibility = View.VISIBLE
                     progressBar.visibility = View.GONE
                     textProgress.visibility = View.GONE
-                    println("Erro")
+                    Toast.makeText(context, "Erro! Tente novamente.", Toast.LENGTH_SHORT).show()
                 }
             })
         }
@@ -85,6 +90,13 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
         myOrdersAdapter.layoutManager = linearLayoutManager
         myOrdersAdapter.itemAnimator = DefaultItemAnimator()
         myOrdersAdapter.adapter = adapter
+    }
+
+    fun setTradeClickListener(ticketId: String){
+        tradeButton.setOnClickListener{
+            var intent = Intent(activity, ConsumerTradeActivity::class.java)
+            activity.startActivity(intent)
+        }
     }
 
     fun bindData(identifierText: Int, quantityText: Int, priceText: Float, stateText: String){
@@ -105,6 +117,12 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
             deleteButton.visibility = Button.VISIBLE
         } else {
             deleteButton.visibility = Button.GONE
+        }
+
+        if(stateText == "Entregue"){
+            tradeButton.visibility = Button.GONE
+        } else {
+            tradeButton.visibility = Button.VISIBLE
         }
     }
 }

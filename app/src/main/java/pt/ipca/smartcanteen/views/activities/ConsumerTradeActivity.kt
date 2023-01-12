@@ -5,6 +5,17 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import pt.ipca.smartcanteen.R
+import pt.ipca.smartcanteen.models.RetroPaymentMethod
+import pt.ipca.smartcanteen.models.RetroTrade
+import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
+import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
+import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
+import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.services.OrdersService
+import pt.ipca.smartcanteen.services.TradesService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ConsumerTradeActivity : AppCompatActivity() {
 
@@ -15,10 +26,16 @@ class ConsumerTradeActivity : AppCompatActivity() {
     private val spinner_direct: Spinner by lazy {findViewById<View>(R.id.trade_direct_spinner) as Spinner}
     private val cancelButton: Button by lazy {findViewById<View>(R.id.trade_cancel) as Button}
     private val confirmButton: Button by lazy {findViewById<View>(R.id.trade_confirm) as Button}
+    private lateinit var loadingDialogManager: LoadingDialogManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trade)
+
+        loadingDialogManager = LoadingDialogManager(layoutInflater, this)
+        loadingDialogManager.createLoadingAlertDialog()
+
+        getPaymentMethods()
 
         spinner_general.visibility = View.INVISIBLE
         spinner_direct.visibility = View.INVISIBLE
@@ -81,6 +98,44 @@ class ConsumerTradeActivity : AppCompatActivity() {
                 spinner_direct.visibility = View.GONE
             }
         }
+    }
+
+    fun getPaymentMethods() {
+        val retrofit = SmartCanteenRequests().retrofit
+
+        val service = retrofit.create(TradesService::class.java)
+
+        val sp = SharedPreferencesHelper.getSharedPreferences(this@ConsumerTradeActivity)
+        val token = sp.getString("token", null)
+
+        loadingDialogManager.dialog.show()
+
+        service.getPaymentMethods("Bearer $token").enqueue(object :
+            Callback<List<RetroPaymentMethod>> {
+            override fun onResponse(
+                call: Call<List<RetroPaymentMethod>>,
+                response: Response<List<RetroPaymentMethod>>
+            ) {
+                if (response.code() == 200) {
+
+                    loadingDialogManager.dialog.dismiss()
+
+
+                    Toast.makeText(this@ConsumerTradeActivity, "Métodos de pagamento obtidos com sucesso!.", Toast.LENGTH_LONG)
+                        .show()
+
+                    val retroFit2 = response.body()
+                }
+            }
+
+            override fun onFailure(calll: Call<List<RetroPaymentMethod>>, t: Throwable) {
+                loadingDialogManager.dialog.dismiss()
+                Toast.makeText(this@ConsumerTradeActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+            })
+
     }
 
     //fun doCancel(view: View){

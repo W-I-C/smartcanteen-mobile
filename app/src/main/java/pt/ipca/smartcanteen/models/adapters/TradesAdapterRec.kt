@@ -1,5 +1,6 @@
 package pt.ipca.smartcanteen.models.adapters
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,18 +11,20 @@ import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.models.adapters.viewHolders.TradesAdapterRecViewHolder
 import pt.ipca.smartcanteen.models.RetroTrade
 
-class TradesAdapterRec(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myTradesAdapter: RecyclerView, private var tradesList: List<RetroTrade>) :
+class TradesAdapterRec(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myTradesAdapter: RecyclerView, private var tradesList: List<RetroTrade>, private var context: Context) :
     RecyclerView.Adapter<TradesAdapterRecViewHolder>() {
 
     var onItemTradesClick : ((RetroTrade) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TradesAdapterRecViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return TradesAdapterRecViewHolder(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, inflater,parent)
+        return TradesAdapterRecViewHolder(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, inflater,parent, context)
     }
 
     override fun onBindViewHolder(holder: TradesAdapterRecViewHolder, position: Int) {
         val ticketid = tradesList.get(position).ticketid
+        val isgeneraltrade = tradesList.get(position).isgeneraltrade
+        val generaltradeid = tradesList.get(position).generaltradeid
         val nencomenda = tradesList.get(position).norder
         val ticketamount = tradesList.get(position).ticketamount
         val total = tradesList.get(position).total
@@ -33,7 +36,7 @@ class TradesAdapterRec(val progressBar: ProgressBar, val textProgress: TextView,
             onItemTradesClick?.invoke(tradesList[position])
         }
 
-        holder.setDeleteClickListener(ticketid)
+        holder.setDeleteClickListener(ticketid, isgeneraltrade, generaltradeid)
     }
 
     override fun getItemCount(): Int {
