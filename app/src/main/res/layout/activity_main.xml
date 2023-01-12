@@ -9,9 +9,9 @@
     tools:context=".views.activities.MainActivity">
     <ImageView
         android:id="@+id/main_logout"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:backgroundTint="@color/black"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:backgroundTint="@color/redLogout"
         android:layout_marginStart="15dp"
         android:background="@drawable/ic_baseline_logout_24"
         app:layout_constraintLeft_toLeftOf="parent"

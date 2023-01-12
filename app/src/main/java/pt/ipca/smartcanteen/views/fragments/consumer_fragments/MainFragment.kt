@@ -1,5 +1,8 @@
 package pt.ipca.smartcanteen.views.fragments.consumer_fragments
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -20,13 +23,13 @@ import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.MealsAdapterRec
 import pt.ipca.smartcanteen.models.adapters.MenuOrdersAdapterRec
 import pt.ipca.smartcanteen.models.adapters.TradeMealsAdapterRec
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
-import pt.ipca.smartcanteen.services.BarMealsService
-import pt.ipca.smartcanteen.services.CampusBarsService
-import pt.ipca.smartcanteen.services.CampusTradesService
-import pt.ipca.smartcanteen.services.MyOrdersService
+import pt.ipca.smartcanteen.services.*
+import pt.ipca.smartcanteen.views.activities.Login
+import pt.ipca.smartcanteen.views.fragments.employee_fragments.EmployeeFragmentActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -63,15 +66,17 @@ class MainFragment : Fragment() {
         tradesProgressBar.visibility = View.VISIBLE
         tradesTextProgress.visibility = View.VISIBLE
 
+        val retrofit = SmartCanteenRequests().retrofit
+
         logoutIc.setOnClickListener{
-            Toast.makeText(requireActivity(), "Logout", Toast.LENGTH_SHORT).show()
+            AuthHelper().doLogout(retrofit,requireActivity(),loadingDialogManager)
         }
 
         notiIc.setOnClickListener{
             Toast.makeText(requireActivity(), "notifications", Toast.LENGTH_SHORT).show()
         }
 
-        val retrofit = SmartCanteenRequests().retrofit
+
 
         val barSpinner: Spinner = view.findViewById<Spinner>(R.id.main_bar_select_sp)
 
@@ -166,10 +171,7 @@ class MainFragment : Fragment() {
 
                                         val barId = body[position].barid
 
-                                        mealsProgressBar.visibility = View.VISIBLE
-                                        mealsTextProgress.visibility = View.VISIBLE
 
-                                        barMealsRecyclerView.visibility = View.GONE
                                         Log.d("spinner:","Before")
                                         getMealsList(
                                             barMealsRecyclerView,
@@ -178,9 +180,7 @@ class MainFragment : Fragment() {
                                             retrofit
                                         )
                                         Log.d("spinner:","After")
-                                        barMealsRecyclerView.visibility = View.VISIBLE
-                                        mealsProgressBar.visibility = View.GONE
-                                        mealsTextProgress.visibility = View.GONE
+
                                     }
                                 }
                         }
@@ -208,6 +208,10 @@ class MainFragment : Fragment() {
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
 
+        mealsProgressBar.visibility = View.VISIBLE
+        mealsTextProgress.visibility = View.VISIBLE
+
+        barMealsRecyclerView.visibility = View.GONE
 
         service.getBarMeals(barId, "Bearer $token").enqueue(object :
             Callback<List<RetroMeal>> {
@@ -236,6 +240,9 @@ class MainFragment : Fragment() {
             }
 
         })
+        barMealsRecyclerView.visibility = View.VISIBLE
+        mealsProgressBar.visibility = View.GONE
+        mealsTextProgress.visibility = View.GONE
 
     }
 

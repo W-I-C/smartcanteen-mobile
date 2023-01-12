@@ -30,6 +30,7 @@ class LoadingScreen : AppCompatActivity() {
 
         if(token == null){
             var intent = Intent(this@LoadingScreen, Login::class.java)
+            finish()
             startActivity(intent)
         }
         else{
@@ -60,15 +61,21 @@ class LoadingScreen : AppCompatActivity() {
                             sp.edit().putString("token", token).commit()
 
                             if(role == "consumer"){
+
                                 var intent = Intent(this@LoadingScreen, ConsumerFragmentActivity::class.java)
+                                finish()
                                 startActivity(intent)
                             } else if(role == "employee"){
+
                                 var intent = Intent(this@LoadingScreen, EmployeeFragmentActivity::class.java)
+                                finish()
                                 startActivity(intent)
                             }
 
                         } else if (response.code() == 401) {
+
                             var intent = Intent(this@LoadingScreen, Login::class.java)
+                            finish()
                             startActivity(intent)
                         }
                     }
