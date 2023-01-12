@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.LoginBody
@@ -27,7 +26,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-class Login : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     private var sessionToken: String? = null
     private val checkBoxPassword: CheckBox by lazy {findViewById<View>(R.id.login_password_visibility_checkbox) as CheckBox };
@@ -59,10 +58,10 @@ class Login : AppCompatActivity() {
             println(passwordText)
 
             if (emailText.isEmpty()) {
-                Toast.makeText(this@Login, "Email vazio", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@LoginActivity, "Email vazio", Toast.LENGTH_LONG).show()
             } else {
                 if (passwordText.isEmpty()) {
-                    Toast.makeText(this@Login, "Password vazia", Toast.LENGTH_LONG)
+                    Toast.makeText(this@LoginActivity, "Password vazia", Toast.LENGTH_LONG)
                         .show()
                 } else {
                     if (Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
@@ -97,49 +96,49 @@ class Login : AppCompatActivity() {
                                             Log.d("token", token)
                                         }
 
-                                        val sp = SharedPreferencesHelper.getSharedPreferences(this@Login)
+                                        val sp = SharedPreferencesHelper.getSharedPreferences(this@LoginActivity)
                                         sp.edit().putString("token", token).commit()
                                         sp.edit().putString("role", role).commit()
 
 
                                         if (role == "consumer") {
                                             // O usuário é um consumidor, então encaminhe-o para a tela específica para consumidores
-                                            var intent = Intent(this@Login, ConsumerFragmentActivity::class.java)
+                                            var intent = Intent(this@LoadingScreenActivity, ConsumerFragmentActivity::class.java)
                                             finish()
                                             startActivity(intent)
                                         } else if (role == "employee") {
                                             // O usuário é um funcionário, então encaminhe-o para a tela específica para funcionários
-                                            var intent = Intent(this@Login, EmployeeFragmentActivity::class.java)
+                                            var intent = Intent(this@LoadingScreenActivity, EmployeeFragmentActivity::class.java)
                                             finish()
                                             startActivity(intent)
                                         } else {
                                             // O usuário não é nem consumidor nem funcionário, então exiba uma mensagem de erro
-                                            Toast.makeText(this@Login, "Erro! Role não existe", Toast.LENGTH_LONG)
+                                            Toast.makeText(this@LoginActivity, "Erro! Role não existe", Toast.LENGTH_LONG)
                                                 .show()
                                         }
 
                                     } else {
                                         loadingDialogManager.dialog.dismiss()
-                                        Toast.makeText(this@Login, "Erro! Não foi possível realizar o login, tente novamente", Toast.LENGTH_LONG)
+                                        Toast.makeText(this@LoginActivity, "Erro! Não foi possível realizar o login, tente novamente", Toast.LENGTH_LONG)
                                             .show()
                                     }
                                 }
 
                                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                                     loadingDialogManager.dialog.dismiss()
-                                    Toast.makeText(this@Login, "Erro! Tente novamente.", Toast.LENGTH_LONG)
+                                    Toast.makeText(this@LoginActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
                                         .show()
                                 }
                             })
 
 
                         } else {
-                            Toast.makeText(this@Login, "Password inválida", Toast.LENGTH_LONG)
+                            Toast.makeText(this@LoginActivity, "Password inválida", Toast.LENGTH_LONG)
                                 .show()
                         }
 
                     } else {
-                        Toast.makeText(this@Login, "Email inválido", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@LoginActivity, "Email inválido", Toast.LENGTH_LONG).show()
 
                     }
                 }

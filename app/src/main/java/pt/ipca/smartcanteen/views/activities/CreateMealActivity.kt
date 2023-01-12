@@ -8,7 +8,7 @@ import pt.ipca.smartcanteen.R
 
 class CreateMealActivity: AppCompatActivity() {
     fun addIngredient(view: View){
-        val intent = Intent(this, AddIngredient::class.java)
+        val intent = Intent(this, AddIngredientActivity::class.java)
         startActivity(intent)
 
     }

@@ -44,10 +44,9 @@ class ExchangesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgre
 
             val token = sp.getString("token", null)
 
+            myTradesAdapter.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
             textProgress.visibility = View.VISIBLE
-
-            println("Eu estou aqui")
 
             service.removeTrade(ticketid,"Bearer $token").enqueue(object :
                 Callback<List<RetroTrade>> {
@@ -57,6 +56,7 @@ class ExchangesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgre
                 ) {
                     if (response.code() == 200) {
 
+                        myTradesAdapter.visibility = View.GONE
                         progressBar.visibility = View.GONE
                         textProgress.visibility = View.GONE
 
@@ -65,12 +65,12 @@ class ExchangesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgre
                         if (retroFit2 != null)
                             if(!retroFit2.isEmpty()){
                                 rebuildlistOrders(ExchangesAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, retroFit2))
-                                // rebuildlistOrders(OrdersAdapterRec(retroFit2))
                             }
                     }
                 }
 
                 override fun onFailure(calll: Call<List<RetroTrade>>, t: Throwable) {
+                    myTradesAdapter.visibility = View.GONE
                     progressBar.visibility = View.GONE
                     textProgress.visibility = View.GONE
                     println("Erro")
