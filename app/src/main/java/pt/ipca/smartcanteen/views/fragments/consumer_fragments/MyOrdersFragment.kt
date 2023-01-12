@@ -75,7 +75,7 @@ class MyOrdersFragment : Fragment() {
         myOrdersAdater.adapter = adapter
 
         adapter.onItemClick = this::onItemOrdersClick
-        adapter.onButtonTradeClick = this::onButtonTradeClick
+        // adapter.onButtonTradeClick = this::onButtonTradeClick
         // adapter.onDeleteButtonClick = this::onDeleteButtonClick
     }
 
@@ -172,8 +172,7 @@ class MyOrdersFragment : Fragment() {
                                 orders.clear()
                                 orders.addAll(retroFit2)
 
-                                rebuildlistOrders(OrdersAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdater, orders))
-                                // rebuildlistOrders(OrdersAdapterRec(retroFit2))
+                                rebuildlistOrders(OrdersAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdater, orders, requireActivity()))
                             }
                     }
                 }
