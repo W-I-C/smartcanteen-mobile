@@ -13,9 +13,6 @@ import pt.ipca.smartcanteen.views.activities.OrderDetailsActivity
 class MenuOrdersAdapterRec(private val activity: Activity, private val qtyString:String,private val orderString:String,private var ordersList: List<RetroTrade>) :
     RecyclerView.Adapter<MenuOrdersAdapterRecViewHolder>() {
 
-    var onItemClick: ((RetroTrade) -> Unit)? = null
-    var onButtonTradeClick: ((View) -> Unit)? = null
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuOrdersAdapterRecViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return MenuOrdersAdapterRecViewHolder(inflater, parent)

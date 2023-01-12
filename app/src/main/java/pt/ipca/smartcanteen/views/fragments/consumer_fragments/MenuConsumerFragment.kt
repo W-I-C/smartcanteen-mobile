@@ -345,9 +345,6 @@ class MenuConsumerFragment : Fragment() {
 
     }
 
-    fun onOrderClick(order:RetroTrade){
-
-    }
 
 }
 
