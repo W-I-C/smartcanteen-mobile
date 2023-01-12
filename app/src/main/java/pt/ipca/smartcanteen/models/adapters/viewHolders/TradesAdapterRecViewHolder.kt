@@ -13,14 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroTrade
+import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
 import pt.ipca.smartcanteen.models.adapters.TradesAdapterRec
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
-import pt.ipca.smartcanteen.services.MyTradesService
+import pt.ipca.smartcanteen.services.TradesService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myTradesAdapter: RecyclerView, inflater: LayoutInflater, val parent: ViewGroup):
     RecyclerView.ViewHolder(inflater.inflate(R.layout.my_trade_card, parent, false)){
@@ -36,7 +35,7 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
 
             val retrofit = SmartCanteenRequests().retrofit
 
-            val service = retrofit.create(MyTradesService::class.java)
+            val service = retrofit.create(TradesService::class.java)
 
             val token = sp.getString("token", null)
 
@@ -44,6 +43,7 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
             progressBar.visibility = View.VISIBLE
             textProgress.visibility = View.VISIBLE
 
+            println("123")
             service.removeTrade(ticketid,"Bearer $token").enqueue(object :
                 Callback<List<RetroTrade>> {
                 override fun onResponse(
@@ -52,15 +52,17 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                 ) {
                     if (response.code() == 200) {
 
-                        myTradesAdapter.visibility = View.GONE
+                        myTradesAdapter.visibility = View.VISIBLE
                         progressBar.visibility = View.GONE
                         textProgress.visibility = View.GONE
 
                         val retroFit2 = response.body()
                         println("Aqui")
+
                         if (retroFit2 != null)
                             if(!retroFit2.isEmpty()){
                                 rebuildlistOrders(TradesAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, retroFit2))
+                                // rebuildlistOrders(OrdersAdapterRec(retroFit2))
                             }
                     }
                 }

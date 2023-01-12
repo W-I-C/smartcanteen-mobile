@@ -17,13 +17,11 @@ import pt.ipca.smartcanteen.models.adapters.UndeliveredOrdersAdaterRec
 import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
-import pt.ipca.smartcanteen.services.UndeliveredOrdersService
+import pt.ipca.smartcanteen.services.OrdersService
 import pt.ipca.smartcanteen.views.activities.DetailedActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class UndeliveredOrdersFragment : Fragment() {
 
@@ -46,7 +44,7 @@ class UndeliveredOrdersFragment : Fragment() {
 
         val retrofit = SmartCanteenRequests().retrofit
 
-        val service = retrofit.create(UndeliveredOrdersService::class.java)
+        val service = retrofit.create(OrdersService::class.java)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
