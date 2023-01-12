@@ -7,6 +7,7 @@ import pt.ipca.smartcanteen.models.RetroTicket
 import pt.ipca.smartcanteen.models.adapters.viewHolders.NotificationAdapterRecViewHolder
 import pt.ipca.smartcanteen.models.adapters.viewHolders.UndeliveredOrdersAdapterRecViewHolder
 import pt.ipca.smartcanteen.models.helpers.RetroNotification
+import java.text.SimpleDateFormat
 
 class NotificationAdapterRec (private val notification_list: List<RetroNotification>) :
     RecyclerView.Adapter<NotificationAdapterRecViewHolder>() {
@@ -20,9 +21,16 @@ class NotificationAdapterRec (private val notification_list: List<RetroNotificat
 
     override fun onBindViewHolder(holder: NotificationAdapterRecViewHolder, position: Int) {
         val description = notification_list.get(position).description
+        val time=notification_list.get(position).time
 
-        holder.bindData(description)
+        fun getFormattedDate(): String {
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+            val date = dateFormat.parse(time)
+            val formattedDate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date)
+            return formattedDate
+        }
 
+        holder.bindData(description, getFormattedDate())
 
     }
 

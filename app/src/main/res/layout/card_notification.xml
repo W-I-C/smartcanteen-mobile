@@ -4,7 +4,10 @@
     android:layout_height="110dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/square_card_background"
-    android:backgroundTint="@color/white">
+    android:backgroundTint="@color/white"
+    android:elevation="5dp"
+    android:layout_marginBottom="10dp"
+    >
 
     <TextView
         android:id="@+id/description"
@@ -18,5 +21,12 @@
         android:textColor="@color/black"
         android:layout_marginLeft="20dp"
         />
+    <TextView
+        android:id="@+id/time_notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/description"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
