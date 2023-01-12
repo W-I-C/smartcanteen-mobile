@@ -1,30 +1,23 @@
 package pt.ipca.smartcanteen.models.adapters.viewHolders
 
-import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
-import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
-import pt.ipca.smartcanteen.services.MyOrdersService
+import pt.ipca.smartcanteen.services.OrdersService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myOrdersAdapter: RecyclerView, inflater: LayoutInflater, val parent: ViewGroup):
     RecyclerView.ViewHolder(inflater.inflate(R.layout.my_order_card, parent, false)){
@@ -45,7 +38,7 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
 
             val retrofit = SmartCanteenRequests().retrofit
 
-            val service = retrofit.create(MyOrdersService::class.java)
+            val service = retrofit.create(OrdersService::class.java)
 
             val token = sp.getString("token", null)
 

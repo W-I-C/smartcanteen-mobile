@@ -15,13 +15,11 @@ import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroCartMeals
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
-import pt.ipca.smartcanteen.services.RetroCartMealsService
+import pt.ipca.smartcanteen.services.MealsService
 import pt.ipca.smartcanteen.views.activities.OrderActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
 class MyOrdersCartFragment : Fragment() {
@@ -40,7 +38,7 @@ class MyOrdersCartFragment : Fragment() {
 
         val retrofit = SmartCanteenRequests().retrofit
 
-        val service = retrofit.create(RetroCartMealsService::class.java)
+        val service = retrofit.create(MealsService::class.java)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)

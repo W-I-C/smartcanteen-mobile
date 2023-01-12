@@ -17,14 +17,12 @@ import pt.ipca.smartcanteen.models.LoginResponse
 import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
-import pt.ipca.smartcanteen.services.LoginService
+import pt.ipca.smartcanteen.services.AuthService
 import pt.ipca.smartcanteen.views.fragments.consumer_fragments.ConsumerFragmentActivity
 import pt.ipca.smartcanteen.views.fragments.employee_fragments.EmployeeFragmentActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
 class LoginActivity : AppCompatActivity() {
@@ -76,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
                             loadingDialogManager.dialog.show()
 
                             // Cria um objeto LoginService
-                            val service = retrofit.create(LoginService::class.java)
+                            val service = retrofit.create(AuthService::class.java)
                             val call = service.login(body)
                             call.enqueue(object : Callback<LoginResponse> {
                                 override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {

@@ -9,14 +9,12 @@ import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.LoginResponse
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
-import pt.ipca.smartcanteen.services.NewSessionTokenService
+import pt.ipca.smartcanteen.services.AuthService
 import pt.ipca.smartcanteen.views.fragments.consumer_fragments.ConsumerFragmentActivity
 import pt.ipca.smartcanteen.views.fragments.employee_fragments.EmployeeFragmentActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class LoadingScreenActivity : AppCompatActivity() {
 
@@ -37,7 +35,7 @@ class LoadingScreenActivity : AppCompatActivity() {
         else{
             val retrofit = SmartCanteenRequests().retrofit
 
-            val service = retrofit.create(NewSessionTokenService::class.java)
+            val service = retrofit.create(AuthService::class.java)
 
             var call =
                 service.getSessionToken("Bearer $token").enqueue(object :

@@ -20,16 +20,14 @@ import pt.ipca.smartcanteen.models.adapters.TradesAdapterRec
 import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
-import pt.ipca.smartcanteen.services.MyOrdersService
-import pt.ipca.smartcanteen.services.MyTradesService
+import pt.ipca.smartcanteen.services.OrdersService
+import pt.ipca.smartcanteen.services.TradesService
 import pt.ipca.smartcanteen.views.activities.ConsumerTradeActivity
 import pt.ipca.smartcanteen.views.activities.DetailedMyOrderActivity
 import pt.ipca.smartcanteen.views.activities.DetailedMyTradeActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MyOrdersFragment : Fragment() {
 
@@ -133,7 +131,7 @@ class MyOrdersFragment : Fragment() {
 
         val retrofit = SmartCanteenRequests().retrofit
 
-        val service = retrofit.create(MyOrdersService::class.java)
+        val service = retrofit.create(OrdersService::class.java)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
@@ -198,7 +196,7 @@ class MyOrdersFragment : Fragment() {
 
         val retrofit = SmartCanteenRequests().retrofit
 
-        val service = retrofit.create(MyTradesService::class.java)
+        val service = retrofit.create(TradesService::class.java)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
