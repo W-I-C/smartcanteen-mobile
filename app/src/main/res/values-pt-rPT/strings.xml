@@ -51,4 +51,6 @@
     <string name="can_increment">Pode incrementar?</string>
     <string name="can_decrement">Pode decrementar?</string>
     <string name="can_remove">Pode remover?</string>
+    <string name="description">Descrição</string>
+    <string name="meal_changes">Alterações</string>
 </resources>
