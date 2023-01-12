@@ -14,4 +14,6 @@ data class RetroTrade (
     @SerializedName("emissiondate") val emissiondate: String,
     @SerializedName("pickuptime") val pickuptime: String,
     @SerializedName("isfree") val isfree: Boolean,
+    @SerializedName("isgeneraltrade") val isgeneraltrade: Boolean,
+    @SerializedName("generaltradeid") val generaltradeid: String
 ) {}

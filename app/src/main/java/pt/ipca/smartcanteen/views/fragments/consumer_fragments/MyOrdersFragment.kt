@@ -2,6 +2,7 @@ package pt.ipca.smartcanteen.views.fragments.consumer_fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -219,6 +220,17 @@ class MyOrdersFragment : Fragment() {
 
                         val retroFit2 = response.body()
 
+                        retroFit2?.forEach { retroTrade ->
+                            val generaltradeid = retroTrade.generaltradeid
+                            val isgeneraltrade = retroTrade.isgeneraltrade
+                            //Log.d("generaltradeid", generaltradeid)
+                            //Log.d("isgeneraltrade", isgeneraltrade.toString())
+                            println(generaltradeid)
+                            println(isgeneraltrade)
+
+                            // tenho que passar por parametro o generaltrade e o isgeneraltrade do ticket que vou selecionar
+                        }
+
                         if (retroFit2 != null)
                             if(retroFit2.isEmpty()){
                                 tradesTextError.visibility = View.VISIBLE
@@ -226,7 +238,7 @@ class MyOrdersFragment : Fragment() {
                             } else {
                                 myTradesAdater.visibility = View.VISIBLE
                                 tradesTextError.visibility = View.GONE
-                                rebuildlistTrades(TradesAdapterRec(progressBar, textProgress, linearLayoutTradeManager, sp, myTradesAdater, retroFit2))
+                                rebuildlistTrades(TradesAdapterRec(progressBar, textProgress, linearLayoutTradeManager, sp, myTradesAdater, retroFit2, requireContext()))
                             }
                     }
                 }
