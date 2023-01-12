@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.core.content.ContextCompat.startActivity
 import pt.ipca.smartcanteen.services.LoginService
-import pt.ipca.smartcanteen.views.activities.Login
+import pt.ipca.smartcanteen.views.activities.LoginActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,7 +32,7 @@ class AuthHelper {
                 if (response.code() == 200) {
                     sp.edit().remove("token").apply()
                     loadingDialogManager.dialog.dismiss()
-                    var intent = Intent(activity, Login::class.java)
+                    var intent = Intent(activity, LoginActivity::class.java)
                     activity.finish()
                     startActivity(activity,intent,null)
                 }

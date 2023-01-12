@@ -74,7 +74,7 @@ class LoadingScreenActivity : AppCompatActivity() {
 
                         } else if (response.code() == 401) {
 
-                            var intent = Intent(this@LoadingScreenActivity, Login::class.java)
+                            var intent = Intent(this@LoadingScreenActivity, LoginActivity::class.java)
                             finish()
                             startActivity(intent)
                         }
