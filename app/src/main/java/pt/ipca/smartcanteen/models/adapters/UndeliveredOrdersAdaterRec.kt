@@ -5,8 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.models.adapters.viewHolders.UndeliveredOrdersAdapterRecViewHolder
 import pt.ipca.smartcanteen.models.RetroTicket
+import pt.ipca.smartcanteen.models.RetroTrade
 
-class UndeliveredOrdersAdaterRec(private val undeliveredOrdersList: List<RetroTicket>) :
+class UndeliveredOrdersAdaterRec(private val undeliveredOrdersList: List<RetroTrade>) :
     RecyclerView.Adapter<UndeliveredOrdersAdapterRecViewHolder>() {
 
     var onItemClick : ((RetroTicket) -> Unit)? = null
@@ -17,17 +18,17 @@ class UndeliveredOrdersAdaterRec(private val undeliveredOrdersList: List<RetroTi
     }
 
     override fun onBindViewHolder(holder: UndeliveredOrdersAdapterRecViewHolder, position: Int) {
-        val nencomenda = undeliveredOrdersList.get(position).nencomenda
-        val name = undeliveredOrdersList.get(position).name
+        val nencomenda = undeliveredOrdersList.get(position).norder
+        val name = undeliveredOrdersList.get(position).ownername
         val statename = undeliveredOrdersList.get(position).statename
         holder.bindData(nencomenda,name,statename)
 
         //holder.itemView.setOnClickListener{
         //    onItemClick?.invoke(undeliveredOrder)
         //}
-        holder.itemView.setOnClickListener {
-            onItemClick?.invoke(undeliveredOrdersList[position])
-        }
+        //holder.itemView.setOnClickListener {
+        //    onItemClick?.invoke(undeliveredOrdersList[position])
+        //}
     }
 
     override fun getItemCount(): Int {
