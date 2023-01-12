@@ -3,6 +3,7 @@ package pt.ipca.smartcanteen.models.adapters.viewHolders
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.R
 
@@ -16,5 +17,13 @@ class UndeliveredOrdersAdapterRecViewHolder(inflater: LayoutInflater, val parent
         identifierTv.text = identifierText.toString()
         nameTv.text = nameText
         stateTv.text = stateText
+
+        if(stateText == "Não Iniciado" || stateText == "Atraso"){
+            stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.redLogout))
+        } else if(stateText == "Pronto"){
+            stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.background_color))
+        } else if(stateText == "Preparação") {
+            stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.orange))
+        }
     }
 }

@@ -187,6 +187,7 @@ class MenuConsumerFragment : Fragment() {
             override fun onFailure(call: Call<List<RetroBar>>, t: Throwable) {
                 //mealsProgressBar.visibility = View.GONE
                 //mealsTextProgress.visibility = View.GONE
+                loadingDialogManager.dialog.dismiss()
                 print("error")
             }
 

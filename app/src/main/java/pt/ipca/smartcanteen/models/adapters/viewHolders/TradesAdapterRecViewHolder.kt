@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -85,6 +86,14 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
         quantityTv.text = quantityText.toString()
         priceTv.text=priceText.toString()
         stateTv.text=stateText
+
+        if(stateText == "Não Iniciado" || stateText == "Atraso"){
+            stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.redLogout))
+        } else if(stateText == "Pronto" || stateText == "Entregue"){
+            stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.background_color))
+        } else if(stateText == "Preparação") {
+            stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.orange))
+        }
 
         if(stateText == "Entregue" || stateText == "Não Iniciado"){
             deleteButton.visibility = Button.VISIBLE
