@@ -319,11 +319,12 @@ class MenuConsumerFragment : Fragment() {
                     if (body != null) {
                         if (body.isNotEmpty()) {
                             /** my orders **/
-                            var ordersAdapter = MenuOrdersAdapterRec(getString(R.string.qty),getString(R.string.ordernum),body)
+                            var ordersAdapter = MenuOrdersAdapterRec(requireActivity(),getString(R.string.qty),getString(R.string.ordernum),body)
 
                             ordersRecyclerView.layoutManager = ordersLinearLayoutManager
                             ordersRecyclerView.itemAnimator = DefaultItemAnimator()
                             ordersRecyclerView.adapter = ordersAdapter
+
                         }
                     }
                 }
@@ -337,6 +338,10 @@ class MenuConsumerFragment : Fragment() {
             }
 
         })
+
+    }
+
+    fun onOrderClick(order:RetroTrade){
 
     }
 
