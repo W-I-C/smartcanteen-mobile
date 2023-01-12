@@ -5,10 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.views.fragments.consumer_fragments.MainFragment
-import pt.ipca.smartcanteen.views.fragments.consumer_fragments.MyOrdersCartFragment
-import pt.ipca.smartcanteen.views.fragments.consumer_fragments.MyOrdersFragment
-import pt.ipca.smartcanteen.views.fragments.consumer_fragments.ProfileFragment
 
 
 class ConsumerFragmentActivity : AppCompatActivity() {
@@ -20,7 +16,7 @@ class ConsumerFragmentActivity : AppCompatActivity() {
         setContentView(R.layout.bottom_navigation_consumer)
 
         val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-        ft.add(R.id.consumer_fragment_container, MainFragment())
+        ft.add(R.id.consumer_fragment_container, MenuConsumerFragment())
         ft.commit()
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_consumer)
@@ -37,7 +33,7 @@ class ConsumerFragmentActivity : AppCompatActivity() {
                 }
                 R.id.menu_consumer_main -> {
                     val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-                    ft.replace(R.id.consumer_fragment_container, MainFragment())
+                    ft.replace(R.id.consumer_fragment_container, MenuConsumerFragment())
                     ft.commit()
                 }
                 R.id.menu_consumer_orders -> {

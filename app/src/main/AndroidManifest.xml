@@ -54,7 +54,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".views.activities.ConsumerExchangeActivity"
+            android:name=".views.activities.ConsumerTradeActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

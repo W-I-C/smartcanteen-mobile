@@ -18,6 +18,7 @@ import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
+import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.MyOrdersService
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,11 +43,7 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
     fun setDeleteClickListener(ticketid: String){
         deleteButton.setOnClickListener{
 
-            val BASE_URL = "https://smartcanteen-api.herokuapp.com"
-            var retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
+            val retrofit = SmartCanteenRequests().retrofit
 
             val service = retrofit.create(MyOrdersService::class.java)
 

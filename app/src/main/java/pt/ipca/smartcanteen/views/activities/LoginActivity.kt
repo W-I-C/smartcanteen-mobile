@@ -16,6 +16,7 @@ import pt.ipca.smartcanteen.models.LoginBody
 import pt.ipca.smartcanteen.models.LoginResponse
 import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
+import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.LoginService
 import pt.ipca.smartcanteen.views.fragments.consumer_fragments.ConsumerFragmentActivity
 import pt.ipca.smartcanteen.views.fragments.employee_fragments.EmployeeFragmentActivity
@@ -45,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.login)
+        setContentView(R.layout.activity_login)
 
         loadingDialogManager = LoadingDialogManager(layoutInflater, this)
         loadingDialogManager.createLoadingAlertDialog()
@@ -70,13 +71,7 @@ class LoginActivity : AppCompatActivity() {
                             // é criado um objeto do tipo JSON
                             val body = LoginBody(emailText, passwordText)
 
-                            val BASE_URL = "https://smartcanteen-api.herokuapp.com"
-
-                            // Cria um objeto Retrofit
-                            val retrofit = Retrofit.Builder()
-                                .baseUrl(BASE_URL)
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build()
+                            val retrofit = SmartCanteenRequests().retrofit
 
                             loadingDialogManager.dialog.show()
 

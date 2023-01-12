@@ -5,9 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.views.fragments.consumer_fragments.MainFragment
+import pt.ipca.smartcanteen.views.fragments.consumer_fragments.MenuConsumerFragment
 import pt.ipca.smartcanteen.views.fragments.consumer_fragments.ProfileFragment
-import pt.ipca.smartcanteen.views.fragments.employee_fragments.UndeliveredOrdersFragment
 
 class EmployeeFragmentActivity : AppCompatActivity() {
 
@@ -18,7 +17,7 @@ class EmployeeFragmentActivity : AppCompatActivity() {
         setContentView(R.layout.bottom_navigation_employee)
 
         val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-        ft.add(R.id.employee_fragment_container, MainFragment())
+        ft.add(R.id.employee_fragment_container, MenuConsumerFragment())
         ft.commit()
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_employee)

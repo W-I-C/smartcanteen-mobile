@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.LoginResponse
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
+import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.NewSessionTokenService
 import pt.ipca.smartcanteen.views.fragments.consumer_fragments.ConsumerFragmentActivity
 import pt.ipca.smartcanteen.views.fragments.employee_fragments.EmployeeFragmentActivity
@@ -23,7 +24,7 @@ class LoadingScreenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.loading_screen)
+        setContentView(R.layout.activity_loading_screen)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(this@LoadingScreenActivity)
         val token = sp.getString("token", null)
@@ -34,11 +35,8 @@ class LoadingScreenActivity : AppCompatActivity() {
             startActivity(intent)
         }
         else{
-            val BASE_URL = "https://smartcanteen-api.herokuapp.com"
-            var retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
+            val retrofit = SmartCanteenRequests().retrofit
+
             val service = retrofit.create(NewSessionTokenService::class.java)
 
             var call =

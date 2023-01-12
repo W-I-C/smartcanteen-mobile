@@ -14,7 +14,7 @@ class IngredientsChangeActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.ingredients_change)
+        setContentView(R.layout.activity_ingredients_change)
 
         // TODO: tem que receber o id da refeição da modal e no saveButtom o POST para adicionar as alterações à Meal
         cancelButton.setOnClickListener {
