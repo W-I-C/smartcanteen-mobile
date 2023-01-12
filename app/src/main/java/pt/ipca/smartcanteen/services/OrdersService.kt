@@ -21,7 +21,7 @@ interface OrdersService {
     ): Call<List<RetroTrade>>
 
     @GET("/api/v1/employee/tickets")
-    fun seeUndeliveredOrders(@Header("Authorization") authorization: String): Call<List<RetroTicket>>
+    fun seeUndeliveredOrders(@Header("Authorization") authorization: String): Call<List<RetroTrade>>
 
 
     @GET("/api/v1/ticket/{ticketid}/detail")

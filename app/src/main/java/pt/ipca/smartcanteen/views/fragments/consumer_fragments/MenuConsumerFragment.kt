@@ -1,5 +1,6 @@
 package pt.ipca.smartcanteen.views.fragments.consumer_fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -22,6 +23,8 @@ import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.*
+import pt.ipca.smartcanteen.views.activities.NotificationActivity
+import pt.ipca.smartcanteen.views.activities.OrderActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -60,7 +63,8 @@ class MenuConsumerFragment : Fragment() {
         }
 
         notiIc.setOnClickListener{
-            Toast.makeText(requireActivity(), "notifications", Toast.LENGTH_SHORT).show()
+            var intent = Intent(requireActivity(), NotificationActivity::class.java)
+            startActivity(intent)
         }
 
 
@@ -168,6 +172,9 @@ class MenuConsumerFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<RetroBar>>, t: Throwable) {
+                //mealsProgressBar.visibility = View.GONE
+                //mealsTextProgress.visibility = View.GONE
+                loadingDialogManager.dialog.dismiss()
                 print("error")
             }
 
