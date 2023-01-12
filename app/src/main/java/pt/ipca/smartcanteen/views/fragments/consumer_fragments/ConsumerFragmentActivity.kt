@@ -29,7 +29,9 @@ class ConsumerFragmentActivity : AppCompatActivity() {
                     ft.commit()
                 }
                 R.id.menu_consumer_favorites -> {
-
+                    val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+                    ft.replace(R.id.consumer_fragment_container, FavoriteMealFragment())
+                    ft.commit()
                 }
                 R.id.menu_consumer_main -> {
                     val ft: FragmentTransaction = supportFragmentManager.beginTransaction()

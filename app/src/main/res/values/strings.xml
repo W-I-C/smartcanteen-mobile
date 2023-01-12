@@ -62,4 +62,7 @@
     <string name="can_remove">Can Remove?</string>
     <string name="description">Description</string>
     <string name="meal_changes">Changes</string>
+    <string name="favorite">Favorite</string>
+    <string name="time">Time</string>
+    <string name="title">Title</string>
 </resources>

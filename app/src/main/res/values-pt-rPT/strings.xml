@@ -53,4 +53,7 @@
     <string name="can_remove">Pode remover?</string>
     <string name="description">Descrição</string>
     <string name="meal_changes">Alterações</string>
+    <string name="favorite">Favoritos</string>
+    <string name="time">Tempo</string>
+    <string name="title">Titulo</string>
 </resources>
