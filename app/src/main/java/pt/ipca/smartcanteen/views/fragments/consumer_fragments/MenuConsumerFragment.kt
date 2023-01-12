@@ -1,14 +1,11 @@
 package pt.ipca.smartcanteen.views.fragments.consumer_fragments
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,7 +30,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 
 
-class MainFragment : Fragment() {
+class MenuConsumerFragment : Fragment() {
 
     private val tradesProgressBar: ProgressBar by lazy {requireView().findViewById<ProgressBar>(R.id.consumer_menu_trades_progress_bar) as ProgressBar }
     private val tradesTextProgress: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_trades_progress_bar_text) as TextView }
@@ -52,7 +49,7 @@ class MainFragment : Fragment() {
 
         loadingDialogManager = LoadingDialogManager(inflater, requireActivity())
         loadingDialogManager.createLoadingAlertDialog()
-        return inflater.inflate(R.layout.activity_main, parent, false)
+        return inflater.inflate(R.layout.fragment_consumer_menu, parent, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

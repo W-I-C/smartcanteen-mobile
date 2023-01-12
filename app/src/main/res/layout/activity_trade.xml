@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/exchange_title"
+        android:id="@+id/trade_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30sp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <CheckBox
-        android:id="@+id/exchange_general_checkbox"
+        android:id="@+id/trade_general_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/general"
@@ -29,23 +29,23 @@
         android:paddingLeft="20dp"
         android:onClick="checkBox1Clicked"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/exchange_title" />
+        app:layout_constraintTop_toBottomOf="@id/trade_title" />
 
     <Spinner
-        android:id="@+id/exchange_general_spinner"
+        android:id="@+id/trade_general_spinner"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/spinner_style"
-        app:layout_constraintTop_toBottomOf="@+id/exchange_general_checkbox"
+        app:layout_constraintTop_toBottomOf="@+id/trade_general_checkbox"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:elevation="5dp"/>
 
     <CheckBox
-        android:id="@+id/exchange_direct_checkbox"
+        android:id="@+id/trade_direct_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/direct_trade"
@@ -56,10 +56,10 @@
         android:paddingLeft="20dp"
         android:onClick="checkBox2Clicked"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/exchange_general_spinner" />
+        app:layout_constraintTop_toBottomOf="@id/trade_general_spinner" />
 
     <EditText
-        android:id="@+id/exchange_email_edittext"
+        android:id="@+id/trade_email_edittext"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="20dp"
@@ -72,24 +72,24 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/exchange_direct_checkbox"
+        app:layout_constraintTop_toBottomOf="@id/trade_direct_checkbox"
         android:elevation="5dp"/>
 
     <Spinner
-        android:id="@+id/exchange_direct_spinner"
+        android:id="@+id/trade_direct_spinner"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/spinner_style"
-        app:layout_constraintTop_toBottomOf="@+id/exchange_email_edittext"
+        app:layout_constraintTop_toBottomOf="@+id/trade_email_edittext"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:elevation="5dp"/>
 
     <Button
-        android:id="@+id/exchange_confirm"
+        android:id="@+id/trade_confirm"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:padding="10dp"
@@ -106,7 +106,7 @@
         />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/exchange_cancel"
+        android:id="@+id/trade_cancel"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:padding="10dp"

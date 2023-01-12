@@ -6,19 +6,19 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import pt.ipca.smartcanteen.R
 
-class ConsumerExchangeActivity : AppCompatActivity() {
+class ConsumerTradeActivity : AppCompatActivity() {
 
-    private val checkBox1: CheckBox by lazy {findViewById<View>(R.id.exchange_general_checkbox) as CheckBox};
-    private val checkBox2: CheckBox by lazy {findViewById<View>(R.id.exchange_direct_checkbox) as CheckBox};
-    private val editText: EditText by lazy {findViewById<View>(R.id.exchange_email_edittext) as EditText}
-    private val spinner_general: Spinner by lazy {findViewById<View>(R.id.exchange_general_spinner) as Spinner}
-    private val spinner_direct: Spinner by lazy {findViewById<View>(R.id.exchange_direct_spinner) as Spinner}
-    private val cancelButton: Button by lazy {findViewById<View>(R.id.exchange_cancel) as Button}
-    private val confirmButton: Button by lazy {findViewById<View>(R.id.exchange_confirm) as Button}
+    private val checkBox1: CheckBox by lazy {findViewById<View>(R.id.trade_general_checkbox) as CheckBox};
+    private val checkBox2: CheckBox by lazy {findViewById<View>(R.id.trade_direct_checkbox) as CheckBox};
+    private val editText: EditText by lazy {findViewById<View>(R.id.trade_email_edittext) as EditText}
+    private val spinner_general: Spinner by lazy {findViewById<View>(R.id.trade_general_spinner) as Spinner}
+    private val spinner_direct: Spinner by lazy {findViewById<View>(R.id.trade_direct_spinner) as Spinner}
+    private val cancelButton: Button by lazy {findViewById<View>(R.id.trade_cancel) as Button}
+    private val confirmButton: Button by lazy {findViewById<View>(R.id.trade_confirm) as Button}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.exchange)
+        setContentView(R.layout.activity_trade)
 
         spinner_general.visibility = View.INVISIBLE
         spinner_direct.visibility = View.INVISIBLE
@@ -51,7 +51,7 @@ class ConsumerExchangeActivity : AppCompatActivity() {
             // TODO: verificar se os spinners foram preenchidos
 
             finish()
-            Toast.makeText(this@ConsumerExchangeActivity, "Encomenda colocada para troca com sucesso!", Toast.LENGTH_LONG)
+            Toast.makeText(this@ConsumerTradeActivity, "Encomenda colocada para troca com sucesso!", Toast.LENGTH_LONG)
                 .show()
         }
     }

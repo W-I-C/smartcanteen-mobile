@@ -8,7 +8,7 @@ import pt.ipca.smartcanteen.R
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.fragment_consumer_menu)
         /*
         /** Trades **/
         val tradeMealsRecyclerView = findViewById<RecyclerView>(R.id.main_available_trades_rv)

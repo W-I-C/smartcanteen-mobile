@@ -12,6 +12,7 @@ import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.adapters.UndeliveredOrdersAdaterRec
 import pt.ipca.smartcanteen.models.RetroTicket
+import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.UndeliveredOrdersService
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,13 +27,10 @@ class UndeliveredOrdersActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.undelivered_orders)
+        setContentView(R.layout.fragment_undelivered_orders)
 
-        val BASE_URL = "https://smartcanteen-api.herokuapp.com"
-        var retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        val retrofit = SmartCanteenRequests().retrofit
+
         val service = retrofit.create(UndeliveredOrdersService::class.java)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(this@UndeliveredOrdersActivity)
