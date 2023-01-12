@@ -32,7 +32,7 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
 
     val deleteButton = itemView.findViewById<Button>(R.id.my_exchanges_card_delete)
 
-    fun setDeleteClickListener(ticketid: String, isgeneraltrade: Boolean, generaltradeid: String){
+    fun setDeleteClickListener(ticketid: String, isgeneraltrade: Boolean, generaltradeid: String?){
         deleteButton.setOnClickListener{
 
             val retrofit = SmartCanteenRequests().retrofit

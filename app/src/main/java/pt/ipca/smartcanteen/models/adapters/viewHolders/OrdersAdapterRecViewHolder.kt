@@ -29,7 +29,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myOrdersAdapter: RecyclerView, inflater: LayoutInflater, val parent: ViewGroup, private val activity: Activity):
+class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myOrdersAdapter: RecyclerView, inflater: LayoutInflater, val parent: ViewGroup, private val activity: Activity, private val context: Context):
     RecyclerView.ViewHolder(inflater.inflate(R.layout.my_order_card, parent, false)){
     val identifierTv = itemView.findViewById<TextView>(R.id.my_orders_card_identifier)
     val quantityTv = itemView.findViewById<TextView>(R.id.my_orders_card_quantity)
@@ -60,6 +60,8 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                 ) {
                     if (response.code() == 200) {
 
+                        Toast.makeText(context, "Encomenda removida com sucesso", Toast.LENGTH_SHORT).show()
+
                         myOrdersAdapter.visibility = View.VISIBLE
                         progressBar.visibility = View.GONE
                         textProgress.visibility = View.GONE
@@ -68,7 +70,7 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                         println("Aqui")
                         if (retroFit2 != null)
                             if(!retroFit2.isEmpty()){
-                                rebuildlistOrders(OrdersAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdapter, retroFit2, activity))
+                                rebuildlistOrders(OrdersAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdapter, retroFit2, activity, context))
                                 // rebuildlistOrders(OrdersAdapterRec(retroFit2))
                             }
                     }
@@ -78,7 +80,7 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                     myOrdersAdapter.visibility = View.VISIBLE
                     progressBar.visibility = View.GONE
                     textProgress.visibility = View.GONE
-                    println("Erro")
+                    Toast.makeText(context, "Erro! Tente novamente.", Toast.LENGTH_SHORT).show()
                 }
             })
         }

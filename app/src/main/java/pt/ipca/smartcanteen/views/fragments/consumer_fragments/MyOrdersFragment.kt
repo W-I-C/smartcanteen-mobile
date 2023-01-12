@@ -173,7 +173,7 @@ class MyOrdersFragment : Fragment() {
                                 orders.clear()
                                 orders.addAll(retroFit2)
 
-                                rebuildlistOrders(OrdersAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdater, orders, requireActivity()))
+                                rebuildlistOrders(OrdersAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdater, orders, requireActivity(), requireContext()))
                             }
                     }
                 }
