@@ -47,11 +47,9 @@ class ProfileFragment : Fragment() {
                 ) {
                     if (response.code() == 200) {
                         val retroFit2 = response.body()
-                        print(retroFit2)
-                        retroFit2?.name= name.toString()
-                        retroFit2?.campusname=spinnerCampus.toString()
-                        retroFit2?.barname=spinnerBar.toString()
-
+                        name.setText(retroFit2?.name)
+                        spinnerCampus.setText(retroFit2?.campusname)
+                        spinnerBar.setText(retroFit2?.barname)
                     }
                 }
 
