@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroTrade
+import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
 import pt.ipca.smartcanteen.models.adapters.TradesAdapterRec
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.TradesService
@@ -41,6 +43,7 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
             progressBar.visibility = View.VISIBLE
             textProgress.visibility = View.VISIBLE
 
+            println("123")
             service.removeTrade(ticketid,"Bearer $token").enqueue(object :
                 Callback<List<RetroTrade>> {
                 override fun onResponse(
@@ -49,15 +52,17 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                 ) {
                     if (response.code() == 200) {
 
-                        myTradesAdapter.visibility = View.GONE
+                        myTradesAdapter.visibility = View.VISIBLE
                         progressBar.visibility = View.GONE
                         textProgress.visibility = View.GONE
 
                         val retroFit2 = response.body()
                         println("Aqui")
+
                         if (retroFit2 != null)
                             if(!retroFit2.isEmpty()){
                                 rebuildlistOrders(TradesAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, retroFit2))
+                                // rebuildlistOrders(OrdersAdapterRec(retroFit2))
                             }
                     }
                 }
@@ -83,6 +88,14 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
         quantityTv.text = quantityText.toString()
         priceTv.text=priceText.toString()
         stateTv.text=stateText
+
+        if(stateText == "Não Iniciado" || stateText == "Atraso"){
+            stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.redLogout))
+        } else if(stateText == "Pronto" || stateText == "Entregue"){
+            stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.background_color))
+        } else if(stateText == "Preparação") {
+            stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.orange))
+        }
 
         if(stateText == "Entregue" || stateText == "Não Iniciado"){
             deleteButton.visibility = Button.VISIBLE
