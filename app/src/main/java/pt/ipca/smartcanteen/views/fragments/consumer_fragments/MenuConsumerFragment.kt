@@ -17,13 +17,11 @@ import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.MealsAdapterRec
 import pt.ipca.smartcanteen.models.adapters.MenuOrdersAdapterRec
 import pt.ipca.smartcanteen.models.adapters.TradeMealsAdapterRec
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
-import pt.ipca.smartcanteen.services.BarMealsService
-import pt.ipca.smartcanteen.services.CampusBarsService
-import pt.ipca.smartcanteen.services.CampusTradesService
-import pt.ipca.smartcanteen.services.MyOrdersService
+import pt.ipca.smartcanteen.services.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -60,15 +58,17 @@ class MenuConsumerFragment : Fragment() {
         tradesProgressBar.visibility = View.VISIBLE
         tradesTextProgress.visibility = View.VISIBLE
 
+        val retrofit = SmartCanteenRequests().retrofit
+
         logoutIc.setOnClickListener{
-            Toast.makeText(requireActivity(), "Logout", Toast.LENGTH_SHORT).show()
+            AuthHelper().doLogout(retrofit,requireActivity(),loadingDialogManager)
         }
 
         notiIc.setOnClickListener{
             Toast.makeText(requireActivity(), "notifications", Toast.LENGTH_SHORT).show()
         }
 
-        val retrofit = SmartCanteenRequests().retrofit
+
 
         val barSpinner: Spinner = view.findViewById<Spinner>(R.id.main_bar_select_sp)
 
@@ -244,6 +244,9 @@ class MenuConsumerFragment : Fragment() {
             }
 
         })
+        barMealsRecyclerView.visibility = View.VISIBLE
+        mealsProgressBar.visibility = View.GONE
+        mealsTextProgress.visibility = View.GONE
 
     }
 

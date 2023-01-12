@@ -95,13 +95,16 @@ class LoginActivity : AppCompatActivity() {
                                         sp.edit().putString("token", token).commit()
                                         sp.edit().putString("role", role).commit()
 
+
                                         if (role == "consumer") {
                                             // O usuário é um consumidor, então encaminhe-o para a tela específica para consumidores
                                             var intent = Intent(this@LoginActivity, ConsumerFragmentActivity::class.java)
+                                            finish()
                                             startActivity(intent)
                                         } else if (role == "employee") {
                                             // O usuário é um funcionário, então encaminhe-o para a tela específica para funcionários
                                             var intent = Intent(this@LoginActivity, EmployeeFragmentActivity::class.java)
+                                            finish()
                                             startActivity(intent)
                                         } else {
                                             // O usuário não é nem consumidor nem funcionário, então exiba uma mensagem de erro
