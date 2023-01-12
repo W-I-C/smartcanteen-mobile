@@ -1,4 +1,8 @@
 package pt.ipca.smartcanteen.models.helpers
 
-class RetroNotification {
+import com.google.gson.annotations.SerializedName
+
+class RetroNotification(
+    @SerializedName("description") var description:String
+) {
 }

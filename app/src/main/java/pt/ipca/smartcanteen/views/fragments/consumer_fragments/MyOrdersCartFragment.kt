@@ -1,4 +1,4 @@
-package pt.ipca.smartcanteen.views.fragments.consumer_fragmentshttps://smartcanteen-api.herokuapp.com/
+package pt.ipca.smartcanteen.views.fragments.consumer_fragmentshttps
 
 import android.content.Intent
 import android.os.Bundle
