@@ -17,7 +17,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class LoadingScreen : AppCompatActivity() {
+class LoadingScreenActivity : AppCompatActivity() {
 
     private var sessionToken: String? = null
 
@@ -25,11 +25,11 @@ class LoadingScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.loading_screen)
 
-        val sp = SharedPreferencesHelper.getSharedPreferences(this@LoadingScreen)
+        val sp = SharedPreferencesHelper.getSharedPreferences(this@LoadingScreenActivity)
         val token = sp.getString("token", null)
 
         if(token == null){
-            var intent = Intent(this@LoadingScreen, Login::class.java)
+            var intent = Intent(this@LoadingScreenActivity, LoginActivity::class.java)
             startActivity(intent)
         }
         else{
@@ -56,25 +56,25 @@ class LoadingScreen : AppCompatActivity() {
                                 Log.d("token", token)
                             }
 
-                            val sp = SharedPreferencesHelper.getSharedPreferences(this@LoadingScreen)
+                            val sp = SharedPreferencesHelper.getSharedPreferences(this@LoadingScreenActivity)
                             sp.edit().putString("token", token).commit()
 
                             if(role == "consumer"){
-                                var intent = Intent(this@LoadingScreen, ConsumerFragmentActivity::class.java)
+                                var intent = Intent(this@LoadingScreenActivity, ConsumerFragmentActivity::class.java)
                                 startActivity(intent)
                             } else if(role == "employee"){
-                                var intent = Intent(this@LoadingScreen, EmployeeFragmentActivity::class.java)
+                                var intent = Intent(this@LoadingScreenActivity, EmployeeFragmentActivity::class.java)
                                 startActivity(intent)
                             }
 
                         } else if (response.code() == 401) {
-                            var intent = Intent(this@LoadingScreen, Login::class.java)
+                            var intent = Intent(this@LoadingScreenActivity, LoginActivity::class.java)
                             startActivity(intent)
                         }
                     }
 
                     override fun onFailure(calll: Call<LoginResponse>, t: Throwable) {
-                        Toast.makeText(this@LoadingScreen, "Erro! Tente novamente.", Toast.LENGTH_LONG)
+                        Toast.makeText(this@LoadingScreenActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
                             .show()
                     }
                 })

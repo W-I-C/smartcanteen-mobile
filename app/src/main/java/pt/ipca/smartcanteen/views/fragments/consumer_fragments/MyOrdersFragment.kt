@@ -129,7 +129,7 @@ class MyOrdersFragment : Fragment() {
         tradesTextError.visibility = View.GONE
         myTradesAdater.visibility = View.GONE
 
-        textTittle.setText("Minhas Encomendas")
+        textTittle.setText(getString(R.string.my_trades))
 
         val BASE_URL = "https://smartcanteen-api.herokuapp.com"
         var retrofit = Retrofit.Builder()
@@ -142,6 +142,7 @@ class MyOrdersFragment : Fragment() {
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
 
+        myOrdersAdater.visibility = View.GONE
         progressBar.visibility = View.VISIBLE
         textProgress.visibility = View.VISIBLE
 
@@ -153,6 +154,8 @@ class MyOrdersFragment : Fragment() {
                     response: Response<List<RetroTrade>>
                 ) {
                     if (response.code() == 200) {
+
+                        myOrdersAdater.visibility = View.VISIBLE
                         progressBar.visibility = View.GONE
                         textProgress.visibility = View.GONE
                         val retroFit2 = response.body()
@@ -182,6 +185,7 @@ class MyOrdersFragment : Fragment() {
                 }
 
                 override fun onFailure(calll: Call<List<RetroTrade>>, t: Throwable) {
+                    myOrdersAdater.visibility = View.VISIBLE
                     progressBar.visibility = View.GONE
                     textProgress.visibility = View.GONE
                     Toast.makeText(requireContext(), "Erro! Tente novamente.", Toast.LENGTH_LONG)
@@ -194,7 +198,7 @@ class MyOrdersFragment : Fragment() {
         ordersTextError.visibility = View.GONE
         myOrdersAdater.visibility = View.GONE
 
-        textTittle.setText("Minhas Trocas")
+        textTittle.setText(getString(R.string.my_orders))
 
         val BASE_URL = "https://smartcanteen-api.herokuapp.com"
         var retrofit = Retrofit.Builder()
@@ -207,6 +211,7 @@ class MyOrdersFragment : Fragment() {
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
 
+        myTradesAdater.visibility = View.GONE
         progressBar.visibility = View.VISIBLE
         textProgress.visibility = View.VISIBLE
 
@@ -218,9 +223,11 @@ class MyOrdersFragment : Fragment() {
                     response: Response<List<RetroTrade>>
                 ) {
                     if (response.code() == 200) {
-                        println("123")
+
+                        myTradesAdater.visibility = View.VISIBLE
                         progressBar.visibility = View.GONE
                         textProgress.visibility = View.GONE
+
                         val retroFit2 = response.body()
 
                         if (retroFit2 != null)
@@ -236,6 +243,7 @@ class MyOrdersFragment : Fragment() {
                 }
 
                 override fun onFailure(calll: Call<List<RetroTrade>>, t: Throwable) {
+                    myTradesAdater.visibility = View.VISIBLE
                     progressBar.visibility = View.GONE
                     textProgress.visibility = View.GONE
                     Toast.makeText(requireContext(), "Erro! Tente novamente.", Toast.LENGTH_LONG)

@@ -166,10 +166,9 @@ class MainFragment : Fragment() {
 
                                         val barId = body[position].barid
 
-                                        mealsProgressBar.visibility = View.VISIBLE
-                                        mealsTextProgress.visibility = View.VISIBLE
 
-                                        barMealsRecyclerView.visibility = View.GONE
+
+                                        //barMealsRecyclerView.visibility = View.GONE
                                         Log.d("spinner:","Before")
                                         getMealsList(
                                             barMealsRecyclerView,
@@ -178,9 +177,9 @@ class MainFragment : Fragment() {
                                             retrofit
                                         )
                                         Log.d("spinner:","After")
-                                        barMealsRecyclerView.visibility = View.VISIBLE
-                                        mealsProgressBar.visibility = View.GONE
-                                        mealsTextProgress.visibility = View.GONE
+                                        //barMealsRecyclerView.visibility = View.VISIBLE
+                                        //mealsProgressBar.visibility = View.GONE
+                                        //mealsTextProgress.visibility = View.GONE
                                     }
                                 }
                         }
@@ -189,6 +188,8 @@ class MainFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<RetroBar>>, t: Throwable) {
+                //mealsProgressBar.visibility = View.GONE
+                //mealsTextProgress.visibility = View.GONE
                 print("error")
             }
 
@@ -208,6 +209,9 @@ class MainFragment : Fragment() {
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
 
+        barMealsRecyclerView.visibility = View.INVISIBLE
+        mealsProgressBar.visibility = View.VISIBLE
+        mealsTextProgress.visibility = View.VISIBLE
 
         service.getBarMeals(barId, "Bearer $token").enqueue(object :
             Callback<List<RetroMeal>> {
@@ -217,6 +221,10 @@ class MainFragment : Fragment() {
             ) {
                 if (response.code() == 200) {
                     val body = response.body()
+
+                    barMealsRecyclerView.visibility = View.VISIBLE
+                    mealsProgressBar.visibility = View.INVISIBLE
+                    mealsTextProgress.visibility = View.INVISIBLE
 
                     if (body != null) {
                         if (body.isNotEmpty()) {
@@ -232,6 +240,9 @@ class MainFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<RetroMeal>>, t: Throwable) {
+                barMealsRecyclerView.visibility = View.VISIBLE
+                mealsProgressBar.visibility = View.INVISIBLE
+                mealsTextProgress.visibility = View.INVISIBLE
                 print("error")
             }
 
@@ -240,8 +251,8 @@ class MainFragment : Fragment() {
     }
 
     private fun getTradeList(
-        barMealsRecyclerView: RecyclerView,
-        barMealsLinearLayoutManager: LinearLayoutManager,
+        tradeMealsRecyclerView: RecyclerView,
+        tradeMealsLinearLayoutManager: LinearLayoutManager,
         retrofit: Retrofit
     ) {
 
@@ -250,6 +261,9 @@ class MainFragment : Fragment() {
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
 
+        tradeMealsRecyclerView.visibility = View.INVISIBLE
+        tradesProgressBar.visibility = View.VISIBLE
+        tradesTextProgress.visibility = View.VISIBLE
 
         service.getCampusTrades("Bearer $token").enqueue(object :
             Callback<List<RetroTrade>> {
@@ -259,21 +273,29 @@ class MainFragment : Fragment() {
             ) {
                 if (response.code() == 200) {
                     val body = response.body()
+
+                    tradeMealsRecyclerView.visibility = View.VISIBLE
+                    tradesProgressBar.visibility = View.INVISIBLE
+                    tradesTextProgress.visibility = View.INVISIBLE
+
                     Log.d("Trades: ", body.toString())
                     if (body != null) {
                         if (body.isNotEmpty()) {
                             /** Campus trades **/
                             val barMealsAdapter = TradeMealsAdapterRec(getString(R.string.ordernum),getString(R.string.free), body)
 
-                            barMealsRecyclerView.layoutManager = barMealsLinearLayoutManager
-                            barMealsRecyclerView.itemAnimator = DefaultItemAnimator()
-                            barMealsRecyclerView.adapter = barMealsAdapter
+                            tradeMealsRecyclerView.layoutManager = tradeMealsLinearLayoutManager
+                            tradeMealsRecyclerView.itemAnimator = DefaultItemAnimator()
+                            tradeMealsRecyclerView.adapter = barMealsAdapter
                         }
                     }
                 }
             }
 
             override fun onFailure(call: Call<List<RetroTrade>>, t: Throwable) {
+                tradeMealsRecyclerView.visibility = View.VISIBLE
+                tradesProgressBar.visibility = View.INVISIBLE
+                tradesTextProgress.visibility = View.INVISIBLE
                 print("error")
             }
 
@@ -292,6 +314,9 @@ class MainFragment : Fragment() {
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
 
+        ordersRecyclerView.visibility = View.INVISIBLE
+        ordersProgressBar.visibility = View.VISIBLE
+        ordersTextProgress.visibility = View.VISIBLE
 
         service.seeMyOrders("Bearer $token").enqueue(object :
             Callback<List<RetroTrade>> {
@@ -301,6 +326,11 @@ class MainFragment : Fragment() {
             ) {
                 if (response.code() == 200) {
                     val body = response.body()
+
+                    ordersRecyclerView.visibility = View.VISIBLE
+                    ordersProgressBar.visibility = View.INVISIBLE
+                    ordersTextProgress.visibility = View.INVISIBLE
+
                     Log.d("Encomendas: ", body.toString())
                     if (body != null) {
                         if (body.isNotEmpty()) {
@@ -316,6 +346,9 @@ class MainFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<RetroTrade>>, t: Throwable) {
+                ordersRecyclerView.visibility = View.VISIBLE
+                ordersProgressBar.visibility = View.INVISIBLE
+                ordersTextProgress.visibility = View.INVISIBLE
                 print("error")
             }
 

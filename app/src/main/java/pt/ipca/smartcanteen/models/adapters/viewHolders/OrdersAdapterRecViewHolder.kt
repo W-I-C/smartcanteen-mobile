@@ -52,6 +52,7 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
 
             val token = sp.getString("token", null)
 
+            myOrdersAdapter.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
             textProgress.visibility = View.VISIBLE
 
@@ -63,6 +64,7 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                 ) {
                     if (response.code() == 200) {
 
+                        myOrdersAdapter.visibility = View.VISIBLE
                         progressBar.visibility = View.GONE
                         textProgress.visibility = View.GONE
 
@@ -77,6 +79,7 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                 }
 
                 override fun onFailure(calll: Call<List<RetroTrade>>, t: Throwable) {
+                    myOrdersAdapter.visibility = View.VISIBLE
                     progressBar.visibility = View.GONE
                     textProgress.visibility = View.GONE
                     println("Erro")
