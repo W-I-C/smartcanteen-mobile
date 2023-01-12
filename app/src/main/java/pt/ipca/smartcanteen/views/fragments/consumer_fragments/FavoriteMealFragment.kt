@@ -1,81 +1,60 @@
-//package pt.ipca.smartcanteen.views.fragments.consumer_fragments
-//
-//import android.os.Bundle
-//import androidx.fragment.app.Fragment
-//import android.view.LayoutInflater
-//import android.view.View
-//import android.view.ViewGroup
-//import android.widget.GridView
-//import androidx.recyclerview.widget.DefaultItemAnimator
-//import androidx.recyclerview.widget.LinearLayoutManager
-//import androidx.recyclerview.widget.RecyclerView
-//import pt.ipca.smartcanteen.R
-//import pt.ipca.smartcanteen.models.RetroTicket
-//import pt.ipca.smartcanteen.models.adapters.FavoriteMealAdapterRec
-//import pt.ipca.smartcanteen.models.adapters.UndeliveredOrdersAdaterRec
-//import pt.ipca.smartcanteen.models.helpers.RetroFavoriteMeal
-//import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
-//import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
-//import pt.ipca.smartcanteen.services.FavoritemealService
-//import pt.ipca.smartcanteen.services.OrdersService
-//import retrofit2.Call
-//import retrofit2.Callback
-//import retrofit2.Response
-//
-//@Suppress("UNREACHABLE_CODE")
-//class FavoriteMealFragment : Fragment() {
-//    private val gridView: GridView by lazy { requireView().findViewById<GridView>(R.id.idGRV) as GridView }
-//
-//
-//
-//    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View {
-//        val view = inflater.inflate(R.layout.activity_favorite_meal, parent, false)
-//        gridView = view.findViewById(R.id.idGRV)
-//
-//        val retrofit = SmartCanteenRequests().retrofit
-//
-//        val service = retrofit.create(FavoritemealService::class.java)
-//
-//        val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
-//        val token = sp.getString("token", null)
-//
-//        var call =
-//            service.getFavoriteMeals("Bearer $token").enqueue(object :
-//                Callback<List<RetroFavoriteMeal>> {
-//                override fun onResponse(
-//                    call: Call<List<RetroFavoriteMeal>>,
-//                    response: Response<List<RetroFavoriteMeal>>
-//                ) {
-//                    if (response.code() == 200) {
-//                        val retroFit2 = response.body()
-//
-//                        if (retroFit2 != null)
-//                            if(retroFit2.isEmpty()){
-//
-//                            } else {
-//
-//                                rebuildlist(FavoriteMealAdapterRec(retroFit2))
-//                            }
-//                    }
-//                }
-//
-//                override fun onFailure(calll: Call<List<RetroFavoriteMeal>>, t: Throwable) {
-//                    print("error")
-//                }
-//            })
-//    }
-//
-//    fun rebuildlist(adapter: FavoriteMealAdapterRec) {
-//        val linearLayoutManager = LinearLayoutManager(requireContext())
-//        gridView.layoutManager = linearLayoutManager
-//        gridView.itemAnimator = DefaultItemAnimator()
-//        gridView.adapter = adapter
-//
-//
-//    }
-//    }
-//
-//
-//
-//}
-//
+package pt.ipca.smartcanteen.views.fragments.consumer_fragments
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import pt.ipca.smartcanteen.R
+
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
+
+/**
+ * A simple [Fragment] subclass.
+ * Use the [FavoriteMealFragment.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class FavoriteMealFragment : Fragment() {
+    // TODO: Rename and change types of parameters
+    private var param1: String? = null
+    private var param2: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_favorite_meal, container, false)
+    }
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment FavoriteMealFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            FavoriteMealFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
+    }
+}
