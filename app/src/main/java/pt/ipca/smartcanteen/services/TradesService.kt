@@ -7,8 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
 
-interface MyTradesService {
-    // TODO: mudar para a rota do Henrique
+interface TradesService {
     @GET("/api/v1/consumer/mytrades")
     fun seeMyTrades(@Header("Authorization") authorization: String): Call<List<RetroTrade>>
 
@@ -17,4 +16,7 @@ interface MyTradesService {
         @Path("ticketid") ticketid: String,
         @Header("Authorization") authorization: String
     ): Call<List<RetroTrade>>
+
+    @GET("/api/v1/consumer/trades/available")
+    fun getCampusTrades(@Header("Authorization") authorization: String): Call<List<RetroTrade>>
 }

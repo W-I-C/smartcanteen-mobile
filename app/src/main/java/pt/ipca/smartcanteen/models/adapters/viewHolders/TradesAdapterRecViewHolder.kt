@@ -14,12 +14,10 @@ import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.TradesAdapterRec
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
-import pt.ipca.smartcanteen.services.MyTradesService
+import pt.ipca.smartcanteen.services.TradesService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myTradesAdapter: RecyclerView, inflater: LayoutInflater, val parent: ViewGroup):
     RecyclerView.ViewHolder(inflater.inflate(R.layout.my_trade_card, parent, false)){
@@ -35,7 +33,7 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
 
             val retrofit = SmartCanteenRequests().retrofit
 
-            val service = retrofit.create(MyTradesService::class.java)
+            val service = retrofit.create(TradesService::class.java)
 
             val token = sp.getString("token", null)
 

@@ -53,11 +53,6 @@ class MenuConsumerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ordersProgressBar.visibility = View.VISIBLE
-        ordersTextProgress.visibility = View.VISIBLE
-        tradesProgressBar.visibility = View.VISIBLE
-        tradesTextProgress.visibility = View.VISIBLE
-
         val retrofit = SmartCanteenRequests().retrofit
 
         logoutIc.setOnClickListener{
@@ -90,17 +85,11 @@ class MenuConsumerFragment : Fragment() {
             tradeMealsLinearLayoutManager,
             retrofit
         )
-        tradesProgressBar.visibility = View.GONE
-        tradesTextProgress.visibility = View.GONE
-
         getOrdersList(
             ordersRecyclerView,
             ordersLinearLayoutManager,
             retrofit
         )
-        ordersProgressBar.visibility = View.GONE
-        ordersTextProgress.visibility = View.GONE
-
         /** Get All Info **/
         getBarInfo(
             barSpinner,
@@ -119,7 +108,7 @@ class MenuConsumerFragment : Fragment() {
     ) {
 
 
-        val service = retrofit.create(CampusBarsService::class.java)
+        val service = retrofit.create(CampusService::class.java)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
@@ -163,9 +152,6 @@ class MenuConsumerFragment : Fragment() {
 
                                         val barId = body[position].barid
 
-
-
-                                        //barMealsRecyclerView.visibility = View.GONE
                                         Log.d("spinner:","Before")
                                         getMealsList(
                                             barMealsRecyclerView,
@@ -174,9 +160,6 @@ class MenuConsumerFragment : Fragment() {
                                             retrofit
                                         )
                                         Log.d("spinner:","After")
-                                        //barMealsRecyclerView.visibility = View.VISIBLE
-                                        //mealsProgressBar.visibility = View.GONE
-                                        //mealsTextProgress.visibility = View.GONE
                                     }
                                 }
                         }
@@ -185,8 +168,6 @@ class MenuConsumerFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<RetroBar>>, t: Throwable) {
-                //mealsProgressBar.visibility = View.GONE
-                //mealsTextProgress.visibility = View.GONE
                 print("error")
             }
 
@@ -201,7 +182,7 @@ class MenuConsumerFragment : Fragment() {
         retrofit: Retrofit
     ) {
 
-        val service = retrofit.create(BarMealsService::class.java)
+        val service = retrofit.create(MealsService::class.java)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
@@ -256,7 +237,7 @@ class MenuConsumerFragment : Fragment() {
         retrofit: Retrofit
     ) {
 
-        val service = retrofit.create(CampusTradesService::class.java)
+        val service = retrofit.create(TradesService::class.java)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
@@ -309,7 +290,7 @@ class MenuConsumerFragment : Fragment() {
         retrofit: Retrofit
     ) {
 
-        val service = retrofit.create(MyOrdersService::class.java)
+        val service = retrofit.create(OrdersService::class.java)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)

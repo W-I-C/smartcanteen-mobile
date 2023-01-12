@@ -3,7 +3,7 @@ package pt.ipca.smartcanteen.models.helpers
 import android.app.Activity
 import android.content.Intent
 import androidx.core.content.ContextCompat.startActivity
-import pt.ipca.smartcanteen.services.LoginService
+import pt.ipca.smartcanteen.services.AuthService
 import pt.ipca.smartcanteen.views.activities.LoginActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,7 +16,7 @@ class AuthHelper {
         activity: Activity,
         loadingDialogManager:LoadingDialogManager
     ){
-        val service = retrofit.create(LoginService::class.java)
+        val service = retrofit.create(AuthService::class.java)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(activity)
         val token = sp.getString("token", null)
