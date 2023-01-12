@@ -60,4 +60,6 @@
     <string name="can_increment">Can increment?</string>
     <string name="can_decrement">Can decrement?</string>
     <string name="can_remove">Can Remove?</string>
+    <string name="description">Description</string>
+    <string name="meal_changes">Changes</string>
 </resources>
