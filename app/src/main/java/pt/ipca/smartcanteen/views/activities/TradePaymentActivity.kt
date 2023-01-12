@@ -6,10 +6,10 @@ import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import pt.ipca.smartcanteen.R
 
-class ExchangePaymentActivity : AppCompatActivity() {
+class TradePaymentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.exchange_payment)
+        setContentView(R.layout.activity_trade_payment)
     }
 
     fun onRadioButtonClicked(view: View) {

@@ -10,16 +10,12 @@ import android.widget.Button
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import pt.ipca.smartcanteen.models.MyOrderCart
 import pt.ipca.smartcanteen.models.adapters.MyOrdersCartRec
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroCartMeals
-import pt.ipca.smartcanteen.models.RetroTicket
-import pt.ipca.smartcanteen.models.adapters.UndeliveredOrdersAdaterRec
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
+import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.RetroCartMealsService
-import pt.ipca.smartcanteen.services.UndeliveredOrdersService
-import pt.ipca.smartcanteen.views.activities.ConsumerExchangeActivity
 import pt.ipca.smartcanteen.views.activities.OrderActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,17 +31,15 @@ class MyOrdersCartFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.activity_cart, parent, false)
+        return inflater.inflate(R.layout.fragment_cart, parent, false)
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val BASE_URL = "https://smartcanteen-api.herokuapp.com"
-        var retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+
+        val retrofit = SmartCanteenRequests().retrofit
+
         val service = retrofit.create(RetroCartMealsService::class.java)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
