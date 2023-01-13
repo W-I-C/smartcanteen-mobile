@@ -352,10 +352,4 @@ class ConsumerTradeActivity : AppCompatActivity() {
         // TODO: no POST de fazer troca meter um error 500 (a troca já foi submtida para troca)
 
     }
-
-    //fun doCancel(view: View){
-    //    println("aqui")
-    //    var intent = Intent(this@ConsumerExchangeActivity, MyOrdersActivity::class.java)
-    //    startActivity(intent)
-    //}
 }

@@ -238,7 +238,7 @@ class MyOrdersFragment : Fragment() {
                             } else {
                                 myTradesAdater.visibility = View.VISIBLE
                                 tradesTextError.visibility = View.GONE
-                                rebuildlistTrades(TradesAdapterRec(progressBar, textProgress, linearLayoutTradeManager, sp, myTradesAdater, retroFit2, requireContext()))
+                                rebuildlistTrades(TradesAdapterRec(progressBar, textProgress, linearLayoutTradeManager, sp, myTradesAdater, retroFit2, requireActivity(), requireContext()))
                             }
                     }
                 }
