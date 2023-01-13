@@ -192,6 +192,7 @@
         android:layout_marginLeft="10dp"
         />
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/cancel"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:padding="10dp"

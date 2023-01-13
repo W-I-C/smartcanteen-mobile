@@ -6,7 +6,8 @@ class RetroCartMeals(
     @SerializedName("name") var name:String,
     @SerializedName("price") var price:Double,
     @SerializedName("amount") var quantity:Int,
-    @SerializedName("carttotal") var cartTotal:Double,)
+    @SerializedName("carttotal") var cartTotal:Double,
+    )
 {
 
 
