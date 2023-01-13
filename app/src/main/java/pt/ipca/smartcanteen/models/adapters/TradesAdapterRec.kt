@@ -2,6 +2,7 @@ package pt.ipca.smartcanteen.models.adapters
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.models.adapters.viewHolders.TradesAdapterRecViewHolder
 import pt.ipca.smartcanteen.models.RetroTrade
+import pt.ipca.smartcanteen.views.activities.ConsumerOrderDetailsActivity
 
 class TradesAdapterRec(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myTradesAdapter: RecyclerView, private var tradesList: List<RetroTrade>, private val activity: Activity,  private var context: Context) :
     RecyclerView.Adapter<TradesAdapterRecViewHolder>() {
@@ -37,7 +39,15 @@ class TradesAdapterRec(val progressBar: ProgressBar, val textProgress: TextView,
             onItemTradesClick?.invoke(tradesList[position])
         }
 
-        //holder.setDetailClickListener(ticketid,nencomenda,total)
+        holder.itemView.setOnClickListener{
+            var intent = Intent(activity, ConsumerOrderDetailsActivity::class.java)
+            intent.putExtra("ticketid", ticketid)
+            intent.putExtra("norder", nencomenda)
+            intent.putExtra("total", total)
+            activity.startActivity(intent)
+        }
+
+        // holder.setDetailClickListener(ticketid,nencomenda,total)
 
         holder.setDeleteClickListener(ticketid, isgeneraltrade, generaltradeid)
     }

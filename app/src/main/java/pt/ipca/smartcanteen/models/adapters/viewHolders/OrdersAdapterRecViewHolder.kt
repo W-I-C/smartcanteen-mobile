@@ -23,6 +23,7 @@ import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.OrdersService
+import pt.ipca.smartcanteen.views.activities.ConsumerOrderDetailsActivity
 import pt.ipca.smartcanteen.views.activities.ConsumerTradeActivity
 import pt.ipca.smartcanteen.views.activities.TradePaymentActivity
 import pt.ipca.smartcanteen.views.fragments.employee_fragments.EmployeeFragmentActivity
@@ -100,14 +101,6 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
             activity.startActivity(intent)
         }
     }
-
-//    fun setDetailClickListener(ticketId: String, nencomenda: Int, total: Float){
-//        var intent = Intent(activity, ConsumerTradeActivity::class.java)
-//        intent.putExtra("ticketid", ticketId)
-//        intent.putExtra("norder", nencomenda)
-//        intent.putExtra("total", total)
-//        activity.startActivity(intent)
-//    }
 
     fun bindData(identifierText: Int, quantityText: Int, priceText: Float, stateText: String){
         identifierTv.text= identifierText.toString()

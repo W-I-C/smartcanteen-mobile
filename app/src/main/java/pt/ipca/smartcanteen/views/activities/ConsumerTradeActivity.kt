@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.*
 import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
@@ -247,11 +248,21 @@ class ConsumerTradeActivity : AppCompatActivity() {
         checkBox2.setOnClickListener {
             if (checkBox2.isChecked) {
                 editText.visibility = View.VISIBLE
-                if(editText.length() == 0){
+                if(editText.text.isEmpty()){
                     textError.visibility = View.VISIBLE
                 } else {
                     textError.visibility = View.GONE
                 }
+                editText.addTextChangedListener {
+                    if (it != null) {
+                        if(it.isEmpty()){
+                            textError.visibility = View.VISIBLE
+                        } else {
+                            textError.visibility = View.GONE
+                        }
+                    }
+                }
+
                 spinner_direct.visibility = View.GONE
                 spinner_direct_payable.visibility = View.VISIBLE
                 checkBox1.isChecked = false
