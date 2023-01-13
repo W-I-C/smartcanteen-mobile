@@ -12,10 +12,13 @@ class MyOrdersCartRecViewHolder(inflater: LayoutInflater, val parent: ViewGroup)
     val quantityTv = itemView.findViewById<TextView>(R.id.my_orders_cart_card_quantity)
     val priceTv = itemView.findViewById<TextView>(R.id.my_orders_cart_card_price)
 
-    fun bindData(nameText:String, quantityText: String, priceText:String){
+
+
+    fun bindData(nameText: String, quantityText: String, priceText: String){
         nameTv.text=nameText
         quantityTv.text = quantityText
         priceTv.text=priceText
+
 
     }
 }
