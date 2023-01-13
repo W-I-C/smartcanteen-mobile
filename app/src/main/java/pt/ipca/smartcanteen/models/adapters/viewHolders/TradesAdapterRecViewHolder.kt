@@ -51,7 +51,6 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                 progressBar.visibility = View.VISIBLE
                 textProgress.visibility = View.VISIBLE
 
-                println("123")
                 service.removeTrade(ticketid,"Bearer $token").enqueue(object :
                     Callback<List<RetroTrade>> {
                     override fun onResponse(
@@ -67,7 +66,6 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                             textProgress.visibility = View.GONE
 
                             val retroFit2 = response.body()
-                            println("Aqui")
 
                             if (retroFit2 != null)
                                 if(!retroFit2.isEmpty()){
@@ -80,7 +78,6 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                         myTradesAdapter.visibility = View.GONE
                         progressBar.visibility = View.GONE
                         textProgress.visibility = View.GONE
-                        println("Erro")
                     }
                 })
             } else {
@@ -91,7 +88,6 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                     progressBar.visibility = View.VISIBLE
                     textProgress.visibility = View.VISIBLE
 
-                    println("123")
                     service.removeGeneralTrade(generaltradeid,"Bearer $token").enqueue(object :
                         Callback<List<RetroTrade>> {
                         override fun onResponse(
@@ -107,10 +103,10 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                                 textProgress.visibility = View.GONE
 
                                 val retroFit2 = response.body()
-                                println("Aqui")
 
                                 if (retroFit2 != null)
                                     if(!retroFit2.isEmpty()){
+                                        println("Aqui123")
                                         rebuildlistOrders(TradesAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, retroFit2, activity, context))
                                     }
                             }
@@ -120,7 +116,6 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                             myTradesAdapter.visibility = View.GONE
                             progressBar.visibility = View.GONE
                             textProgress.visibility = View.GONE
-                            println("Erro")
                         }
                     })
                 }

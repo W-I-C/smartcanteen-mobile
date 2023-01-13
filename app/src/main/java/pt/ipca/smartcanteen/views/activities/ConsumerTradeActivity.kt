@@ -146,7 +146,7 @@ class ConsumerTradeActivity : AppCompatActivity() {
 
                     val body = GeneralTradeBody(isfree, paymentmethodid)
 
-                    //loadingDialogManager.dialog.show()
+                    loadingDialogManager.dialog.show()
 
                     println(isfree)
                     println(paymentmethodid)
@@ -162,18 +162,21 @@ class ConsumerTradeActivity : AppCompatActivity() {
 
                                 println("Aqui123")
 
-                                //loadingDialogManager.dialog.dismiss()
+                                loadingDialogManager.dialog.dismiss()
 
                                 Toast.makeText(this@ConsumerTradeActivity, "Troca geral realizada com sucesso!", Toast.LENGTH_LONG)
                                     .show()
                                 finish()
                             } else if (response.code() == 500) {
-                                println("Entrou aqui")
+                                loadingDialogManager.dialog.dismiss()
+
+                                Toast.makeText(this@ConsumerTradeActivity, "Troca geral falhada!", Toast.LENGTH_LONG)
+                                    .show()
                             }
                         }
 
                         override fun onFailure(calll: Call<String>, t: Throwable) {
-                            //loadingDialogManager.dialog.dismiss()
+                            loadingDialogManager.dialog.dismiss()
                             println("Deu erro")
                             Toast.makeText(this@ConsumerTradeActivity, "Erro! Tente novamente (a troca geral pode já ter sido feita).", Toast.LENGTH_LONG)
                                 .show()
@@ -193,7 +196,7 @@ class ConsumerTradeActivity : AppCompatActivity() {
 
                     val body = DirectTradeBody(receiveremail.toString() ,isfree, paymentmethodid)
 
-                    //loadingDialogManager.dialog.show()
+                    loadingDialogManager.dialog.show()
 
                     service.directTicketTrade(ticketId, "Bearer $token",body).enqueue(object :
                         Callback<String> {
@@ -205,19 +208,22 @@ class ConsumerTradeActivity : AppCompatActivity() {
                             if (response.code() == 200) {
 
                                 println("Aqui")
-                               // loadingDialogManager.dialog.dismiss()
+                                loadingDialogManager.dialog.dismiss()
 
                                 Toast.makeText(this@ConsumerTradeActivity, "Troca direta realizada com sucesso!", Toast.LENGTH_LONG)
                                     .show()
+                                finish()
                             } else if (response.code() == 500) {
-                                println("Entrou aqui")
-                                println(response.body())
+                                loadingDialogManager.dialog.dismiss()
+
+                                Toast.makeText(this@ConsumerTradeActivity, "Troca direta falhada!", Toast.LENGTH_LONG)
+                                    .show()
                             }
 
                         }
 
                         override fun onFailure(call: Call<String>, t: Throwable) {
-                            //loadingDialogManager.dialog.dismiss()
+                            loadingDialogManager.dialog.dismiss()
                             println("CAo ${t.toString()} ")
                             Toast.makeText(this@ConsumerTradeActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
                                 .show()
