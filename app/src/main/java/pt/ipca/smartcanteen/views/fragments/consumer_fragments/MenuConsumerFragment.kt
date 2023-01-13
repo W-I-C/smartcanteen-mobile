@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.*
 import pt.ipca.smartcanteen.models.RetroBar
 import pt.ipca.smartcanteen.models.RetroMeal
+import pt.ipca.smartcanteen.models.RetroTicket
 import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.MealsAdapterRec
 import pt.ipca.smartcanteen.models.adapters.MenuOrdersAdapterRec
@@ -63,7 +64,7 @@ class MenuConsumerFragment : Fragment() {
         }
 
         notiIc.setOnClickListener{
-            var intent = Intent(requireActivity(), NotificationActivity::class.java)
+            val intent = Intent(requireActivity(), NotificationActivity::class.java)
             startActivity(intent)
         }
 
@@ -270,7 +271,7 @@ class MenuConsumerFragment : Fragment() {
                     if (body != null) {
                         if (body.isNotEmpty()) {
                             /** Campus trades **/
-                            val barMealsAdapter = TradeMealsAdapterRec(getString(R.string.ordernum),getString(R.string.free), body)
+                            val barMealsAdapter = TradeMealsAdapterRec(requireActivity(),getString(R.string.ordernum),getString(R.string.free), body)
 
                             tradeMealsRecyclerView.layoutManager = tradeMealsLinearLayoutManager
                             tradeMealsRecyclerView.itemAnimator = DefaultItemAnimator()
@@ -307,10 +308,10 @@ class MenuConsumerFragment : Fragment() {
         ordersTextProgress.visibility = View.VISIBLE
 
         service.seeMyOrders("Bearer $token").enqueue(object :
-            Callback<List<RetroTrade>> {
+            Callback<List<RetroTicket>> {
             override fun onResponse(
-                call: Call<List<RetroTrade>>,
-                response: Response<List<RetroTrade>>
+                call: Call<List<RetroTicket>>,
+                response: Response<List<RetroTicket>>
             ) {
                 if (response.code() == 200) {
                     val body = response.body()
@@ -334,7 +335,7 @@ class MenuConsumerFragment : Fragment() {
                 }
             }
 
-            override fun onFailure(call: Call<List<RetroTrade>>, t: Throwable) {
+            override fun onFailure(call: Call<List<RetroTicket>>, t: Throwable) {
                 ordersRecyclerView.visibility = View.VISIBLE
                 ordersProgressBar.visibility = View.INVISIBLE
                 ordersTextProgress.visibility = View.INVISIBLE

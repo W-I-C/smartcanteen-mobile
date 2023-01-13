@@ -2,7 +2,7 @@ package pt.ipca.smartcanteen.models
 
 import com.google.gson.annotations.SerializedName
 
-class RetroOrder(
+class RetroTicketMeal(
     @SerializedName("mealid") var mealid: String,
     @SerializedName("amount") var amount: Int,
     @SerializedName("mealprice") var mealprice: Double,

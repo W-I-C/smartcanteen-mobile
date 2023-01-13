@@ -94,7 +94,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/background_color"
         android:layout_marginTop="10dp"
-        android:text="Loading..."
+        android:text="@string/Loading..."
         android:textSize="30sp"
         android:textStyle="bold"
         android:textColor="@color/background_color"

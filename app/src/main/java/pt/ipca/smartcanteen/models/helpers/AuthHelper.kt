@@ -32,7 +32,7 @@ class AuthHelper {
                 if (response.code() == 200) {
                     sp.edit().remove("token").apply()
                     loadingDialogManager.dialog.dismiss()
-                    var intent = Intent(activity, LoginActivity::class.java)
+                    val intent = Intent(activity, LoginActivity::class.java)
                     activity.finish()
                     startActivity(activity,intent,null)
                 }

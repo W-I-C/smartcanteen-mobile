@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.*
+import pt.ipca.smartcanteen.models.RetroTicket
 import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.TradesAdapterRec
 import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
@@ -41,7 +42,7 @@ class MyOrdersFragment : Fragment() {
     private val textTittle: TextView by lazy {requireView().findViewById<TextView>(R.id.my_orders_title) as TextView }
     private val progressBar: ProgressBar by lazy {requireView().findViewById<ProgressBar>(R.id.my_orders_progress_bar) as ProgressBar }
     private val textProgress: TextView by lazy {requireView().findViewById<TextView>(R.id.my_orders_progress_bar_text) as TextView }
-    var orders = ArrayList<RetroTrade>()
+    var orders = ArrayList<RetroTicket>()
     // val linearLayoutManager = LinearLayoutManager(requireContext())
     val linearLayoutManager = LinearLayoutManager(activity)
     val linearLayoutTradeManager = LinearLayoutManager(activity)
@@ -79,7 +80,7 @@ class MyOrdersFragment : Fragment() {
         // adapter.onDeleteButtonClick = this::onDeleteButtonClick
     }
 
-    fun onItemOrdersClick(order: RetroTrade) {
+    fun onItemOrdersClick(order: RetroTicket) {
         val intent = Intent(requireActivity(), DetailedMyOrderActivity::class.java).apply {
             putExtra("order_nencomenda", order.norder)
             putExtra("order_ticketamount", order.ticketamount)
@@ -142,10 +143,10 @@ class MyOrdersFragment : Fragment() {
 
         var call =
             service.seeMyOrders("Bearer $token").enqueue(object :
-                Callback<List<RetroTrade>> {
+                Callback<List<RetroTicket>> {
                 override fun onResponse(
-                    call: Call<List<RetroTrade>>,
-                    response: Response<List<RetroTrade>>
+                    call: Call<List<RetroTicket>>,
+                    response: Response<List<RetroTicket>>
                 ) {
                     if (response.code() == 200) {
 
@@ -177,7 +178,7 @@ class MyOrdersFragment : Fragment() {
                     }
                 }
 
-                override fun onFailure(calll: Call<List<RetroTrade>>, t: Throwable) {
+                override fun onFailure(calll: Call<List<RetroTicket>>, t: Throwable) {
                     myOrdersAdater.visibility = View.VISIBLE
                     progressBar.visibility = View.GONE
                     textProgress.visibility = View.GONE

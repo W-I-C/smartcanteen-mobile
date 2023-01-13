@@ -57,5 +57,8 @@
     <string name="time">Tempo</string>
     <string name="title">Titulo</string>
     <string name="notification">Notificações</string>
+    <string name="Loading...">A Carregar...</string>
+    <string name="current_state">Estado Atual</string>
+    <string name="deliver">Entregar</string>
     <string name="email_error">O email tem que estar preenchido</string>
 </resources>
