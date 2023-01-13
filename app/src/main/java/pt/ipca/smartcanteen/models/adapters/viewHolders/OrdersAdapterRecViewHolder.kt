@@ -67,7 +67,6 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                         textProgress.visibility = View.GONE
 
                         val retroFit2 = response.body()
-                        println("Aqui")
                         if (retroFit2 != null)
                             if(!retroFit2.isEmpty()){
                                 rebuildlistOrders(OrdersAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdapter, retroFit2, activity, context))
