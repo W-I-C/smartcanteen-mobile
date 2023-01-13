@@ -33,7 +33,7 @@ class TradesAdapterRec(val progressBar: ProgressBar, val textProgress: TextView,
         val total = tradesList.get(position).total
         val statename = tradesList.get(position).statename
         //Log.d("statename", statename)
-        holder.bindData(nencomenda,ticketamount,total,statename)
+        holder.bindData(nencomenda,ticketamount,total,statename,isgeneraltrade)
 
         holder.itemView.setOnClickListener {
             onItemTradesClick?.invoke(tradesList[position])
