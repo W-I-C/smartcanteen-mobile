@@ -1,6 +1,8 @@
 package pt.ipca.smartcanteen.models.adapters.viewHolders
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
@@ -19,11 +21,13 @@ import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
 import pt.ipca.smartcanteen.models.adapters.TradesAdapterRec
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.TradesService
+import pt.ipca.smartcanteen.views.activities.ConsumerOrderDetailsActivity
+import pt.ipca.smartcanteen.views.activities.ConsumerTradeActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myTradesAdapter: RecyclerView, inflater: LayoutInflater, val parent: ViewGroup, private var context: Context):
+class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myTradesAdapter: RecyclerView, inflater: LayoutInflater, val parent: ViewGroup, private val activity: Activity, private var context: Context):
     RecyclerView.ViewHolder(inflater.inflate(R.layout.my_trade_card, parent, false)){
     val identifierTv = itemView.findViewById<TextView>(R.id.my_exchanges_card_identifier)
     val quantityTv = itemView.findViewById<TextView>(R.id.my_exchanges_card_quantity)
@@ -67,7 +71,7 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
 
                             if (retroFit2 != null)
                                 if(!retroFit2.isEmpty()){
-                                    rebuildlistOrders(TradesAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, retroFit2, context))
+                                    rebuildlistOrders(TradesAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, retroFit2, activity, context))
                                 }
                         }
                     }
@@ -107,7 +111,7 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
 
                                 if (retroFit2 != null)
                                     if(!retroFit2.isEmpty()){
-                                        rebuildlistOrders(TradesAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, retroFit2, context))
+                                        rebuildlistOrders(TradesAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, retroFit2, activity, context))
                                     }
                             }
                         }
