@@ -95,6 +95,8 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
     fun setTradeClickListener(ticketId: String){
         tradeButton.setOnClickListener{
             var intent = Intent(activity, ConsumerTradeActivity::class.java)
+            // println(ticketId)
+            intent.putExtra("ticketId", ticketId)
             activity.startActivity(intent)
         }
     }
