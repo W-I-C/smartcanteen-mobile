@@ -127,6 +127,17 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".views.activities.TradePaymentActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+            
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".views.activities.OrderActivity"
             android:exported="false">
             <intent-filter>

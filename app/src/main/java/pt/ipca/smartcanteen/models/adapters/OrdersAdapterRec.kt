@@ -1,5 +1,7 @@
 package pt.ipca.smartcanteen.models.adapters
 
+import android.app.Activity
+import android.content.Context
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +15,7 @@ import pt.ipca.smartcanteen.models.RetroTicket
 import pt.ipca.smartcanteen.models.adapters.viewHolders.OrdersAdapterRecViewHolder
 import pt.ipca.smartcanteen.models.RetroTrade
 
-class OrdersAdapterRec(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myOrdersAdapter: RecyclerView, private var ordersList: List<RetroTicket>) :
+class OrdersAdapterRec(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myOrdersAdapter: RecyclerView, private var ordersList: List<RetroTicket>, private val actvity: Activity, private val context: Context) :
     RecyclerView.Adapter<OrdersAdapterRecViewHolder>() {
 
     var onItemClick : ((RetroTicket) -> Unit)? = null
@@ -23,7 +25,7 @@ class OrdersAdapterRec(val progressBar: ProgressBar, val textProgress: TextView,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrdersAdapterRecViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return OrdersAdapterRecViewHolder(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdapter, inflater, parent)
+        return OrdersAdapterRecViewHolder(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdapter, inflater, parent, actvity, context)
     }
 
     override fun onBindViewHolder(holder: OrdersAdapterRecViewHolder, position: Int) {
@@ -38,14 +40,12 @@ class OrdersAdapterRec(val progressBar: ProgressBar, val textProgress: TextView,
             onItemClick?.invoke(ordersList[position])
         }
 
-        holder.setOnClickListener {
-            onButtonTradeClick?.invoke(it)
-        }
-
         holder.setDeleteClickListener(ticketid)
+
+        holder.setTradeClickListener(ticketid)
     }
 
     override fun getItemCount(): Int {
-       return ordersList.size
+        return ordersList.size
     }
 }

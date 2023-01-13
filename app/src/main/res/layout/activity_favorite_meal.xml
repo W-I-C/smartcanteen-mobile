@@ -19,13 +19,12 @@
         android:textColor="@color/background_color"
         tools:ignore="MissingConstraints" />
 
-    <GridView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="50dp"
         android:id="@+id/idGRV"
         android:layout_width="match_parent"
         android:layout_height="600dp"
         android:horizontalSpacing="6dp"
-        android:numColumns="2"
         android:verticalSpacing="6dp" />
 
 

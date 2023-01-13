@@ -69,4 +69,5 @@
     <string name="Loading...">Loading...</string>
     <string name="current_state">Current State</string>
     <string name="deliver">Deliver</string>
+    <string name="email_error">The email has to be filled in</string>
 </resources>

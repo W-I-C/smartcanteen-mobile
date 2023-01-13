@@ -76,7 +76,7 @@ class MyOrdersFragment : Fragment() {
         myOrdersAdater.adapter = adapter
 
         adapter.onItemClick = this::onItemOrdersClick
-        adapter.onButtonTradeClick = this::onButtonTradeClick
+        // adapter.onButtonTradeClick = this::onButtonTradeClick
         // adapter.onDeleteButtonClick = this::onDeleteButtonClick
     }
 
@@ -173,8 +173,7 @@ class MyOrdersFragment : Fragment() {
                                 orders.clear()
                                 orders.addAll(retroFit2)
 
-                                rebuildlistOrders(OrdersAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdater, orders))
-                                // rebuildlistOrders(OrdersAdapterRec(retroFit2))
+                                rebuildlistOrders(OrdersAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdater, orders, requireActivity(), requireContext()))
                             }
                     }
                 }
@@ -221,6 +220,17 @@ class MyOrdersFragment : Fragment() {
 
                         val retroFit2 = response.body()
 
+                        retroFit2?.forEach { retroTrade ->
+                            val generaltradeid = retroTrade.generaltradeid
+                            val isgeneraltrade = retroTrade.isgeneraltrade
+                            //Log.d("generaltradeid", generaltradeid)
+                            //Log.d("isgeneraltrade", isgeneraltrade.toString())
+                            println(generaltradeid)
+                            println(isgeneraltrade)
+
+                            // tenho que passar por parametro o generaltrade e o isgeneraltrade do ticket que vou selecionar
+                        }
+
                         if (retroFit2 != null)
                             if(retroFit2.isEmpty()){
                                 tradesTextError.visibility = View.VISIBLE
@@ -228,7 +238,7 @@ class MyOrdersFragment : Fragment() {
                             } else {
                                 myTradesAdater.visibility = View.VISIBLE
                                 tradesTextError.visibility = View.GONE
-                                rebuildlistTrades(TradesAdapterRec(progressBar, textProgress, linearLayoutTradeManager, sp, myTradesAdater, retroFit2))
+                                rebuildlistTrades(TradesAdapterRec(progressBar, textProgress, linearLayoutTradeManager, sp, myTradesAdater, retroFit2, requireContext()))
                             }
                     }
                 }
