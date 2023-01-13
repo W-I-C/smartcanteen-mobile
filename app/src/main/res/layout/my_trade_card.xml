@@ -9,7 +9,7 @@
     android:background="@drawable/my_order_card">
 
     <ImageView
-        android:id='@+id/my_exchanges_card_image'
+        android:id='@+id/my_trades_card_image'
         android:layout_width="120dp"
         android:layout_height="match_parent"
         android:layout_marginBottom="5dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id='@+id/my_exchanges_card_delete'
+        android:id='@+id/my_trades_card_delete'
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:background="@drawable/delete_button"
@@ -28,7 +28,7 @@
         />
 
     <TextView
-        android:id="@+id/my_exchanges_card_identifier"
+        android:id="@+id/my_trades_card_identifier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
@@ -37,11 +37,11 @@
         android:textColor="@color/black"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
-        app:layout_constraintLeft_toRightOf="@id/my_exchanges_card_image"
+        app:layout_constraintLeft_toRightOf="@id/my_trades_card_image"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/my_exchanges_card_quantity"
+        android:id="@+id/my_trades_card_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
@@ -50,11 +50,11 @@
         android:textColor="@color/black"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="12dp"
-        app:layout_constraintLeft_toRightOf="@id/my_exchanges_card_image"
-        app:layout_constraintTop_toBottomOf="@id/my_exchanges_card_identifier"/>
+        app:layout_constraintLeft_toRightOf="@id/my_trades_card_image"
+        app:layout_constraintTop_toBottomOf="@id/my_trades_card_identifier"/>
 
     <TextView
-        android:id="@+id/my_exchanges_card_price"
+        android:id="@+id/my_trades_card_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
@@ -63,11 +63,11 @@
         android:textColor="@color/background_color"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="12dp"
-        app:layout_constraintLeft_toRightOf="@id/my_exchanges_card_image"
-        app:layout_constraintTop_toBottomOf="@id/my_exchanges_card_quantity"/>
+        app:layout_constraintLeft_toRightOf="@id/my_trades_card_image"
+        app:layout_constraintTop_toBottomOf="@id/my_trades_card_quantity"/>
 
     <TextView
-        android:id="@+id/my_exchanges_card_state"
+        android:id="@+id/my_trades_card_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
@@ -77,10 +77,25 @@
         android:textColor="@color/background_color"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="40dp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintLeft_toRightOf="@id/my_exchanges_card_quantity"
+        android:layout_marginTop="40dp"
+        app:layout_constraintLeft_toRightOf="@id/my_trades_card_quantity"
         app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/my_trades_card_isgeneraltrade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Is General Trade"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/redButton"
+        app:layout_constraintTop_toBottomOf="@+id/my_trades_card_state"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/my_trades_card_price"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

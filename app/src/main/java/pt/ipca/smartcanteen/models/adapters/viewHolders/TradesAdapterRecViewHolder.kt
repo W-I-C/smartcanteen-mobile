@@ -29,12 +29,12 @@ import retrofit2.Response
 
 class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myTradesAdapter: RecyclerView, inflater: LayoutInflater, val parent: ViewGroup, private val activity: Activity, private var context: Context):
     RecyclerView.ViewHolder(inflater.inflate(R.layout.my_trade_card, parent, false)){
-    val identifierTv = itemView.findViewById<TextView>(R.id.my_exchanges_card_identifier)
-    val quantityTv = itemView.findViewById<TextView>(R.id.my_exchanges_card_quantity)
-    val priceTv = itemView.findViewById<TextView>(R.id.my_exchanges_card_price)
-    val stateTv = itemView.findViewById<TextView>(R.id.my_exchanges_card_state)
-
-    val deleteButton = itemView.findViewById<Button>(R.id.my_exchanges_card_delete)
+    val identifierTv = itemView.findViewById<TextView>(R.id.my_trades_card_identifier)
+    val quantityTv = itemView.findViewById<TextView>(R.id.my_trades_card_quantity)
+    val priceTv = itemView.findViewById<TextView>(R.id.my_trades_card_price)
+    val stateTv = itemView.findViewById<TextView>(R.id.my_trades_card_state)
+    val isGeneralTradeTv = itemView.findViewById<TextView>(R.id.my_trades_card_isgeneraltrade)
+    val deleteButton = itemView.findViewById<Button>(R.id.my_trades_card_delete)
 
     fun setDeleteClickListener(ticketid: String, isgeneraltrade: Boolean, generaltradeid: String?){
         deleteButton.setOnClickListener{
@@ -129,11 +129,18 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
         myTradesAdapter.adapter = adapter
     }
 
-    fun bindData(identifierText: Int, quantityText: Int, priceText:Float, stateText: String){
+    fun bindData(identifierText: Int, quantityText: Int, priceText:Float, stateText: String, isgeneraltrade: Boolean){
         identifierTv.text = identifierText.toString()
         quantityTv.text = quantityText.toString()
-        priceTv.text=priceText.toString()
-        stateTv.text=stateText
+        priceTv.text = priceText.toString()
+        stateTv.text = stateText
+
+        // TODO: passar para strings do resource
+        if(isgeneraltrade == true){
+            isGeneralTradeTv.text = "General Trade"
+        } else {
+            isGeneralTradeTv.text = "Direct Trade"
+        }
 
         if(stateText == "Não Iniciado" || stateText == "Atraso"){
             stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.redLogout))
@@ -147,6 +154,12 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
             deleteButton.visibility = Button.VISIBLE
         } else {
             deleteButton.visibility = Button.GONE
+        }
+
+        if(isGeneralTradeTv.text == "General Trade"){
+            isGeneralTradeTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.redLogout))
+        } else if(isGeneralTradeTv.text == "Direct Trade") {
+            isGeneralTradeTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.orange))
         }
     }
 }
