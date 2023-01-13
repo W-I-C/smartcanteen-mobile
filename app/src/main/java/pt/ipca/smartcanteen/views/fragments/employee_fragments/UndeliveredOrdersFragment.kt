@@ -22,6 +22,7 @@ import pt.ipca.smartcanteen.views.activities.DetailedActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
 
 class UndeliveredOrdersFragment : Fragment() {
 
@@ -39,10 +40,24 @@ class UndeliveredOrdersFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_undelivered_orders, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        val retrofit = SmartCanteenRequests().retrofit
+        getOrders(retrofit)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val retrofit = SmartCanteenRequests().retrofit
+        getOrders(retrofit)
+
+
+    }
+
+    private fun getOrders(
+        retrofit: Retrofit
+    ){
 
         val service = retrofit.create(OrdersService::class.java)
 
@@ -53,10 +68,10 @@ class UndeliveredOrdersFragment : Fragment() {
 
         var call =
             service.seeUndeliveredOrders("Bearer $token").enqueue(object :
-                Callback<List<RetroTrade>> {
+                Callback<List<RetroTicket>> {
                 override fun onResponse(
-                    call: Call<List<RetroTrade>>,
-                    response: Response<List<RetroTrade>>
+                    call: Call<List<RetroTicket>>,
+                    response: Response<List<RetroTicket>>
                 ) {
                     if (response.code() == 200) {
                         loadingDialogManager.dialog.dismiss()
@@ -69,12 +84,12 @@ class UndeliveredOrdersFragment : Fragment() {
                             } else {
                                 undeliveredOrdersAdater.visibility = View.VISIBLE
                                 textError.visibility = View.GONE
-                                rebuildlist(UndeliveredOrdersAdaterRec(retroFit2))
+                                rebuildlist(UndeliveredOrdersAdaterRec(requireActivity(),retroFit2))
                             }
                     }
                 }
 
-                override fun onFailure(calll: Call<List<RetroTrade>>, t: Throwable) {
+                override fun onFailure(calll: Call<List<RetroTicket>>, t: Throwable) {
                     print("error")
                 }
             })

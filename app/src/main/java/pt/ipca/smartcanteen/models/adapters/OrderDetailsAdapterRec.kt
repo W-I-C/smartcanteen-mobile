@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import pt.ipca.smartcanteen.models.RetroOrder
+import pt.ipca.smartcanteen.models.RetroTicket
+import pt.ipca.smartcanteen.models.RetroTicketMeal
+
 import pt.ipca.smartcanteen.models.adapters.viewHolders.OrderDetailsAdapterRecViewHolder
 
-class OrderDetailsAdapterRec(private var orderMealsList: List<RetroOrder>) :
+class OrderDetailsAdapterRec(private var orderMealsList: List<RetroTicketMeal>) :
     RecyclerView.Adapter<OrderDetailsAdapterRecViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderDetailsAdapterRecViewHolder {
