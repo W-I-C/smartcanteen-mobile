@@ -100,13 +100,13 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
         }
     }
 
-    fun setDetailClickListener(ticketId: String, nencomenda: Int, total: Float){
-        var intent = Intent(activity, ConsumerTradeActivity::class.java)
-        intent.putExtra("ticketid", ticketId)
-        intent.putExtra("norder", nencomenda)
-        intent.putExtra("total", total)
-        activity.startActivity(intent)
-    }
+//    fun setDetailClickListener(ticketId: String, nencomenda: Int, total: Float){
+//        var intent = Intent(activity, ConsumerTradeActivity::class.java)
+//        intent.putExtra("ticketid", ticketId)
+//        intent.putExtra("norder", nencomenda)
+//        intent.putExtra("total", total)
+//        activity.startActivity(intent)
+//    }
 
     fun bindData(identifierText: Int, quantityText: Int, priceText: Float, stateText: String){
         identifierTv.text= identifierText.toString()

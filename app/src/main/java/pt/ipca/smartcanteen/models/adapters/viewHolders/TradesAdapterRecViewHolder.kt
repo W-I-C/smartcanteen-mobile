@@ -127,13 +127,13 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
         }
     }
 
-    fun setDetailClickListener(ticketId: String, nencomenda: Int, total: Float){
-        var intent = Intent(activity, ConsumerTradeActivity::class.java)
-        intent.putExtra("ticketid", ticketId)
-        intent.putExtra("norder", nencomenda)
-        intent.putExtra("total", total)
-        activity.startActivity(intent)
-    }
+//    fun setDetailClickListener(ticketId: String, nencomenda: Int, total: Float){
+//        var intent = Intent(activity, ConsumerTradeActivity::class.java)
+//        intent.putExtra("ticketid", ticketId)
+//        intent.putExtra("norder", nencomenda)
+//        intent.putExtra("total", total)
+//        activity.startActivity(intent)
+//    }
 
     fun rebuildlistOrders(adapter: TradesAdapterRec) {
         myTradesAdapter.layoutManager = linearLayoutManager

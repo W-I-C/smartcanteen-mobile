@@ -37,7 +37,7 @@ class TradesAdapterRec(val progressBar: ProgressBar, val textProgress: TextView,
             onItemTradesClick?.invoke(tradesList[position])
         }
 
-        holder.setDetailClickListener(ticketid,nencomenda,total)
+        //holder.setDetailClickListener(ticketid,nencomenda,total)
 
         holder.setDeleteClickListener(ticketid, isgeneraltrade, generaltradeid)
     }
