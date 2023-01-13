@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.R
+import pt.ipca.smartcanteen.models.RetroTicket
 import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
@@ -50,10 +51,10 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
             textProgress.visibility = View.VISIBLE
 
             service.removeTicket(ticketid,"Bearer $token").enqueue(object :
-                Callback<List<RetroTrade>> {
+                Callback<List<RetroTicket>> {
                 override fun onResponse(
-                    call: Call<List<RetroTrade>>,
-                    response: Response<List<RetroTrade>>
+                    call: Call<List<RetroTicket>>,
+                    response: Response<List<RetroTicket>>
                 ) {
                     if (response.code() == 200) {
 
@@ -71,7 +72,7 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                     }
                 }
 
-                override fun onFailure(calll: Call<List<RetroTrade>>, t: Throwable) {
+                override fun onFailure(calll: Call<List<RetroTicket>>, t: Throwable) {
                     myOrdersAdapter.visibility = View.VISIBLE
                     progressBar.visibility = View.GONE
                     textProgress.visibility = View.GONE

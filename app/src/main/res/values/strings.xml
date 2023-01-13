@@ -66,4 +66,7 @@
     <string name="time">Time</string>
     <string name="title">Title</string>
     <string name="notification">Notification</string>
+    <string name="Loading...">Loading...</string>
+    <string name="current_state">Current State</string>
+    <string name="deliver">Deliver</string>
 </resources>

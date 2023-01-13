@@ -9,13 +9,14 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import pt.ipca.smartcanteen.models.RetroTicket
 import pt.ipca.smartcanteen.models.adapters.viewHolders.OrdersAdapterRecViewHolder
 import pt.ipca.smartcanteen.models.RetroTrade
 
-class OrdersAdapterRec(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myOrdersAdapter: RecyclerView, private var ordersList: List<RetroTrade>) :
+class OrdersAdapterRec(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myOrdersAdapter: RecyclerView, private var ordersList: List<RetroTicket>) :
     RecyclerView.Adapter<OrdersAdapterRecViewHolder>() {
 
-    var onItemClick : ((RetroTrade) -> Unit)? = null
+    var onItemClick : ((RetroTicket) -> Unit)? = null
     var onButtonTradeClick : ((View) -> Unit)? = null
     // função que aceita um inteiro por entrada (posição da lista) e não tem retornbo - inicializado a null
     // var onDeleteButtonClick : ((Int) -> Unit)? = null

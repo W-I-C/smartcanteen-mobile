@@ -56,7 +56,7 @@ class MenuMealsActivity : AppCompatActivity() {
             }
 
             ingredientsChange.setOnClickListener {
-                var intent = Intent(this@MenuMealsActivity, IngredientsChangeActivity::class.java)
+                val intent = Intent(this@MenuMealsActivity, IngredientsChangeActivity::class.java)
                 startActivity(intent)
             }
 

@@ -28,7 +28,7 @@ class LoadingScreenActivity : AppCompatActivity() {
         val token = sp.getString("token", null)
 
         if(token == null){
-            var intent = Intent(this@LoadingScreenActivity, LoginActivity::class.java)
+            val intent = Intent(this@LoadingScreenActivity, LoginActivity::class.java)
             finish()
             startActivity(intent)
         }
@@ -58,12 +58,12 @@ class LoadingScreenActivity : AppCompatActivity() {
 
                             if(role == "consumer"){
 
-                                var intent = Intent(this@LoadingScreenActivity, ConsumerFragmentActivity::class.java)
+                                val intent = Intent(this@LoadingScreenActivity, ConsumerFragmentActivity::class.java)
                                 finish()
                                 startActivity(intent)
                             } else if(role == "employee"){
 
-                                var intent = Intent(this@LoadingScreenActivity, EmployeeFragmentActivity::class.java)
+                                val intent = Intent(this@LoadingScreenActivity, EmployeeFragmentActivity::class.java)
                                 finish()
                                 startActivity(intent)
                             }
@@ -77,8 +77,9 @@ class LoadingScreenActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(calll: Call<LoginResponse>, t: Throwable) {
-                        Toast.makeText(this@LoadingScreenActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
-                            .show()
+                        var intent = Intent(this@LoadingScreenActivity, LoginActivity::class.java)
+                        finish()
+                        startActivity(intent)
                     }
                 })
             }
