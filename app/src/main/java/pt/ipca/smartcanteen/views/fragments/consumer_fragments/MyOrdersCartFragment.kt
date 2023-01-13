@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.models.adapters.MyOrdersCartRec
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.MyOrderCart
 import pt.ipca.smartcanteen.models.RetroCartMeals
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
@@ -51,15 +50,13 @@ class MyOrdersCartFragment : Fragment() {
             ) {
                 if (response.code() == 200) {
                     val retroFit2 = response.body()
-                    Log.d("<test", response.toString())
+
                     if (retroFit2 != null) {
                         if(!retroFit2.isEmpty()){
-                            val adapter = MyOrdersCartRec(retroFit2, total)
+                            val adapter = MyOrdersCartRec(retroFit2)
                             rebuildlist(adapter)
                             if(retroFit2.size>=1)
                                 total.text = "${retroFit2[0].cartTotal} €"
-                        }else{
-                            total.text = "0.0 €"
                         }
                     }
                 }

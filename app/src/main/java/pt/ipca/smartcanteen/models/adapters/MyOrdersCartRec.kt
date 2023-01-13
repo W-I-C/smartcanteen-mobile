@@ -9,7 +9,7 @@ import pt.ipca.smartcanteen.models.RetroCartMeals
 import pt.ipca.smartcanteen.models.adapters.viewHolders.MyOrdersCartRecViewHolder
 
 
-class MyOrdersCartRec(private var ordersList: List<RetroCartMeals>, private val totalEditText: TextView) :
+class MyOrdersCartRec(private var ordersList: List<RetroCartMeals>) :
     RecyclerView.Adapter<MyOrdersCartRecViewHolder>() {
 
 

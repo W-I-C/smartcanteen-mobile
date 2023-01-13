@@ -47,6 +47,6 @@ class OrdersAdapterRec(val progressBar: ProgressBar, val textProgress: TextView,
     }
 
     override fun getItemCount(): Int {
-       return ordersList.size
+        return ordersList.size
     }
 }
