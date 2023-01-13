@@ -58,6 +58,8 @@ class MyOrdersCartFragment : Fragment() {
                             rebuildlist(adapter)
                             if(retroFit2.size>=1)
                                 total.text = "${retroFit2[0].cartTotal} €"
+                        }else{
+                            total.text = "0.0 €"
                         }
                     }
                 }
