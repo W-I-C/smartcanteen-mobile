@@ -66,4 +66,5 @@
     <string name="time">Time</string>
     <string name="title">Title</string>
     <string name="notification">Notification</string>
+    <string name="email_error">The email has to be filled in</string>
 </resources>
