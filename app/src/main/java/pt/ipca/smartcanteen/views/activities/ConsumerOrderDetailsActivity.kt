@@ -51,11 +51,11 @@ class ConsumerOrderDetailsActivity : AppCompatActivity() {
         val orderMealsLinearLayoutManager = LinearLayoutManager(this@ConsumerOrderDetailsActivity)
         getTicket(ticketid!!,orderMealsRecyclerView,orderMealsLinearLayoutManager)
 
-        if(isFreeTrade)
+        if(isFreeTrade){
             totalTv.text = getString(R.string.free)
-        else
+        }else{
             totalTv.text = "Total: ${ticketTotal}€"
-        
+        }
 
         titleTv.text = "${getString(R.string.ordernum)}: ${norder}"
 
