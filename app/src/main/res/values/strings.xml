@@ -70,6 +70,7 @@
     <string name="current_state">Current State</string>
     <string name="deliver">Deliver</string>
     <string name="email_error">The email has to be filled in</string>
+    <string name="is_free">Is Free?</string>
     <string name="Menu">Menu</string>
     <string name="see_menu">View Menu</string>
 </resources>

@@ -32,12 +32,9 @@ class TradesAdapterRec(val progressBar: ProgressBar, val textProgress: TextView,
         val ticketamount = tradesList.get(position).ticketamount
         val total = tradesList.get(position).total
         val statename = tradesList.get(position).statename
-        //Log.d("statename", statename)
-        holder.bindData(nencomenda,ticketamount,total,statename,isgeneraltrade)
+        val receivername = tradesList.get(position).receivername
+        holder.bindData(nencomenda,ticketamount,total,statename,isgeneraltrade,receivername)
 
-        holder.itemView.setOnClickListener {
-            onItemTradesClick?.invoke(tradesList[position])
-        }
 
         holder.itemView.setOnClickListener{
             var intent = Intent(activity, ConsumerOrderDetailsActivity::class.java)
@@ -46,8 +43,6 @@ class TradesAdapterRec(val progressBar: ProgressBar, val textProgress: TextView,
             intent.putExtra("total", total)
             activity.startActivity(intent)
         }
-
-        // holder.setDetailClickListener(ticketid,nencomenda,total)
 
         holder.setDeleteClickListener(ticketid, isgeneraltrade, generaltradeid)
     }
