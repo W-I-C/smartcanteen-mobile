@@ -71,13 +71,14 @@ class ConsumerOrderDetailsActivity : AppCompatActivity() {
         tradeBtn.setOnClickListener {
             if(isMyOrder){
                 val intent = Intent(this@ConsumerOrderDetailsActivity, ConsumerTradeActivity::class.java)
-                intent.putExtra("ticketid",ticketid)
-                intent.putExtra("generaltradeid",generaltradeid)
+                intent.putExtra("ticketId",ticketid)
                 startActivity(intent)
             }else{
                 if(!isFreeTrade) {
                     val intent = Intent(this@ConsumerOrderDetailsActivity, TradePaymentActivity::class.java)
                     intent.putExtra("ticketid",ticketid)
+                    intent.putExtra("generaltradeid",generaltradeid)
+                    intent.putExtra("price",ticketTotal)
                     startActivity(intent)
                 }
             }

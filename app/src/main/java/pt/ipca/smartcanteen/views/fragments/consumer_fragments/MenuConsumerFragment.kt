@@ -24,6 +24,7 @@ import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.*
+import pt.ipca.smartcanteen.views.activities.ConsumerBarMenuActivity
 import pt.ipca.smartcanteen.views.activities.NotificationActivity
 import pt.ipca.smartcanteen.views.activities.OrderActivity
 import retrofit2.Call
@@ -40,8 +41,11 @@ class MenuConsumerFragment : Fragment() {
     private val mealsTextProgress: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_meals_progress_bar_text) as TextView }
     private val ordersProgressBar: ProgressBar by lazy {requireView().findViewById<ProgressBar>(R.id.consumer_menu_orders_progress_bar) as ProgressBar }
     private val ordersTextProgress: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_orders_progress_bar_text) as TextView }
-    private val logoutIc: ImageView by lazy {requireView().findViewById<ImageView>(R.id.main_logout) as ImageView }
-    private val notiIc: ImageView by lazy {requireView().findViewById<ImageView>(R.id.main_notification_bell) as ImageView }
+    private val logoutIc: ImageView by lazy {requireView().findViewById<ImageView>(R.id.consumer_menu_logout) as ImageView }
+    private val notiIc: ImageView by lazy {requireView().findViewById<ImageView>(R.id.consumer_menu_notification_bell) as ImageView }
+
+    private val barMealsTitleTv: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_bar_meals_tv) as TextView }
+
     private lateinit var loadingDialogManager :LoadingDialogManager
 
     override fun onCreateView(
@@ -68,13 +72,16 @@ class MenuConsumerFragment : Fragment() {
             startActivity(intent)
         }
 
+        barMealsTitleTv.setOnClickListener{
+            val intent = Intent(requireActivity(), ConsumerBarMenuActivity::class.java)
+            startActivity(intent)
+        }
 
+        val barSpinner: Spinner = view.findViewById<Spinner>(R.id.consumer_menu_bar_select_sp)
 
-        val barSpinner: Spinner = view.findViewById<Spinner>(R.id.main_bar_select_sp)
-
-        val barMealsRecyclerView = view.findViewById<RecyclerView>(R.id.main_bar_meals_rv)
-        val tradeMealsRecyclerView = view.findViewById<RecyclerView>(R.id.main_available_trades_rv)
-        val ordersRecyclerView = view.findViewById<RecyclerView>(R.id.main_orders_rv)
+        val barMealsRecyclerView = view.findViewById<RecyclerView>(R.id.consumer_menu_bar_meals_rv)
+        val tradeMealsRecyclerView = view.findViewById<RecyclerView>(R.id.consumer_menu_available_trades_rv)
+        val ordersRecyclerView = view.findViewById<RecyclerView>(R.id.consumer_menu_orders_rv)
 
         val barMealsLinearLayoutManager = LinearLayoutManager(view.context)
         barMealsLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
