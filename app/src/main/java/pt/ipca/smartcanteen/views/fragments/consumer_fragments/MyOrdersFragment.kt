@@ -74,10 +74,6 @@ class MyOrdersFragment : Fragment() {
         myOrdersAdater.layoutManager = linearLayoutManager
         myOrdersAdater.itemAnimator = DefaultItemAnimator()
         myOrdersAdater.adapter = adapter
-
-        adapter.onItemClick = this::onItemOrdersClick
-        // adapter.onButtonTradeClick = this::onButtonTradeClick
-        // adapter.onDeleteButtonClick = this::onDeleteButtonClick
     }
 
     fun onItemOrdersClick(order: RetroTicket) {
@@ -110,8 +106,6 @@ class MyOrdersFragment : Fragment() {
         myTradesAdater.layoutManager = linearLayoutTradeManager
         myTradesAdater.itemAnimator = DefaultItemAnimator()
         myTradesAdater.adapter = adapter
-
-        adapter.onItemTradesClick = this::onItemTradesClick
     }
 
     fun onItemTradesClick(trade: RetroTrade) {

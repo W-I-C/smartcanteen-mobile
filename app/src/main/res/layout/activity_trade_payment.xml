@@ -86,6 +86,7 @@
         />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/trade_cancel_payment_pay"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:padding="10dp"

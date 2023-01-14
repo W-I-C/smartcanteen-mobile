@@ -20,6 +20,7 @@ import retrofit2.Response
 class TradePaymentActivity : AppCompatActivity() {
 
     private val confirm_button: Button by lazy {findViewById<Button>(R.id.trade_payment_pay) as Button }
+    private val cancel_button: Button by lazy {findViewById<Button>(R.id.trade_cancel_payment_pay) as Button }
     private val price_text: TextView by lazy {findViewById<TextView>(R.id.trade_payment_price_textview) as TextView }
     private val payment_method: TextView by lazy {findViewById<TextView>(R.id.trade_payment_method_general_textview) as TextView }
     private val payment_method_tittle: TextView by lazy {findViewById<TextView>(R.id.type_payment_textview) as TextView }
@@ -37,18 +38,32 @@ class TradePaymentActivity : AppCompatActivity() {
         val isfree = intent.getBooleanExtra("isfree",false)
         val price = intent.getFloatExtra("price",0.0f)
 
+        println(generaltradeid)
+        println(isfree)
+        println(price)
 
         // fazer isto só se recebermos um int (price), se recebermos gratuito não chama isto
-        if(isfree == false) {
+        if(isfree == true) {
             price_text.text = "Gratuito"
             payment_method.visibility = View.GONE
             payment_method_tittle.visibility = View.GONE
         } else {
+            price_text.text = "${price.toString()}€"
             payment_method.visibility = View.VISIBLE
             payment_method_tittle.visibility = View.VISIBLE
             getPaymentMethods(generaltradeid)
+            confirmPaymentTrade(generaltradeid)
         }
 
+        cancel()
+    }
+
+    fun cancel(){
+        cancel_button.setOnClickListener {
+            finish()
+            Toast.makeText(this@TradePaymentActivity, "Operação cancelada!", Toast.LENGTH_LONG)
+                .show()
+        }
     }
 
     fun getPaymentMethods(generaltradeid: String) {
@@ -95,45 +110,42 @@ class TradePaymentActivity : AppCompatActivity() {
         })
     }
 
-//    fun confirmPaymentTrade(){
-//        confirm_button.setOnClickListener(){
-//
-//            // aceder ao paymentmethodid
-//
-//
-//            val retrofit = SmartCanteenRequests().retrofit
-//
-//            val service = retrofit.create(TradesService::class.java)
-//
-//            val sp = SharedPreferencesHelper.getSharedPreferences(this@TradePaymentActivity)
-//            val token = sp.getString("token", null)
-//
-//            loadingDialogManager.dialog.show()
-//
-//            service.acceptGeneralTrade(generaltradeid,"Bearer $token").enqueue(object :
-//                Callback<String> {
-//                override fun onResponse(
-//                    call: Call<String>,
-//                    response: Response<String>
-//                ) {
-//                    if (response.code() == 200) {
-//
-//                        loadingDialogManager.dialog.dismiss()
-//
-//                        finish()
-//                        Toast.makeText(this@TradePaymentActivity, "Métodos de pagamento obtidos com sucesso!", Toast.LENGTH_LONG)
-//                            .show()
-//                    }
-//                }
-//
-//                override fun onFailure(calll: Call<String>, t: Throwable) {
-//                    loadingDialogManager.dialog.dismiss()
-//                    Toast.makeText(this@TradePaymentActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
-//                        .show()
-//                }
-//
-//            })
-//
-//        }
-//    }
+    fun confirmPaymentTrade(generaltradeid: String){
+        confirm_button.setOnClickListener(){
+
+            val retrofit = SmartCanteenRequests().retrofit
+
+            val service = retrofit.create(TradesService::class.java)
+
+            val sp = SharedPreferencesHelper.getSharedPreferences(this@TradePaymentActivity)
+            val token = sp.getString("token", null)
+
+            loadingDialogManager.dialog.show()
+
+            service.acceptGeneralTrade(generaltradeid,"Bearer $token").enqueue(object :
+                Callback<String> {
+                override fun onResponse(
+                    call: Call<String>,
+                    response: Response<String>
+                ) {
+                    if (response.code() == 200) {
+
+                        loadingDialogManager.dialog.dismiss()
+
+                        finish()
+                        Toast.makeText(this@TradePaymentActivity, "Métodos de pagamento obtidos com sucesso!", Toast.LENGTH_LONG)
+                            .show()
+                    }
+                }
+
+                override fun onFailure(calll: Call<String>, t: Throwable) {
+                    loadingDialogManager.dialog.dismiss()
+                    Toast.makeText(this@TradePaymentActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
+                        .show()
+                }
+
+            })
+
+        }
+    }
 }
