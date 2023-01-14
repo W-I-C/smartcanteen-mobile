@@ -28,6 +28,10 @@ class ConsumerTradeActivity : AppCompatActivity() {
     private val cancelButton: Button by lazy {findViewById<View>(R.id.trade_cancel) as Button}
     private val confirmButton: Button by lazy {findViewById<View>(R.id.trade_confirm) as Button}
     private val textError: TextView by lazy {findViewById<TextView>(R.id.trade_email_textview_error) as TextView}
+    private val generalIsFree: TextView by lazy {findViewById<TextView>(R.id.trade_general_title_isfree) as TextView}
+    private val generalPaymentMethod: TextView by lazy {findViewById<TextView>(R.id.trade_general_title_payment_method) as TextView}
+    private val directIsFree: TextView by lazy {findViewById<TextView>(R.id.trade_direct_title_isfree) as TextView}
+    private val directPaymentMethod: TextView by lazy {findViewById<TextView>(R.id.trade_direct_title_payment_method) as TextView}
     private lateinit var loadingDialogManager: LoadingDialogManager
     private lateinit var ticketId: String
 
@@ -52,6 +56,10 @@ class ConsumerTradeActivity : AppCompatActivity() {
         spinner_direct_payable.visibility = View.GONE
         editText.visibility = View.GONE
         textError.visibility = View.GONE
+        generalIsFree.visibility = View.GONE
+        generalPaymentMethod.visibility = View.GONE
+        directIsFree.visibility = View.GONE
+        directPaymentMethod.visibility = View.GONE
 
         // Sim -> Gratuito -> não aparece o spinner de baixo
         // Não -> Pagamento -> aparece o spinner de baixo
@@ -80,10 +88,11 @@ class ConsumerTradeActivity : AppCompatActivity() {
                             spinner_general.visibility = View.GONE
                             isfree = true
                             paymentmethodid = null
+                            generalPaymentMethod.visibility = View.GONE
                         } else {
                             spinner_general.visibility = View.VISIBLE
                             isfree = false
-
+                            generalPaymentMethod.visibility = View.VISIBLE
                         }
                     }
                 }
@@ -113,8 +122,13 @@ class ConsumerTradeActivity : AppCompatActivity() {
                         val selectedItem = parent.getItemAtPosition(position).toString()
                         if (selectedItem == "Sim") {
                             spinner_direct.visibility = View.GONE
+                            directPaymentMethod.visibility = View.GONE
+                            isfree = true
+                            paymentmethodid = null
                         } else {
                             spinner_direct.visibility = View.VISIBLE
+                            directPaymentMethod.visibility = View.VISIBLE
+                            isfree = false
                         }
                     }
                 }
@@ -236,16 +250,22 @@ class ConsumerTradeActivity : AppCompatActivity() {
     fun checkBox1Clicked(view: View) {
         checkBox1.setOnClickListener {
             if (checkBox1.isChecked) {
-                spinner_general.visibility = View.GONE
+                //spinner_general.visibility = View.GONE
                 spinner_general_payable.visibility = View.VISIBLE
                 checkBox2.isChecked = false
                 editText.visibility = View.GONE
                 textError.visibility = View.GONE
+                generalIsFree.visibility = View.VISIBLE
+                generalPaymentMethod.visibility = View.GONE
                 spinner_direct.visibility = View.GONE
                 spinner_direct_payable.visibility = View.GONE
+                directIsFree.visibility = View.GONE
+                directPaymentMethod.visibility = View.GONE
             } else {
                 spinner_general.visibility = View.GONE
                 spinner_general_payable.visibility = View.GONE
+                generalIsFree.visibility = View.GONE
+                generalPaymentMethod.visibility = View.GONE
             }
         }
     }
@@ -254,6 +274,8 @@ class ConsumerTradeActivity : AppCompatActivity() {
         checkBox2.setOnClickListener {
             if (checkBox2.isChecked) {
                 editText.visibility = View.VISIBLE
+                directIsFree.visibility = View.VISIBLE
+                directPaymentMethod.visibility = View.GONE
                 if(editText.text.isEmpty()){
                     textError.visibility = View.VISIBLE
                 } else {
@@ -268,17 +290,20 @@ class ConsumerTradeActivity : AppCompatActivity() {
                         }
                     }
                 }
-
-                spinner_direct.visibility = View.GONE
+                //spinner_direct.visibility = View.GONE
                 spinner_direct_payable.visibility = View.VISIBLE
                 checkBox1.isChecked = false
                 spinner_general.visibility = View.GONE
                 spinner_general_payable.visibility = View.GONE
+                generalIsFree.visibility = View.GONE
+                generalPaymentMethod.visibility = View.GONE
             } else {
                 editText.visibility = View.GONE
                 textError.visibility = View.GONE
                 spinner_direct.visibility = View.GONE
                 spinner_direct_payable.visibility = View.GONE
+                directIsFree.visibility = View.GONE
+                directPaymentMethod.visibility = View.GONE
             }
         }
     }
