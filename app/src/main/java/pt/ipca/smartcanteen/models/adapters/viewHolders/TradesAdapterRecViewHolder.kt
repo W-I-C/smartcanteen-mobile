@@ -130,7 +130,7 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
         myTradesAdapter.adapter = adapter
     }
 
-    fun bindData(identifierText: Int, quantityText: Int, priceText:Float, stateText: String, isgeneraltrade: Boolean, receiverNameText: String){
+    fun bindData(identifierText: Int, quantityText: Int, priceText:Float, stateText: String, isgeneraltrade: Boolean, receiverNameText: String?){
         identifierTv.text = identifierText.toString()
         quantityTv.text = quantityText.toString()
         priceTv.text = priceText.toString()
@@ -145,7 +145,9 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
             isGeneralTradeTv.text = "General Trade"
         } else {
             isGeneralTradeTv.text = "Direct Trade"
-            receiverNameTv.text = receiverNameText
+            if(receiverNameText != null) {
+                receiverNameTv.text = receiverNameText
+            }
         }
 
         if(stateText == "Não Iniciado" || stateText == "Atraso"){
