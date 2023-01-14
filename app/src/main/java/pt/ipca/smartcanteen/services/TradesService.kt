@@ -42,9 +42,9 @@ interface TradesService {
 
     @GET("/api/v1/consumer/general/trades/{generalTradeId}")
     fun getTradePaymentMethod(
-        @Path("generalTradeId") generaltradetd: String,
+        @Path("generalTradeId") generaltradeid: String,
         @Header("Authorization") authorization: String
-    ): Call<String>
+    ): Call<RetroTradePayment>
 
     @GET("/api/v1/consumer/general/trades/{generalTradeId}")
     fun acceptGeneralTrade(
