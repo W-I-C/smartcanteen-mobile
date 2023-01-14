@@ -17,7 +17,7 @@ class EmployeeFragmentActivity : AppCompatActivity() {
         setContentView(R.layout.bottom_navigation_employee)
 
         val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-        ft.add(R.id.employee_fragment_container, MenuConsumerFragment())
+        ft.add(R.id.employee_fragment_container, EmployeeBarMenuFragment())
         ft.commit()
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_employee)
@@ -25,10 +25,14 @@ class EmployeeFragmentActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_employee_main -> {
-
+                    val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+                    ft.replace(R.id.employee_fragment_container, EmployeeBarMenuFragment())
+                    ft.commit()
                 }
                 R.id.menu_employee_meals -> {
-
+                    val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+                    ft.replace(R.id.employee_fragment_container, EmployeeBarMenuFragment())
+                    ft.commit()
                 }
                 R.id.menu_employee_orders -> {
                     val ft: FragmentTransaction = supportFragmentManager.beginTransaction()

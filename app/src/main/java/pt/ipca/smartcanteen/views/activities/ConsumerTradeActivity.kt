@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.*
-import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
+import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.TradesService
@@ -32,7 +32,7 @@ class ConsumerTradeActivity : AppCompatActivity() {
     private val generalPaymentMethod: TextView by lazy {findViewById<TextView>(R.id.trade_general_title_payment_method) as TextView}
     private val directIsFree: TextView by lazy {findViewById<TextView>(R.id.trade_direct_title_isfree) as TextView}
     private val directPaymentMethod: TextView by lazy {findViewById<TextView>(R.id.trade_direct_title_payment_method) as TextView}
-    private lateinit var loadingDialogManager: LoadingDialogManager
+    private lateinit var alertDialogManager: AlertDialogManager
     private lateinit var ticketId: String
 
     var isfree = true
@@ -45,8 +45,8 @@ class ConsumerTradeActivity : AppCompatActivity() {
         ticketId = intent.getStringExtra("ticketId").toString()
         println(ticketId)
 
-        loadingDialogManager = LoadingDialogManager(layoutInflater, this)
-        loadingDialogManager.createLoadingAlertDialog()
+        alertDialogManager = AlertDialogManager(layoutInflater, this)
+        alertDialogManager.createLoadingAlertDialog()
 
         getPaymentMethods()
 
@@ -160,7 +160,7 @@ class ConsumerTradeActivity : AppCompatActivity() {
 
                     val body = GeneralTradeBody(isfree, paymentmethodid)
 
-                    loadingDialogManager.dialog.show()
+                    alertDialogManager.dialog.show()
 
                     println(isfree)
                     println(paymentmethodid)
@@ -176,13 +176,13 @@ class ConsumerTradeActivity : AppCompatActivity() {
 
                                 println("Aqui123")
 
-                                loadingDialogManager.dialog.dismiss()
+                                alertDialogManager.dialog.dismiss()
 
                                 Toast.makeText(this@ConsumerTradeActivity, "Troca geral realizada com sucesso!", Toast.LENGTH_LONG)
                                     .show()
                                 finish()
                             } else if (response.code() == 500) {
-                                loadingDialogManager.dialog.dismiss()
+                                alertDialogManager.dialog.dismiss()
 
                                 Toast.makeText(this@ConsumerTradeActivity, "Troca geral falhada!", Toast.LENGTH_LONG)
                                     .show()
@@ -190,7 +190,7 @@ class ConsumerTradeActivity : AppCompatActivity() {
                         }
 
                         override fun onFailure(calll: Call<String>, t: Throwable) {
-                            loadingDialogManager.dialog.dismiss()
+                            alertDialogManager.dialog.dismiss()
                             println("Deu erro")
                             Toast.makeText(this@ConsumerTradeActivity, "Erro! Tente novamente (a troca geral pode já ter sido feita).", Toast.LENGTH_LONG)
                                 .show()
@@ -210,7 +210,7 @@ class ConsumerTradeActivity : AppCompatActivity() {
 
                     val body = DirectTradeBody(receiveremail.toString() ,isfree, paymentmethodid)
 
-                    loadingDialogManager.dialog.show()
+                    alertDialogManager.dialog.show()
 
                     service.directTicketTrade(ticketId, "Bearer $token",body).enqueue(object :
                         Callback<String> {
@@ -222,13 +222,13 @@ class ConsumerTradeActivity : AppCompatActivity() {
                             if (response.code() == 200) {
 
                                 println("Aqui")
-                                loadingDialogManager.dialog.dismiss()
+                                alertDialogManager.dialog.dismiss()
 
                                 Toast.makeText(this@ConsumerTradeActivity, "Troca direta realizada com sucesso!", Toast.LENGTH_LONG)
                                     .show()
                                 finish()
                             } else if (response.code() == 500) {
-                                loadingDialogManager.dialog.dismiss()
+                                alertDialogManager.dialog.dismiss()
 
                                 Toast.makeText(this@ConsumerTradeActivity, "Troca direta falhada!", Toast.LENGTH_LONG)
                                     .show()
@@ -237,7 +237,7 @@ class ConsumerTradeActivity : AppCompatActivity() {
                         }
 
                         override fun onFailure(call: Call<String>, t: Throwable) {
-                            loadingDialogManager.dialog.dismiss()
+                            alertDialogManager.dialog.dismiss()
                             println("CAo ${t.toString()} ")
                             Toast.makeText(this@ConsumerTradeActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
                                 .show()
@@ -316,7 +316,7 @@ class ConsumerTradeActivity : AppCompatActivity() {
         val sp = SharedPreferencesHelper.getSharedPreferences(this@ConsumerTradeActivity)
         val token = sp.getString("token", null)
 
-        loadingDialogManager.dialog.show()
+        alertDialogManager.dialog.show()
 
         service.getPaymentMethods("Bearer $token").enqueue(object :
             Callback<List<RetroPaymentMethod>> {
@@ -326,7 +326,7 @@ class ConsumerTradeActivity : AppCompatActivity() {
             ) {
                 if (response.code() == 200) {
 
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
 
                     val paymentMethods = response.body()
                     paymentMethods?.map { retroPaymentMethods -> retroPaymentMethods.methodid }
@@ -384,7 +384,7 @@ class ConsumerTradeActivity : AppCompatActivity() {
             }
 
             override fun onFailure(calll: Call<List<RetroPaymentMethod>>, t: Throwable) {
-                loadingDialogManager.dialog.dismiss()
+                alertDialogManager.dialog.dismiss()
                 Toast.makeText(this@ConsumerTradeActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
                     .show()
             }

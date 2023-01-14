@@ -20,13 +20,12 @@ import pt.ipca.smartcanteen.models.adapters.MealsAdapterRec
 import pt.ipca.smartcanteen.models.adapters.MenuOrdersAdapterRec
 import pt.ipca.smartcanteen.models.adapters.TradeMealsAdapterRec
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
-import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
+import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.*
 import pt.ipca.smartcanteen.views.activities.ConsumerBarMenuActivity
 import pt.ipca.smartcanteen.views.activities.NotificationActivity
-import pt.ipca.smartcanteen.views.activities.OrderActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,17 +46,19 @@ class MenuConsumerFragment : Fragment() {
 
     private val barMealsTitleTv: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_bar_meals_tv) as TextView }
 
-    private lateinit var loadingDialogManager :LoadingDialogManager
+    private val barMealsRecyclerView : RecyclerView by lazy {requireView().findViewById<RecyclerView>(R.id.consumer_menu_bar_meals_rv) as RecyclerView }
+    private val tradeMealsRecyclerView : RecyclerView by lazy {requireView().findViewById<RecyclerView>(R.id.consumer_menu_available_trades_rv) as RecyclerView }
+    private val ordersRecyclerView : RecyclerView by lazy {requireView().findViewById<RecyclerView>(R.id.consumer_menu_orders_rv) as RecyclerView }
+    private val barSpinner : Spinner by lazy {requireView().findViewById<Spinner>(R.id.consumer_menu_bar_select_sp) as Spinner }
+
+    private lateinit var alertDialogManager :AlertDialogManager
 
     override fun onCreateView(
         inflater: LayoutInflater, parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-
-
-        loadingDialogManager = LoadingDialogManager(inflater, requireActivity())
-        loadingDialogManager.createLoadingAlertDialog()
+        alertDialogManager = AlertDialogManager(inflater, requireActivity())
+        alertDialogManager.createLoadingAlertDialog()
         return inflater.inflate(R.layout.fragment_consumer_menu, parent, false)
     }
 
@@ -66,7 +67,7 @@ class MenuConsumerFragment : Fragment() {
         val retrofit = SmartCanteenRequests().retrofit
 
         logoutIc.setOnClickListener{
-            AuthHelper().doLogout(retrofit,requireActivity(),loadingDialogManager)
+            AuthHelper().doLogout(retrofit,requireActivity(),alertDialogManager)
         }
 
         notiIc.setOnClickListener{
@@ -84,46 +85,19 @@ class MenuConsumerFragment : Fragment() {
             startActivity(intent)
         }
 
-
-        val barSpinner: Spinner = view.findViewById<Spinner>(R.id.consumer_menu_bar_select_sp)
-
-        val barMealsRecyclerView = view.findViewById<RecyclerView>(R.id.consumer_menu_bar_meals_rv)
-        val tradeMealsRecyclerView = view.findViewById<RecyclerView>(R.id.consumer_menu_available_trades_rv)
-        val ordersRecyclerView = view.findViewById<RecyclerView>(R.id.consumer_menu_orders_rv)
-
-        val barMealsLinearLayoutManager = LinearLayoutManager(view.context)
-        barMealsLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-
-        val tradeMealsLinearLayoutManager = LinearLayoutManager(view.context)
-        tradeMealsLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-
-        val ordersLinearLayoutManager = LinearLayoutManager(view.context)
-        ordersLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-
         getTradeList(
-            tradeMealsRecyclerView,
-            tradeMealsLinearLayoutManager,
             retrofit
         )
         getOrdersList(
-            ordersRecyclerView,
-            ordersLinearLayoutManager,
             retrofit
         )
-        /** Get All Info **/
         getBarInfo(
-            barSpinner,
-            barMealsRecyclerView,
-            barMealsLinearLayoutManager,
             retrofit
         )
     }
 
 
     fun getBarInfo(
-        spinner: Spinner,
-        barMealsRecyclerView: RecyclerView,
-        barMealsLinearLayoutManager: LinearLayoutManager,
         retrofit:Retrofit
     ) {
 
@@ -133,7 +107,7 @@ class MenuConsumerFragment : Fragment() {
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
 
-        loadingDialogManager.dialog.show()
+        alertDialogManager.dialog.show()
 
         service.getCampusBars("Bearer $token").enqueue(object :
             Callback<List<RetroBar>> {
@@ -142,7 +116,7 @@ class MenuConsumerFragment : Fragment() {
                 response: Response<List<RetroBar>>
             ) {
                 if (response.code() == 200) {
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
                     val body = response.body()
 
                     if (body != null) {
@@ -157,9 +131,9 @@ class MenuConsumerFragment : Fragment() {
                                 )
                             }
                             adapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spinner.adapter = adapter
+                            barSpinner.adapter = adapter
 
-                            spinner.onItemSelectedListener =
+                            barSpinner.onItemSelectedListener =
                                 object : AdapterView.OnItemSelectedListener {
                                     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
@@ -174,8 +148,6 @@ class MenuConsumerFragment : Fragment() {
 
                                         Log.d("spinner:","Before")
                                         getMealsList(
-                                            barMealsRecyclerView,
-                                            barMealsLinearLayoutManager,
                                             barId,
                                             retrofit
                                         )
@@ -188,9 +160,6 @@ class MenuConsumerFragment : Fragment() {
                 else if(response.code()==401){
                     AuthHelper().newSessionToken(requireActivity())
                     getBarInfo(
-                        spinner,
-                        barMealsRecyclerView,
-                        barMealsLinearLayoutManager,
                         retrofit
                     )
                 }
@@ -200,7 +169,7 @@ class MenuConsumerFragment : Fragment() {
             override fun onFailure(call: Call<List<RetroBar>>, t: Throwable) {
                 //mealsProgressBar.visibility = View.GONE
                 //mealsTextProgress.visibility = View.GONE
-                loadingDialogManager.dialog.dismiss()
+                alertDialogManager.dialog.dismiss()
                 print("error")
             }
 
@@ -209,8 +178,6 @@ class MenuConsumerFragment : Fragment() {
     }
 
     private fun getMealsList(
-        barMealsRecyclerView: RecyclerView,
-        barMealsLinearLayoutManager: LinearLayoutManager,
         barId: String,
         retrofit: Retrofit
     ) {
@@ -241,7 +208,8 @@ class MenuConsumerFragment : Fragment() {
                         if (body.isNotEmpty()) {
                             /** bar Meals **/
                             val barMealsAdapter = MealsAdapterRec(body)
-
+                            val barMealsLinearLayoutManager = LinearLayoutManager(requireContext())
+                            barMealsLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
                             barMealsRecyclerView.layoutManager = barMealsLinearLayoutManager
                             barMealsRecyclerView.itemAnimator = DefaultItemAnimator()
                             barMealsRecyclerView.adapter = barMealsAdapter
@@ -265,8 +233,6 @@ class MenuConsumerFragment : Fragment() {
     }
 
     private fun getTradeList(
-        tradeMealsRecyclerView: RecyclerView,
-        tradeMealsLinearLayoutManager: LinearLayoutManager,
         retrofit: Retrofit
     ) {
 
@@ -297,7 +263,8 @@ class MenuConsumerFragment : Fragment() {
                         if (body.isNotEmpty()) {
                             /** Campus trades **/
                             val barMealsAdapter = TradeMealsAdapterRec(requireActivity(),getString(R.string.ordernum),getString(R.string.free), body)
-
+                            val tradeMealsLinearLayoutManager = LinearLayoutManager(requireActivity())
+                            tradeMealsLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
                             tradeMealsRecyclerView.layoutManager = tradeMealsLinearLayoutManager
                             tradeMealsRecyclerView.itemAnimator = DefaultItemAnimator()
                             tradeMealsRecyclerView.adapter = barMealsAdapter
@@ -306,8 +273,6 @@ class MenuConsumerFragment : Fragment() {
                 }else if(response.code()==401){
                     AuthHelper().newSessionToken(requireActivity())
                     getTradeList(
-                        tradeMealsRecyclerView,
-                        tradeMealsLinearLayoutManager,
                         retrofit
                     )
                 }
@@ -325,8 +290,6 @@ class MenuConsumerFragment : Fragment() {
     }
 
     private fun getOrdersList(
-        ordersRecyclerView: RecyclerView,
-        ordersLinearLayoutManager: LinearLayoutManager,
         retrofit: Retrofit
     ) {
 
@@ -357,7 +320,8 @@ class MenuConsumerFragment : Fragment() {
                         if (body.isNotEmpty()) {
                             /** my orders **/
                             var ordersAdapter = MenuOrdersAdapterRec(requireActivity(),getString(R.string.qty),getString(R.string.ordernum),body)
-
+                            val ordersLinearLayoutManager = LinearLayoutManager(requireContext())
+                            ordersLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
                             ordersRecyclerView.layoutManager = ordersLinearLayoutManager
                             ordersRecyclerView.itemAnimator = DefaultItemAnimator()
                             ordersRecyclerView.adapter = ordersAdapter
@@ -368,8 +332,6 @@ class MenuConsumerFragment : Fragment() {
                 else if(response.code()==401){
                     AuthHelper().newSessionToken(requireActivity())
                     getOrdersList(
-                        ordersRecyclerView,
-                        ordersLinearLayoutManager,
                         retrofit
                     )
                 }

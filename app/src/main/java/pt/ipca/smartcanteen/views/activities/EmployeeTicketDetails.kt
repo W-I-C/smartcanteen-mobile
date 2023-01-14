@@ -2,29 +2,25 @@ package pt.ipca.smartcanteen.views.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.RetroBar
 import pt.ipca.smartcanteen.models.RetroState
 import pt.ipca.smartcanteen.models.RetroTicketMeal
 import pt.ipca.smartcanteen.models.adapters.OrderDetailsAdapterRec
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
-import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
+import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
-import pt.ipca.smartcanteen.services.CampusService
 import pt.ipca.smartcanteen.services.OrdersService
 import pt.ipca.smartcanteen.services.StatesService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class EmployeeTicketDetails : AppCompatActivity() {
     private val deliverBtn: Button by lazy { findViewById<View>(R.id.employee_order_details_deliver_btn) as Button }
@@ -40,7 +36,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
     private val stateTv: TextView by lazy { findViewById<View>(R.id.employee_order_details_current_state_tv) as TextView }
 
 
-    private lateinit var loadingDialogManager: LoadingDialogManager
+    private lateinit var alertDialogManager: AlertDialogManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,8 +60,8 @@ class EmployeeTicketDetails : AppCompatActivity() {
         stateTitleTv.text = "${getString(R.string.current_state)}: "
         stateTv.text = statename
 
-        loadingDialogManager = LoadingDialogManager(layoutInflater, this@EmployeeTicketDetails)
-        loadingDialogManager.createLoadingAlertDialog()
+        alertDialogManager = AlertDialogManager(layoutInflater, this@EmployeeTicketDetails)
+        alertDialogManager.createLoadingAlertDialog()
 
         val spinner: Spinner = findViewById<View>(R.id.employee_order_details_current_state_sp) as Spinner
 
@@ -87,7 +83,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
         val sp = SharedPreferencesHelper.getSharedPreferences(this@EmployeeTicketDetails)
         val token = sp.getString("token", null)
 
-        loadingDialogManager.dialog.show()
+        alertDialogManager.dialog.show()
 
         service.getStates("Bearer $token").enqueue(object :
             Callback<List<RetroState>> {
@@ -96,7 +92,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
                 response: Response<List<RetroState>>
             ) {
                 if (response.code() == 200) {
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
                     val body = response.body()
 
                     if (body != null) {
@@ -154,7 +150,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
             override fun onFailure(call: Call<List<RetroState>>, t: Throwable) {
                 //mealsProgressBar.visibility = View.GONE
                 //mealsTextProgress.visibility = View.GONE
-                loadingDialogManager.dialog.dismiss()
+                alertDialogManager.dialog.dismiss()
                 print("error")
             }
 
@@ -231,7 +227,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
         val sp = SharedPreferencesHelper.getSharedPreferences(this@EmployeeTicketDetails)
         val token = sp.getString("token", null)
 
-        loadingDialogManager.dialog.show()
+        alertDialogManager.dialog.show()
 
         service.setTicketStates(ticketid, stateId, "Bearer $token").enqueue(object :
             Callback<String> {
@@ -239,7 +235,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
                 call: Call<String>,
                 response: Response<String>
             ) {
-                loadingDialogManager.dialog.dismiss()
+                alertDialogManager.dialog.dismiss()
                 if (response.code() == 200) {
                     if(finishActivity){
                         finish()
@@ -250,7 +246,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
             override fun onFailure(call: Call<String>, t: Throwable) {
                 //mealsProgressBar.visibility = View.GONE
                 //mealsTextProgress.visibility = View.GONE
-                loadingDialogManager.dialog.dismiss()
+                alertDialogManager.dialog.dismiss()
                 print("error")
             }
 

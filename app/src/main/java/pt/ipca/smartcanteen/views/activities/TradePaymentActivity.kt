@@ -5,12 +5,11 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import org.w3c.dom.Text
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroPaymentMethod
 import pt.ipca.smartcanteen.models.RetroTradePayment
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
-import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
+import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.TradesService
@@ -26,14 +25,14 @@ class TradePaymentActivity : AppCompatActivity() {
     private val payment_method: TextView by lazy { findViewById<TextView>(R.id.trade_payment_method_general_textview) as TextView }
     private val payment_method_tittle: TextView by lazy { findViewById<TextView>(R.id.type_payment_textview) as TextView }
     var paymentmethodid: String? = null
-    private lateinit var loadingDialogManager: LoadingDialogManager
+    private lateinit var alertDialogManager: AlertDialogManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trade_payment)
 
-        loadingDialogManager = LoadingDialogManager(layoutInflater, this)
-        loadingDialogManager.createLoadingAlertDialog()
+        alertDialogManager = AlertDialogManager(layoutInflater, this)
+        alertDialogManager.createLoadingAlertDialog()
 
         val generaltradeid = intent.getStringExtra("generaltradeid").toString()
         val isfree = intent.getBooleanExtra("isfree", false)
@@ -82,7 +81,7 @@ class TradePaymentActivity : AppCompatActivity() {
         val sp = SharedPreferencesHelper.getSharedPreferences(this@TradePaymentActivity)
         val token = sp.getString("token", null)
 
-        loadingDialogManager.dialog.show()
+        alertDialogManager.dialog.show()
 
         service.getTradePaymentMethod(generaltradeid, "Bearer $token").enqueue(object :
             Callback<RetroTradePayment> {
@@ -93,7 +92,7 @@ class TradePaymentActivity : AppCompatActivity() {
                 Log.d("teste", response.code().toString())
                 if (response.code() == 200) {
 
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
 
                     println("Aqui")
 

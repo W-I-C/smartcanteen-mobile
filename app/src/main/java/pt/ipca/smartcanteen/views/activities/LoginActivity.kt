@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.LoginBody
 import pt.ipca.smartcanteen.models.LoginResponse
-import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
+import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.AuthService
@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
     private val email: EditText by lazy {findViewById<View>(R.id.login_email_edittext) as EditText};
     private val password: EditText by lazy {findViewById<View>(R.id.login_password_edittext) as EditText}
     private val button: Button by lazy {findViewById<View>(R.id.login_button_login) as Button}
-    private lateinit var loadingDialogManager: LoadingDialogManager
+    private lateinit var alertDialogManager: AlertDialogManager
     // val myButton = findViewById<Button>(R.id.login_button_login)
 
     private fun validatePassword(password:String):Boolean{
@@ -46,8 +46,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        loadingDialogManager = LoadingDialogManager(layoutInflater, this)
-        loadingDialogManager.createLoadingAlertDialog()
+        alertDialogManager = AlertDialogManager(layoutInflater, this)
+        alertDialogManager.createLoadingAlertDialog()
 
         button.setOnClickListener {
             val emailText = email.text.toString()
@@ -71,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
 
                             val retrofit = SmartCanteenRequests().retrofit
 
-                            loadingDialogManager.dialog.show()
+                            alertDialogManager.dialog.show()
 
                             // Cria um objeto LoginService
                             val service = retrofit.create(AuthService::class.java)
@@ -79,7 +79,7 @@ class LoginActivity : AppCompatActivity() {
                             call.enqueue(object : Callback<LoginResponse> {
                                 override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                                     if (response.code() == 200) {
-                                        loadingDialogManager.dialog.dismiss()
+
 
                                         val loginBody = response.body()
                                         val token = loginBody?.token
@@ -88,10 +88,11 @@ class LoginActivity : AppCompatActivity() {
                                         if(token != null){
                                             Log.d("token", token)
                                         }
-
                                         val sp = SharedPreferencesHelper.getSharedPreferences(this@LoginActivity)
                                         sp.edit().putString("token", token).commit()
                                         sp.edit().putString("role", role).commit()
+
+                                        alertDialogManager.dialog.dismiss()
 
 
                                         if (role == "consumer") {
@@ -111,14 +112,14 @@ class LoginActivity : AppCompatActivity() {
                                         }
 
                                     } else {
-                                        loadingDialogManager.dialog.dismiss()
+                                        alertDialogManager.dialog.dismiss()
                                         Toast.makeText(this@LoginActivity, "Erro! Não foi possível realizar o login, tente novamente", Toast.LENGTH_LONG)
                                             .show()
                                     }
                                 }
 
                                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                                    loadingDialogManager.dialog.dismiss()
+                                    alertDialogManager.dialog.dismiss()
                                     Toast.makeText(this@LoginActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
                                         .show()
                                 }

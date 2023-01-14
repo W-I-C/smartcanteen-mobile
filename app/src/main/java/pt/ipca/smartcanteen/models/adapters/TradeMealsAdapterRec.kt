@@ -27,8 +27,9 @@ class TradeMealsAdapterRec(private val activity:Activity,private val orderString
         val price = if (trade.isfree) freeString else "${trade.total}€"
         val status = trade.statename
         val norder = "${orderString}: ${trade.norder}"
-
+        Log.d("generaltradeid", trade.generaltradeid.toString())
         holder.itemView.setOnClickListener{
+
             Log.d("isFree",trade.isfree.toString())
             val intent = Intent(activity, ConsumerOrderDetailsActivity::class.java).apply {
                 putExtra("ticketid",trade.ticketid)
