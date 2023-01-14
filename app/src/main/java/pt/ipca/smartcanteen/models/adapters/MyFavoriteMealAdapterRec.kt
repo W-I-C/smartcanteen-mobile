@@ -20,7 +20,7 @@ class MyFavoriteMealAdapterRec(private var listFavorite: List<RetroFavoriteMeal>
     override fun onBindViewHolder(holder: MyFavoriteMealRecViewHolder, position: Int) {
         val order = listFavorite.get(position)
         val name = order.name
-        val time = order.time
+        val time = "${order.time}min"
         val price = "${order.price}€"
 
         holder.bindData(name,time.toString(),price)

@@ -22,7 +22,7 @@ class UndeliveredOrdersAdapterRecViewHolder(inflater: LayoutInflater, val parent
             stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.redLogout))
         } else if(stateText == "Pronto"){
             stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.background_color))
-        } else if(stateText == "Preparação") {
+        } else if(stateText == "Em Preparação") {
             stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.orange))
         }
     }
