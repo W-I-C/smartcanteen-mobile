@@ -185,6 +185,16 @@ class MenuConsumerFragment : Fragment() {
                         }
                     }
                 }
+                else if(response.code()==401){
+                    AuthHelper().newSessionToken(requireActivity())
+                    getBarInfo(
+                        spinner,
+                        barMealsRecyclerView,
+                        barMealsLinearLayoutManager,
+                        retrofit
+                    )
+                }
+
             }
 
             override fun onFailure(call: Call<List<RetroBar>>, t: Throwable) {
@@ -293,6 +303,13 @@ class MenuConsumerFragment : Fragment() {
                             tradeMealsRecyclerView.adapter = barMealsAdapter
                         }
                     }
+                }else if(response.code()==401){
+                    AuthHelper().newSessionToken(requireActivity())
+                    getTradeList(
+                        tradeMealsRecyclerView,
+                        tradeMealsLinearLayoutManager,
+                        retrofit
+                    )
                 }
             }
 
@@ -347,6 +364,14 @@ class MenuConsumerFragment : Fragment() {
 
                         }
                     }
+                }
+                else if(response.code()==401){
+                    AuthHelper().newSessionToken(requireActivity())
+                    getOrdersList(
+                        ordersRecyclerView,
+                        ordersLinearLayoutManager,
+                        retrofit
+                    )
                 }
             }
 

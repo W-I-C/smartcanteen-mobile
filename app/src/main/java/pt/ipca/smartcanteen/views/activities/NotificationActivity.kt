@@ -17,6 +17,7 @@ import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.adapters.UndeliveredOrdersAdaterRec
 import pt.ipca.smartcanteen.models.RetroTicket
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.OrdersService
 import retrofit2.Call
@@ -32,6 +33,10 @@ class NotificationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notification)
 
+
+    }
+
+    fun getNotification(){
         val retrofit = SmartCanteenRequests().retrofit
 
         val service = retrofit.create(NotificationService::class.java)
@@ -55,6 +60,9 @@ class NotificationActivity : AppCompatActivity() {
 
                                 rebuildlist(NotificationAdapterRec(retroFit2))
                             }
+                    }else if(response.code()==401){
+                        AuthHelper().newSessionToken(this@NotificationActivity)
+                        getNotification()
                     }
                 }
 

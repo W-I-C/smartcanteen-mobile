@@ -16,6 +16,7 @@ import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroCartMeals
 import pt.ipca.smartcanteen.models.adapters.MyFavoriteMealAdapterRec
 import pt.ipca.smartcanteen.models.adapters.MyOrdersCartRec
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.RetroFavoriteMeal
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
@@ -44,6 +45,11 @@ class FavoriteMealFragment : Fragment() {
         val linearLayoutManager = GridLayoutManager(requireContext(), 2)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
 
+        getFavs()
+    }
+
+
+    fun getFavs(){
         val retrofit = SmartCanteenRequests().retrofit
         val service = retrofit.create(FavoritemealService::class.java)
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
@@ -59,12 +65,14 @@ class FavoriteMealFragment : Fragment() {
                     val retroFit2 = response.body()
 
                     if (retroFit2 != null) {
-                        if(!retroFit2.isEmpty()){
+                        if (!retroFit2.isEmpty()) {
                             val adapter = MyFavoriteMealAdapterRec(retroFit2)
                             rebuildlist(adapter)
-
                         }
                     }
+                }else if(response.code()==401){
+                    AuthHelper().newSessionToken(requireActivity())
+                    getFavs()
                 }
             }
 
@@ -72,9 +80,7 @@ class FavoriteMealFragment : Fragment() {
                 print("error")
             }
         })
-
     }
-
 
 
     fun rebuildlist(adapter: MyFavoriteMealAdapterRec) {

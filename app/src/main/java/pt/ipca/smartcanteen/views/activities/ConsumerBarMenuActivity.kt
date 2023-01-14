@@ -15,6 +15,7 @@ import pt.ipca.smartcanteen.models.RetroBar
 import pt.ipca.smartcanteen.models.RetroMeal
 import pt.ipca.smartcanteen.models.adapters.BarMenuMealsAdapterRec
 import pt.ipca.smartcanteen.models.adapters.MealsAdapterRec
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
@@ -28,32 +29,30 @@ import retrofit2.Retrofit
 class ConsumerBarMenuActivity : AppCompatActivity() {
     private val mealsProgressBar: ProgressBar by lazy {findViewById<ProgressBar>(R.id.consumer_bar_menu_meals_progress_bar) as ProgressBar }
     private val mealsTextProgress: TextView by lazy {findViewById<TextView>(R.id.consumer_bar_menu_meals_progress_bar_text) as TextView }
+
+    private val barMealsRecyclerView: RecyclerView by lazy {findViewById<RecyclerView>(R.id.consumer_bar_menu_rv) as RecyclerView }
+
+    private val barSpinner: Spinner by lazy {findViewById<Spinner>(R.id.consumer_bar_menu_bar_select_sp) as Spinner }
+
+
     private lateinit var loadingDialogManager :LoadingDialogManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_consumer_bar_menu)
 
-        val barMealsRecyclerView = findViewById<RecyclerView>(R.id.consumer_bar_menu_rv)
-        val barMealsLayoutManager = GridLayoutManager(this@ConsumerBarMenuActivity, 2)
-        barMealsLayoutManager.orientation = LinearLayoutManager.VERTICAL
 
         loadingDialogManager = LoadingDialogManager(layoutInflater, this@ConsumerBarMenuActivity)
         loadingDialogManager.createLoadingAlertDialog()
 
-        val barSpinner: Spinner = findViewById<Spinner>(R.id.consumer_bar_menu_bar_select_sp)
-        val retrofit = SmartCanteenRequests().retrofit
-        getBarInfo(barSpinner,barMealsRecyclerView,barMealsLayoutManager,retrofit)
+
+        getBarInfo()
     }
 
 
     fun getBarInfo(
-        spinner: Spinner,
-        barMealsRecyclerView: RecyclerView,
-        barMealsLinearLayoutManager: LinearLayoutManager,
-        retrofit:Retrofit
     ) {
-
+        val retrofit = SmartCanteenRequests().retrofit
 
         val service = retrofit.create(CampusService::class.java)
 
@@ -69,11 +68,13 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
                 response: Response<List<RetroBar>>
             ) {
                 if (response.code() == 200) {
+
                     loadingDialogManager.dialog.dismiss()
                     val body = response.body()
 
                     if (body != null) {
                         if (body.isNotEmpty()) {
+
 
                             Log.d("bar:", body.toString())
                             var adapter = ArrayAdapter(
@@ -83,9 +84,9 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
                             )
 
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spinner.adapter = adapter
+                            barSpinner.adapter = adapter
 
-                            spinner.onItemSelectedListener =
+                            barSpinner.onItemSelectedListener =
                                 object : AdapterView.OnItemSelectedListener {
                                     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
@@ -100,8 +101,6 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
 
 
                                         getMealsList(
-                                            barMealsRecyclerView,
-                                            barMealsLinearLayoutManager,
                                             barId,
                                             retrofit
                                         )
@@ -110,6 +109,10 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
                                 }
                         }
                     }
+                }
+                else if(response.code()==401){
+                    AuthHelper().newSessionToken(this@ConsumerBarMenuActivity)
+                    getBarInfo()
                 }
             }
 
@@ -125,8 +128,6 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
     }
 
     private fun getMealsList(
-        barMealsRecyclerView: RecyclerView,
-        barMealsLinearLayoutManager: LinearLayoutManager,
         barId: String,
         retrofit: Retrofit
     ) {
@@ -156,13 +157,22 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
                     if (body != null) {
                         if (body.isNotEmpty()) {
                             /** bar Meals **/
+                            val barMealsLayoutManager = GridLayoutManager(this@ConsumerBarMenuActivity, 2)
+                            barMealsLayoutManager.orientation = LinearLayoutManager.VERTICAL
                             val barMealsAdapter = BarMenuMealsAdapterRec(body)
 
-                            barMealsRecyclerView.layoutManager = barMealsLinearLayoutManager
+                            barMealsRecyclerView.layoutManager = barMealsLayoutManager
                             barMealsRecyclerView.itemAnimator = DefaultItemAnimator()
                             barMealsRecyclerView.adapter = barMealsAdapter
                         }
                     }
+                }
+                else if(response.code()==401){
+                    AuthHelper().newSessionToken(this@ConsumerBarMenuActivity)
+                    getMealsList(
+                        barId,
+                        retrofit
+                    )
                 }
             }
 
