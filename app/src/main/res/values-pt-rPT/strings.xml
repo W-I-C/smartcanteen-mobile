@@ -62,4 +62,6 @@
     <string name="deliver">Entregar</string>
     <string name="email_error">O email tem que estar preenchido</string>
     <string name="is_free">É gratuito?</string>
+    <string name="Menu">Ementa</string>
+    <string name="see_menu">Ver Ementa</string>
 </resources>
