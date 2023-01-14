@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,22 +8,56 @@
 
 
     <TextView
-        android:id="@+id/text_favorite"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/favorite"
-        android:textStyle="bold"
-        android:textColor="@color/background_color"
-        android:textSize="30sp"
-        android:textAlignment="center"
-        android:layout_marginTop="20dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favourites_menu_text_favorite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="95dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/favorite"
+        android:textAlignment="center"
+        android:textColor="@color/background_color"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/favourites_menu_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:minWidth="50dp"
+        android:minHeight="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favourites_menu_text_favorite" />
+
+    <TextView
+        android:id="@+id/favourites_menu_progress_bar_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/background_color"
+        android:text="@string/Loading..."
+        android:textColor="@color/background_color"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favourites_menu_progress_bar" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favourites_menu_rv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:clipChildren="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favourites_menu_text_favorite" />
 
-        />
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
