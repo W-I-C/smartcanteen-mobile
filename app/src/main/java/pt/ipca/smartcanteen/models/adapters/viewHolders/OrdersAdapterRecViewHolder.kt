@@ -37,61 +37,7 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
     val quantityTv = itemView.findViewById<TextView>(R.id.my_orders_card_quantity)
     val priceTv = itemView.findViewById<TextView>(R.id.my_orders_card_price)
     val stateTv = itemView.findViewById<TextView>(R.id.my_orders_card_state)
-
     val tradeButton = itemView.findViewById<Button>(R.id.my_orders_card_button_trade)
-    val deleteButton = itemView.findViewById<Button>(R.id.my_orders_card_delete)
-
-    fun setDeleteClickListener(ticketid: String){
-        deleteButton.setOnClickListener{
-
-            val retrofit = SmartCanteenRequests().retrofit
-
-            val service = retrofit.create(OrdersService::class.java)
-
-            val token = sp.getString("token", null)
-
-            myOrdersAdapter.visibility = View.GONE
-            progressBar.visibility = View.VISIBLE
-            textProgress.visibility = View.VISIBLE
-
-            service.removeTicket(ticketid,"Bearer $token").enqueue(object :
-                Callback<List<RetroTicket>> {
-                override fun onResponse(
-                    call: Call<List<RetroTicket>>,
-                    response: Response<List<RetroTicket>>
-                ) {
-                    if (response.code() == 200) {
-
-                        Toast.makeText(context, "Encomenda removida com sucesso", Toast.LENGTH_SHORT).show()
-
-                        myOrdersAdapter.visibility = View.VISIBLE
-                        progressBar.visibility = View.GONE
-                        textProgress.visibility = View.GONE
-
-                        val retroFit2 = response.body()
-                        if (retroFit2 != null)
-                            if(!retroFit2.isEmpty()){
-                                rebuildlistOrders(OrdersAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdapter, retroFit2, activity, context))
-                                // rebuildlistOrders(OrdersAdapterRec(retroFit2))
-                            }
-                    }
-                }
-
-                override fun onFailure(calll: Call<List<RetroTicket>>, t: Throwable) {
-                    myOrdersAdapter.visibility = View.VISIBLE
-                    progressBar.visibility = View.GONE
-                    textProgress.visibility = View.GONE
-                    Toast.makeText(context, "Erro! Tente novamente.", Toast.LENGTH_SHORT).show()
-                }
-            })
-        }
-    }
-
-    fun rebuildlistOrders(adapter: OrdersAdapterRec) {
-        myOrdersAdapter.layoutManager = linearLayoutManager
-        myOrdersAdapter.itemAnimator = DefaultItemAnimator()
-        myOrdersAdapter.adapter = adapter
-    }
 
     fun setTradeClickListener(ticketId: String){
         tradeButton.setOnClickListener{
@@ -114,12 +60,6 @@ class OrdersAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
             stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.background_color))
         } else if(stateText == "Preparação") {
             stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.orange))
-        }
-
-        if(stateText == "Entregue" || stateText == "Não Iniciado"){
-            deleteButton.visibility = Button.VISIBLE
-        } else {
-            deleteButton.visibility = Button.GONE
         }
 
         if(stateText == "Entregue"){

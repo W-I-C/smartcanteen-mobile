@@ -66,6 +66,23 @@
         app:layout_constraintLeft_toRightOf="@id/my_trades_card_image"
         app:layout_constraintTop_toBottomOf="@id/my_trades_card_quantity"/>
 
+
+    <TextView
+        android:id="@+id/my_trades_card_receiver_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@color/background_color"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toRightOf="@id/my_trades_card_identifier"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <TextView
         android:id="@+id/my_trades_card_state"
         android:layout_width="wrap_content"
@@ -87,7 +104,7 @@
         android:id="@+id/my_trades_card_isgeneraltrade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Is General Trade"
+        android:text="General Trade"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="40dp"
         android:layout_marginTop="10dp"

@@ -34,6 +34,7 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
     val priceTv = itemView.findViewById<TextView>(R.id.my_trades_card_price)
     val stateTv = itemView.findViewById<TextView>(R.id.my_trades_card_state)
     val isGeneralTradeTv = itemView.findViewById<TextView>(R.id.my_trades_card_isgeneraltrade)
+    val receiverNameTv = itemView.findViewById<TextView>(R.id.my_trades_card_receiver_name)
     val deleteButton = itemView.findViewById<Button>(R.id.my_trades_card_delete)
 
     fun setDeleteClickListener(ticketid: String, isgeneraltrade: Boolean, generaltradeid: String?){
@@ -129,17 +130,22 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
         myTradesAdapter.adapter = adapter
     }
 
-    fun bindData(identifierText: Int, quantityText: Int, priceText:Float, stateText: String, isgeneraltrade: Boolean){
+    fun bindData(identifierText: Int, quantityText: Int, priceText:Float, stateText: String, isgeneraltrade: Boolean, receiverNameText: String){
         identifierTv.text = identifierText.toString()
         quantityTv.text = quantityText.toString()
         priceTv.text = priceText.toString()
         stateTv.text = stateText
 
+        println("Aqui123")
+        println(isgeneraltrade)
+
         // TODO: passar para strings do resource
         if(isgeneraltrade == true){
+            println("Aqui")
             isGeneralTradeTv.text = "General Trade"
         } else {
             isGeneralTradeTv.text = "Direct Trade"
+            receiverNameTv.text = receiverNameText
         }
 
         if(stateText == "Não Iniciado" || stateText == "Atraso"){

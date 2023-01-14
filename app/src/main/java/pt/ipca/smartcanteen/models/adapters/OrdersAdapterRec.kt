@@ -38,10 +38,6 @@ class OrdersAdapterRec(val progressBar: ProgressBar, val textProgress: TextView,
         val statename = ordersList.get(position).statename
         holder.bindData(nencomenda,ticketamount,total,statename)
 
-        holder.itemView.setOnClickListener {
-            onItemClick?.invoke(ordersList[position])
-        }
-
         holder.itemView.setOnClickListener{
             var intent = Intent(activity, ConsumerOrderDetailsActivity::class.java)
             intent.putExtra("ticketid", ticketid)
@@ -49,8 +45,6 @@ class OrdersAdapterRec(val progressBar: ProgressBar, val textProgress: TextView,
             intent.putExtra("total", total)
             activity.startActivity(intent)
         }
-
-        holder.setDeleteClickListener(ticketid)
 
         holder.setTradeClickListener(ticketid)
     }
