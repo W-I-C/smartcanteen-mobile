@@ -64,4 +64,6 @@
     <string name="is_free">É gratuito?</string>
     <string name="Menu">Ementa</string>
     <string name="see_menu">Ver Ementa</string>
+    <string name="wish_remove_meal_ask">Deseja realmente remover a refeição?</string>
+    <string name="meal_being_used">Não é possivel remover uma refeição que está a ser usada</string>
 </resources>

@@ -5,11 +5,10 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import org.w3c.dom.Text
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroPaymentMethod
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
-import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
+import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.TradesService
@@ -23,7 +22,7 @@ class TradePaymentActivity : AppCompatActivity() {
     private val confirm_button: Button by lazy {findViewById<Button>(R.id.trade_payment_pay) as Button }
     private val price_text: TextView by lazy {findViewById<TextView>(R.id.trade_payment_price_textview) as TextView }
     var paymentmethodid: String? = null
-    private lateinit var loadingDialogManager: LoadingDialogManager
+    private lateinit var alertDialogManager: AlertDialogManager
 
     // receber o ticketid e o generaltradeid
     //private lateinit var generaltradeid: String
@@ -38,8 +37,8 @@ class TradePaymentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trade_payment)
 
-        loadingDialogManager = LoadingDialogManager(layoutInflater, this)
-        loadingDialogManager.createLoadingAlertDialog()
+        alertDialogManager = AlertDialogManager(layoutInflater, this)
+        alertDialogManager.createLoadingAlertDialog()
 
         // fazer isto só se recebermos um int (price), se recebermos gratuito não chama isto
         // if(isfree == false)
@@ -57,7 +56,7 @@ class TradePaymentActivity : AppCompatActivity() {
         val sp = SharedPreferencesHelper.getSharedPreferences(this@TradePaymentActivity)
         val token = sp.getString("token", null)
 
-        loadingDialogManager.dialog.show()
+        alertDialogManager.dialog.show()
 
         service.getPaymentMethods("Bearer $token").enqueue(object :
             Callback<List<RetroPaymentMethod>> {
@@ -67,7 +66,7 @@ class TradePaymentActivity : AppCompatActivity() {
             ) {
                 if (response.code() == 200) {
 
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
 
                     val paymentMethods = response.body()
                     paymentMethods?.map { retroPaymentMethods -> retroPaymentMethods.methodid }
@@ -102,7 +101,7 @@ class TradePaymentActivity : AppCompatActivity() {
                     Toast.makeText(this@TradePaymentActivity, "Métodos de pagamento obtidos com sucesso!", Toast.LENGTH_LONG)
                         .show()
                 } else if(response.code() == 500){
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
                     Toast.makeText(this@TradePaymentActivity, "Erro! Não foi possível obter os métodos de pagamento.", Toast.LENGTH_LONG)
                         .show()
                 }else if(response.code()==401){
@@ -112,7 +111,7 @@ class TradePaymentActivity : AppCompatActivity() {
             }
 
             override fun onFailure(calll: Call<List<RetroPaymentMethod>>, t: Throwable) {
-                loadingDialogManager.dialog.dismiss()
+                alertDialogManager.dialog.dismiss()
                 Toast.makeText(this@TradePaymentActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
                     .show()
             }

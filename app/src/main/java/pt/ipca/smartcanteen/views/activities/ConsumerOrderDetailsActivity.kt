@@ -2,6 +2,7 @@ package pt.ipca.smartcanteen.views.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -75,6 +76,7 @@ class ConsumerOrderDetailsActivity : AppCompatActivity() {
                 intent.putExtra("ticketId",ticketid)
                 startActivity(intent)
             }else{
+                Log.d("teste general trade id",generaltradeid.toString())
                 val intent = Intent(this@ConsumerOrderDetailsActivity, TradePaymentActivity::class.java)
                 intent.putExtra("ticketid",ticketid)
                 intent.putExtra("generaltradeid",generaltradeid)
