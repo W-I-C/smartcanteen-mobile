@@ -39,6 +39,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:textColor="@color/black"
+        android:textSize="30sp"
         app:layout_constraintTop_toBottomOf="@+id/type_payment_textview"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.models.adapters.MyOrdersCartRec
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroCartMeals
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.MealsService
@@ -37,6 +38,15 @@ class MyOrdersCartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        getMyOrders()
+
+        Finalizar.setOnClickListener {
+            var intent = Intent(requireActivity(), OrderActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    fun getMyOrders(){
         val retrofit = SmartCanteenRequests().retrofit
         val service = retrofit.create(MealsService::class.java)
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
@@ -59,6 +69,9 @@ class MyOrdersCartFragment : Fragment() {
                                 total.text = "${retroFit2[0].cartTotal} €"
                         }
                     }
+                }else if(response.code()==401){
+                    AuthHelper().newSessionToken(requireActivity())
+                    getMyOrders()
                 }
             }
 
@@ -66,11 +79,6 @@ class MyOrdersCartFragment : Fragment() {
                 print("error")
             }
         })
-
-        Finalizar.setOnClickListener {
-            var intent = Intent(requireActivity(), OrderActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     fun rebuildlist(adapter: MyOrdersCartRec) {

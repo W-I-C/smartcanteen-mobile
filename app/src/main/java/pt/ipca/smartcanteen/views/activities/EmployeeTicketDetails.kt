@@ -13,6 +13,7 @@ import pt.ipca.smartcanteen.models.RetroBar
 import pt.ipca.smartcanteen.models.RetroState
 import pt.ipca.smartcanteen.models.RetroTicketMeal
 import pt.ipca.smartcanteen.models.adapters.OrderDetailsAdapterRec
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
@@ -144,6 +145,9 @@ class EmployeeTicketDetails : AppCompatActivity() {
                             getTicket(ticketid, orderMealsRecyclerView, orderMealsLinearLayoutManager)
                         }
                     }
+                }else if(response.code()==401){
+                    AuthHelper().newSessionToken(this@EmployeeTicketDetails)
+                    getStatesInfo(spinner, retrofit, ticketid,statename, orderMealsRecyclerView, orderMealsLinearLayoutManager)
                 }
             }
 
@@ -196,6 +200,10 @@ class EmployeeTicketDetails : AppCompatActivity() {
                     loadingBar.visibility = View.GONE
                     loadingText.visibility = View.GONE
 
+                }
+                else if(response.code()==401){
+                    AuthHelper().newSessionToken(this@EmployeeTicketDetails)
+                    getTicket(ticketid, orderMealsRecyclerView, orderMealsLinearLayoutManager)
                 }
             }
 

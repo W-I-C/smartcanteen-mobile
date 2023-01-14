@@ -40,7 +40,7 @@ interface TradesService {
         @Body body: GeneralTradeBody
     ): Call<String>
 
-    @GET("/api/v1/consumer/general/trades/{generalTradeId}")
+    @GET("/api/v1/consumer/general/trade/{generalTradeId}")
     fun getTradePaymentMethod(
         @Path("generalTradeId") generaltradeid: String,
         @Header("Authorization") authorization: String

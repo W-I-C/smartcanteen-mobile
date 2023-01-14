@@ -14,6 +14,7 @@ import pt.ipca.smartcanteen.*
 import pt.ipca.smartcanteen.models.RetroTicket
 import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.UndeliveredOrdersAdaterRec
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
@@ -86,6 +87,9 @@ class UndeliveredOrdersFragment : Fragment() {
                                 textError.visibility = View.GONE
                                 rebuildlist(UndeliveredOrdersAdaterRec(requireActivity(),retroFit2))
                             }
+                    }else if(response.code()==401){
+                        AuthHelper().newSessionToken(requireActivity())
+                        getOrders(retrofit)
                     }
                 }
 
