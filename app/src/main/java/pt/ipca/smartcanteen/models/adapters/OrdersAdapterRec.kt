@@ -20,11 +20,6 @@ import pt.ipca.smartcanteen.views.activities.ConsumerOrderDetailsActivity
 class OrdersAdapterRec(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myOrdersAdapter: RecyclerView, private var ordersList: List<RetroTicket>, private val activity: Activity, private val context: Context) :
     RecyclerView.Adapter<OrdersAdapterRecViewHolder>() {
 
-    var onItemClick : ((RetroTicket) -> Unit)? = null
-    var onButtonTradeClick : ((View) -> Unit)? = null
-    // função que aceita um inteiro por entrada (posição da lista) e não tem retornbo - inicializado a null
-    // var onDeleteButtonClick : ((Int) -> Unit)? = null
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrdersAdapterRecViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return OrdersAdapterRecViewHolder(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdapter, inflater, parent, activity, context)

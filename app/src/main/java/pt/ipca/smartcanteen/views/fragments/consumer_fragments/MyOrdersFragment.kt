@@ -75,54 +75,12 @@ class MyOrdersFragment : Fragment() {
         myOrdersAdater.layoutManager = linearLayoutManager
         myOrdersAdater.itemAnimator = DefaultItemAnimator()
         myOrdersAdater.adapter = adapter
-
-        adapter.onItemClick = this::onItemOrdersClick
-        // adapter.onButtonTradeClick = this::onButtonTradeClick
-        // adapter.onDeleteButtonClick = this::onDeleteButtonClick
-    }
-
-    fun onItemOrdersClick(order: RetroTicket) {
-        val intent = Intent(requireActivity(), DetailedMyOrderActivity::class.java).apply {
-            putExtra("order_nencomenda", order.norder)
-            putExtra("order_ticketamount", order.ticketamount)
-            putExtra("order_total", order.total)
-            putExtra("order_statename", order.statename)
-        }
-        startActivity(intent)
-    }
-
-    fun onButtonTradeClick(view: View) {
-        var intent = Intent(requireActivity(), ConsumerTradeActivity::class.java)
-        startActivity(intent)
-    }
-
-    fun onDeleteButtonClick(position: Int){
-        // val ticketid = orders[position].ticketid
-        val order = orders[position]
-        val ticketid = order.ticketid
-    }
-
-    fun doTrade(view: View) {
-        var intent = Intent(requireActivity(), ConsumerTradeActivity::class.java)
-        startActivity(intent)
     }
 
     fun rebuildlistTrades(adapter: TradesAdapterRec) {
         myTradesAdater.layoutManager = linearLayoutTradeManager
         myTradesAdater.itemAnimator = DefaultItemAnimator()
         myTradesAdater.adapter = adapter
-
-        adapter.onItemTradesClick = this::onItemTradesClick
-    }
-
-    fun onItemTradesClick(trade: RetroTrade) {
-        val intent = Intent(requireActivity(), DetailedMyTradeActivity::class.java).apply {
-            putExtra("trade_nencomenda", trade.norder)
-            putExtra("trade_ticketamount", trade.ticketamount)
-            putExtra("trade_total", trade.total)
-            putExtra("trade_statename", trade.statename)
-        }
-        startActivity(intent)
     }
 
     private fun myOrders(){
@@ -176,7 +134,13 @@ class MyOrdersFragment : Fragment() {
 
                                 rebuildlistOrders(OrdersAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdater, orders, requireActivity(), requireContext()))
                             }
-                    }else if(response.code()==401){
+                    } else if(response.code() == 500){
+                        myOrdersAdater.visibility = View.VISIBLE
+                        progressBar.visibility = View.GONE
+                        textProgress.visibility = View.GONE
+                        Toast.makeText(requireActivity(), "Erro! Não foi possível obter as encomendas.", Toast.LENGTH_LONG)
+                            .show()
+                    } else if(response.code()==401){
                         AuthHelper().newSessionToken(requireActivity())
                         myOrders()
                     }
@@ -244,7 +208,13 @@ class MyOrdersFragment : Fragment() {
                                 tradesTextError.visibility = View.GONE
                                 rebuildlistTrades(TradesAdapterRec(progressBar, textProgress, linearLayoutTradeManager, sp, myTradesAdater, retroFit2, requireActivity(), requireContext()))
                             }
-                    }else if(response.code()==401){
+                    } else if(response.code() == 500){
+                        myTradesAdater.visibility = View.VISIBLE
+                        progressBar.visibility = View.GONE
+                        textProgress.visibility = View.GONE
+                        Toast.makeText(requireActivity(), "Erro! Não foi possível obter as encomendas.", Toast.LENGTH_LONG)
+                            .show()
+                    } else if(response.code()==401){
                         AuthHelper().newSessionToken(requireActivity())
                         myTrades()
                     }

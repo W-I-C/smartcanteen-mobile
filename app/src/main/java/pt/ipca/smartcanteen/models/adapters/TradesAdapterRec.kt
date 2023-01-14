@@ -17,8 +17,6 @@ import pt.ipca.smartcanteen.views.activities.ConsumerOrderDetailsActivity
 class TradesAdapterRec(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myTradesAdapter: RecyclerView, private var tradesList: List<RetroTrade>, private val activity: Activity,  private var context: Context) :
     RecyclerView.Adapter<TradesAdapterRecViewHolder>() {
 
-    var onItemTradesClick : ((RetroTrade) -> Unit)? = null
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TradesAdapterRecViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return TradesAdapterRecViewHolder(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, inflater,parent, activity, context)
