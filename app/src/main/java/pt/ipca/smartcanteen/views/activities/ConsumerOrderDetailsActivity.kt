@@ -78,6 +78,7 @@ class ConsumerOrderDetailsActivity : AppCompatActivity() {
                 intent.putExtra("ticketid",ticketid)
                 intent.putExtra("generaltradeid",generaltradeid)
                 intent.putExtra("price",ticketTotal)
+                intent.putExtra("isfree",isFreeTrade)
                 startActivity(intent)
             }
 
