@@ -1,6 +1,8 @@
 package pt.ipca.smartcanteen.models.adapters.viewHolders
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
@@ -19,18 +21,20 @@ import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
 import pt.ipca.smartcanteen.models.adapters.TradesAdapterRec
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.TradesService
+import pt.ipca.smartcanteen.views.activities.ConsumerOrderDetailsActivity
+import pt.ipca.smartcanteen.views.activities.ConsumerTradeActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myTradesAdapter: RecyclerView, inflater: LayoutInflater, val parent: ViewGroup, private var context: Context):
+class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myTradesAdapter: RecyclerView, inflater: LayoutInflater, val parent: ViewGroup, private val activity: Activity, private var context: Context):
     RecyclerView.ViewHolder(inflater.inflate(R.layout.my_trade_card, parent, false)){
-    val identifierTv = itemView.findViewById<TextView>(R.id.my_exchanges_card_identifier)
-    val quantityTv = itemView.findViewById<TextView>(R.id.my_exchanges_card_quantity)
-    val priceTv = itemView.findViewById<TextView>(R.id.my_exchanges_card_price)
-    val stateTv = itemView.findViewById<TextView>(R.id.my_exchanges_card_state)
-
-    val deleteButton = itemView.findViewById<Button>(R.id.my_exchanges_card_delete)
+    val identifierTv = itemView.findViewById<TextView>(R.id.my_trades_card_identifier)
+    val quantityTv = itemView.findViewById<TextView>(R.id.my_trades_card_quantity)
+    val priceTv = itemView.findViewById<TextView>(R.id.my_trades_card_price)
+    val stateTv = itemView.findViewById<TextView>(R.id.my_trades_card_state)
+    val isGeneralTradeTv = itemView.findViewById<TextView>(R.id.my_trades_card_isgeneraltrade)
+    val deleteButton = itemView.findViewById<Button>(R.id.my_trades_card_delete)
 
     fun setDeleteClickListener(ticketid: String, isgeneraltrade: Boolean, generaltradeid: String?){
         deleteButton.setOnClickListener{
@@ -47,7 +51,6 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                 progressBar.visibility = View.VISIBLE
                 textProgress.visibility = View.VISIBLE
 
-                println("123")
                 service.removeTrade(ticketid,"Bearer $token").enqueue(object :
                     Callback<List<RetroTrade>> {
                     override fun onResponse(
@@ -63,11 +66,10 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                             textProgress.visibility = View.GONE
 
                             val retroFit2 = response.body()
-                            println("Aqui")
 
                             if (retroFit2 != null)
                                 if(!retroFit2.isEmpty()){
-                                    rebuildlistOrders(TradesAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, retroFit2, context))
+                                    rebuildlistOrders(TradesAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, retroFit2, activity, context))
                                 }
                         }
                     }
@@ -76,7 +78,6 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                         myTradesAdapter.visibility = View.GONE
                         progressBar.visibility = View.GONE
                         textProgress.visibility = View.GONE
-                        println("Erro")
                     }
                 })
             } else {
@@ -87,7 +88,6 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                     progressBar.visibility = View.VISIBLE
                     textProgress.visibility = View.VISIBLE
 
-                    println("123")
                     service.removeGeneralTrade(generaltradeid,"Bearer $token").enqueue(object :
                         Callback<List<RetroTrade>> {
                         override fun onResponse(
@@ -103,11 +103,11 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                                 textProgress.visibility = View.GONE
 
                                 val retroFit2 = response.body()
-                                println("Aqui")
 
                                 if (retroFit2 != null)
                                     if(!retroFit2.isEmpty()){
-                                        rebuildlistOrders(TradesAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, retroFit2, context))
+                                        println("Aqui123")
+                                        rebuildlistOrders(TradesAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, retroFit2, activity, context))
                                     }
                             }
                         }
@@ -116,7 +116,6 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                             myTradesAdapter.visibility = View.GONE
                             progressBar.visibility = View.GONE
                             textProgress.visibility = View.GONE
-                            println("Erro")
                         }
                     })
                 }
@@ -130,11 +129,18 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
         myTradesAdapter.adapter = adapter
     }
 
-    fun bindData(identifierText: Int, quantityText: Int, priceText:Float, stateText: String){
+    fun bindData(identifierText: Int, quantityText: Int, priceText:Float, stateText: String, isgeneraltrade: Boolean){
         identifierTv.text = identifierText.toString()
         quantityTv.text = quantityText.toString()
-        priceTv.text=priceText.toString()
-        stateTv.text=stateText
+        priceTv.text = priceText.toString()
+        stateTv.text = stateText
+
+        // TODO: passar para strings do resource
+        if(isgeneraltrade == true){
+            isGeneralTradeTv.text = "General Trade"
+        } else {
+            isGeneralTradeTv.text = "Direct Trade"
+        }
 
         if(stateText == "Não Iniciado" || stateText == "Atraso"){
             stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.redLogout))
@@ -148,6 +154,12 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
             deleteButton.visibility = Button.VISIBLE
         } else {
             deleteButton.visibility = Button.GONE
+        }
+
+        if(isGeneralTradeTv.text == "General Trade"){
+            isGeneralTradeTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.redLogout))
+        } else if(isGeneralTradeTv.text == "Direct Trade") {
+            isGeneralTradeTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.orange))
         }
     }
 }

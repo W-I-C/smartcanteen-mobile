@@ -23,6 +23,7 @@ import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.OrdersService
+import pt.ipca.smartcanteen.views.activities.ConsumerOrderDetailsActivity
 import pt.ipca.smartcanteen.views.activities.ConsumerTradeActivity
 import pt.ipca.smartcanteen.views.activities.TradePaymentActivity
 import pt.ipca.smartcanteen.views.fragments.employee_fragments.EmployeeFragmentActivity
