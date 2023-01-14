@@ -37,6 +37,10 @@ class AuthHelper {
                     val intent = Intent(activity, LoginActivity::class.java)
                     activity.finish()
                     startActivity(activity, intent, null)
+                } else if (response.code() == 401) {
+                    var intent = Intent(activity, LoginActivity::class.java)
+                    activity.finish()
+                    activity.startActivity(intent)
                 }
             }
 

@@ -19,6 +19,7 @@ import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
 import pt.ipca.smartcanteen.models.adapters.TradesAdapterRec
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.TradesService
 import pt.ipca.smartcanteen.views.activities.ConsumerOrderDetailsActivity
@@ -72,6 +73,15 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                                 if(!retroFit2.isEmpty()){
                                     rebuildlistOrders(TradesAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, retroFit2, activity, context))
                                 }
+                        } else if(response.code() == 500){
+                            myTradesAdapter.visibility = View.VISIBLE
+                            progressBar.visibility = View.GONE
+                            textProgress.visibility = View.GONE
+                            Toast.makeText(context, "Erro! Não foi possível remover a troca direta.", Toast.LENGTH_LONG)
+                                .show()
+                        } else if(response.code()==401){
+                            AuthHelper().newSessionToken(activity)
+                            setDeleteClickListener(ticketid, isgeneraltrade, generaltradeid)
                         }
                     }
 
@@ -110,6 +120,15 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                                         println("Aqui123")
                                         rebuildlistOrders(TradesAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, retroFit2, activity, context))
                                     }
+                            } else if(response.code() == 500){
+                                myTradesAdapter.visibility = View.VISIBLE
+                                progressBar.visibility = View.GONE
+                                textProgress.visibility = View.GONE
+                                Toast.makeText(context, "Erro! Não foi possível remover a troca geral.", Toast.LENGTH_LONG)
+                                    .show()
+                            } else if(response.code()==401){
+                                AuthHelper().newSessionToken(activity)
+                                setDeleteClickListener(ticketid, isgeneraltrade, generaltradeid)
                             }
                         }
 
@@ -168,6 +187,17 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
             isGeneralTradeTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.redLogout))
         } else if(isGeneralTradeTv.text == "Direct Trade") {
             isGeneralTradeTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.orange))
+        }
+
+
+        if(receiverNameText == null && isgeneraltrade == true){
+            deleteButton.visibility = View.VISIBLE
+        } else {
+            deleteButton.visibility = View.GONE
+            stateTv.text = "Trocado"
+            isGeneralTradeTv.text = receiverNameText
+            stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.background_color))
+            isGeneralTradeTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.background_color))
         }
     }
 }
