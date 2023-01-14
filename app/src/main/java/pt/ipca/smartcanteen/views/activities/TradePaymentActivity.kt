@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import org.w3c.dom.Text
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroPaymentMethod
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
@@ -104,6 +105,9 @@ class TradePaymentActivity : AppCompatActivity() {
                     loadingDialogManager.dialog.dismiss()
                     Toast.makeText(this@TradePaymentActivity, "Erro! Não foi possível obter os métodos de pagamento.", Toast.LENGTH_LONG)
                         .show()
+                }else if(response.code()==401){
+                    AuthHelper().newSessionToken(this@TradePaymentActivity)
+                    getPaymentMethods()
                 }
             }
 

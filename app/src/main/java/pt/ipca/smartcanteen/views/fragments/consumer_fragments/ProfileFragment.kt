@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroProfile
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.ProfileService
@@ -31,6 +32,10 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        getData()
+    }
+
+    private fun getData(){
         val retrofit = SmartCanteenRequests().retrofit
 
         val service = retrofit.create(ProfileService::class.java)
@@ -50,6 +55,9 @@ class ProfileFragment : Fragment() {
                         name.setText(retroFit2?.name)
                         spinnerCampus.setText(retroFit2?.campusname)
                         spinnerBar.setText(retroFit2?.barname)
+                    }else if(response.code()==401){
+                        AuthHelper().newSessionToken(requireActivity())
+                        getData()
                     }
                 }
 
