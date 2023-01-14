@@ -33,9 +33,8 @@ class TradesAdapterRec(val progressBar: ProgressBar, val textProgress: TextView,
         val total = tradesList.get(position).total
         val statename = tradesList.get(position).statename
         val receivername = tradesList.get(position).receivername
-        if (receivername != null) {
-            holder.bindData(nencomenda,ticketamount,total,statename,isgeneraltrade,receivername)
-        }
+        holder.bindData(nencomenda,ticketamount,total,statename,isgeneraltrade,receivername)
+
 
         holder.itemView.setOnClickListener{
             var intent = Intent(activity, ConsumerOrderDetailsActivity::class.java)
