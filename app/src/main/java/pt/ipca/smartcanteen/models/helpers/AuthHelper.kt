@@ -44,4 +44,11 @@ class AuthHelper {
 
         })
     }
+
+    fun newSessionToken(){
+
+    }
+
+
+
 }
