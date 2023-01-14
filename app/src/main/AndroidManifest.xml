@@ -15,6 +15,13 @@
         android:theme="@style/Theme.SmartCanteen"
         tools:targetApi="31">
         <activity
+            android:name=".views.activities.ConsumerBarMenuActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".views.activities.LoadingScreenActivity"
             android:exported="true">
             <intent-filter>
@@ -132,7 +139,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
-            
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
