@@ -64,4 +64,5 @@
     <string name="is_free">É gratuito?</string>
     <string name="Menu">Ementa</string>
     <string name="see_menu">Ver Ementa</string>
+    <string name="no_changes_available">Não há mudanças possíveis</string>
 </resources>

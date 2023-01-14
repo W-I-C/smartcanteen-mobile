@@ -28,6 +28,19 @@
         app:layout_constraintTop_toBottomOf="@id/ingredients_change_title"
         />
 
+    <TextView
+        android:id="@+id/ingredients_change_text_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:text="@string/no_changes_available"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@id/ingredients_change_save"
+        app:layout_constraintTop_toBottomOf="@id/ingredients_change_title"/>
+
     <Button
         android:id="@+id/ingredients_change_save"
         android:layout_width="150dp"

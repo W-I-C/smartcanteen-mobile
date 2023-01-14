@@ -73,4 +73,5 @@
     <string name="is_free">Is Free?</string>
     <string name="Menu">Menu</string>
     <string name="see_menu">View Menu</string>
+    <string name="no_changes_available">No changes available</string>
 </resources>

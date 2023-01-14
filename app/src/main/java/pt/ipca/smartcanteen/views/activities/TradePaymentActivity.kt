@@ -61,8 +61,6 @@ class TradePaymentActivity : AppCompatActivity() {
             }
         }
 
-
-
         cancel()
     }
 
@@ -90,12 +88,9 @@ class TradePaymentActivity : AppCompatActivity() {
                 call: Call<RetroTradePayment>,
                 response: Response<RetroTradePayment>
             ) {
-                Log.d("teste", response.code().toString())
                 if (response.code() == 200) {
 
                     loadingDialogManager.dialog.dismiss()
-
-                    println("Aqui")
 
                     val paymentMethods = response.body()
 

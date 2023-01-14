@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.*
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
@@ -161,10 +162,6 @@ class ConsumerTradeActivity : AppCompatActivity() {
                     val body = GeneralTradeBody(isfree, paymentmethodid)
 
                     loadingDialogManager.dialog.show()
-
-                    println(isfree)
-                    println(paymentmethodid)
-                    println(ticketId)
 
                     service.generalTicketTrade(ticketId, "Bearer $token",body).enqueue(object :
                         Callback<String> {
@@ -380,6 +377,13 @@ class ConsumerTradeActivity : AppCompatActivity() {
 
                     Toast.makeText(this@ConsumerTradeActivity, "Métodos de pagamento obtidos com sucesso!", Toast.LENGTH_LONG)
                         .show()
+                } else if(response.code() == 500){
+                    loadingDialogManager.dialog.dismiss()
+                    Toast.makeText(this@ConsumerTradeActivity, "Erro! Não foi possível obter os métodos de pagamento.", Toast.LENGTH_LONG)
+                        .show()
+                } else if(response.code()==401){
+                    AuthHelper().newSessionToken(this@ConsumerTradeActivity)
+                    getPaymentMethods()
                 }
             }
 
