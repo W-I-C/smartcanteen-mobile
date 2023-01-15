@@ -81,4 +81,9 @@
     <string name="delivered_orders">Delivered Orders</string>
     <string name="undelivered_orders">Undelivered Orders</string>
     <string name="trades_made">Trades Done</string>
+    <string name="description_2">Description:</string>
+    <string name="changes_2">Changes:</string>
+    <string name="type">Type:</string>
+    <string name="only_increase">Only Increase</string>
+    <string name="field_error">This field must be filled in</string>
 </resources>

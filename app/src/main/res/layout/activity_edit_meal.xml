@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/meal_bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/activity_edit_meal_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/scroll_bottom_sheet_rectangle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/activity_edit_meal_back_arrow_iv"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/arrow_back"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image"
+        />
+
+    <ImageView
+        android:id="@+id/activity_edit_meal_edit_pencil_white"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_white"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image"
+        />
+
+    <ImageView
+        android:id="@+id/activity_edit_meal_edit_pencil_green"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit"
+        android:visibility="gone"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image"
+        />
+
+    <ImageView
+        android:id="@+id/activity_edit_meal_edit_warning_white"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/warning_white"
+        android:visibility="gone"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image"
+        />
+
+    <ImageView
+        android:id="@+id/activity_edit_meal_edit_warning_green"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/warning_green"
+        android:visibility="gone"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image"
+        />
+
+    <TextView
+        android:id="@+id/activity_edit_meal_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Nome da Refeição"
+        android:layout_marginLeft="20dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/activity_edit_meal_image"
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image"/>
+
+    <EditText
+        android:id="@+id/activity_edit_meal_name_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:visibility="gone"
+        android:layout_marginLeft="20dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/activity_edit_meal_image"
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image"/>
+
+    <TextView
+        android:id="@+id/trade_name_edit_textview_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:hint="@string/field_error"
+        android:textSize="10sp"
+        android:visibility="gone"
+        android:textColorHint="@color/redButton"
+        app:layout_constraintStart_toStartOf="@+id/activity_edit_meal_name_edittext"
+        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_name_edittext"/>
+
+    <TextView
+        android:id="@+id/activity_edit_meal_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="10min"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        app:layout_constraintRight_toLeftOf="@id/activity_edit_meal_clock"
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image"/>
+
+    <EditText
+        android:id="@+id/activity_edit_meal_time_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        app:layout_constraintRight_toLeftOf="@id/activity_edit_meal_clock"
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image"/>
+
+    <TextView
+        android:id="@+id/trade_time_edit_textview_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:hint="@string/field_error"
+        android:textSize="10sp"
+        android:visibility="gone"
+        android:textColorHint="@color/redButton"
+        app:layout_constraintEnd_toEndOf="@+id/activity_edit_meal_time_edittext"
+        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_time_edittext"/>
+
+    <TextView
+        android:id="@+id/activity_edit_meal_clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/clock"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@id/activity_edit_meal_image"
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image"/>
+
+    <TextView
+        android:id="@+id/activity_edit_meal_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:text="0.00€"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/background_color"
+        app:layout_constraintStart_toStartOf="@id/activity_edit_meal_name"
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_name"/>
+
+    <EditText
+        android:id="@+id/activity_edit_meal_price_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:visibility="gone"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/background_color"
+        app:layout_constraintStart_toStartOf="@id/trade_name_edit_textview_error"
+        app:layout_constraintTop_toBottomOf="@+id/trade_name_edit_textview_error"/>
+
+    <TextView
+        android:id="@+id/trade_price_edit_textview_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:hint="@string/field_error"
+        android:textSize="10sp"
+        android:visibility="gone"
+        android:textColorHint="@color/redButton"
+        app:layout_constraintStart_toStartOf="@+id/activity_edit_meal_price_edittext"
+        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_price_edittext"/>
+
+    <TextView
+        android:id="@+id/activity_edit_meal_description_tittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="@string/description_2"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#515050"
+        app:layout_constraintStart_toStartOf="@id/activity_edit_meal_price"
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_price"/>
+
+    <TextView
+        android:id="@+id/activity_edit_meal_description_tittle_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="@string/description_2"
+        android:visibility="gone"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#515050"
+        app:layout_constraintStart_toStartOf="@id/trade_price_edit_textview_error"
+        app:layout_constraintTop_toBottomOf="@+id/trade_price_edit_textview_error"/>
+
+    <TextView
+        android:id="@+id/activity_edit_meal_description"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam odio quam, luctus ut elementum sollicitudin, convallis a elit. Phasellus placerat semper feugiat. Nam gravida porta urna. Curabitur ac tincidunt quam. Praesent scelerisque ultrices nisi, vel condimentum ante tristique a. Donec venenatis ullamcorper magna. Suspendisse sed purus vel nisi cursus dignissim. Mauris et imperdiet ante, in tincidunt turpis. Curabitur sed tortor ante."
+        android:textSize="14sp"
+        android:textColor="#515050"
+        app:layout_constraintStart_toStartOf="@id/activity_edit_meal_price"
+        app:layout_constraintEnd_toEndOf="@id/activity_edit_meal_clock"
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_description_tittle"/>
+
+    <EditText
+        android:id="@+id/activity_edit_meal_description_edittext"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="14sp"
+        android:visibility="gone"
+        android:textColor="#515050"
+        app:layout_constraintStart_toStartOf="@id/activity_edit_meal_price"
+        app:layout_constraintEnd_toEndOf="@id/activity_edit_meal_clock"
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_description_tittle_edittext"/>
+
+    <TextView
+        android:id="@+id/trade_description_edit_textview_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:hint="@string/field_error"
+        android:textSize="10sp"
+        android:visibility="gone"
+        android:textColorHint="@color/redButton"
+        app:layout_constraintStart_toStartOf="@+id/activity_edit_meal_description_edittext"
+        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_description_edittext"/>
+
+
+    <TextView
+        android:id="@+id/activity_edit_meal_item_alt_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/changes_2"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#515050"
+        app:layout_constraintStart_toStartOf="@id/activity_edit_meal_price"
+        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_description" />
+
+    <TextView
+        android:id="@+id/activity_edit_meal_item_alt_title_tv_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/changes_2"
+        android:visibility="gone"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#515050"
+        app:layout_constraintStart_toStartOf="@id/activity_edit_meal_price_edittext"
+        app:layout_constraintTop_toBottomOf="@id/trade_description_edit_textview_error" />
+
+    <ImageView
+        android:id="@+id/activity_edit_meal_card_1_increment"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/quantity_increase"
+        android:visibility="gone"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/activity_edit_meal_clock"
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_description_edittext"
+        />
+
+    <TextView
+        android:id="@+id/activity_edit_meal_textError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Não há Allowed Changes"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:textColor="#515050"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_item_alt_title_tv" />
+
+    <TextView
+        android:id="@+id/activity_edit_meal_textError_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Não há Allowed Changes"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:textColor="#515050"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_item_alt_title_tv_edittext" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_edit_meal_item_alt_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="@id/activity_edit_meal_price"
+        app:layout_constraintEnd_toEndOf="@id/activity_edit_meal_clock"
+        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_item_alt_title_tv" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_edit_meal_item_alt_rv_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="@id/activity_edit_meal_price"
+        app:layout_constraintEnd_toEndOf="@id/activity_edit_meal_clock"
+        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_item_alt_title_tv_edittext" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/activity_edit_meal_cancel"
+        android:layout_width="181dp"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:hint="@string/cancel"
+        android:visibility="gone"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/button_grey"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <Button
+        android:id="@+id/activity_edit_meal_add_cart"
+        android:layout_width="181dp"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:textColorHint="@color/white"
+        android:hint="@string/add_cart"
+        android:visibility="gone"
+        android:textSize="13sp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_button_style"
+        android:textAlignment="center"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

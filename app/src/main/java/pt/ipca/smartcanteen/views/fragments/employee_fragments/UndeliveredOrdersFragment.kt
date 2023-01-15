@@ -19,7 +19,6 @@ import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.OrdersService
-import pt.ipca.smartcanteen.views.activities.DetailedActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -104,17 +103,5 @@ class UndeliveredOrdersFragment : Fragment() {
         undeliveredOrdersAdater.layoutManager = linearLayoutManager
         undeliveredOrdersAdater.itemAnimator = DefaultItemAnimator()
         undeliveredOrdersAdater.adapter = adapter
-
-        // adapter.onItemClick = this::onItemClick
-
-    }
-
-    fun onItemClick(order: RetroTrade) {
-        val intent = Intent(requireActivity(), DetailedActivity::class.java).apply {
-            putExtra("order_nencomenda", order.norder)
-            putExtra("order_name", order.ownername)
-            putExtra("order_statename", order.statename)
-        }
-        startActivity(intent)
     }
 }

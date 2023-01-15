@@ -11,11 +11,15 @@ interface MealsService {
     @GET("/api/v1/consumer/cart/meals")
     fun getMealsCart(@Header("Authorization") authorization: String): Call<List<RetroCartMeals>>
 
-    @GET("/api/v1/consumer/meals/{mealId}/allowedChanges")
+    @GET("/api/v1/meals/{mealId}/allowedChanges")
     fun getAllowedChanges(@Path("mealId") mealId: String, @Header("Authorization") authorization: String): Call<List<RetroAllowedChanges>>
+
     @GET("/api/v1/employee/bar/menu")
     fun getEmployeeBarMeals(@Header("Authorization") authorization: String): Call<List<RetroMeal>>
 
     @DELETE("/api/v1/employee/meal/{mealId}")
     fun deleteEmployeeBarMeal(@Path("mealId") mealId:String,@Header("Authorization") authorization: String): Call<String>
+
+    @PUT("/api/v1/employee/meal/{mealId}/canBeMade")
+    fun canBeMade(@Path("mealId") mealId: String, @Header("Authorization") authorization: String, @Body body: CanBeMadeBody): Call<String>
 }

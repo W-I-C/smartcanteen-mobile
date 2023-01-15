@@ -1,6 +1,5 @@
 package pt.ipca.smartcanteen.views.fragments.consumer_fragments
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,9 +23,6 @@ import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.OrdersService
 import pt.ipca.smartcanteen.services.TradesService
-import pt.ipca.smartcanteen.views.activities.ConsumerTradeActivity
-import pt.ipca.smartcanteen.views.activities.DetailedMyOrderActivity
-import pt.ipca.smartcanteen.views.activities.DetailedMyTradeActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
