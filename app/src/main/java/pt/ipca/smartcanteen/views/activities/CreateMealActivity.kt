@@ -33,7 +33,7 @@ class CreateMealActivity: AppCompatActivity() {
 
             // on below line we are creating a variable for our button
             // which we are using to dismiss our dialog.
-            val btnClose = view.findViewById<Button>(R.id.cancel)
+            val btnClose = view.findViewById<Button>(R.id.activity_add_cancel)
 
             // on below line we are adding on click listener
             // for our dismissing the dialog button.

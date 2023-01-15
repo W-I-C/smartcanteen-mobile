@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_ingredient_bottom_sheet"
     android:layout_width="match_parent"
-    android:layout_height="700dp"
+    android:layout_height="match_parent"
     android:layout_gravity="bottom"
     android:background="@drawable/create_ingredient"
 
@@ -19,7 +20,6 @@
         android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="@color/black"
-
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -34,18 +34,26 @@
         android:layout_marginLeft="20dp"
         android:textColor="@color/black"
         />
+
     <EditText
-        app:layout_constraintTop_toBottomOf="@+id/name_ingredient"
         android:id="@+id/cart_name_ingredient"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-
         android:background="@drawable/edit_text_style"
+        android:inputType="textEmailAddress"
+        android:hint="@string/name"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:drawablePadding="10dp"
+        android:paddingLeft="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/name_ingredient"
+        android:elevation="5dp" />
 
-        />
     <TextView
         app:layout_constraintTop_toBottomOf="@+id/cart_name_ingredient"
         android:id="@+id/dosage_ingredient"
@@ -56,8 +64,8 @@
         android:textSize="20sp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
-        android:textColor="@color/black"
-        />
+        android:textColor="@color/black" />
+
     <EditText
         app:layout_constraintTop_toBottomOf="@+id/dosage_ingredient"
         android:id="@+id/cart_dosage_ingredient"
@@ -66,10 +74,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-
-        android:background="@drawable/edit_text_style"
-
-        />
+        android:padding="30dp"
+        android:background="@drawable/edit_text_style" />
 
     <TextView
         app:layout_constraintTop_toBottomOf="@+id/cart_dosage_ingredient"
@@ -83,6 +89,7 @@
         android:layout_marginLeft="20dp"
         android:textColor="@color/black"
         />
+
     <EditText
         app:layout_constraintTop_toBottomOf="@+id/increment_limit"
         android:id="@+id/cart_increment_limit"
@@ -91,10 +98,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-
-        android:background="@drawable/edit_text_style"
-
-        />
+        android:padding="30dp"
+        android:background="@drawable/edit_text_style" />
 
     <TextView
         app:layout_constraintTop_toBottomOf="@+id/cart_increment_limit"
@@ -106,8 +111,8 @@
         android:textSize="20sp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
-        android:textColor="@color/black"
-        />
+        android:textColor="@color/black" />
+
     <EditText
         app:layout_constraintTop_toBottomOf="@+id/decrement_limit"
         android:id="@+id/cart_decrement_limit"
@@ -116,83 +121,53 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-
         android:background="@drawable/edit_text_style"
+        android:padding="30dp" />
 
-        />
-    <TextView
-        android:paddingLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:id="@+id/can_increment"
+    <CheckBox
+        android:id="@+id/checkbox_can_increment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/cart_decrement_limit"
+        app:layout_constraintLeft_toLeftOf="@+id/decrement_limit"
         android:text="@string/can_increment"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@+id/cart_decrement_limit"
-        tools:ignore="MissingConstraints" />
-
-    <ImageButton
-        android:id="@+id/button_can_increment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/cart_decrement_limit"
-        app:layout_constraintLeft_toRightOf="@+id/can_increment"
-        android:background="@drawable/check_box"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
+        android:textColor="@color/black"
         />
 
-    <TextView
-       android:id="@+id/choose_can_decrement"
+    <CheckBox
+        android:id="@+id/checkbox_can_decrement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/can_increment"
+        app:layout_constraintTop_toBottomOf="@+id/checkbox_can_increment"
+        app:layout_constraintLeft_toLeftOf="@+id/decrement_limit"
         android:text="@string/can_decrement"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
-        android:paddingLeft="20dp"
-        android:layout_marginTop="15dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageButton
-        android:id="@+id/button_can_decrement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/button_can_increment"
-        app:layout_constraintLeft_toRightOf="@+id/choose_can_decrement"
-        android:background="@drawable/check_box"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
+        android:textColor="@color/black"
         />
 
-    <TextView
+    <CheckBox
+        android:id="@+id/checkbox_can_isremoveonly"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/choose_can_remove"
-        android:text="@string/can_remove"
+        app:layout_constraintTop_toBottomOf="@+id/checkbox_can_decrement"
+        app:layout_constraintLeft_toLeftOf="@+id/decrement_limit"
+        android:text="@string/is_remove_only"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@+id/choose_can_decrement"
-        android:paddingLeft="20dp"
-        android:layout_marginTop="13dp"
-        tools:ignore="MissingConstraints" />
-
-    <ImageButton
-        android:id="@+id/button_can_remove"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/button_can_decrement"
-        app:layout_constraintLeft_toRightOf="@+id/choose_can_remove"
-        android:background="@drawable/check_box"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
+        android:textColor="@color/black"
         />
+
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/cancel"
+        android:id="@+id/activity_add_cancel"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:padding="10dp"
@@ -207,6 +182,7 @@
         android:layout_marginLeft="70dp"
         />
     <Button
+        android:id="@+id/activity_add_save"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:padding="10dp"
