@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.R
 
 class MyFavoriteMealRecViewHolder(inflater: LayoutInflater, val parent: ViewGroup):
-    RecyclerView.ViewHolder(inflater.inflate(R.layout.layout_card_favorite, parent, false)){
-    val nameTv = itemView.findViewById<TextView>(R.id.layout_favorite_card_title_tv)
-    val timeTv = itemView.findViewById<TextView>(R.id.layout_favorite_card_time_tv)
-    val priceTv = itemView.findViewById<TextView>(R.id.layout_favorite_card_price_tv)
+    RecyclerView.ViewHolder(inflater.inflate(R.layout.layout_card_meal_with_rmv, parent, false)){
+    val nameTv = itemView.findViewById<TextView>(R.id.layout_card_with_remove_title_tv)
+    val timeTv = itemView.findViewById<TextView>(R.id.layout_card_with_remove_time_tv)
+    val priceTv = itemView.findViewById<TextView>(R.id.layout_card_with_remove_price_tv)
 
 
 

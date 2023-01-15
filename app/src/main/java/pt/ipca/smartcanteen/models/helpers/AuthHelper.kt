@@ -1,15 +1,12 @@
 package pt.ipca.smartcanteen.models.helpers
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.core.content.ContextCompat.startActivity
 import pt.ipca.smartcanteen.models.LoginResponse
 import pt.ipca.smartcanteen.services.AuthService
 import pt.ipca.smartcanteen.views.activities.LoginActivity
-import pt.ipca.smartcanteen.views.fragments.consumer_fragments.ConsumerFragmentActivity
-import pt.ipca.smartcanteen.views.fragments.employee_fragments.EmployeeFragmentActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,14 +16,14 @@ class AuthHelper {
     fun doLogout(
         retrofit: Retrofit,
         activity: Activity,
-        loadingDialogManager: LoadingDialogManager
+        alertDialogManager: AlertDialogManager
     ) {
         val service = retrofit.create(AuthService::class.java)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(activity)
         val token = sp.getString("token", null)
 
-        loadingDialogManager.dialog.show()
+        alertDialogManager.dialog.show()
 
         service.logout("Bearer $token").enqueue(object :
             Callback<String> {
@@ -36,7 +33,7 @@ class AuthHelper {
             ) {
                 if (response.code() == 200) {
                     sp.edit().remove("token").apply()
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
                     val intent = Intent(activity, LoginActivity::class.java)
                     activity.finish()
                     startActivity(activity, intent, null)

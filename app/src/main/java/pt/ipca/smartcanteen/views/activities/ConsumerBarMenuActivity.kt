@@ -3,7 +3,6 @@ package pt.ipca.smartcanteen.views.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -14,9 +13,8 @@ import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroBar
 import pt.ipca.smartcanteen.models.RetroMeal
 import pt.ipca.smartcanteen.models.adapters.BarMenuMealsAdapterRec
-import pt.ipca.smartcanteen.models.adapters.MealsAdapterRec
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
-import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
+import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.CampusService
@@ -35,15 +33,15 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
     private val barSpinner: Spinner by lazy {findViewById<Spinner>(R.id.consumer_bar_menu_bar_select_sp) as Spinner }
 
 
-    private lateinit var loadingDialogManager :LoadingDialogManager
+    private lateinit var alertDialogManager :AlertDialogManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_consumer_bar_menu)
 
 
-        loadingDialogManager = LoadingDialogManager(layoutInflater, this@ConsumerBarMenuActivity)
-        loadingDialogManager.createLoadingAlertDialog()
+        alertDialogManager = AlertDialogManager(layoutInflater, this@ConsumerBarMenuActivity)
+        alertDialogManager.createLoadingAlertDialog()
 
 
         getBarInfo()
@@ -59,7 +57,7 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
         val sp = SharedPreferencesHelper.getSharedPreferences(this@ConsumerBarMenuActivity)
         val token = sp.getString("token", null)
 
-        loadingDialogManager.dialog.show()
+        alertDialogManager.dialog.show()
 
         service.getCampusBars("Bearer $token").enqueue(object :
             Callback<List<RetroBar>> {
@@ -69,7 +67,7 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
             ) {
                 if (response.code() == 200) {
 
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
                     val body = response.body()
 
                     if (body != null) {
@@ -119,7 +117,7 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
             override fun onFailure(call: Call<List<RetroBar>>, t: Throwable) {
                 //mealsProgressBar.visibility = View.GONE
                 //mealsTextProgress.visibility = View.GONE
-                loadingDialogManager.dialog.dismiss()
+                alertDialogManager.dialog.dismiss()
                 print("error")
             }
 

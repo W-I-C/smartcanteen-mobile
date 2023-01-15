@@ -31,7 +31,7 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
     RecyclerView.Adapter<BarMenuMealsAdapterRecViewHolder>() {
 
     val retrofit = SmartCanteenRequests().retrofit
-    private lateinit var loadingDialogManager: LoadingDialogManager
+    private lateinit var alertDialogManager: AlertDialogManager
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BarMenuMealsAdapterRecViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -59,8 +59,8 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
 
     fun mealDetails(mealid: String,mealName: String,mealDescription: String,mealPrice: String, mealPreptime: String){
 
-        loadingDialogManager = LoadingDialogManager(layoutInflater, activity)
-        loadingDialogManager.createLoadingAlertDialog()
+        alertDialogManager = AlertDialogManager(layoutInflater, activity)
+        alertDialogManager.createLoadingAlertDialog()
 
         val bottomSheetDialog = BottomSheetDialog(activity,
             R.style.BottomSheetDialogTheme
@@ -143,7 +143,7 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
         val sp = SharedPreferencesHelper.getSharedPreferences(activity)
         val token = sp.getString("token", null)
 
-        loadingDialogManager.dialog.show()
+        alertDialogManager.dialog.show()
 
         println("Aqui")
         service.addFavoriteMeal(mealid, "Bearer $token").enqueue(object :
@@ -154,17 +154,17 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
             ) {
                 if (response.code() == 200) {
 
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
 
                     Toast.makeText(activity, "Refeição adicionada aos favoritos!", Toast.LENGTH_LONG)
                         .show()
                 } else if (response.code() == 500) {
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
 
                     Toast.makeText(activity, "Erro! Não foi possível adicionar a refeição aos favoritos", Toast.LENGTH_LONG)
                         .show()
                 } else if(response.code()==401){
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
 
                     AuthHelper().newSessionToken(activity)
                     addFavMeal(mealid)
@@ -172,7 +172,7 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
             }
 
             override fun onFailure(calll: Call<List<RetroFavoriteMeal>>, t: Throwable) {
-                loadingDialogManager.dialog.dismiss()
+                alertDialogManager.dialog.dismiss()
                 println("Deu erro")
                 Toast.makeText(activity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
                     .show()
@@ -187,7 +187,7 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
         val sp = SharedPreferencesHelper.getSharedPreferences(activity)
         val token = sp.getString("token", null)
 
-        loadingDialogManager.dialog.show()
+        alertDialogManager.dialog.show()
 
         service.removeFavoriteMeal(mealid, "Bearer $token").enqueue(object :
             Callback<List<RetroFavoriteMeal>> {
@@ -197,17 +197,17 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
             ) {
                 if (response.code() == 200) {
 
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
 
                     Toast.makeText(activity, "Refeição removida dos favoritos!", Toast.LENGTH_LONG)
                         .show()
                 } else if (response.code() == 500) {
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
 
                     Toast.makeText(activity, "Erro! Não foi possível remover a refeição dos favoritos", Toast.LENGTH_LONG)
                         .show()
                 } else if(response.code()==401){
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
 
                     AuthHelper().newSessionToken(activity)
                     removeFavMeal(mealid)
@@ -215,7 +215,7 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
             }
 
             override fun onFailure(calll: Call<List<RetroFavoriteMeal>>, t: Throwable) {
-                loadingDialogManager.dialog.dismiss()
+                alertDialogManager.dialog.dismiss()
                 Toast.makeText(activity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
                     .show()
             }

@@ -13,10 +13,7 @@ import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroAllowedChanges
 import pt.ipca.smartcanteen.models.adapters.AllowedChangesAdapterRec
 import pt.ipca.smartcanteen.models.adapters.OrderDetailsAdapterRec
-import pt.ipca.smartcanteen.models.helpers.AuthHelper
-import pt.ipca.smartcanteen.models.helpers.LoadingDialogManager
-import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
-import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.helpers.*
 import pt.ipca.smartcanteen.services.MealsService
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,14 +25,14 @@ class IngredientsChangeActivity: AppCompatActivity() {
     private val saveButton: Button by lazy {findViewById<View>(R.id.ingredients_change_save) as Button }
 
     val retrofit = SmartCanteenRequests().retrofit
-    private lateinit var loadingDialogManager: LoadingDialogManager
+    private lateinit var alertDialogManager: AlertDialogManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ingredients_change)
 
-        loadingDialogManager = LoadingDialogManager(layoutInflater, this@IngredientsChangeActivity)
-        loadingDialogManager.createLoadingAlertDialog()
+        alertDialogManager = AlertDialogManager(layoutInflater, this@IngredientsChangeActivity)
+        alertDialogManager.createLoadingAlertDialog()
 
         val mealid = intent.getStringExtra("mealid")
 
@@ -72,7 +69,7 @@ class IngredientsChangeActivity: AppCompatActivity() {
         val sp = SharedPreferencesHelper.getSharedPreferences(this@IngredientsChangeActivity)
         val token = sp.getString("token", null)
 
-        loadingDialogManager.dialog.show()
+        alertDialogManager.dialog.show()
         textError.visibility = View.GONE
 
         service.getAllowedChanges(mealid, "Bearer $token").enqueue(object :
@@ -83,7 +80,7 @@ class IngredientsChangeActivity: AppCompatActivity() {
             ) {
                 if (response.code() == 200) {
 
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
 
                     Toast.makeText(this@IngredientsChangeActivity, "Allowed Changes obtidas com sucesso!", Toast.LENGTH_LONG)
                         .show()
@@ -108,7 +105,7 @@ class IngredientsChangeActivity: AppCompatActivity() {
                     }
 
                 } else if (response.code() == 500) {
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
 
                     allowedChangesRecyclerView.visibility = View.VISIBLE
                     textError.visibility = View.GONE
@@ -116,7 +113,7 @@ class IngredientsChangeActivity: AppCompatActivity() {
                     Toast.makeText(this@IngredientsChangeActivity, "Erro! Não foi possível obter as allowed changes.", Toast.LENGTH_LONG)
                         .show()
                 } else if(response.code() == 401){
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
 
                     allowedChangesRecyclerView.visibility = View.VISIBLE
                     textError.visibility = View.GONE
@@ -127,7 +124,7 @@ class IngredientsChangeActivity: AppCompatActivity() {
             }
 
             override fun onFailure(calll: Call<List<RetroAllowedChanges>>, t: Throwable) {
-                loadingDialogManager.dialog.dismiss()
+                alertDialogManager.dialog.dismiss()
 
                 allowedChangesRecyclerView.visibility = View.VISIBLE
                 textError.visibility = View.GONE
