@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="@string/profile"
         android:textAlignment="center"
-        android:textColor="@color/Green_ipca"
+        android:textColor="@color/green_ipca"
         android:textSize="30sp"
         android:paddingTop="50dp"
         tools:ignore="MissingConstraints" />
