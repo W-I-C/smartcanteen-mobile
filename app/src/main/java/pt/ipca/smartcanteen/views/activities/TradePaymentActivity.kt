@@ -109,7 +109,7 @@ class TradePaymentActivity : AppCompatActivity() {
                     )
                         .show()
                 } else if (response.code() == 500) {
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
                     Toast.makeText(
                         this@TradePaymentActivity,
                         "Erro! Não foi possível obter o método de pagamento.",
@@ -123,7 +123,7 @@ class TradePaymentActivity : AppCompatActivity() {
             }
 
             override fun onFailure(calll: Call<RetroTradePayment>, t: Throwable) {
-                loadingDialogManager.dialog.dismiss()
+                alertDialogManager.dialog.dismiss()
                 Toast.makeText(
                     this@TradePaymentActivity,
                     "Erro! Tente novamente.",
@@ -146,7 +146,7 @@ class TradePaymentActivity : AppCompatActivity() {
         val sp = SharedPreferencesHelper.getSharedPreferences(this@TradePaymentActivity)
         val token = sp.getString("token", null)
 
-        loadingDialogManager.dialog.show()
+        alertDialogManager.dialog.show()
 
         service.acceptGeneralTrade(generaltradeid, "Bearer $token").enqueue(object :
             Callback<String> {
@@ -156,7 +156,7 @@ class TradePaymentActivity : AppCompatActivity() {
             ) {
                 if (response.code() == 200) {
 
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
 
                     finish()
                     Toast.makeText(
@@ -166,7 +166,7 @@ class TradePaymentActivity : AppCompatActivity() {
                     )
                         .show()
                 } else if (response.code() == 500) {
-                    loadingDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
                     Toast.makeText(
                         this@TradePaymentActivity,
                         "Erro! Não foi possível realizar a troca.",
@@ -180,7 +180,7 @@ class TradePaymentActivity : AppCompatActivity() {
             }
 
             override fun onFailure(calll: Call<String>, t: Throwable) {
-                loadingDialogManager.dialog.dismiss()
+                alertDialogManager.dialog.dismiss()
                 Toast.makeText(
                     this@TradePaymentActivity,
                     "Erro! Tente novamente.",
