@@ -22,4 +22,10 @@ interface MealsService {
 
     @PUT("/api/v1/employee/meal/{mealId}/canBeMade")
     fun canBeMade(@Path("mealId") mealId: String, @Header("Authorization") authorization: String, @Body body: CanBeMadeBody): Call<String>
+
+    @POST("/api/v1/employee//meals/{mealId}/allowedchanges")
+    fun addMealChange(@Path("mealId") mealId: String, @Header("Authorization") authorization: String, @Body body: MealChangeBody): Call<List<RetroAllowedChanges>>
+
+    @DELETE("/api/v1/employee/meals/{mealId}/allowedchanges/{changeId}")
+    fun removeMealChange(@Path("mealId") mealId: String,@Path("changeId") changeId: String, @Header("Authorization") authorization: String): Call<List<RetroAllowedChanges>>
 }

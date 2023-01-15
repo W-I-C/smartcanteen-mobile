@@ -77,4 +77,5 @@
     <string name="type">Tipo:</string>
     <string name="only_increase">Apenas Incrementar</string>
     <string name="field_error">Este campo deve ser preenchido</string>
+    <string name="is_remove_only">Apenas pode remover?</string>
 </resources>

@@ -1,13 +1,18 @@
 package pt.ipca.smartcanteen.views.activities
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.CanBeMadeBody
 import pt.ipca.smartcanteen.models.RetroAllowedChanges
@@ -61,6 +66,7 @@ class EditMealActivity: AppCompatActivity() {
     private val timeTextError: TextView by lazy { findViewById<TextView>(R.id.trade_time_edit_textview_error) as TextView }
     private val priceTextError: TextView by lazy { findViewById<TextView>(R.id.trade_price_edit_textview_error) as TextView }
     private val descriptionTextError: TextView by lazy { findViewById<TextView>(R.id.trade_description_edit_textview_error) as TextView }
+
 
     private lateinit var alertDialogManager: AlertDialogManager
     val retrofit = SmartCanteenRequests().retrofit
@@ -141,9 +147,11 @@ class EditMealActivity: AppCompatActivity() {
 
     }
 
+    @SuppressLint("MissingInflatedId")
     fun edit (
         mealId: String, name: String,time: String,price: String,description: String,allowedChangesRecyclerView: RecyclerView, allowedChangesEditRecyclerView: RecyclerView,
-        allowedChangesLayoutManager: RecyclerView.LayoutManager,allowedChangesEditLayoutManager: RecyclerView.LayoutManager){
+        allowedChangesLayoutManager: RecyclerView.LayoutManager,allowedChangesEditLayoutManager: LinearLayoutManager){
+
 
         pencilWhite.setOnClickListener(){
             pencilWhite.visibility = View.GONE
@@ -291,6 +299,19 @@ class EditMealActivity: AppCompatActivity() {
 
                 getAllowedChanges(mealId,allowedChangesRecyclerView,allowedChangesLayoutManager,textError)
             }
+
+            incrementBtn.setOnClickListener{
+                println("Aqui")
+                val intent = Intent(this, AddMealChangeActivity::class.java)
+                intent.putExtra("mealid", mealId)
+                startActivity(intent)
+            }
+
+            // TODO: remover no adapter
+
+            confirmBtn.setOnClickListener(){
+                // TODO: rota de editar
+            }
         }
     }
 
@@ -405,7 +426,6 @@ class EditMealActivity: AppCompatActivity() {
 
     }
 
-    // TODO: função que vai meter as allowed changes mal se entra (onCreate) e as mete na recycler view
     fun getAllowedChanges(mealId: String, allowedChangesRecyclerView: RecyclerView, allowedChangesLinearLayoutManager: RecyclerView.LayoutManager, textError: TextView){
 
         val service = retrofit.create(MealsService::class.java)
@@ -479,7 +499,7 @@ class EditMealActivity: AppCompatActivity() {
         })
     }
 
-    fun getAllowedChangesEdit(mealId: String, allowedChangesEditRecyclerView: RecyclerView, allowedChangesEditLayoutManager: RecyclerView.LayoutManager, textError: TextView){
+    fun getAllowedChangesEdit(mealId: String, allowedChangesEditRecyclerView: RecyclerView, allowedChangesEditLayoutManager: LinearLayoutManager, textError: TextView){
 
         val service = retrofit.create(MealsService::class.java)
 
@@ -506,7 +526,7 @@ class EditMealActivity: AppCompatActivity() {
 
                     if (body != null) {
                         if (body.isNotEmpty()) {
-                            val allowedChangesAdapterRec = MealAllowedChangesEditAdapterRec(body)
+                            val allowedChangesAdapterRec = MealAllowedChangesEditAdapterRec(body,sp,this@EditMealActivity,this@EditMealActivity,allowedChangesEditRecyclerView,allowedChangesEditLayoutManager,alertDialogManager)
 
                             allowedChangesEditRecyclerView.visibility = View.VISIBLE
                             textError.visibility = View.GONE
