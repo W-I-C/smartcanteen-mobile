@@ -84,6 +84,8 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
         val time = bottomSheetView.findViewById<TextView>(R.id.meal_bottom_sheet_time)
         val price = bottomSheetView.findViewById<TextView>(R.id.meal_bottom_sheet_price)
         val description = bottomSheetView.findViewById<TextView>(R.id.meal_bottom_sheet_description)
+        // tem que ir para a bottom sheet (manda no intent) que recebe na resposta a lista
+        val numbers = arrayListOf<String>()
 
         name.text = mealName
         time.text = mealPreptime
@@ -108,6 +110,7 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
         ingredientsChange.setOnClickListener {
             val intent = Intent(activity, IngredientsChangeActivity::class.java)
             intent.putExtra("mealid", mealid)
+            intent.putExtra("numbers", numbers)
             activity.startActivity(intent)
         }
 

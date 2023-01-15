@@ -35,13 +35,14 @@ class IngredientsChangeActivity: AppCompatActivity() {
         alertDialogManager.createLoadingAlertDialog()
 
         val mealid = intent.getStringExtra("mealid")
+        val numbers = intent.getSerializableExtra("numbers") as ArrayList<String>
 
         val allowedChangesRecyclerView = findViewById<RecyclerView>(R.id.ingredients_change_recycler_view)
         val textError = findViewById<TextView>(R.id.ingredients_change_text_error)
         val allowedChangesLinearLayoutManager = LinearLayoutManager(this@IngredientsChangeActivity)
 
         if (mealid != null) {
-            getAllowedChanges(mealid,allowedChangesRecyclerView,allowedChangesLinearLayoutManager,textError)
+            getAllowedChanges(mealid,allowedChangesRecyclerView,allowedChangesLinearLayoutManager,textError, numbers)
         }
 
 
@@ -60,10 +61,13 @@ class IngredientsChangeActivity: AppCompatActivity() {
             finish()
             Toast.makeText(this@IngredientsChangeActivity, "Alterações ao ingrediente guardadas com sucesso!", Toast.LENGTH_LONG)
                 .show()
+
+            // guardar num array as alterações feitas
+
         }
     }
 
-    fun getAllowedChanges(mealid: String, allowedChangesRecyclerView:RecyclerView, allowedChangesLinearLayoutManager: RecyclerView.LayoutManager, textError: TextView){
+    fun getAllowedChanges(mealid: String, allowedChangesRecyclerView:RecyclerView, allowedChangesLinearLayoutManager: RecyclerView.LayoutManager, textError: TextView,numbers: ArrayList<String>){
         val service = retrofit.create(MealsService::class.java)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(this@IngredientsChangeActivity)
@@ -119,7 +123,7 @@ class IngredientsChangeActivity: AppCompatActivity() {
                     textError.visibility = View.GONE
 
                     AuthHelper().newSessionToken(this@IngredientsChangeActivity)
-                    getAllowedChanges(mealid,allowedChangesRecyclerView,allowedChangesLinearLayoutManager,textError)
+                    getAllowedChanges(mealid,allowedChangesRecyclerView,allowedChangesLinearLayoutManager,textError,numbers)
                 }
             }
 

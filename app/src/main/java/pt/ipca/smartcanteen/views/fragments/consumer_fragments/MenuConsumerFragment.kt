@@ -207,7 +207,7 @@ class MenuConsumerFragment : Fragment() {
                     if (body != null) {
                         if (body.isNotEmpty()) {
                             /** bar Meals **/
-                            val barMealsAdapter = MealsAdapterRec(body)
+                            val barMealsAdapter = MealsAdapterRec(body,requireActivity(), layoutInflater)
                             val barMealsLinearLayoutManager = LinearLayoutManager(requireContext())
                             barMealsLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
                             barMealsRecyclerView.layoutManager = barMealsLinearLayoutManager

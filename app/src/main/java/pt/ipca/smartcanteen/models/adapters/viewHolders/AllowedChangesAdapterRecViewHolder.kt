@@ -46,7 +46,7 @@ class AllowedChangesAdapterRecViewHolder (inflater: LayoutInflater, val parent: 
 
 
     fun bindData(changeid:String,mealid:String,ingname:String,ingdosage:String,isremoveonly:Boolean,canbeincremented:Boolean,canbedecremented:Boolean,incrementlimit:Int,decrementlimit:Int,default:Int){
-        Log.d("help","Here")
+
         // incrementar e decrementar
         decrementCircle1.visibility = View.GONE
         decrementCircle1Btn.visibility = View.GONE
@@ -77,7 +77,7 @@ class AllowedChangesAdapterRecViewHolder (inflater: LayoutInflater, val parent: 
             addWhiteBckg.visibility = View.VISIBLE
             addBlack.visibility = View.VISIBLE
 
-            // istoi só aparece ao carregar no butão
+            // isto só aparece ao carregar no butão
             removeBlack.setOnClickListener{
                 removeWhiteBckg.visibility = View.INVISIBLE
                 removeGreenBckg.visibility = View.VISIBLE
@@ -100,12 +100,6 @@ class AllowedChangesAdapterRecViewHolder (inflater: LayoutInflater, val parent: 
                 removeBlack.visibility = View.VISIBLE
             }
 
-//            removeWhite.visibility = View.VISIBLE
-//            removeBlack.visibility = View.VISIBLE
-//            addWhiteBckg.visibility = View.VISIBLE
-//            addGreenBckg.visibility = View.VISIBLE
-//            addBlack.visibility = View.VISIBLE
-//            addWhite.visibility = View.VISIBLE
         }else{
             if(canbeincremented == true && canbedecremented == true){
                 decrementCircle1.visibility = View.VISIBLE
@@ -130,6 +124,7 @@ class AllowedChangesAdapterRecViewHolder (inflater: LayoutInflater, val parent: 
                         quantity1.text = count.toString()
                     }
                 }
+
             } else if (canbeincremented == true && canbedecremented == false) {
                 decrementCircle1.visibility = View.VISIBLE
                 decrementCircle1Btn.visibility = View.VISIBLE
@@ -153,6 +148,7 @@ class AllowedChangesAdapterRecViewHolder (inflater: LayoutInflater, val parent: 
                         quantity1.text = count.toString()
                     }
                 }
+
             } else if (canbeincremented == false && canbedecremented == true) {
                 decrementCircle1.visibility = View.VISIBLE
                 decrementCircle1Btn.visibility = View.VISIBLE
@@ -176,6 +172,7 @@ class AllowedChangesAdapterRecViewHolder (inflater: LayoutInflater, val parent: 
                         quantity1.text = count.toString()
                     }
                 }
+
             }
         }
     }
