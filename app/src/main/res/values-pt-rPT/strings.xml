@@ -72,4 +72,9 @@
     <string name="delivered_orders">Pedidos Entregues</string>
     <string name="undelivered_orders">Pedidos p/Entregar</string>
     <string name="trades_made">Trocas Realizadas</string>
+    <string name="description_2">Descrição:</string>
+    <string name="changes_2">Alterações:</string>
+    <string name="type">Tipo:</string>
+    <string name="only_increase">Apenas Incrementar</string>
+    <string name="field_error">Este campo deve ser preenchido</string>
 </resources>

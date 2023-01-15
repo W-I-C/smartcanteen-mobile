@@ -46,17 +46,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".views.activities.DetailedActivity"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".views.activities.NotificationActivity"
             android:exported="false">
             <intent-filter>
@@ -90,18 +79,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".views.activities.DetailedMyOrderActivity"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".views.activities.DetailedMyTradeActivity"
+            android:name=".views.activities.EditMealActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -8,7 +8,7 @@ class RetroMeal(
     @SerializedName("name") var name:String,
     @SerializedName("preparationtime") var preparationtime:String,
     @SerializedName("description") var description:String,
-    @SerializedName("cantakeaway") var cantakeaway:String,
+    @SerializedName("cantakeaway") var cantakeaway:Boolean,
     @SerializedName("price") var price:String,
-    @SerializedName("canbemade") var canbemade:String,
+    @SerializedName("canbemade") var canbemade:Boolean,
 )
