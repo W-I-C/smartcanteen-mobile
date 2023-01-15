@@ -16,6 +16,8 @@ class MenuMealsActivity : AppCompatActivity() {
 
     private val button: Button by lazy {findViewById<View>(R.id.menu_meals_button) as Button }
 
+    // receber a descrição, o nome, a imgurl, tempo, preço, mealid, tenho que enviar as allowed changes num array
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.meals)

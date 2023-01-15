@@ -157,7 +157,7 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
                             /** bar Meals **/
                             val barMealsLayoutManager = GridLayoutManager(this@ConsumerBarMenuActivity, 2)
                             barMealsLayoutManager.orientation = LinearLayoutManager.VERTICAL
-                            val barMealsAdapter = BarMenuMealsAdapterRec(body)
+                            val barMealsAdapter = BarMenuMealsAdapterRec(body,this@ConsumerBarMenuActivity, layoutInflater)
 
                             barMealsRecyclerView.layoutManager = barMealsLayoutManager
                             barMealsRecyclerView.itemAnimator = DefaultItemAnimator()

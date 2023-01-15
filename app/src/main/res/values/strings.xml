@@ -73,6 +73,7 @@
     <string name="is_free">Is Free?</string>
     <string name="Menu">Menu</string>
     <string name="see_menu">View Menu</string>
+    <string name="no_changes_available">No changes available</string>
     <string name="wish_remove_meal_ask">Do you really want to remove this meal?</string>
     <string name="meal_being_used">Cant delete a meal that is being used!!</string>
     <string name="see_orders">View Orders</string>

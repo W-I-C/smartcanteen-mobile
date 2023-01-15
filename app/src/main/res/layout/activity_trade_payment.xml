@@ -75,7 +75,7 @@
         android:layout_height="50dp"
         android:padding="10dp"
         android:textColorHint="@color/white"
-        android:hint="@string/pay"
+        android:hint="@string/trade"
         android:textSize="16sp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="30dp"
