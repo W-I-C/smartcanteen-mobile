@@ -35,6 +35,7 @@ class EmployeeBarMenuMealsAdapterRec(
         val time = "${meal.preparationtime}min"
         val description = meal.description
         val canbemade = meal.canbemade
+        val cantakeaway = meal.cantakeaway
         val price = "${meal.price}€"
 
         holder.bindData(name, time, price, removeMealAskString, cantRemoveMealString, meal.mealid, rebuildList)
@@ -47,6 +48,7 @@ class EmployeeBarMenuMealsAdapterRec(
             intent.putExtra("description", description)
             intent.putExtra("canbemade", canbemade)
             intent.putExtra("price", price)
+            intent.putExtra("cantakeaway", cantakeaway)
             activity.startActivity(intent)
         }
 

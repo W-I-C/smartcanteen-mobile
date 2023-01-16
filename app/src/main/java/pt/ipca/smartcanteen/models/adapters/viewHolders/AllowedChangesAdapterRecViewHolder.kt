@@ -45,7 +45,7 @@ class AllowedChangesAdapterRecViewHolder (inflater: LayoutInflater, val parent: 
 
 
 
-    fun bindData(changeid:String,mealid:String,ingname:String,ingdosage:String,isremoveonly:Boolean,canbeincremented:Boolean,canbedecremented:Boolean,incrementlimit:Int,decrementlimit:Int,default:Int){
+    fun bindData(changeid:String,mealid:String,ingname:String,ingdosage:String,isremoveonly:Boolean,canbeincremented:Boolean,canbedecremented:Boolean,incrementlimit:Int?,decrementlimit:Int?,default:Int){
 
         // incrementar e decrementar
         decrementCircle1.visibility = View.GONE
@@ -111,7 +111,7 @@ class AllowedChangesAdapterRecViewHolder (inflater: LayoutInflater, val parent: 
 
                 decrementCircle1Btn.setOnClickListener {
                     var count: Int = quantity1.text.toString().toInt()
-                    if (count > decrementlimit) {
+                    if (count > decrementlimit!!) {
                         count--
                         quantity1.text = count.toString()
                     }
@@ -119,7 +119,7 @@ class AllowedChangesAdapterRecViewHolder (inflater: LayoutInflater, val parent: 
 
                 incrementCircle1Btn.setOnClickListener {
                     var count: Int = quantity1.text.toString().toInt()
-                    if (count < incrementlimit) {
+                    if (count < incrementlimit!!) {
                         count++
                         quantity1.text = count.toString()
                     }
@@ -135,7 +135,7 @@ class AllowedChangesAdapterRecViewHolder (inflater: LayoutInflater, val parent: 
 
                 decrementCircle1Btn.setOnClickListener {
                     var count: Int = quantity1.text.toString().toInt()
-                    if (count > default) {
+                    if (count > default!!) {
                         count--
                         quantity1.text = count.toString()
                     }
@@ -143,7 +143,7 @@ class AllowedChangesAdapterRecViewHolder (inflater: LayoutInflater, val parent: 
 
                 incrementCircle1Btn.setOnClickListener {
                     var count: Int = quantity1.text.toString().toInt()
-                    if (count < incrementlimit) {
+                    if (count < incrementlimit!!) {
                         count++
                         quantity1.text = count.toString()
                     }
@@ -167,7 +167,7 @@ class AllowedChangesAdapterRecViewHolder (inflater: LayoutInflater, val parent: 
 
                 incrementCircle1Btn.setOnClickListener {
                     var count: Int = quantity1.text.toString().toInt()
-                    if (count < default) {
+                    if (count < default!!) {
                         count++
                         quantity1.text = count.toString()
                     }

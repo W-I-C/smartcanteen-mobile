@@ -255,6 +255,30 @@
         app:layout_constraintStart_toStartOf="@+id/activity_edit_meal_description_edittext"
         app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_description_edittext"/>
 
+    <TextView
+        android:id="@+id/activity_edit_meal_cantakeaway"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="CanTakeAway"
+        android:textSize="14sp"
+        android:textColor="@color/background_color"
+        app:layout_constraintStart_toStartOf="@id/activity_edit_meal_price"
+        app:layout_constraintEnd_toEndOf="@id/activity_edit_meal_clock"
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_description"/>
+
+    <CheckBox
+        android:id="@+id/activity_edit_meal_cantakeaway_checkbox"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="14sp"
+        android:visibility="gone"
+        android:text="@string/cantakeaway"
+        android:textColor="@color/background_color"
+        app:layout_constraintStart_toStartOf="@id/activity_edit_meal_price_edittext"
+        app:layout_constraintTop_toBottomOf="@+id/trade_description_edit_textview_error"/>
+
 
     <TextView
         android:id="@+id/activity_edit_meal_item_alt_title_tv"
@@ -266,7 +290,7 @@
         android:textSize="18sp"
         android:textColor="#515050"
         app:layout_constraintStart_toStartOf="@id/activity_edit_meal_price"
-        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_description" />
+        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_cantakeaway" />
 
     <TextView
         android:id="@+id/activity_edit_meal_item_alt_title_tv_edittext"
@@ -279,7 +303,7 @@
         android:textSize="18sp"
         android:textColor="#515050"
         app:layout_constraintStart_toStartOf="@id/activity_edit_meal_price_edittext"
-        app:layout_constraintTop_toBottomOf="@id/trade_description_edit_textview_error" />
+        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_cantakeaway_checkbox" />
 
     <ImageView
         android:id="@+id/activity_edit_meal_card_1_increment"
