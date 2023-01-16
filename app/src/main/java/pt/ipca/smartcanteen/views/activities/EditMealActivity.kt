@@ -48,6 +48,7 @@ class EditMealActivity: AppCompatActivity() {
     private val mealDescriptionTitle: TextView by lazy { findViewById<TextView>(R.id.activity_edit_meal_description_tittle) as TextView }
     private val mealDescription: TextView by lazy { findViewById<TextView>(R.id.activity_edit_meal_description) as TextView }
     private val mealChangesTittle: TextView by lazy { findViewById<TextView>(R.id.activity_edit_meal_item_alt_title_tv) as TextView }
+    private val canTakeAway: TextView by lazy { findViewById<TextView>(R.id.activity_edit_meal_cantakeaway) as TextView }
 
     private val mealNameEdit: EditText by lazy { findViewById<EditText>(R.id.activity_edit_meal_name_edittext) as EditText }
     private val mealTimeEdit: EditText by lazy { findViewById<EditText>(R.id.activity_edit_meal_time_edittext) as EditText }
@@ -58,6 +59,8 @@ class EditMealActivity: AppCompatActivity() {
     private val incrementBtn: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_card_1_increment) as ImageView }
     private val cancelBtn: Button by lazy { findViewById<Button>(R.id.activity_edit_meal_cancel) as Button }
     private val confirmBtn: Button by lazy { findViewById<Button>(R.id.activity_edit_meal_add_cart) as Button }
+    private val canTakeAwayCheckBox: CheckBox by lazy { findViewById<CheckBox>(R.id.activity_edit_meal_cantakeaway_checkbox) as CheckBox }
+
 
     private val textError: TextView by lazy { findViewById<TextView>(R.id.activity_edit_meal_textError) as TextView }
     private val textErrorEdit: TextView by lazy { findViewById<TextView>(R.id.activity_edit_meal_textError_edittext) as TextView }
@@ -66,6 +69,11 @@ class EditMealActivity: AppCompatActivity() {
     private val timeTextError: TextView by lazy { findViewById<TextView>(R.id.trade_time_edit_textview_error) as TextView }
     private val priceTextError: TextView by lazy { findViewById<TextView>(R.id.trade_price_edit_textview_error) as TextView }
     private val descriptionTextError: TextView by lazy { findViewById<TextView>(R.id.trade_description_edit_textview_error) as TextView }
+
+    private lateinit var mealId: String
+    private var cantakeaway: Boolean = true
+    private lateinit var allowedChangesEditRecyclerView: RecyclerView
+    private lateinit var allowedChangesEditLayoutManager: LinearLayoutManager
 
 
     private lateinit var alertDialogManager: AlertDialogManager
@@ -78,25 +86,34 @@ class EditMealActivity: AppCompatActivity() {
         alertDialogManager = AlertDialogManager(layoutInflater, this)
         alertDialogManager.createLoadingAlertDialog()
 
-        val mealId = intent.getStringExtra("mealId")
+        mealId = intent.getStringExtra("mealId")?:""
         val name = intent.getStringExtra("name")
         val time = intent.getStringExtra("time")
         val description = intent.getStringExtra("description")
         var canbemade = intent.getBooleanExtra("canbemade",true)
         val price = intent.getStringExtra("price")
+        cantakeaway = intent.getBooleanExtra("cantakeaway",false)
 
         mealName.text = name
         mealTime.text = time
         mealPrice.text = price
         mealDescription.text = description
 
+        if(cantakeaway == true){
+            canTakeAway.text = "Can Take Away"
+        } else {
+            canTakeAway.text = "Cannot Take Away"
+        }
+
         // Recycler View usada apenas para ver - apenas faz GET
         val allowedChangesRecyclerView = findViewById<RecyclerView>(R.id.activity_edit_meal_item_alt_rv)
         val allowedChangesLayoutManager = LinearLayoutManager(this@EditMealActivity)
 
         // Recycler View usada para editar - faz GET  e REMOVE
-        val allowedChangesEditRecyclerView = findViewById<RecyclerView>(R.id.activity_edit_meal_item_alt_rv_edit)
-        val allowedChangesEditLayoutManager = LinearLayoutManager(this@EditMealActivity)
+        allowedChangesEditRecyclerView = findViewById<RecyclerView>(R.id.activity_edit_meal_item_alt_rv_edit)
+        allowedChangesEditLayoutManager = LinearLayoutManager(this@EditMealActivity)
+
+        allowedChangesEditRecyclerView.visibility = View.GONE
 
         returnButton()
 
@@ -147,6 +164,11 @@ class EditMealActivity: AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        getAllowedChangesEdit(mealId,allowedChangesEditRecyclerView,allowedChangesEditLayoutManager,textError)
+    }
+
     @SuppressLint("MissingInflatedId")
     fun edit (
         mealId: String, name: String,time: String,price: String,description: String,allowedChangesRecyclerView: RecyclerView, allowedChangesEditRecyclerView: RecyclerView,
@@ -163,6 +185,7 @@ class EditMealActivity: AppCompatActivity() {
             mealDescriptionTitle.visibility = View.GONE
             mealDescription.visibility = View.GONE
             mealChangesTittle.visibility = View.GONE
+            canTakeAway.visibility = View.GONE
 
             // TODO: só é mostrado se a lista for vazia
             textError.visibility = View.GONE
@@ -173,9 +196,18 @@ class EditMealActivity: AppCompatActivity() {
             mealDescriptionTitleEdit.visibility = View.VISIBLE
             mealDescriptionEdit.visibility = View.VISIBLE
             mealChangesTittleEdit.visibility = View.VISIBLE
+            canTakeAwayCheckBox.visibility = View.VISIBLE
             incrementBtn.visibility = View.VISIBLE
             cancelBtn.visibility = View.VISIBLE
             confirmBtn.visibility = View.VISIBLE
+
+            canTakeAwayCheckBox.setOnClickListener{
+                if(canTakeAwayCheckBox.isChecked == true){
+                    cantakeaway = true
+                } else {
+                    cantakeaway = false
+                }
+            }
 
             // TODO: meter mensagens em baixo que não podem ser nulos
             val nameNotNull = name ?: ""
@@ -309,8 +341,7 @@ class EditMealActivity: AppCompatActivity() {
 
             // TODO: remover no adapter
 
-            confirmBtn.setOnClickListener(){
-                // TODO: rota de editar
+            confirmBtn.setOnClickListener() {
             }
         }
     }
@@ -571,8 +602,6 @@ class EditMealActivity: AppCompatActivity() {
             }
         })
     }
-
-    // TODO: bottom Sheet
 
     fun returnButton(){
         arrowBack.setOnClickListener{
