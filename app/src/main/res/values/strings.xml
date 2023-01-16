@@ -89,4 +89,5 @@
     <string name="is_remove_only">Is Remove only?</string>
     <string name="default_value">Default Value</string>
     <string name="cantakeaway">CanTakeAway</string>
+    <string name="warning">It is mandatory to fill in all fields</string>
 </resources>

@@ -80,4 +80,5 @@
     <string name="is_remove_only">Apenas pode remover?</string>
     <string name="default_value">Valor por defeito</string>
     <string name="cantakeaway">Pode TakeAway</string>
+    <string name="warning">É obrigatório preencher todos os campos</string>
 </resources>

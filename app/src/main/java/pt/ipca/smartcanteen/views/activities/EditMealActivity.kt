@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.CanBeMadeBody
+import pt.ipca.smartcanteen.models.MealBody
 import pt.ipca.smartcanteen.models.RetroAllowedChanges
 import pt.ipca.smartcanteen.models.RetroTicketMeal
 import pt.ipca.smartcanteen.models.adapters.AllowedChangesAdapterRec
@@ -176,120 +177,8 @@ class EditMealActivity: AppCompatActivity() {
 
 
         pencilWhite.setOnClickListener(){
-            pencilWhite.visibility = View.GONE
-            pencilGreen.visibility = View.VISIBLE
 
-            mealName.visibility = View.GONE
-            mealTime.visibility = View.GONE
-            mealPrice.visibility = View.GONE
-            mealDescriptionTitle.visibility = View.GONE
-            mealDescription.visibility = View.GONE
-            mealChangesTittle.visibility = View.GONE
-            canTakeAway.visibility = View.GONE
-
-            // TODO: só é mostrado se a lista for vazia
-            textError.visibility = View.GONE
-
-            mealNameEdit.visibility = View.VISIBLE
-            mealTimeEdit.visibility = View.VISIBLE
-            mealPriceEdit.visibility = View.VISIBLE
-            mealDescriptionTitleEdit.visibility = View.VISIBLE
-            mealDescriptionEdit.visibility = View.VISIBLE
-            mealChangesTittleEdit.visibility = View.VISIBLE
-            canTakeAwayCheckBox.visibility = View.VISIBLE
-            incrementBtn.visibility = View.VISIBLE
-            cancelBtn.visibility = View.VISIBLE
-            confirmBtn.visibility = View.VISIBLE
-
-            canTakeAwayCheckBox.setOnClickListener{
-                if(canTakeAwayCheckBox.isChecked == true){
-                    cantakeaway = true
-                } else {
-                    cantakeaway = false
-                }
-            }
-
-            // TODO: meter mensagens em baixo que não podem ser nulos
-            val nameNotNull = name ?: ""
-            mealNameEdit.setHint(nameNotNull)
-
-            val timeNotNull = time ?: ""
-            mealTimeEdit.setHint(timeNotNull)
-
-            val priceNotNull = price ?: ""
-            mealPriceEdit.setHint(priceNotNull)
-
-            val descriptionNotNull = description ?: ""
-            mealDescriptionEdit.setHint(descriptionNotNull)
-
-
-            if(mealNameEdit.text.isEmpty()){
-                nameTextError.visibility = View.VISIBLE
-            } else {
-                nameTextError.visibility = View.GONE
-            }
-            mealNameEdit.addTextChangedListener {
-                if (it != null) {
-                    if(it.isEmpty()){
-                        nameTextError.visibility = View.VISIBLE
-                    } else {
-                        nameTextError.visibility = View.GONE
-                    }
-                }
-            }
-
-            if(mealTimeEdit.text.isEmpty()){
-                timeTextError.visibility = View.VISIBLE
-            } else {
-                timeTextError.visibility = View.GONE
-            }
-            mealTimeEdit.addTextChangedListener {
-                if (it != null) {
-                    if(it.isEmpty()){
-                        timeTextError.visibility = View.VISIBLE
-                    } else {
-                        timeTextError.visibility = View.GONE
-                    }
-                }
-            }
-
-            if(mealPriceEdit.text.isEmpty()){
-                priceTextError.visibility = View.VISIBLE
-            } else {
-                priceTextError.visibility = View.GONE
-            }
-            mealPriceEdit.addTextChangedListener {
-                if (it != null) {
-                    if(it.isEmpty()){
-                        priceTextError.visibility = View.VISIBLE
-                    } else {
-                        priceTextError.visibility = View.GONE
-                    }
-                }
-            }
-
-            if(mealDescriptionEdit.text.isEmpty()){
-                descriptionTextError.visibility = View.VISIBLE
-            } else {
-                descriptionTextError.visibility = View.GONE
-            }
-            mealDescriptionEdit.addTextChangedListener {
-                if (it != null) {
-                    if(it.isEmpty()){
-                        descriptionTextError.visibility = View.VISIBLE
-                    } else {
-                        descriptionTextError.visibility = View.GONE
-                    }
-                }
-            }
-
-            allowedChangesRecyclerView.visibility = View.GONE
-            allowedChangesEditRecyclerView.visibility = View.VISIBLE
-
-            getAllowedChangesEdit(mealId, allowedChangesEditRecyclerView, allowedChangesEditLayoutManager, textErrorEdit)
-
-            // TODO: só é mostrado se a lista for vazia
-            // textErrorEditText.visibility = View.VISIBLE
+            pencilWhite(name,time,price,description,allowedChangesRecyclerView)
 
             cancelBtn.setOnClickListener{
 
@@ -333,15 +222,77 @@ class EditMealActivity: AppCompatActivity() {
             }
 
             incrementBtn.setOnClickListener{
-                println("Aqui")
                 val intent = Intent(this, AddMealChangeActivity::class.java)
                 intent.putExtra("mealid", mealId)
                 startActivity(intent)
             }
 
-            // TODO: remover no adapter
+            confirmBtn.setOnClickListener{
 
-            confirmBtn.setOnClickListener() {
+                val mealNameText = mealNameEdit.text.toString()
+                val mealTimeText = mealTimeEdit.text.toString().toInt()
+                val mealDescriptionText = mealDescriptionEdit.text.toString()
+                val mealPriceText = mealTimeEdit.text.toString().toFloat()
+
+                val service = retrofit.create(MealsService::class.java)
+
+                val sp = SharedPreferencesHelper.getSharedPreferences(this@EditMealActivity)
+                val token = sp.getString("token", null)
+
+                alertDialogManager.dialog.show()
+                textError.visibility = View.GONE
+
+                println(mealNameText)
+                println(mealTimeText)
+                println(mealDescriptionText)
+                println(cantakeaway)
+                println(mealPriceText)
+
+                val body = MealBody(mealNameText,mealTimeText,mealDescriptionText,cantakeaway,mealPriceText)
+
+                service.editMeal(mealId, "Bearer $token",body).enqueue(object :
+                    Callback<String> {
+                    override fun onResponse(
+                        call: Call<String>,
+                        response: Response<String>
+                    ) {
+                        if (response.code() == 200) {
+
+                            alertDialogManager.dialog.dismiss()
+
+                            Toast.makeText(this@EditMealActivity, "Refeição editada com sucesso", Toast.LENGTH_LONG)
+                                .show()
+
+                            val body = response.body()
+
+                            finish()
+
+                        } else if (response.code() == 500) {
+                            alertDialogManager.dialog.dismiss()
+
+                            Toast.makeText(this@EditMealActivity, "Erro! Não foi possível editar a refeição", Toast.LENGTH_LONG)
+                                .show()
+                        } else if(response.code() == 401){
+                            alertDialogManager.dialog.dismiss()
+
+                            allowedChangesEditRecyclerView.visibility = View.VISIBLE
+                            textError.visibility = View.GONE
+
+                            AuthHelper().newSessionToken(this@EditMealActivity)
+                            getAllowedChangesEdit(mealId,allowedChangesEditRecyclerView,allowedChangesEditLayoutManager,textError)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        alertDialogManager.dialog.dismiss()
+
+                        allowedChangesEditRecyclerView.visibility = View.VISIBLE
+                        textError.visibility = View.GONE
+
+                        Toast.makeText(this@EditMealActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
+                            .show()
+                    }
+                })
             }
         }
     }
@@ -609,4 +560,123 @@ class EditMealActivity: AppCompatActivity() {
         }
     }
 
+    fun pencilWhite(name: String,time: String,price: String,description: String,allowedChangesRecyclerView: RecyclerView){
+        pencilWhite.visibility = View.GONE
+        pencilGreen.visibility = View.VISIBLE
+
+        mealName.visibility = View.GONE
+        mealTime.visibility = View.GONE
+        mealPrice.visibility = View.GONE
+        mealDescriptionTitle.visibility = View.GONE
+        mealDescription.visibility = View.GONE
+        mealChangesTittle.visibility = View.GONE
+        canTakeAway.visibility = View.GONE
+
+        // TODO: só é mostrado se a lista for vazia
+        textError.visibility = View.GONE
+
+        mealNameEdit.visibility = View.VISIBLE
+        mealTimeEdit.visibility = View.VISIBLE
+        mealPriceEdit.visibility = View.VISIBLE
+        mealDescriptionTitleEdit.visibility = View.VISIBLE
+        mealDescriptionEdit.visibility = View.VISIBLE
+        mealChangesTittleEdit.visibility = View.VISIBLE
+        canTakeAwayCheckBox.visibility = View.VISIBLE
+        incrementBtn.visibility = View.VISIBLE
+        cancelBtn.visibility = View.VISIBLE
+        confirmBtn.visibility = View.VISIBLE
+
+        if(canTakeAwayCheckBox.isChecked == true){
+            cantakeaway = true
+        } else {
+            cantakeaway = false
+        }
+
+        canTakeAwayCheckBox.setOnClickListener{
+            if(canTakeAwayCheckBox.isChecked == true){
+                cantakeaway = true
+            } else {
+                cantakeaway = false
+            }
+        }
+
+        // TODO: meter mensagens em baixo que não podem ser nulos
+        val nameNotNull = name ?: ""
+        mealNameEdit.setHint(nameNotNull)
+
+        val timeNotNull = time ?: ""
+        mealTimeEdit.setHint(timeNotNull)
+
+        val priceNotNull = price ?: ""
+        mealPriceEdit.setHint(priceNotNull)
+
+        val descriptionNotNull = description ?: ""
+        mealDescriptionEdit.setHint(descriptionNotNull)
+
+
+        if(mealNameEdit.text.isEmpty()){
+            nameTextError.visibility = View.VISIBLE
+        } else {
+            nameTextError.visibility = View.GONE
+        }
+        mealNameEdit.addTextChangedListener {
+            if (it != null) {
+                if(it.isEmpty()){
+                    nameTextError.visibility = View.VISIBLE
+                } else {
+                    nameTextError.visibility = View.GONE
+                }
+            }
+        }
+
+        if(mealTimeEdit.text.isEmpty()){
+            timeTextError.visibility = View.VISIBLE
+        } else {
+            timeTextError.visibility = View.GONE
+        }
+        mealTimeEdit.addTextChangedListener {
+            if (it != null) {
+                if(it.isEmpty()){
+                    timeTextError.visibility = View.VISIBLE
+                } else {
+                    timeTextError.visibility = View.GONE
+                }
+            }
+        }
+
+        if(mealPriceEdit.text.isEmpty()){
+            priceTextError.visibility = View.VISIBLE
+        } else {
+            priceTextError.visibility = View.GONE
+        }
+        mealPriceEdit.addTextChangedListener {
+            if (it != null) {
+                if(it.isEmpty()){
+                    priceTextError.visibility = View.VISIBLE
+                } else {
+                    priceTextError.visibility = View.GONE
+                }
+            }
+        }
+
+        if(mealDescriptionEdit.text.isEmpty()){
+            descriptionTextError.visibility = View.VISIBLE
+        } else {
+            descriptionTextError.visibility = View.GONE
+        }
+        mealDescriptionEdit.addTextChangedListener {
+            if (it != null) {
+                if(it.isEmpty()){
+                    descriptionTextError.visibility = View.VISIBLE
+                } else {
+                    descriptionTextError.visibility = View.GONE
+                }
+            }
+        }
+
+        allowedChangesRecyclerView.visibility = View.GONE
+        allowedChangesEditRecyclerView.visibility = View.VISIBLE
+
+        getAllowedChangesEdit(mealId, allowedChangesEditRecyclerView, allowedChangesEditLayoutManager, textErrorEdit)
+    }
 }
