@@ -172,6 +172,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
         detailsRv.visibility = View.INVISIBLE
         loadingBar.visibility = View.VISIBLE
         loadingText.visibility = View.VISIBLE
+
         service.getTicketDetails(ticketid, "Bearer $token").enqueue(object :
             Callback<List<RetroTicketMeal>> {
             override fun onResponse(

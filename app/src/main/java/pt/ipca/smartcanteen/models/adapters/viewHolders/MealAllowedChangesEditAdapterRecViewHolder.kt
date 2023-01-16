@@ -36,8 +36,6 @@ class MealAllowedChangesEditAdapterRecViewHolder (inflater: LayoutInflater, val 
     fun setDeleteClickListener(mealid: String, changeid: String) {
         deleteBtn.setOnClickListener {
 
-            println("Aqui")
-
             val retrofit = SmartCanteenRequests().retrofit
             val service = retrofit.create(MealsService::class.java)
 
