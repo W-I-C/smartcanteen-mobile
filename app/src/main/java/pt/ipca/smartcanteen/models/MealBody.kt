@@ -3,7 +3,6 @@ package pt.ipca.smartcanteen.models
 import com.google.gson.annotations.SerializedName
 
 data class MealBody(
-    @SerializedName("mealid") var mealid: String,
     @SerializedName("name") var name: String,
     @SerializedName("preparationTime") var time: Int,
     @SerializedName("description") var description: String,

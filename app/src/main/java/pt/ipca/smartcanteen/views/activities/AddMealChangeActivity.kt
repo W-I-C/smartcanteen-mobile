@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
+import org.w3c.dom.Text
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.MealChangeBody
 import pt.ipca.smartcanteen.models.RetroAllowedChanges
@@ -31,6 +32,9 @@ class AddMealChangeActivity : AppCompatActivity() {
     private val canbeDecremented: CheckBox by lazy { findViewById<CheckBox>(R.id.checkbox_can_decrement) as CheckBox }
     private val isRemoveonly: CheckBox by lazy { findViewById<CheckBox>(R.id.checkbox_can_isremoveonly) as CheckBox }
 
+    private val incrementLimitTittle: TextView by lazy { findViewById<TextView>(R.id.increment_limit) as TextView }
+    private val decrementLimitTittle: TextView by lazy { findViewById<TextView>(R.id.decrement_limit) as TextView }
+
     private val cancelBtn: Button by lazy { findViewById<Button>(R.id.activity_add_cancel) as Button }
     private val confirmBtn: Button by lazy { findViewById<Button>(R.id.activity_add_save) as Button }
 
@@ -47,6 +51,11 @@ class AddMealChangeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_ingredient)
 
         val ingName = findViewById<EditText>(R.id.cart_name_ingredient)
+
+        incrementLimit.visibility = View.GONE
+        decrementLimit.visibility  = View.GONE
+        incrementLimitTittle.visibility = View.GONE
+        decrementLimitTittle.visibility = View.GONE
 
 
         alertDialogManager = AlertDialogManager(layoutInflater, this)
@@ -78,6 +87,8 @@ class AddMealChangeActivity : AppCompatActivity() {
             if (isRemoveonly.isChecked) {
                 incrementLimit.visibility = View.GONE
                 decrementLimit.visibility = View.GONE
+                incrementLimitTittle.visibility = View.GONE
+                decrementLimitTittle.visibility = View.GONE
 
                 isremoveonly = true
                 canbeincremented = false
@@ -91,23 +102,23 @@ class AddMealChangeActivity : AppCompatActivity() {
                 }
             } else {
                 isremoveonly = false
-                incrementLimit.visibility = View.VISIBLE
-                decrementLimit.visibility = View.VISIBLE
             }
         }
 
         canbeIncremented.setOnClickListener {
             if (canbeIncremented.isChecked) {
                 incrementLimit.visibility = View.VISIBLE
+                incrementLimitTittle.visibility = View.VISIBLE
 
                 isremoveonly = false
                 canbeincremented = true
 
                 if(canbeDecremented.isChecked == false){
                     decrementLimit.visibility = View.GONE
+                    decrementLimitTittle.visibility = View.GONE
                 } else{
                     decrementLimit.visibility = View.VISIBLE
-
+                    decrementLimitTittle.visibility = View.VISIBLE
                 }
 
                 if(isRemoveonly.isChecked == true){
@@ -115,27 +126,31 @@ class AddMealChangeActivity : AppCompatActivity() {
                 }
             } else {
                 canbeincremented = false
-                incrementLimit.visibility = View.VISIBLE
-                decrementLimit.visibility = View.VISIBLE
+
+                incrementLimit.visibility = View.GONE
+                incrementLimitTittle.visibility = View.GONE
             }
         }
 
         canbeDecremented.setOnClickListener {
             if (canbeDecremented.isChecked) {
                 decrementLimit.visibility = View.VISIBLE
+                decrementLimitTittle.visibility = View.VISIBLE
 
                 isremoveonly = false
                 canbedecremented = true
 
                 if(canbeIncremented.isChecked == false){
                     incrementLimit.visibility = View.GONE
+                    incrementLimitTittle.visibility = View.GONE
                 } else{
                     incrementLimit.visibility = View.VISIBLE
+                    incrementLimitTittle.visibility = View.VISIBLE
                 }
             } else {
                 canbedecremented = false
-                incrementLimit.visibility = View.VISIBLE
-                decrementLimit.visibility = View.VISIBLE
+                decrementLimit.visibility = View.GONE
+                decrementLimitTittle.visibility = View.GONE
             }
         }
     }
@@ -149,16 +164,6 @@ class AddMealChangeActivity : AppCompatActivity() {
     }
 
     fun confirmBtn(mealid: String, ingname: String, ingdosage: String, isremoveonly: Boolean, canbeincremented: Boolean, canbedecremented: Boolean, incrementlimit: Int?, decrementlimit: Int?, defaultValue: Int){
-
-        println(mealid)
-        println(ingname)
-        println(ingdosage)
-        println(isremoveonly)
-        println(canbeincremented)
-        println(canbedecremented)
-        println(incrementlimit)
-        println(decrementlimit)
-        println(defaultValue)
 
         val service = retrofit.create(MealsService::class.java)
 

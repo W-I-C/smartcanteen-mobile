@@ -228,7 +228,6 @@
         android:textSize="14sp"
         android:textColor="#515050"
         app:layout_constraintStart_toStartOf="@id/activity_edit_meal_price"
-        app:layout_constraintEnd_toEndOf="@id/activity_edit_meal_clock"
         app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_description_tittle"/>
 
     <EditText
