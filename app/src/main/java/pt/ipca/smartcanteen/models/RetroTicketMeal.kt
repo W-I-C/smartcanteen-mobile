@@ -9,5 +9,6 @@ class RetroTicketMeal(
     @SerializedName("name") var name: String,
     @SerializedName("description") var description: String,
     @SerializedName("cantakeaway") var cantakeaway: Boolean,
-    @SerializedName("mealchanges") var mealchanges: List<RetroMealChange>
+    @SerializedName("mealchanges") var mealchanges: List<RetroMealChange>,
+    @SerializedName("url") var url: String
 )
