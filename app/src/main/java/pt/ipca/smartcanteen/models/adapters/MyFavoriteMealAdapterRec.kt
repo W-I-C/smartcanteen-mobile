@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.models.RetroCartMeals
+import pt.ipca.smartcanteen.models.RetroMeal
 import pt.ipca.smartcanteen.models.adapters.viewHolders.MyFavoriteMealRecViewHolder
 import pt.ipca.smartcanteen.models.adapters.viewHolders.MyOrdersCartRecViewHolder
 import pt.ipca.smartcanteen.models.helpers.RetroFavoriteMeal
@@ -24,6 +25,8 @@ class MyFavoriteMealAdapterRec(private var listFavorite: List<RetroFavoriteMeal>
         val price = "${order.price}€"
 
         holder.bindData(name,time.toString(),price)
+
+
 
     }
 
