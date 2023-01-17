@@ -26,7 +26,7 @@ class MyOrdersCartRec(private var ordersList: List<RetroCartMeals>, val activity
         val name = order.name
         val quantity = "${order.quantity} ${if(order.quantity > 1) "doses" else "dose"}"
         val price = "${order.price}€"
-        val url = order.url
+        val url = order.url?:""
         val cartmealId=order.cartmealId
 
         holder.bindData(name,quantity,price, url)
