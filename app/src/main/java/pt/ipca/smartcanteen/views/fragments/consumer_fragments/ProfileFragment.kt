@@ -1,16 +1,23 @@
 package pt.ipca.smartcanteen.views.fragments.consumer_fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.Spinner
 import pt.ipca.smartcanteen.R
+import pt.ipca.smartcanteen.models.RetroBar
 import pt.ipca.smartcanteen.models.RetroProfile
+import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.services.CampusService
 import pt.ipca.smartcanteen.services.ProfileService
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,10 +30,12 @@ class ProfileFragment : Fragment() {
     private val spinnerCampus: EditText by lazy { requireView().findViewById<EditText>(R.id.main_PreferenceCantine_editText) as EditText }
     private val spinnerBar: EditText by lazy { requireView().findViewById<EditText>(R.id.main_Institute_editText) as EditText }
 
-
+    private lateinit var alertDialogManager : AlertDialogManager
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?,
                               savedInstanceState: Bundle?): View {
+
         return inflater.inflate(R.layout.fragment_profile, parent, false)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,6 +64,9 @@ class ProfileFragment : Fragment() {
                         name.setText(retroFit2?.name)
                         spinnerCampus.setText(retroFit2?.campusname)
                         spinnerBar.setText(retroFit2?.barname)
+
+
+
                     }else if(response.code()==401){
                         AuthHelper().newSessionToken(requireActivity())
                         getData()
@@ -66,6 +78,8 @@ class ProfileFragment : Fragment() {
                 }
             })
     }
+
+
 
 
 
