@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.*
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
@@ -272,14 +273,11 @@ class ConsumerTradeActivity : AppCompatActivity() {
                         }
                     }
 
-
-
-                    Toast.makeText(this@ConsumerTradeActivity, getString(R.string.sucess_methods), Toast.LENGTH_LONG)
-                        .show()
+                    Toasty.success(this@ConsumerTradeActivity, getString(R.string.sucess_methods), Toast.LENGTH_LONG).show()
                 } else if(response.code() == 500){
                     alertDialogManager.dialog.dismiss()
-                    Toast.makeText(this@ConsumerTradeActivity, getString(R.string.error_methods), Toast.LENGTH_LONG)
-                        .show()
+
+                    Toasty.error(this@ConsumerTradeActivity, getString(R.string.error_methods), Toast.LENGTH_LONG).show()
                 } else if(response.code()==401){
                     AuthHelper().newSessionToken(this@ConsumerTradeActivity)
                     getPaymentMethods()
@@ -288,8 +286,8 @@ class ConsumerTradeActivity : AppCompatActivity() {
 
             override fun onFailure(calll: Call<List<RetroPaymentMethod>>, t: Throwable) {
                 alertDialogManager.dialog.dismiss()
-                Toast.makeText(this@ConsumerTradeActivity, getString(R.string.error), Toast.LENGTH_LONG)
-                    .show()
+                Toasty.error(this@ConsumerTradeActivity, getString(R.string.error), Toast.LENGTH_LONG).show()
+
             }
 
             })
@@ -297,8 +295,9 @@ class ConsumerTradeActivity : AppCompatActivity() {
 
     fun cancelBtn(){
         finish()
-        Toast.makeText(this@ConsumerTradeActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG)
-            .show()
+
+        Toasty.success(this@ConsumerTradeActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG).show()
+
     }
 
     fun confirmBtn(){
@@ -328,21 +327,20 @@ class ConsumerTradeActivity : AppCompatActivity() {
 
                         alertDialogManager.dialog.dismiss()
 
-                        Toast.makeText(this@ConsumerTradeActivity, getString(R.string.success_general_trade), Toast.LENGTH_LONG)
-                            .show()
+                        Toasty.success(this@ConsumerTradeActivity, getString(R.string.success_general_trade), Toast.LENGTH_LONG).show()
+
                         finish()
                     } else if (response.code() == 500) {
                         alertDialogManager.dialog.dismiss()
 
-                        Toast.makeText(this@ConsumerTradeActivity, getString(R.string.error_general_trade), Toast.LENGTH_LONG)
-                            .show()
+                        Toasty.error(this@ConsumerTradeActivity, getString(R.string.error_general_trade), Toast.LENGTH_LONG).show()
                     }
                 }
 
                 override fun onFailure(calll: Call<String>, t: Throwable) {
                     alertDialogManager.dialog.dismiss()
-                    Toast.makeText(this@ConsumerTradeActivity, getString(R.string.error), Toast.LENGTH_LONG)
-                        .show()
+
+                    Toasty.error(this@ConsumerTradeActivity, getString(R.string.error), Toast.LENGTH_LONG).show()
                 }
 
             })
@@ -350,11 +348,6 @@ class ConsumerTradeActivity : AppCompatActivity() {
         } else if (checkBox2.isChecked) {
 
             val receiveremail = editText.text
-
-            println(receiveremail)
-            println(isfree)
-            println(paymentmethodid)
-            println(ticketId)
 
             val body = DirectTradeBody(receiveremail.toString() ,isfree, paymentmethodid)
 
@@ -371,22 +364,21 @@ class ConsumerTradeActivity : AppCompatActivity() {
 
                         alertDialogManager.dialog.dismiss()
 
-                        Toast.makeText(this@ConsumerTradeActivity, getString(R.string.success_direct_trade), Toast.LENGTH_LONG)
-                            .show()
+                        Toasty.success(this@ConsumerTradeActivity, getString(R.string.success_direct_trade), Toast.LENGTH_LONG).show()
+
                         finish()
                     } else if (response.code() == 500) {
                         alertDialogManager.dialog.dismiss()
 
-                        Toast.makeText(this@ConsumerTradeActivity, getString(R.string.error_direct_trade), Toast.LENGTH_LONG)
-                            .show()
+                        Toasty.error(this@ConsumerTradeActivity, getString(R.string.error_direct_trade), Toast.LENGTH_LONG).show()
                     }
 
                 }
 
                 override fun onFailure(call: Call<String>, t: Throwable) {
                     alertDialogManager.dialog.dismiss()
-                    Toast.makeText(this@ConsumerTradeActivity, getString(R.string.error), Toast.LENGTH_LONG)
-                        .show()
+
+                    Toasty.error(this@ConsumerTradeActivity, getString(R.string.error), Toast.LENGTH_LONG).show()
                 }
             })
         }

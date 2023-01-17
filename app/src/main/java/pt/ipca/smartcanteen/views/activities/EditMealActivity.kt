@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.CanBeMadeBody
 import pt.ipca.smartcanteen.models.MealBody
@@ -157,8 +158,9 @@ class EditMealActivity: AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
         getAllowedChangesEdit(mealId,allowedChangesEditRecyclerView,allowedChangesEditLayoutManager,textError)
     }
 
@@ -245,8 +247,7 @@ class EditMealActivity: AppCompatActivity() {
 
                             alertDialogManager.dialog.dismiss()
 
-                            Toast.makeText(this@EditMealActivity, getString(R.string.edited_meal), Toast.LENGTH_LONG)
-                                .show()
+                            Toasty.success(this@EditMealActivity, getString(R.string.edited_meal), Toast.LENGTH_LONG).show()
 
                             val body = response.body()
 
@@ -255,8 +256,7 @@ class EditMealActivity: AppCompatActivity() {
                         } else if (response.code() == 500) {
                             alertDialogManager.dialog.dismiss()
 
-                            Toast.makeText(this@EditMealActivity, getString(R.string.error_edit_meal), Toast.LENGTH_LONG)
-                                .show()
+                            Toasty.error(this@EditMealActivity, getString(R.string.error_edit_meal), Toast.LENGTH_LONG).show()
                         } else if(response.code() == 401){
                             alertDialogManager.dialog.dismiss()
 
@@ -274,8 +274,7 @@ class EditMealActivity: AppCompatActivity() {
                         allowedChangesEditRecyclerView.visibility = View.VISIBLE
                         textError.visibility = View.GONE
 
-                        Toast.makeText(this@EditMealActivity, getString(R.string.error), Toast.LENGTH_LONG)
-                            .show()
+                        Toasty.error(this@EditMealActivity, getString(R.string.error), Toast.LENGTH_LONG).show()
                     }
                 })
             }
@@ -309,11 +308,7 @@ class EditMealActivity: AppCompatActivity() {
 
                             alertDialogManager.dialog.dismiss()
 
-                            Toast.makeText(
-                                this@EditMealActivity,
-                                getString(R.string.meal_status),
-                                Toast.LENGTH_LONG
-                            ).show()
+                            Toasty.success(this@EditMealActivity, getString(R.string.meal_status), Toast.LENGTH_LONG).show()
 
                             warningWhite.visibility = View.GONE
                             warningGreen.visibility = View.VISIBLE
@@ -321,8 +316,7 @@ class EditMealActivity: AppCompatActivity() {
                         } else if(response.code()==500) {
                             alertDialogManager.dialog.dismiss()
 
-                            Toast.makeText(this@EditMealActivity, getString(R.string.error_meal_status), Toast.LENGTH_LONG)
-                                .show()
+                            Toasty.success(this@EditMealActivity, getString(R.string.error_meal_status), Toast.LENGTH_LONG).show()
                         } else if(response.code()==401){
                             AuthHelper().newSessionToken(this@EditMealActivity)
                             canBeMade(mealId,canBeMade)
@@ -330,8 +324,8 @@ class EditMealActivity: AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<String>, t: Throwable) {
-                        Toast.makeText(this@EditMealActivity, getString(R.string.error), Toast.LENGTH_LONG)
-                            .show()
+
+                        Toasty.success(this@EditMealActivity, getString(R.string.error), Toast.LENGTH_LONG).show()
                     }
                 })
             }
@@ -360,11 +354,7 @@ class EditMealActivity: AppCompatActivity() {
 
                             alertDialogManager.dialog.dismiss()
 
-                            Toast.makeText(
-                                this@EditMealActivity,
-                                getString(R.string.success_meal_status_changed),
-                                Toast.LENGTH_LONG
-                            ).show()
+                            Toasty.success(this@EditMealActivity, getString(R.string.success_meal_status_changed), Toast.LENGTH_LONG).show()
 
                             warningGreen.visibility = View.GONE
                             warningWhite.visibility = View.VISIBLE
@@ -372,8 +362,7 @@ class EditMealActivity: AppCompatActivity() {
                         } else if(response.code()==500) {
                             alertDialogManager.dialog.dismiss()
 
-                            Toast.makeText(this@EditMealActivity, getString(R.string.error_meal_status_changed), Toast.LENGTH_LONG)
-                                .show()
+                            Toasty.error(this@EditMealActivity, getString(R.string.error_meal_status_changed), Toast.LENGTH_LONG).show()
                         } else if(response.code()==401){
                             AuthHelper().newSessionToken(this@EditMealActivity)
                             canBeMade(mealId,canBeMade)
@@ -381,8 +370,8 @@ class EditMealActivity: AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<String>, t: Throwable) {
-                        Toast.makeText(this@EditMealActivity, getString(R.string.error), Toast.LENGTH_LONG)
-                            .show()
+
+                        Toasty.error(this@EditMealActivity, getString(R.string.error), Toast.LENGTH_LONG).show()
                     }
                 })
             }
@@ -410,8 +399,7 @@ class EditMealActivity: AppCompatActivity() {
 
                     alertDialogManager.dialog.dismiss()
 
-                    Toast.makeText(this@EditMealActivity, getString(R.string.success_allowed_changes), Toast.LENGTH_LONG)
-                        .show()
+                    Toasty.success(this@EditMealActivity, getString(R.string.success_allowed_changes), Toast.LENGTH_LONG).show()
 
                     val body = response.body()
 
@@ -438,8 +426,7 @@ class EditMealActivity: AppCompatActivity() {
                     allowedChangesRecyclerView.visibility = View.VISIBLE
                     textError.visibility = View.GONE
 
-                    Toast.makeText(this@EditMealActivity, getString(R.string.error_allowed_changes), Toast.LENGTH_LONG)
-                        .show()
+                    Toasty.error(this@EditMealActivity, getString(R.string.error_allowed_changes), Toast.LENGTH_LONG).show()
                 } else if(response.code() == 401){
                     alertDialogManager.dialog.dismiss()
 
@@ -457,8 +444,7 @@ class EditMealActivity: AppCompatActivity() {
                 allowedChangesRecyclerView.visibility = View.VISIBLE
                 textError.visibility = View.GONE
 
-                Toast.makeText(this@EditMealActivity, getString(R.string.error), Toast.LENGTH_LONG)
-                    .show()
+                Toasty.error(this@EditMealActivity, getString(R.string.error), Toast.LENGTH_LONG).show()
             }
         })
     }
@@ -483,8 +469,7 @@ class EditMealActivity: AppCompatActivity() {
 
                     alertDialogManager.dialog.dismiss()
 
-                    Toast.makeText(this@EditMealActivity, getString(R.string.success_allowed_changes), Toast.LENGTH_LONG)
-                        .show()
+                    Toasty.success(this@EditMealActivity, getString(R.string.success_allowed_changes), Toast.LENGTH_LONG).show()
 
                     val body = response.body()
 
@@ -511,8 +496,7 @@ class EditMealActivity: AppCompatActivity() {
                     allowedChangesEditRecyclerView.visibility = View.VISIBLE
                     textError.visibility = View.GONE
 
-                    Toast.makeText(this@EditMealActivity, getString(R.string.error_allowed_changes), Toast.LENGTH_LONG)
-                        .show()
+                    Toasty.error(this@EditMealActivity, getString(R.string.error_allowed_changes), Toast.LENGTH_LONG).show()
                 } else if(response.code() == 401){
                     alertDialogManager.dialog.dismiss()
 
@@ -530,8 +514,7 @@ class EditMealActivity: AppCompatActivity() {
                 allowedChangesEditRecyclerView.visibility = View.VISIBLE
                 textError.visibility = View.GONE
 
-                Toast.makeText(this@EditMealActivity, getString(R.string.error), Toast.LENGTH_LONG)
-                    .show()
+                Toasty.error(this@EditMealActivity, getString(R.string.error), Toast.LENGTH_LONG).show()
             }
         })
     }
