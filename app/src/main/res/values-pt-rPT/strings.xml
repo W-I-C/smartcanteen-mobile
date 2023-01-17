@@ -121,4 +121,6 @@
     <string name="error_meal_status">Erro! Não foi possível alterar o status da direção</string>
     <string name="success_meal_status_changed">Status da refeição alterado com sucesso</string>
     <string name="error_meal_status_changed">Erro! Não foi possível alterar o status da direção</string>
+    <string name="wish_remove_trade_ask">Quer mesmo eliminar esta troca?</string>
+    <string name="wish_remove_allowed_change_ask">Quer mesmo eliminar esta alteração de refeição?</string>
 </resources>

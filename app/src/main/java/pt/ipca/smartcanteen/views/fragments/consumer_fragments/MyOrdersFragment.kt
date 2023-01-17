@@ -18,6 +18,7 @@ import pt.ipca.smartcanteen.models.RetroTicket
 import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.TradesAdapterRec
 import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
+import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
@@ -43,6 +44,8 @@ class MyOrdersFragment : Fragment() {
     val linearLayoutTradeManager = LinearLayoutManager(activity)
     private lateinit var loadingAlertDialog: AlertDialog
 
+    private lateinit var alertDialogManager: AlertDialogManager
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,6 +55,9 @@ class MyOrdersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        alertDialogManager = AlertDialogManager(layoutInflater, requireActivity())
+        alertDialogManager.createLoadingAlertDialog()
 
         myOrders()
 
@@ -185,7 +191,7 @@ class MyOrdersFragment : Fragment() {
                             } else {
                                 myTradesAdater.visibility = View.VISIBLE
                                 tradesTextError.visibility = View.GONE
-                                rebuildlistTrades(TradesAdapterRec(progressBar, textProgress, linearLayoutTradeManager, sp, myTradesAdater, retroFit2, requireActivity(), requireContext()))
+                                rebuildlistTrades(TradesAdapterRec(progressBar, textProgress, linearLayoutTradeManager, sp, myTradesAdater, retroFit2, requireActivity(), requireContext(),getString(R.string.wish_remove_trade_ask), alertDialogManager))
                             }
                     } else if(response.code() == 500){
                         myTradesAdater.visibility = View.VISIBLE

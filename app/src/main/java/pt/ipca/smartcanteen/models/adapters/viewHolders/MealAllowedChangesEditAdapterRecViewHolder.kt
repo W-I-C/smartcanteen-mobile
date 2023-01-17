@@ -33,65 +33,72 @@ class MealAllowedChangesEditAdapterRecViewHolder (inflater: LayoutInflater, val 
     var typeTv = itemView.findViewById<TextView>(R.id.meals_allowed_change_edit_card_inc_dec)
     var deleteBtn = itemView.findViewById<Button>(R.id.meals_allowed_change_edit_card_delete)
 
-    fun setDeleteClickListener(mealid: String, changeid: String) {
-        deleteBtn.setOnClickListener {
-
-            val retrofit = SmartCanteenRequests().retrofit
-            val service = retrofit.create(MealsService::class.java)
-
-            val token = sp.getString("token", null)
-
-            alertDialogManager.dialog.show()
-
-            service.removeMealChange(mealid,changeid,"Bearer $token").enqueue(object :
-                Callback<List<RetroAllowedChanges>> {
-                override fun onResponse(
-                    call: Call<List<RetroAllowedChanges>>,
-                    response: Response<List<RetroAllowedChanges>>
-                ) {
-                    if (response.code() == 200) {
-
-                        alertDialogManager.dialog.dismiss()
-
-                        val retroFit2 = response.body()
-
-                        if (retroFit2 != null) {
-                            if (!retroFit2.isEmpty()) {
-                                rebuildlistOrders(
-                                    MealAllowedChangesEditAdapterRec(
-                                        retroFit2,
-                                        sp,
-                                        activity,
-                                        context,
-                                        allowedChangesEditRecyclerView,
-                                        linearLayoutManager,
-                                        alertDialogManager
-                                    )
-                                )
-                            }
-                        }
-
-                        Toast.makeText(context, activity.getString(R.string.succes_change), Toast.LENGTH_LONG)
-                            .show()
-                    } else if(response.code() == 500){
-
-                        alertDialogManager.dialog.dismiss()
-
-                        Toast.makeText(context, activity.getString(R.string.error_change), Toast.LENGTH_LONG)
-                            .show()
-                    } else if(response.code()==401){
-                        AuthHelper().newSessionToken(activity)
-                        setDeleteClickListener(mealid, changeid)
-                    }
-                }
-
-                override fun onFailure(calll: Call<List<RetroAllowedChanges>>, t: Throwable) {
-                    Toast.makeText(context, activity.getString(R.string.error), Toast.LENGTH_LONG)
-                        .show()
-                    alertDialogManager.dialog.dismiss()
-                }
-            })
+    fun setDeleteClickListener(mealid: String, changeid: String, removeAllowedChangeAskString: String, alertDialogManager: AlertDialogManager) {
+        deleteBtn.setOnClickListener{
+            alertDialogManager.createConfirmAlertDialog(
+                removeAllowedChangeAskString,
+                { remove(mealid,changeid,removeAllowedChangeAskString,alertDialogManager) }
+            )
         }
+    }
+
+    fun remove(mealid: String, changeid: String, removeAllowedChangeAskString: String, alertDialogManager: AlertDialogManager){
+        val retrofit = SmartCanteenRequests().retrofit
+        val service = retrofit.create(MealsService::class.java)
+
+        val token = sp.getString("token", null)
+
+        alertDialogManager.dialog.show()
+
+        service.removeMealChange(mealid,changeid,"Bearer $token").enqueue(object :
+            Callback<List<RetroAllowedChanges>> {
+            override fun onResponse(
+                call: Call<List<RetroAllowedChanges>>,
+                response: Response<List<RetroAllowedChanges>>
+            ) {
+                if (response.code() == 200) {
+
+                    alertDialogManager.dialog.dismiss()
+
+                    val retroFit2 = response.body()
+
+                    if (retroFit2 != null) {
+                        if (!retroFit2.isEmpty()) {
+                            rebuildlistOrders(
+                                MealAllowedChangesEditAdapterRec(
+                                    retroFit2,
+                                    sp,
+                                    activity,
+                                    context,
+                                    allowedChangesEditRecyclerView,
+                                    linearLayoutManager,
+                                    alertDialogManager,
+                                    removeAllowedChangeAskString
+                                )
+                            )
+                        }
+                    }
+
+                    Toast.makeText(context, activity.getString(R.string.succes_change), Toast.LENGTH_LONG)
+                        .show()
+                } else if(response.code() == 500){
+
+                    alertDialogManager.dialog.dismiss()
+
+                    Toast.makeText(context, activity.getString(R.string.error_change), Toast.LENGTH_LONG)
+                        .show()
+                } else if(response.code()==401){
+                    AuthHelper().newSessionToken(activity)
+                    setDeleteClickListener(mealid, changeid, removeAllowedChangeAskString, alertDialogManager)
+                }
+            }
+
+            override fun onFailure(calll: Call<List<RetroAllowedChanges>>, t: Throwable) {
+                Toast.makeText(context, activity.getString(R.string.error), Toast.LENGTH_LONG)
+                    .show()
+                alertDialogManager.dialog.dismiss()
+            }
+        })
     }
 
     fun rebuildlistOrders(adapter: MealAllowedChangesEditAdapterRec) {

@@ -490,7 +490,7 @@ class EditMealActivity: AppCompatActivity() {
 
                     if (body != null) {
                         if (body.isNotEmpty()) {
-                            val allowedChangesAdapterRec = MealAllowedChangesEditAdapterRec(body,sp,this@EditMealActivity,this@EditMealActivity,allowedChangesEditRecyclerView,allowedChangesEditLayoutManager,alertDialogManager)
+                            val allowedChangesAdapterRec = MealAllowedChangesEditAdapterRec(body,sp,this@EditMealActivity,this@EditMealActivity,allowedChangesEditRecyclerView,allowedChangesEditLayoutManager,alertDialogManager,getString(R.string.wish_remove_allowed_change_ask))
 
                             allowedChangesEditRecyclerView.visibility = View.VISIBLE
                             textError.visibility = View.GONE
@@ -534,12 +534,6 @@ class EditMealActivity: AppCompatActivity() {
                     .show()
             }
         })
-    }
-
-    fun returnButton(){
-        arrowBack.setOnClickListener{
-            finish()
-        }
     }
 
     fun pencilWhite(name: String,time: String,price: String,description: String,allowedChangesRecyclerView: RecyclerView){
@@ -658,5 +652,11 @@ class EditMealActivity: AppCompatActivity() {
         allowedChangesEditRecyclerView.visibility = View.VISIBLE
 
         getAllowedChangesEdit(mealId, allowedChangesEditRecyclerView, allowedChangesEditLayoutManager, textErrorEdit)
+    }
+
+    fun returnButton(){
+        arrowBack.setOnClickListener{
+            finish()
+        }
     }
 }
