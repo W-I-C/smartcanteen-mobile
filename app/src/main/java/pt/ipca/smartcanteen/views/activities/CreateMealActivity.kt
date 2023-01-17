@@ -18,17 +18,19 @@ class CreateMealActivity: AppCompatActivity() {
     var price=findViewById<EditText>(R.id.cart_price)
     var descriptionMeal=findViewById<EditText>(R.id.cart_description)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_create_meal)
+
+    }
+
     fun addIngredient(view: View){
         val intent = Intent(this, AddMealChangeActivity::class.java)
         startActivity(intent)
 
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_meal)
 
-        }
 
 }
 

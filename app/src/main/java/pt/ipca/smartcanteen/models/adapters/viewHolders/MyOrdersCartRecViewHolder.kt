@@ -33,7 +33,7 @@ class MyOrdersCartRecViewHolder(inflater: LayoutInflater, val parent: ViewGroup,
     val quantityTv = itemView.findViewById<TextView>(R.id.my_orders_cart_card_quantity)
     val priceTv = itemView.findViewById<TextView>(R.id.my_orders_cart_card_price)
     val deleteIv=itemView.findViewById<ImageView>(R.id.cart_delete)
-
+    val image=itemView.findViewById<ImageView>(R.id.my_orders_cart_card_image)
 
     fun bindData(nameText: String, quantityText: String, priceText: String){
         nameTv.text=nameText?:""

@@ -1,5 +1,6 @@
 package pt.ipca.smartcanteen.views.fragments.employee_fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroBarStatistics
 import pt.ipca.smartcanteen.models.helpers.*
 import pt.ipca.smartcanteen.services.CampusService
+import pt.ipca.smartcanteen.views.activities.CreateMealActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,6 +36,10 @@ class EmployeeMenuFragment(private val supportFragmentManager:FragmentManager, p
     private val deliveredOrdersProgress: ProgressBar by lazy { requireView().findViewById<View>(R.id.employee_menu_delivered_requests_progress_bar) as ProgressBar }
     private val undeliveredOrdersProgress: ProgressBar by lazy { requireView().findViewById<View>(R.id.employee_menu_undelivered_requests_progress_bar) as ProgressBar }
 
+    private val logoutIc: ImageView by lazy {requireView().findViewById<ImageView>(R.id.employee_menu_logout) as ImageView }
+    private val addMeal:ImageView by  lazy {requireView().findViewById<ImageView>(R.id.add_meal) as ImageView }
+
+
     private lateinit var alertDialogManager: AlertDialogManager
 
     override fun onCreateView(
@@ -50,13 +56,22 @@ class EmployeeMenuFragment(private val supportFragmentManager:FragmentManager, p
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getCanteenStatistics()
+        val retrofit = SmartCanteenRequests().retrofit
 
+        addMeal.setOnClickListener{
+            val intent= Intent(requireActivity(),CreateMealActivity::class.java)
+            startActivity(intent)
+        }
         seeMenuIv.setOnClickListener {
             bottomNavigationMenuView.selectedItemId = R.id.menu_employee_meals
         }
 
         seeOrdersIv.setOnClickListener {
             bottomNavigationMenuView.selectedItemId = R.id.menu_employee_orders
+        }
+
+        logoutIc.setOnClickListener{
+            AuthHelper().doLogout(retrofit,requireActivity(),alertDialogManager)
         }
     }
 
