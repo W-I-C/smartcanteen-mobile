@@ -45,10 +45,10 @@ class AddMealCartActivity : AppCompatActivity() {
 
         val mealid = intent.getStringExtra("mealId")
         val mealName = intent.getStringExtra("name")
-        val mealPreptime = intent.getIntExtra("time",0)
+        val mealPreptime = intent.getStringExtra("time")
         val mealDescription = intent.getStringExtra("description")
-        val mealPrice = intent.getFloatExtra("price",0.0f)
         val url = intent.getStringExtra("url")?:""
+        val mealPrice = intent.getStringExtra("price")
 
         name.text = mealName
         time.text = mealPreptime.toString()

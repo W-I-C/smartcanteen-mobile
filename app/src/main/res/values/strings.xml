@@ -143,4 +143,5 @@
     <string name="general_change_remove">General trade successfully removed</string>
     <string name="add_meal_cart">Meal added to cart</string>
     <string name="no_available_trades">No Availabe Trades</string>
+    <string name="cannot_takeaway">Cannot TakeAway</string>
 </resources>

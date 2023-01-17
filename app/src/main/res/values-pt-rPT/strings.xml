@@ -134,4 +134,5 @@
     <string name="error_general_change_remove">Erro! Não foi possível remover a troca geral.</string>
     <string name="add_meal_cart">Refeição adicionada ao carrinho</string>
     <string name="no_available_trades">Sem Trocas disponiveis</string>
+    <string name="cannot_takeaway">Não pode TakeAway</string>
 </resources>
