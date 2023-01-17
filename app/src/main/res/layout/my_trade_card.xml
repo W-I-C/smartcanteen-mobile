@@ -31,14 +31,16 @@
         android:id="@+id/my_trades_card_identifier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         android:text="@string/id"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
-        app:layout_constraintLeft_toRightOf="@id/my_trades_card_image"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toStartOf="@id/my_trades_card_image"
+        app:layout_constraintTop_toTopOf="@id/my_trades_card_image"
+        app:layout_constraintEnd_toEndOf="@id/my_trades_card_image"
+        app:layout_constraintBottom_toBottomOf="@id/my_trades_card_image"/>
 
     <TextView
         android:id="@+id/my_trades_card_quantity"
@@ -49,9 +51,9 @@
         android:text="@string/quantity"
         android:textColor="@color/black"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintLeft_toRightOf="@id/my_trades_card_image"
-        app:layout_constraintTop_toBottomOf="@id/my_trades_card_identifier"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/my_trades_card_price"
