@@ -57,7 +57,7 @@ class EditMealActivity: AppCompatActivity() {
     private val mealChangesTittleEdit: TextView by lazy { findViewById<TextView>(R.id.activity_edit_meal_item_alt_title_tv_edittext) as TextView }
     private val incrementBtn: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_card_1_increment) as ImageView }
     private val cancelBtn: Button by lazy { findViewById<Button>(R.id.activity_edit_meal_cancel) as Button }
-    private val confirmBtn: Button by lazy { findViewById<Button>(R.id.activity_edit_meal_add_cart) as Button }
+    private val confirmBtn: Button by lazy { findViewById<Button>(R.id.activity_edit_meal_confirm) as Button }
     private val canTakeAwayCheckBox: CheckBox by lazy { findViewById<CheckBox>(R.id.activity_edit_meal_cantakeaway_checkbox) as CheckBox }
 
 
@@ -99,9 +99,9 @@ class EditMealActivity: AppCompatActivity() {
         mealDescription.text = description
 
         if(cantakeaway == true){
-            canTakeAway.text = "Can Take Away"
+            canTakeAway.text = getString(R.string.cantakeaway)
         } else {
-            canTakeAway.text = "Cannot Take Away"
+            canTakeAway.text = getString(R.string.cannot_takeaway)
         }
 
         // Recycler View usada apenas para ver - apenas faz GET

@@ -137,4 +137,5 @@
     <string name="error_general_change_remove">Error! Unable to remove the general trade.</string>
     <string name="general_change_remove">General trade successfully removed</string>
     <string name="add_meal_cart">Meal added to cart</string>
+    <string name="cannot_takeaway">Cannot TakeAway</string>
 </resources>
