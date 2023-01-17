@@ -393,12 +393,12 @@
         />
 
     <Button
-        android:id="@+id/activity_edit_meal_add_cart"
+        android:id="@+id/activity_edit_meal_confirm"
         android:layout_width="181dp"
         android:layout_height="50dp"
         android:padding="10dp"
         android:textColorHint="@color/white"
-        android:hint="@string/add_cart"
+        android:hint="@string/confirm"
         android:visibility="gone"
         android:textSize="13sp"
         android:layout_marginRight="20dp"
