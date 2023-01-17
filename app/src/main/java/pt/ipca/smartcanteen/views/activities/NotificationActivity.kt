@@ -77,11 +77,7 @@ class NotificationActivity : AppCompatActivity() {
         notification.layoutManager = linearLayoutManager
         notification.itemAnimator = DefaultItemAnimator()
         notification.adapter = adapter
-
-
     }
-
-
 }
 
 

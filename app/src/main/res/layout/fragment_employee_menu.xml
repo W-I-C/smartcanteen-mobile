@@ -6,16 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".views.fragments.employee_fragments.EmployeeMenuFragment">
 
+    <ImageView
+        android:id="@+id/employee_menu_logout"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:backgroundTint="@color/redLogout"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/ic_baseline_logout_24"
+        app:layout_constraintBottom_toTopOf="@+id/employee_menu_see_menu_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/employee_menu_title"
+        />
+
     <TextView
         android:id="@+id/employee_menu_title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:text="@string/app_name"
         android:textAlignment="center"
         android:textColor="@color/background_color"
         android:textSize="30sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/employee_menu_see_menu_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

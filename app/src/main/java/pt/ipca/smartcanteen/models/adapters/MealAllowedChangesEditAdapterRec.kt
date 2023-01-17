@@ -14,7 +14,7 @@ import pt.ipca.smartcanteen.models.adapters.viewHolders.*
 import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 
 
-class MealAllowedChangesEditAdapterRec(private var allowedChanges: List<RetroAllowedChanges>, val sp: SharedPreferences, private val activity: Activity, private var context: Context, val allowedChangesEditRecyclerView: RecyclerView, private val linearLayoutManager: LinearLayoutManager, private val alertDialogManager: AlertDialogManager) :
+class MealAllowedChangesEditAdapterRec(private var allowedChanges: List<RetroAllowedChanges>, val sp: SharedPreferences, private val activity: Activity, private var context: Context, val allowedChangesEditRecyclerView: RecyclerView, private val linearLayoutManager: LinearLayoutManager, private val alertDialogManager: AlertDialogManager, private var removeAllowedChangeAskString: String,) :
     RecyclerView.Adapter<MealAllowedChangesEditAdapterRecViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealAllowedChangesEditAdapterRecViewHolder {
@@ -33,7 +33,7 @@ class MealAllowedChangesEditAdapterRec(private var allowedChanges: List<RetroAll
 
         holder.bindData(changeid,mealid,ingname,isremoveonly,canbeincremented,canbedecremented)
 
-        holder.setDeleteClickListener(mealid, changeid)
+        holder.setDeleteClickListener(mealid, changeid,removeAllowedChangeAskString,alertDialogManager)
     }
 
     override fun getItemCount(): Int {

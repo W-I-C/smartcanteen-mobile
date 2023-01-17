@@ -32,7 +32,5 @@ class OrderDetailsAdapterRecViewHolder( inflater: LayoutInflater,private val con
         changesRv.layoutManager = orderMealsLinearLayoutManager
         changesRv.itemAnimator = DefaultItemAnimator()
         changesRv.adapter = ordersAdapter
-
-
     }
 }
