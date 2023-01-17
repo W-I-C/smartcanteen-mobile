@@ -2,6 +2,7 @@ package pt.ipca.smartcanteen.models.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.models.RetroMealChange
 import pt.ipca.smartcanteen.models.adapters.viewHolders.OrderDetailsMealsChangesViewHolder

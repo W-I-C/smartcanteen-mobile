@@ -14,10 +14,7 @@ import android.widget.*
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroBar
 import pt.ipca.smartcanteen.models.RetroProfile
-import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
-import pt.ipca.smartcanteen.models.helpers.AuthHelper
-import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
-import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.helpers.*
 import pt.ipca.smartcanteen.services.CampusService
 import pt.ipca.smartcanteen.services.ProfileService
 import retrofit2.Call
@@ -32,6 +29,7 @@ class ProfileFragment : Fragment() {
     private val name: EditText by lazy { requireView().findViewById<EditText>(R.id.main_Name_editText) as EditText }
     private val spinnerCampus: EditText by lazy { requireView().findViewById<EditText>(R.id.main_PreferenceCantine_editText) as EditText }
     private val spinnerBar: EditText by lazy { requireView().findViewById<EditText>(R.id.main_Institute_editText) as EditText }
+    private val profilePic: ImageView by lazy { requireView().findViewById<ImageView>(R.id.main_Image_imageview) as ImageView }
 
     private lateinit var alertDialogManager : AlertDialogManager
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?,
@@ -67,7 +65,7 @@ class ProfileFragment : Fragment() {
                         name.setText(retroFit2?.name)
                         spinnerCampus.setText(retroFit2?.campusname)
                         spinnerBar.setText(retroFit2?.barname)
-
+                        ImagesHelper().getImage(retroFit2?.imgurl!!,profilePic, true)
 
 
                     }else if(response.code()==401){

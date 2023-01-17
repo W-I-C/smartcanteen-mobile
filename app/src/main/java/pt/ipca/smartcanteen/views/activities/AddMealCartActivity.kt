@@ -38,6 +38,7 @@ class AddMealCartActivity : AppCompatActivity() {
         val description = findViewById<TextView>(R.id.meal_bottom_sheet_description)
         val buttonConfirm = findViewById<Button>(R.id.meal_bottom_sheet_add_cart)
         val arrowBack = findViewById<ImageView>(R.id.meal_bottom_sheet_arrow)
+        val mealImage = findViewById<ImageView>(R.id.meal_bottom_sheet_image)
         // tem que ir para a bottom sheet (manda no intent) que recebe na resposta a lista
         val numbers = arrayListOf<String>()
 
@@ -47,11 +48,14 @@ class AddMealCartActivity : AppCompatActivity() {
         val mealPreptime = intent.getIntExtra("time",0)
         val mealDescription = intent.getStringExtra("description")
         val mealPrice = intent.getFloatExtra("price",0.0f)
+        val url = intent.getStringExtra("url")?:""
 
         name.text = mealName
         time.text = mealPreptime.toString()
         price.text = mealPrice.toString()
         description.text = mealDescription
+
+        ImagesHelper().getImage("https://firebasestorage.googleapis.com/v0/b/smartcanteen-9b4a5.appspot.com/o/francesinha.jpeg?alt=media&token=d23bcad0-9b7a-499c-b5e8-d47e50d38025", mealImage, false)
 
         buttonIncrement.setOnClickListener {
             var count: Int = quantity.text.toString().toInt()

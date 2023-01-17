@@ -26,10 +26,11 @@ class MyFavoriteMealAdapterRec(private var listFavorite: List<RetroFavoriteMeal>
         val name = order.name
         val time = "${order.time}min"
         val price = "${order.price}€"
+        val url = "https://firebasestorage.googleapis.com/v0/b/smartcanteen-9b4a5.appspot.com/o/francesinha.jpeg?alt=media&token=d23bcad0-9b7a-499c-b5e8-d47e50d38025"
 
         val mealId= order.mealId
 
-        holder.bindData(name,time.toString(),price)
+        holder.bindData(name,time,price, url)
         holder.deleteMeal(mealId)
 
 

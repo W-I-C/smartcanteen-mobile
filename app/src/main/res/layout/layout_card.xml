@@ -13,7 +13,8 @@
         android:layout_height="130dp"
         android:background="@drawable/square_card_black_image"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:clipToOutline="true"/>
 
     <TextView
         android:id="@+id/layout_card_title_tv"

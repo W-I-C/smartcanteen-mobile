@@ -15,7 +15,6 @@
         android:layout_marginStart="15dp"
         android:background="@drawable/ic_baseline_logout_24"
         app:layout_constraintLeft_toLeftOf="parent"
-
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/consumer_menu_search_et"
         />
@@ -125,6 +124,21 @@
                 android:textStyle="bold"
                 android:textColor="@color/background_color"
                 app:layout_constraintTop_toBottomOf="@+id/consumer_menu_trades_progress_bar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/consumer_menu_trades_no_trades_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/background_color"
+                android:layout_marginTop="10dp"
+                android:text="@string/no_available_trades"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/background_color"
+                app:layout_constraintTop_toTopOf="@+id/consumer_menu_available_trades_rv"
+                app:layout_constraintBottom_toBottomOf="@+id/consumer_menu_available_trades_rv"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 

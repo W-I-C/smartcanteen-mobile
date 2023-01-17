@@ -39,6 +39,7 @@ class MenuConsumerFragment : Fragment() {
     private val mealsProgressBar: ProgressBar by lazy {requireView().findViewById<ProgressBar>(R.id.consumer_menu_meals_progress_bar) as ProgressBar }
     private val mealsTextProgress: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_meals_progress_bar_text) as TextView }
     private val viewMealsText: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_bar_meals_view_meals_tv) as TextView }
+    private val noAvailableTradesText: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_trades_no_trades_text) as TextView }
     private val ordersProgressBar: ProgressBar by lazy {requireView().findViewById<ProgressBar>(R.id.consumer_menu_orders_progress_bar) as ProgressBar }
     private val ordersTextProgress: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_orders_progress_bar_text) as TextView }
     private val logoutIc: ImageView by lazy {requireView().findViewById<ImageView>(R.id.consumer_menu_logout) as ImageView }
@@ -57,6 +58,7 @@ class MenuConsumerFragment : Fragment() {
         inflater: LayoutInflater, parent: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         alertDialogManager = AlertDialogManager(inflater, requireActivity())
         alertDialogManager.createLoadingAlertDialog()
         return inflater.inflate(R.layout.fragment_consumer_menu, parent, false)
@@ -65,7 +67,7 @@ class MenuConsumerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val retrofit = SmartCanteenRequests().retrofit
-
+        noAvailableTradesText.visibility=View.GONE
         logoutIc.setOnClickListener{
             AuthHelper().doLogout(retrofit,requireActivity(),alertDialogManager)
         }
@@ -95,6 +97,8 @@ class MenuConsumerFragment : Fragment() {
             retrofit
         )
     }
+
+
 
 
     fun getBarInfo(
@@ -268,6 +272,8 @@ class MenuConsumerFragment : Fragment() {
                             tradeMealsRecyclerView.layoutManager = tradeMealsLinearLayoutManager
                             tradeMealsRecyclerView.itemAnimator = DefaultItemAnimator()
                             tradeMealsRecyclerView.adapter = barMealsAdapter
+                        }else{
+                            noAvailableTradesText.visibility=View.VISIBLE
                         }
                     }
                 }else if(response.code()==401){
