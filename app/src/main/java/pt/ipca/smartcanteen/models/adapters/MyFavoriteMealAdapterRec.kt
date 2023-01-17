@@ -26,10 +26,11 @@ class MyFavoriteMealAdapterRec(private var listFavorite: List<RetroFavoriteMeal>
         val name = order.name
         val time = "${order.time}min"
         val price = "${order.price}€"
+        val url = order.url
 
         val mealId= order.mealId
 
-        holder.bindData(name,time.toString(),price)
+        holder.bindData(name,time,price, url)
         holder.deleteMeal(mealId)
 
 

@@ -6,6 +6,7 @@ class RetroProfile (
     @SerializedName("name") var name:String,
     @SerializedName("campusname") var campusname:String,
     @SerializedName("barname") var barname:String,
+    @SerializedName("imgurl") var imgurl:String,
    )
 {
 

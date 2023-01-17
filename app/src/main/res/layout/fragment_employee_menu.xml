@@ -19,18 +19,6 @@
         app:layout_constraintRight_toLeftOf="@id/employee_menu_title"
         />
 
-    <ImageView
-        android:id="@+id/add_meal"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginLeft="344dp"
-        android:background="@drawable/add_symbol"
-       app:layout_constraintTop_toBottomOf="@+id/employee_menu_title"
-        app:layout_constraintEnd_toEndOf="@+id/employee_menu_title"
-        android:layout_marginRight="-50dp"
-        android:layout_marginTop="-40dp"
-        />
-
     <TextView
         android:id="@+id/employee_menu_title"
         android:layout_width="wrap_content"

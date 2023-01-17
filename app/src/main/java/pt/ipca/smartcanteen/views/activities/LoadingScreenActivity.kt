@@ -113,7 +113,6 @@ class LoadingScreenActivity : AppCompatActivity() {
             // Log and toast
             val msg = "InstanceID Token: "+token
             Log.d("Main", msg)
-            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
         })
     }
 

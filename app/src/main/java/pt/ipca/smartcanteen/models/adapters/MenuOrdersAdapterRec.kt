@@ -24,6 +24,7 @@ class MenuOrdersAdapterRec(private val activity: Activity, private val qtyString
         val total = "${ordersList[position].total}€"
         val statename = ordersList[position].statename
 
+
         holder.itemView.setOnClickListener{
             val intent = Intent(activity, ConsumerOrderDetailsActivity::class.java).apply {
                 putExtra("ticketid",ordersList[position].ticketid)

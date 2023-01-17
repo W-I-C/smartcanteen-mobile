@@ -19,6 +19,7 @@ import pt.ipca.smartcanteen.models.RetroCartMeals
 import pt.ipca.smartcanteen.models.adapters.MyOrdersCartRec
 import pt.ipca.smartcanteen.models.adapters.TradesAdapterRec
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
+import pt.ipca.smartcanteen.models.helpers.ImagesHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.CampusService
@@ -35,10 +36,11 @@ class MyOrdersCartRecViewHolder(inflater: LayoutInflater, val parent: ViewGroup,
     val deleteIv=itemView.findViewById<ImageView>(R.id.cart_delete)
     val image=itemView.findViewById<ImageView>(R.id.my_orders_cart_card_image)
 
-    fun bindData(nameText: String, quantityText: String, priceText: String){
+    fun bindData(nameText: String, quantityText: String, priceText: String, url:String){
         nameTv.text=nameText?:""
         quantityTv.text = quantityText
         priceTv.text=priceText
+        ImagesHelper().getImage(url, image, false)
     }
 
     fun deleteMeal(cartmealId:String){

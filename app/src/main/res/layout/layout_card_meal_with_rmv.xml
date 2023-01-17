@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="180dp"
-    android:layout_height="200dp"
+    android:layout_height="210dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/square_card_background_with_top_padding"
     android:elevation="5dp"
@@ -10,10 +10,11 @@
    >
 
     <ImageView
-        android:layout_marginTop="10dp"
+
+        android:layout_marginTop="12dp"
         android:id="@+id/layout_card_with_remove_iv"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/square_card_black_image"
         app:layout_constraintTop_toTopOf="parent"

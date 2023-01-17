@@ -12,11 +12,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import pt.ipca.smartcanteen.R
 
 class CreateMealActivity: AppCompatActivity() {
-    var listChange=findViewById<RecyclerView>(R.id.card_add_ingredient_recycler_view)
-    var mealName= findViewById<EditText>(R.id.cart_text_meals_name)
-    var preparationTime= findViewById<EditText>(R.id.cart_preparation_time)
-    var price=findViewById<EditText>(R.id.cart_price)
-    var descriptionMeal=findViewById<EditText>(R.id.cart_description)
+    private val listChange: RecyclerView by lazy { findViewById<RecyclerView>(R.id.card_add_ingredient_recycler_view) as RecyclerView }
+    private val mealName: EditText by lazy { findViewById<EditText>(R.id.cart_text_meals_name) as EditText }
+    private val preparationTime: EditText by lazy { findViewById<EditText>(R.id.cart_preparation_time) as EditText }
+    private val price: EditText by lazy { findViewById<EditText>(R.id.cart_price) as EditText }
+    private val descriptionMeal: EditText by lazy { findViewById<EditText>(R.id.cart_description) as EditText }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

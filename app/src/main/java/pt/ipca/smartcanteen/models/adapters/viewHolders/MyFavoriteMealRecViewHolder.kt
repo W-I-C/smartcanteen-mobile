@@ -12,10 +12,7 @@ import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroCartMeals
 import pt.ipca.smartcanteen.models.adapters.MyFavoriteMealAdapterRec
 import pt.ipca.smartcanteen.models.adapters.MyOrdersCartRec
-import pt.ipca.smartcanteen.models.helpers.AuthHelper
-import pt.ipca.smartcanteen.models.helpers.RetroFavoriteMeal
-import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
-import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.helpers.*
 import pt.ipca.smartcanteen.services.FavoritemealService
 import pt.ipca.smartcanteen.services.MealsService
 import retrofit2.Call
@@ -28,12 +25,15 @@ class MyFavoriteMealRecViewHolder(inflater: LayoutInflater, val parent: ViewGrou
     val timeTv = itemView.findViewById<TextView>(R.id.layout_card_with_remove_time_tv)
     val priceTv = itemView.findViewById<TextView>(R.id.layout_card_with_remove_price_tv)
     val delete= itemView.findViewById<ImageView>(R.id.layout_card_with_remove_delete)
+    val mealImage= itemView.findViewById<ImageView>(R.id.layout_card_with_remove_iv)
 
 
-    fun bindData(nameText: String, quantityText: String, priceText: String){
+    fun bindData(nameText: String, quantityText: String, priceText: String, url:String){
         nameTv.text=nameText
         timeTv.text = quantityText
         priceTv.text=priceText
+        ImagesHelper().getImage(url,mealImage, false)
+
     }
 
     fun deleteMeal(mealId:String){

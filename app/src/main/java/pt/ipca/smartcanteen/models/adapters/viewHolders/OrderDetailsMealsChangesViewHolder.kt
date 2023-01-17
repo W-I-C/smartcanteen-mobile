@@ -46,7 +46,7 @@ class OrderDetailsMealsChangesViewHolder (inflater: LayoutInflater, val parent: 
 
 
     fun bindData(title:String,amount:Int,isremoveonly:Boolean){
-        Log.d("help","Here")
+
         // incrementar e decrementar
         decrementCircle1.visibility = View.GONE
         decrementCircle1Btn.visibility = View.GONE
