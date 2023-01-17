@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
+import es.dmoral.toasty.Toasty
 import org.w3c.dom.Text
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.MealChangeBody
@@ -199,19 +200,14 @@ class AddMealChangeActivity : AppCompatActivity() {
 
                     alertDialogManager.dialog.dismiss()
 
-                    Toast.makeText(
-                        this@AddMealChangeActivity,
-                        getString(R.string.success_add_meal_change),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toasty.success(this@AddMealChangeActivity, getString(R.string.success_add_meal_change), Toast.LENGTH_LONG).show()
 
                     finish()
 
                 } else if(response.code()==500) {
                     alertDialogManager.dialog.dismiss()
 
-                    Toast.makeText(this@AddMealChangeActivity, getString(R.string.error_add_meal_change), Toast.LENGTH_LONG)
-                        .show()
+                    Toasty.error(this@AddMealChangeActivity, getString(R.string.error_add_meal_change), Toast.LENGTH_LONG).show()
                 } else if(response.code()==401){
                     AuthHelper().newSessionToken(this@AddMealChangeActivity)
                     confirmBtn(mealid,ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit,defaultValue)
@@ -221,8 +217,7 @@ class AddMealChangeActivity : AppCompatActivity() {
             override fun onFailure(call: Call<List<RetroAllowedChanges>>, t: Throwable) {
                 alertDialogManager.dialog.dismiss()
 
-                Toast.makeText(this@AddMealChangeActivity, getString(R.string.error), Toast.LENGTH_LONG)
-                    .show()
+                Toasty.error(this@AddMealChangeActivity, getString(R.string.error), Toast.LENGTH_LONG).show()
             }
         })
     }

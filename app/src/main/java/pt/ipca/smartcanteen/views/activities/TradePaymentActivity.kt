@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroPaymentMethod
 import pt.ipca.smartcanteen.models.RetroTradePayment
@@ -62,8 +63,8 @@ class TradePaymentActivity : AppCompatActivity() {
     fun cancel() {
         cancel_button.setOnClickListener {
             finish()
-            Toast.makeText(this@TradePaymentActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG)
-                .show()
+
+            Toasty.error(this@TradePaymentActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -93,20 +94,11 @@ class TradePaymentActivity : AppCompatActivity() {
                         payment_method.text = paymentMethods.name
                     }
 
-                    Toast.makeText(
-                        this@TradePaymentActivity,
-                        getString(R.string.sucess_methods),
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
+                    Toasty.success(this@TradePaymentActivity, getString(R.string.sucess_methods), Toast.LENGTH_LONG).show()
                 } else if (response.code() == 500) {
                     alertDialogManager.dialog.dismiss()
-                    Toast.makeText(
-                        this@TradePaymentActivity,
-                        getString(R.string.error_methods),
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
+
+                    Toasty.error(this@TradePaymentActivity, getString(R.string.error_methods), Toast.LENGTH_LONG).show()
                 } else if (response.code() == 401) {
                     AuthHelper().newSessionToken(this@TradePaymentActivity)
                     getPaymentMethods(generaltradeid)
@@ -115,12 +107,8 @@ class TradePaymentActivity : AppCompatActivity() {
 
             override fun onFailure(calll: Call<RetroTradePayment>, t: Throwable) {
                 alertDialogManager.dialog.dismiss()
-                Toast.makeText(
-                    this@TradePaymentActivity,
-                    getString(R.string.canceled_operation),
-                    Toast.LENGTH_LONG
-                )
-                    .show()
+
+                Toasty.error(this@TradePaymentActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG).show()
             }
 
         })
@@ -150,20 +138,12 @@ class TradePaymentActivity : AppCompatActivity() {
                     alertDialogManager.dialog.dismiss()
 
                     finish()
-                    Toast.makeText(
-                        this@TradePaymentActivity,
-                        getString(R.string.success_trade),
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
+
+                    Toasty.success(this@TradePaymentActivity, getString(R.string.success_trade), Toast.LENGTH_LONG).show()
                 } else if (response.code() == 500) {
                     alertDialogManager.dialog.dismiss()
-                    Toast.makeText(
-                        this@TradePaymentActivity,
-                        getString(R.string.error_trade),
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
+
+                    Toasty.error(this@TradePaymentActivity, getString(R.string.error_trade), Toast.LENGTH_LONG).show()
                 } else if (response.code() == 401) {
                     AuthHelper().newSessionToken(this@TradePaymentActivity)
                     getPaymentMethods(generaltradeid)
@@ -172,14 +152,9 @@ class TradePaymentActivity : AppCompatActivity() {
 
             override fun onFailure(calll: Call<String>, t: Throwable) {
                 alertDialogManager.dialog.dismiss()
-                Toast.makeText(
-                    this@TradePaymentActivity,
-                    getString(R.string.canceled_operation),
-                    Toast.LENGTH_LONG
-                )
-                    .show()
-            }
 
+                Toasty.error(this@TradePaymentActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG).show()
+            }
         })
     }
 }

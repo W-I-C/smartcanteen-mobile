@@ -132,4 +132,9 @@
     <string name="error_meal_status_changed">Error! Unable to change steering status</string>
     <string name="wish_remove_trade_ask">Do you really want to remove this trade?</string>
     <string name="wish_remove_allowed_change_ask">Do you really want to remove this meal change?</string>
+    <string name="direct_change_remove">Direct trade successfully removed!</string>
+    <string name="error_direct_change_remove">Error! Unable to remove the direct trade.</string>
+    <string name="error_general_change_remove">Error! Unable to remove the general trade.</string>
+    <string name="general_change_remove">General trade successfully removed</string>
+    <string name="add_meal_cart">Meal added to cart</string>
 </resources>

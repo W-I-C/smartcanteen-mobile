@@ -29,15 +29,8 @@ class MyOrdersCartRec(private var ordersList: List<RetroCartMeals>, val activity
 
         val cartmealId=order.cartmealId
 
-
-
         holder.bindData(name,quantity,price)
         holder.deleteMeal(cartmealId)
-
-
-
-
-
     }
 
     override fun getItemCount(): Int {

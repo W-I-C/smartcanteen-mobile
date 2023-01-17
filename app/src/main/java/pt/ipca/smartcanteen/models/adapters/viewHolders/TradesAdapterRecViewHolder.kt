@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
@@ -70,7 +71,7 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                 ) {
                     if (response.code() == 200) {
 
-                        Toast.makeText(context, "Troca direta removida com sucesso", Toast.LENGTH_SHORT).show()
+                        Toasty.success(activity, activity.getString(R.string.direct_change_remove), Toast.LENGTH_LONG).show()
 
                         myTradesAdapter.visibility = View.VISIBLE
                         progressBar.visibility = View.GONE
@@ -86,8 +87,8 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                         myTradesAdapter.visibility = View.VISIBLE
                         progressBar.visibility = View.GONE
                         textProgress.visibility = View.GONE
-                        Toast.makeText(context, "Erro! Não foi possível remover a troca direta.", Toast.LENGTH_LONG)
-                            .show()
+                        Toasty.error(activity, activity.getString(R.string.error_direct_change_remove), Toast.LENGTH_LONG).show()
+
                     } else if(response.code()==401){
                         AuthHelper().newSessionToken(activity)
                         setDeleteClickListener(ticketid, isgeneraltrade, generaltradeid,removeTradeAskString,alertDialogManager)
@@ -116,7 +117,7 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
                     ) {
                         if (response.code() == 200) {
 
-                            Toast.makeText(context, "Troca geral removida com sucesso", Toast.LENGTH_SHORT).show()
+                            Toasty.success(activity, activity.getString(R.string.general_change_remove), Toast.LENGTH_LONG).show()
 
                             myTradesAdapter.visibility = View.VISIBLE
                             progressBar.visibility = View.GONE
@@ -126,15 +127,13 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
 
                             if (retroFit2 != null)
                                 if(!retroFit2.isEmpty()){
-                                    println("Aqui123")
                                     rebuildlistOrders(TradesAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, retroFit2, activity, context, removeTradeAskString, alertDialogManager))
                                 }
                         } else if(response.code() == 500){
                             myTradesAdapter.visibility = View.VISIBLE
                             progressBar.visibility = View.GONE
                             textProgress.visibility = View.GONE
-                            Toast.makeText(context, "Erro! Não foi possível remover a troca geral.", Toast.LENGTH_LONG)
-                                .show()
+                            Toasty.error(activity, activity.getString(R.string.error_general_change_remove), Toast.LENGTH_LONG).show()
                         } else if(response.code()==401){
                             AuthHelper().newSessionToken(activity)
                             setDeleteClickListener(ticketid, isgeneraltrade, generaltradeid, removeTradeAskString, alertDialogManager)
