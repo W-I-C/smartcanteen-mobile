@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "563218033896",
+    "project_id": "smartcanteen-9b4a5",
+    "storage_bucket": "smartcanteen-9b4a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:563218033896:android:d68b5d68cdcf5126666d5d",
+        "android_client_info": {
+          "package_name": "pt.ipca.smartcanteen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "563218033896-odufh849jd70nk41nrms602fhjedub5q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkmLsAtnBUBH4vtlz0Tf1TywrHSXFIeL4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "563218033896-odufh849jd70nk41nrms602fhjedub5q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
