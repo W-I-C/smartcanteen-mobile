@@ -130,4 +130,6 @@
     <string name="error_meal_status">Error! Unable to change steering status</string>
     <string name="success_meal_status_changed">Meal status changed successfully</string>
     <string name="error_meal_status_changed">Error! Unable to change steering status</string>
+    <string name="wish_remove_trade_ask">Do you really want to remove this trade?</string>
+    <string name="wish_remove_allowed_change_ask">Do you really want to remove this meal change?</string>
 </resources>

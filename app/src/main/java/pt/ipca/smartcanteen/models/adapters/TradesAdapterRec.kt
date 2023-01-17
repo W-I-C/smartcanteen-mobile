@@ -12,14 +12,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.models.adapters.viewHolders.TradesAdapterRecViewHolder
 import pt.ipca.smartcanteen.models.RetroTrade
+import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.views.activities.ConsumerOrderDetailsActivity
 
-class TradesAdapterRec(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myTradesAdapter: RecyclerView, private var tradesList: List<RetroTrade>, private val activity: Activity,  private var context: Context) :
+class TradesAdapterRec(val progressBar: ProgressBar, val textProgress: TextView, val linearLayoutManager: LinearLayoutManager, val sp: SharedPreferences, val myTradesAdapter: RecyclerView,
+                       private var tradesList: List<RetroTrade>, private val activity: Activity, private var context: Context, private var removeTradeAskString: String, private var alertDialogManager: AlertDialogManager) :
     RecyclerView.Adapter<TradesAdapterRecViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TradesAdapterRecViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return TradesAdapterRecViewHolder(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, inflater,parent, activity, context)
+        return TradesAdapterRecViewHolder(progressBar, textProgress, linearLayoutManager, sp, myTradesAdapter, inflater,parent, activity, context, alertDialogManager)
     }
 
     override fun onBindViewHolder(holder: TradesAdapterRecViewHolder, position: Int) {
@@ -42,7 +44,7 @@ class TradesAdapterRec(val progressBar: ProgressBar, val textProgress: TextView,
             activity.startActivity(intent)
         }
 
-        holder.setDeleteClickListener(ticketid, isgeneraltrade, generaltradeid)
+        holder.setDeleteClickListener(ticketid, isgeneraltrade, generaltradeid,removeTradeAskString, alertDialogManager)
     }
 
     override fun getItemCount(): Int {
