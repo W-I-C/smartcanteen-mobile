@@ -132,4 +132,9 @@
     <string name="error_meal_status_changed">Error! Unable to change steering status</string>
     <string name="wish_remove_trade_ask">Do you really want to remove this trade?</string>
     <string name="wish_remove_allowed_change_ask">Do you really want to remove this meal change?</string>
+    <string name="delayed">Delayed</string>
+    <string name="Done">Ready</string>
+    <string name="in_preperation">In Preperation</string>
+    <string name="not_started">Not Started</string>
+    <string name="ready">Ready</string>
 </resources>

@@ -24,6 +24,11 @@ import retrofit2.Retrofit
 
 class EmployeeTicketDetails : AppCompatActivity() {
     private val deliverBtn: Button by lazy { findViewById<View>(R.id.employee_order_details_deliver_btn) as Button }
+
+    private val inPrepBtn: Button by lazy { findViewById<View>(R.id.employee_order_details_started_btn) as Button }
+    private val delayedBtn: Button by lazy { findViewById<View>(R.id.employee_order_details_delayed_btn) as Button }
+    private val readyBtn: Button by lazy { findViewById<View>(R.id.employee_order_details_ready_btn) as Button }
+
     private val backArrow: ImageView by lazy { findViewById<View>(R.id.employee_order_details_back_arrow_iv) as ImageView }
 
     private val detailsRv: RecyclerView by lazy { findViewById<View>(R.id.employee_order_details_rv) as RecyclerView }
@@ -35,7 +40,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
     private val stateTitleTv: TextView by lazy { findViewById<View>(R.id.employee_order_current_state_title_tv) as TextView }
     private val stateTv: TextView by lazy { findViewById<View>(R.id.employee_order_details_current_state_tv) as TextView }
 
-
+    private lateinit var currentState:String
     private lateinit var alertDialogManager: AlertDialogManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +51,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
 
         val ticketid = intent.getStringExtra("ticketid")
         val norder = intent.getIntExtra("norder", 0)
-        val statename = intent.getStringExtra("statename")
+        currentState = intent.getStringExtra("statename")?:""
 
         val orderMealsRecyclerView = findViewById<RecyclerView>(R.id.employee_order_details_rv)
         val orderMealsLinearLayoutManager = LinearLayoutManager(this@EmployeeTicketDetails)
@@ -58,23 +63,20 @@ class EmployeeTicketDetails : AppCompatActivity() {
         titleTv.text = "${getString(R.string.ordernum)}: ${norder}"
 
         stateTitleTv.text = "${getString(R.string.current_state)}: "
-        stateTv.text = statename
+        stateTv.text = currentState
 
         alertDialogManager = AlertDialogManager(layoutInflater, this@EmployeeTicketDetails)
         alertDialogManager.createLoadingAlertDialog()
 
-        val spinner: Spinner = findViewById<View>(R.id.employee_order_details_current_state_sp) as Spinner
 
-        getStatesInfo(spinner, retrofit, ticketid!!,statename!!, orderMealsRecyclerView, orderMealsLinearLayoutManager)
+        getStatesInfo(retrofit, ticketid!!, orderMealsRecyclerView, orderMealsLinearLayoutManager)
 
 
     }
 
     private fun getStatesInfo(
-        spinner: Spinner,
         retrofit: Retrofit,
         ticketid: String,
-        statename: String,
         orderMealsRecyclerView: RecyclerView,
         orderMealsLinearLayoutManager: LinearLayoutManager
     ) {
@@ -98,52 +100,44 @@ class EmployeeTicketDetails : AppCompatActivity() {
                     if (body != null) {
                         if (body.isNotEmpty()) {
                             val states = body.sortedBy { state :RetroState -> state.priority  }
-                            val adapter = ArrayAdapter(
-                                this@EmployeeTicketDetails,
-                                android.R.layout.simple_spinner_item,
-                                states.map { state -> state.name }
-                            )
 
                             deliverBtn.setOnClickListener {
                                 setTicketState(retrofit,ticketid,states[states.size-1].stateid,true)
-                                val pos = adapter.getPosition(states[states.size-1].name)
-                                spinner.setSelection(pos)
                                 stateTv.text = states[states.size-1].name
                             }
 
-                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            spinner.adapter = adapter
+                            inPrepBtn.setOnClickListener {
+                                setTicketState(retrofit,ticketid,states[1].stateid,true)
+                                stateTv.text = states[1].name
+                                delayedBtn.setBackgroundResource(R.drawable.button_grey)
+                                readyBtn.setBackgroundResource(R.drawable.button_grey)
+                                it.setBackgroundResource(R.drawable.rounded_button_style)
+                            }
 
-                            val pos = adapter.getPosition(statename)
+                            delayedBtn.setOnClickListener {
+                                setTicketState(retrofit,ticketid,states[2].stateid,true)
+                                stateTv.text = states[2].name
+                                inPrepBtn.setBackgroundResource(R.drawable.button_grey)
+                                readyBtn.setBackgroundResource(R.drawable.button_grey)
+                                it.setBackgroundResource(R.drawable.rounded_button_style)
+                            }
 
-                            spinner.setSelection(pos)
-                            spinner.onItemSelectedListener =
-                                object : AdapterView.OnItemSelectedListener {
-                                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                            readyBtn.setOnClickListener {
+                                setTicketState(retrofit,ticketid,states[3].stateid,true)
+                                stateTv.text = states[3].name
+                                delayedBtn.setBackgroundResource(R.drawable.button_grey)
+                                inPrepBtn.setBackgroundResource(R.drawable.button_grey)
+                                it.setBackgroundResource(R.drawable.rounded_button_style)
+                            }
 
-                                    override fun onItemSelected(
-                                        parent: AdapterView<*>?,
-                                        view: View?,
-                                        position: Int,
-                                        id: Long
-                                    ) {
 
-                                        val stateId = states[position].stateid
-                                        stateTv.text = states[position].name
-                                        if (stateId == states[states.size-1].stateid)
-                                            setTicketState(retrofit,ticketid, stateId, true)
-                                        else
-                                            setTicketState(retrofit,ticketid, stateId, false)
-                                        getTicket(ticketid, orderMealsRecyclerView, orderMealsLinearLayoutManager)
-                                    }
-                                }
 
                             getTicket(ticketid, orderMealsRecyclerView, orderMealsLinearLayoutManager)
                         }
                     }
                 }else if(response.code()==401){
                     AuthHelper().newSessionToken(this@EmployeeTicketDetails)
-                    getStatesInfo(spinner, retrofit, ticketid,statename, orderMealsRecyclerView, orderMealsLinearLayoutManager)
+                    getStatesInfo(retrofit, ticketid, orderMealsRecyclerView, orderMealsLinearLayoutManager)
                 }
             }
 
@@ -187,6 +181,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
                         if (body.isNotEmpty()) {
                             val ordersAdapter = OrderDetailsAdapterRec(body)
 
+
                             orderMealsRecyclerView.layoutManager = orderMealsLinearLayoutManager
                             orderMealsRecyclerView.itemAnimator = DefaultItemAnimator()
                             orderMealsRecyclerView.adapter = ordersAdapter
@@ -228,7 +223,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
         val sp = SharedPreferencesHelper.getSharedPreferences(this@EmployeeTicketDetails)
         val token = sp.getString("token", null)
 
-        alertDialogManager.dialog.show()
+
 
         service.setTicketStates(ticketid, stateId, "Bearer $token").enqueue(object :
             Callback<String> {
@@ -236,7 +231,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
                 call: Call<String>,
                 response: Response<String>
             ) {
-                alertDialogManager.dialog.dismiss()
+
                 if (response.code() == 200) {
                     if(finishActivity){
                         finish()
@@ -245,9 +240,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                //mealsProgressBar.visibility = View.GONE
-                //mealsTextProgress.visibility = View.GONE
-                alertDialogManager.dialog.dismiss()
+
                 print("error")
             }
 
