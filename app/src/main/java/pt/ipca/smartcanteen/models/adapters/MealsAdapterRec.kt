@@ -42,7 +42,7 @@ class MealsAdapterRec(private var mealsList: List<RetroMeal>, private var activi
         val title = meal.name
         val price = "${meal.price}€"
         val preptime = "${meal.preparationtime}min"
-        val url = meal.url
+        val url = meal.url?:""
         holder.bindData(title,preptime,price,url)
 
         holder.itemView.setOnClickListener{
