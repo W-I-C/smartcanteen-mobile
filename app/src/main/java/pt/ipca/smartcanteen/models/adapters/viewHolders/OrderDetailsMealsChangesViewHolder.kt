@@ -90,8 +90,6 @@ class OrderDetailsMealsChangesViewHolder (inflater: LayoutInflater, val parent: 
         }else{
             quantity2.visibility = View.VISIBLE
             quantity2.text=amount.toString()
-
         }
-
     }
 }

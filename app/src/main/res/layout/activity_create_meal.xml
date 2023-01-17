@@ -15,17 +15,6 @@
         tools:ignore="MissingConstraints" />
 
    <ImageView
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:background="@drawable/edit"
-       app:layout_constraintBottom_toBottomOf="@+id/image_meal"
-       app:layout_constraintRight_toRightOf="@+id/image_meal"
-       android:layout_marginRight="5dp"
-       android:layout_marginBottom="20dp"
-       android:backgroundTint="@color/white"
-
-       />
-    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/arrow_back"

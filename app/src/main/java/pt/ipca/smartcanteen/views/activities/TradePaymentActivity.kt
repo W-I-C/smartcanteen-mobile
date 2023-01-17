@@ -38,13 +38,9 @@ class TradePaymentActivity : AppCompatActivity() {
         val isfree = intent.getBooleanExtra("isfree", false)
         val price = intent.getFloatExtra("price", 0.0f)
 
-        println(generaltradeid)
-        println(isfree)
-        println(price)
-
         // fazer isto só se recebermos um int (price), se recebermos gratuito não chama isto
         if (isfree == true) {
-            price_text.text = "Gratuito"
+            price_text.text = getString(R.string.free)
             payment_method.visibility = View.GONE
             payment_method_tittle.visibility = View.GONE
             confirm_button.setOnClickListener {
@@ -66,7 +62,7 @@ class TradePaymentActivity : AppCompatActivity() {
     fun cancel() {
         cancel_button.setOnClickListener {
             finish()
-            Toast.makeText(this@TradePaymentActivity, "Operação cancelada!", Toast.LENGTH_LONG)
+            Toast.makeText(this@TradePaymentActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG)
                 .show()
         }
     }
@@ -99,7 +95,7 @@ class TradePaymentActivity : AppCompatActivity() {
 
                     Toast.makeText(
                         this@TradePaymentActivity,
-                        "Método de pagamento obtidos com sucesso!",
+                        getString(R.string.sucess_methods),
                         Toast.LENGTH_LONG
                     )
                         .show()
@@ -107,7 +103,7 @@ class TradePaymentActivity : AppCompatActivity() {
                     alertDialogManager.dialog.dismiss()
                     Toast.makeText(
                         this@TradePaymentActivity,
-                        "Erro! Não foi possível obter o método de pagamento.",
+                        getString(R.string.error_methods),
                         Toast.LENGTH_LONG
                     )
                         .show()
@@ -121,7 +117,7 @@ class TradePaymentActivity : AppCompatActivity() {
                 alertDialogManager.dialog.dismiss()
                 Toast.makeText(
                     this@TradePaymentActivity,
-                    "Erro! Tente novamente.",
+                    getString(R.string.canceled_operation),
                     Toast.LENGTH_LONG
                 )
                     .show()
@@ -156,7 +152,7 @@ class TradePaymentActivity : AppCompatActivity() {
                     finish()
                     Toast.makeText(
                         this@TradePaymentActivity,
-                        "Troca obtida com sucesso!",
+                        getString(R.string.success_trade),
                         Toast.LENGTH_LONG
                     )
                         .show()
@@ -164,7 +160,7 @@ class TradePaymentActivity : AppCompatActivity() {
                     alertDialogManager.dialog.dismiss()
                     Toast.makeText(
                         this@TradePaymentActivity,
-                        "Erro! Não foi possível realizar a troca.",
+                        getString(R.string.error_trade),
                         Toast.LENGTH_LONG
                     )
                         .show()
@@ -178,7 +174,7 @@ class TradePaymentActivity : AppCompatActivity() {
                 alertDialogManager.dialog.dismiss()
                 Toast.makeText(
                     this@TradePaymentActivity,
-                    "Erro! Tente novamente.",
+                    getString(R.string.canceled_operation),
                     Toast.LENGTH_LONG
                 )
                     .show()

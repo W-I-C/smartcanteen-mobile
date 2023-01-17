@@ -102,10 +102,8 @@ class EmployeeBarMenuFragment : Fragment() {
                 menuRv.visibility = View.VISIBLE
                 loadingProgressBar.visibility = View.INVISIBLE
                 loadingProgressText.visibility = View.INVISIBLE
-                print("error")
+
             }
-
         })
-
     }
 }

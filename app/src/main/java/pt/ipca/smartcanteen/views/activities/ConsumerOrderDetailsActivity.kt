@@ -76,7 +76,6 @@ class ConsumerOrderDetailsActivity : AppCompatActivity() {
                 intent.putExtra("ticketId",ticketid)
                 startActivity(intent)
             }else{
-                Log.d("teste general trade id",generaltradeid.toString())
                 val intent = Intent(this@ConsumerOrderDetailsActivity, TradePaymentActivity::class.java)
                 intent.putExtra("ticketid",ticketid)
                 intent.putExtra("generaltradeid",generaltradeid)
@@ -134,7 +133,6 @@ class ConsumerOrderDetailsActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<List<RetroTicketMeal>>, t: Throwable) {
-                print("error")
                 detailsRv.visibility=View.VISIBLE
                 loadingBar.visibility=View.GONE
                 loadingText.visibility=View.GONE

@@ -51,12 +51,9 @@ class EmployeeBarMenuMealsAdapterRec(
             intent.putExtra("cantakeaway", cantakeaway)
             activity.startActivity(intent)
         }
-
     }
 
     override fun getItemCount(): Int {
         return meals.size
     }
-
-
 }

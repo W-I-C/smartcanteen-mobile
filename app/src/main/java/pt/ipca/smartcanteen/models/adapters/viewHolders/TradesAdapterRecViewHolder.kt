@@ -155,12 +155,8 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
         priceTv.text = priceText.toString()
         stateTv.text = stateText
 
-        println("Aqui123")
-        println(isgeneraltrade)
 
-        // TODO: passar para strings do resource
         if(isgeneraltrade == true){
-            println("Aqui")
             isGeneralTradeTv.text = "General Trade"
         } else {
             isGeneralTradeTv.text = "Direct Trade"

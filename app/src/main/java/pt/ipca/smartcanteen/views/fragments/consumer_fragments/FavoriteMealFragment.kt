@@ -1,6 +1,7 @@
 package pt.ipca.smartcanteen.views.fragments.consumer_fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.adapters.MyFavoriteMealAdapterRec
+import pt.ipca.smartcanteen.models.adapters.MyOrdersCartRec
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.RetroFavoriteMeal
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
@@ -30,6 +32,8 @@ class FavoriteMealFragment : Fragment() {
     private val menuRv: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.favourites_menu_rv) as RecyclerView }
     private val loadingProgressBar: ProgressBar by lazy { requireView().findViewById<RecyclerView>(R.id.favourites_menu_progress_bar) as ProgressBar }
     private val loadingProgressText: TextView by lazy { requireView().findViewById<RecyclerView>(R.id.favourites_menu_progress_bar_text) as TextView }
+
+    val linearLayoutManager=LinearLayoutManager(activity)
 
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -68,8 +72,9 @@ class FavoriteMealFragment : Fragment() {
 
                     if (retroFit2 != null) {
                         if (!retroFit2.isEmpty()) {
-                            val adapter = MyFavoriteMealAdapterRec(retroFit2)
-                            rebuildlist(adapter)
+
+                            rebuildlist(MyFavoriteMealAdapterRec(retroFit2,requireActivity(),linearLayoutManager,menuRv ))
+
                         }
                     }
                 }else if(response.code()==401){

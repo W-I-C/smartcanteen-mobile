@@ -84,81 +84,93 @@ class AddMealChangeActivity : AppCompatActivity() {
     fun make(mealid: String){
 
         isRemoveonly.setOnClickListener {
-            if (isRemoveonly.isChecked) {
-                incrementLimit.visibility = View.GONE
-                decrementLimit.visibility = View.GONE
-                incrementLimitTittle.visibility = View.GONE
-                decrementLimitTittle.visibility = View.GONE
-
-                isremoveonly = true
-                canbeincremented = false
-                canbedecremented = false
-
-                if(canbeDecremented.isChecked == true){
-                    canbeDecremented.isChecked = false
-                }
-                if(canbeIncremented.isChecked == true){
-                    canbeIncremented.isChecked = false
-                }
-            } else {
-                isremoveonly = false
-            }
+            isRemoveOnly()
         }
 
         canbeIncremented.setOnClickListener {
-            if (canbeIncremented.isChecked) {
-                incrementLimit.visibility = View.VISIBLE
-                incrementLimitTittle.visibility = View.VISIBLE
-
-                isremoveonly = false
-                canbeincremented = true
-
-                if(canbeDecremented.isChecked == false){
-                    decrementLimit.visibility = View.GONE
-                    decrementLimitTittle.visibility = View.GONE
-                } else{
-                    decrementLimit.visibility = View.VISIBLE
-                    decrementLimitTittle.visibility = View.VISIBLE
-                }
-
-                if(isRemoveonly.isChecked == true){
-                    isRemoveonly.isChecked = false
-                }
-            } else {
-                canbeincremented = false
-
-                incrementLimit.visibility = View.GONE
-                incrementLimitTittle.visibility = View.GONE
-            }
+            canbeIncremented()
         }
 
         canbeDecremented.setOnClickListener {
-            if (canbeDecremented.isChecked) {
-                decrementLimit.visibility = View.VISIBLE
-                decrementLimitTittle.visibility = View.VISIBLE
+            canbeDecremented()
+        }
+    }
 
-                isremoveonly = false
-                canbedecremented = true
+    fun isRemoveOnly(){
+        if (isRemoveonly.isChecked) {
+            incrementLimit.visibility = View.GONE
+            decrementLimit.visibility = View.GONE
+            incrementLimitTittle.visibility = View.GONE
+            decrementLimitTittle.visibility = View.GONE
 
-                if(canbeIncremented.isChecked == false){
-                    incrementLimit.visibility = View.GONE
-                    incrementLimitTittle.visibility = View.GONE
-                } else{
-                    incrementLimit.visibility = View.VISIBLE
-                    incrementLimitTittle.visibility = View.VISIBLE
-                }
-            } else {
-                canbedecremented = false
+            isremoveonly = true
+            canbeincremented = false
+            canbedecremented = false
+
+            if(canbeDecremented.isChecked == true){
+                canbeDecremented.isChecked = false
+            }
+            if(canbeIncremented.isChecked == true){
+                canbeIncremented.isChecked = false
+            }
+        } else {
+            isremoveonly = false
+        }
+    }
+
+    fun canbeIncremented(){
+        if (canbeIncremented.isChecked) {
+            incrementLimit.visibility = View.VISIBLE
+            incrementLimitTittle.visibility = View.VISIBLE
+
+            isremoveonly = false
+            canbeincremented = true
+
+            if(canbeDecremented.isChecked == false){
                 decrementLimit.visibility = View.GONE
                 decrementLimitTittle.visibility = View.GONE
+            } else{
+                decrementLimit.visibility = View.VISIBLE
+                decrementLimitTittle.visibility = View.VISIBLE
             }
+
+            if(isRemoveonly.isChecked == true){
+                isRemoveonly.isChecked = false
+            }
+        } else {
+            canbeincremented = false
+
+            incrementLimit.visibility = View.GONE
+            incrementLimitTittle.visibility = View.GONE
+        }
+    }
+
+    fun canbeDecremented(){
+        if (canbeDecremented.isChecked) {
+            decrementLimit.visibility = View.VISIBLE
+            decrementLimitTittle.visibility = View.VISIBLE
+
+            isremoveonly = false
+            canbedecremented = true
+
+            if(canbeIncremented.isChecked == false){
+                incrementLimit.visibility = View.GONE
+                incrementLimitTittle.visibility = View.GONE
+            } else{
+                incrementLimit.visibility = View.VISIBLE
+                incrementLimitTittle.visibility = View.VISIBLE
+            }
+        } else {
+            canbedecremented = false
+            decrementLimit.visibility = View.GONE
+            decrementLimitTittle.visibility = View.GONE
         }
     }
 
     fun cancelBtn(){
         cancelBtn.setOnClickListener{
             finish()
-            Toast.makeText(this@AddMealChangeActivity, "Operação cancelada!", Toast.LENGTH_LONG)
+            Toast.makeText(this@AddMealChangeActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG)
                 .show()
         }
     }
@@ -173,7 +185,6 @@ class AddMealChangeActivity : AppCompatActivity() {
 
         val body = MealChangeBody(ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit,defaultValue)
 
-        // TODO: meter mensagem de confimação
         alertDialogManager.dialog.show()
 
         service.addMealChange(mealid,"Bearer $token",body).enqueue(object :
@@ -190,7 +201,7 @@ class AddMealChangeActivity : AppCompatActivity() {
 
                     Toast.makeText(
                         this@AddMealChangeActivity,
-                        "Alteração adicionada à refeição com sucesso",
+                        getString(R.string.success_add_meal_change),
                         Toast.LENGTH_LONG
                     ).show()
 
@@ -199,7 +210,7 @@ class AddMealChangeActivity : AppCompatActivity() {
                 } else if(response.code()==500) {
                     alertDialogManager.dialog.dismiss()
 
-                    Toast.makeText(this@AddMealChangeActivity, "Erro! Não foi possível adicionar a alterção", Toast.LENGTH_LONG)
+                    Toast.makeText(this@AddMealChangeActivity, getString(R.string.error_add_meal_change), Toast.LENGTH_LONG)
                         .show()
                 } else if(response.code()==401){
                     AuthHelper().newSessionToken(this@AddMealChangeActivity)
@@ -210,7 +221,7 @@ class AddMealChangeActivity : AppCompatActivity() {
             override fun onFailure(call: Call<List<RetroAllowedChanges>>, t: Throwable) {
                 alertDialogManager.dialog.dismiss()
 
-                Toast.makeText(this@AddMealChangeActivity, "Erro! Tente novamente", Toast.LENGTH_LONG)
+                Toast.makeText(this@AddMealChangeActivity, getString(R.string.error), Toast.LENGTH_LONG)
                     .show()
             }
         })
