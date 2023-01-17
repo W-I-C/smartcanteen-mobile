@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.*
 import pt.ipca.smartcanteen.models.RetroTicket
 import pt.ipca.smartcanteen.models.RetroTrade
@@ -129,8 +130,8 @@ class MyOrdersFragment : Fragment() {
                         myOrdersAdater.visibility = View.VISIBLE
                         progressBar.visibility = View.GONE
                         textProgress.visibility = View.GONE
-                        Toast.makeText(requireActivity(), getString(R.string.no_orders), Toast.LENGTH_LONG)
-                            .show()
+
+                        Toasty.error(requireActivity(), getString(R.string.no_orders), Toast.LENGTH_LONG).show()
                     } else if(response.code()==401){
                         AuthHelper().newSessionToken(requireActivity())
                         myOrders()
@@ -141,8 +142,8 @@ class MyOrdersFragment : Fragment() {
                     myOrdersAdater.visibility = View.VISIBLE
                     progressBar.visibility = View.GONE
                     textProgress.visibility = View.GONE
-                    Toast.makeText(requireContext(), getString(R.string.error), Toast.LENGTH_LONG)
-                        .show()
+
+                    Toasty.error(requireActivity(), getString(R.string.error), Toast.LENGTH_LONG).show()
                 }
             })
     }
@@ -197,8 +198,8 @@ class MyOrdersFragment : Fragment() {
                         myTradesAdater.visibility = View.VISIBLE
                         progressBar.visibility = View.GONE
                         textProgress.visibility = View.GONE
-                        Toast.makeText(requireActivity(), getString(R.string.no_trades), Toast.LENGTH_LONG)
-                            .show()
+
+                        Toasty.error(requireActivity(), getString(R.string.no_trades), Toast.LENGTH_LONG).show()
                     } else if(response.code()==401){
                         AuthHelper().newSessionToken(requireActivity())
                         myTrades()
@@ -209,8 +210,8 @@ class MyOrdersFragment : Fragment() {
                     myTradesAdater.visibility = View.VISIBLE
                     progressBar.visibility = View.GONE
                     textProgress.visibility = View.GONE
-                    Toast.makeText(requireContext(), getString(R.string.error), Toast.LENGTH_LONG)
-                        .show()
+
+                    Toasty.error(requireActivity(), getString(R.string.error), Toast.LENGTH_LONG).show()
                 }
             })
     }

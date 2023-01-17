@@ -72,11 +72,13 @@ class LoadingScreenActivity : AppCompatActivity() {
                                 val intent = Intent(this@LoadingScreenActivity, ConsumerFragmentActivity::class.java)
                                 finish()
                                 startActivity(intent)
+                                overridePendingTransition(androidx.appcompat.R.anim.abc_fade_out, es.dmoral.toasty.R.anim.abc_fade_in);
                             } else if (role == "employee") {
 
                                 val intent = Intent(this@LoadingScreenActivity, EmployeeFragmentActivity::class.java)
                                 finish()
                                 startActivity(intent)
+                                overridePendingTransition(androidx.appcompat.R.anim.abc_fade_out, es.dmoral.toasty.R.anim.abc_fade_in);
                             }
 
                         } else if (response.code() == 401) {

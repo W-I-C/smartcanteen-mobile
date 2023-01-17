@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroAllowedChanges
 import pt.ipca.smartcanteen.models.RetroTrade
@@ -79,14 +80,12 @@ class MealAllowedChangesEditAdapterRecViewHolder (inflater: LayoutInflater, val 
                         }
                     }
 
-                    Toast.makeText(context, activity.getString(R.string.succes_change), Toast.LENGTH_LONG)
-                        .show()
+                    Toasty.success(activity, activity.getString(R.string.succes_change), Toast.LENGTH_LONG).show()
                 } else if(response.code() == 500){
 
                     alertDialogManager.dialog.dismiss()
 
-                    Toast.makeText(context, activity.getString(R.string.error_change), Toast.LENGTH_LONG)
-                        .show()
+                    Toasty.error(activity, activity.getString(R.string.error_change), Toast.LENGTH_LONG).show()
                 } else if(response.code()==401){
                     AuthHelper().newSessionToken(activity)
                     setDeleteClickListener(mealid, changeid, removeAllowedChangeAskString, alertDialogManager)
@@ -94,8 +93,7 @@ class MealAllowedChangesEditAdapterRecViewHolder (inflater: LayoutInflater, val 
             }
 
             override fun onFailure(calll: Call<List<RetroAllowedChanges>>, t: Throwable) {
-                Toast.makeText(context, activity.getString(R.string.error), Toast.LENGTH_LONG)
-                    .show()
+                Toasty.error(activity, activity.getString(R.string.error), Toast.LENGTH_LONG).show()
                 alertDialogManager.dialog.dismiss()
             }
         })

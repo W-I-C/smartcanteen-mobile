@@ -128,4 +128,9 @@
     <string name="in_preperation">Em preparação</string>
     <string name="not_started">Não Iniciado</string>
     <string name="ready">Pronto</string>
+    <string name="direct_change_remove">Troca direta removida com sucesso!</string>
+    <string name="error_direct_change_remove">Erro! Não foi possível remover a troca direta.</string>
+    <string name="general_change_remove">Troca geral removida com sucesso</string>
+    <string name="error_general_change_remove">Erro! Não foi possível remover a troca geral.</string>
+    <string name="add_meal_cart">Refeição adicionada ao carrinho</string>
 </resources>
