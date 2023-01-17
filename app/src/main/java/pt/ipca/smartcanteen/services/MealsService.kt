@@ -11,6 +11,9 @@ interface MealsService {
     @GET("/api/v1/consumer/cart/meals")
     fun getMealsCart(@Header("Authorization") authorization: String): Call<List<RetroCartMeals>>
 
+    @DELETE("/api/v1/consumer/meals/{cartmealid}")
+    fun deleteMealsCart(@Path("cartmealid") cartMealId:String,@Header("Authorization") authorization: String): Call<List<RetroCartMeals>>
+
     @GET("/api/v1/meals/{mealId}/allowedChanges")
     fun getAllowedChanges(@Path("mealId") mealId: String, @Header("Authorization") authorization: String): Call<List<RetroAllowedChanges>>
 
