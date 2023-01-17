@@ -1,15 +1,16 @@
 package pt.ipca.smartcanteen.views.fragments.consumer_fragments
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Spinner
+import android.widget.*
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroBar
 import pt.ipca.smartcanteen.models.RetroProfile
@@ -24,8 +25,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.Executors
 
 class ProfileFragment : Fragment() {
+
     private val name: EditText by lazy { requireView().findViewById<EditText>(R.id.main_Name_editText) as EditText }
     private val spinnerCampus: EditText by lazy { requireView().findViewById<EditText>(R.id.main_PreferenceCantine_editText) as EditText }
     private val spinnerBar: EditText by lazy { requireView().findViewById<EditText>(R.id.main_Institute_editText) as EditText }
