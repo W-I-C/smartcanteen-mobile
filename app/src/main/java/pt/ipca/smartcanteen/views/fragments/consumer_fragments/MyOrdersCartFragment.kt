@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.models.adapters.MyOrdersCartRec
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroCartMeals
+import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
@@ -31,6 +32,8 @@ class MyOrdersCartFragment : Fragment() {
     private val cartMeals: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.myorders_cart_recycler_view) as RecyclerView }
 
     val linearLayoutManager=LinearLayoutManager(activity)
+
+    private lateinit var alertDialogManager: AlertDialogManager
 
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -65,7 +68,7 @@ class MyOrdersCartFragment : Fragment() {
 
                     if (retroFit2 != null) {
                         if(!retroFit2.isEmpty()){
-                            Log.d("teste",retroFit2[0].name.toString())
+
                             rebuildlist(MyOrdersCartRec(retroFit2,requireActivity(),linearLayoutManager, cartMeals))
                             if(retroFit2.size>=1)
                                 total.text = "${retroFit2[0].cartTotal} €"
