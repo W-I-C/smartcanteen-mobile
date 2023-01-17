@@ -93,7 +93,6 @@ class EmployeeBarMenuMealsAdapterRecViewHolder(
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                print("error")
                 alertDialogManager.dialog.dismiss()
             }
 

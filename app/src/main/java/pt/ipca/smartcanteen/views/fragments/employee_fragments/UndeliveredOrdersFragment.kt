@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -93,7 +94,8 @@ class UndeliveredOrdersFragment : Fragment() {
                 }
 
                 override fun onFailure(calll: Call<List<RetroTicket>>, t: Throwable) {
-                    print("error")
+                    Toast.makeText(requireActivity(), getString(R.string.error), Toast.LENGTH_LONG)
+                        .show()
                 }
             })
     }

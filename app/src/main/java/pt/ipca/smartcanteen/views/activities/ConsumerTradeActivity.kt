@@ -44,7 +44,6 @@ class ConsumerTradeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_trade)
 
         ticketId = intent.getStringExtra("ticketId").toString()
-        println(ticketId)
 
         alertDialogManager = AlertDialogManager(layoutInflater, this)
         alertDialogManager.createLoadingAlertDialog()
@@ -136,111 +135,11 @@ class ConsumerTradeActivity : AppCompatActivity() {
             }
 
         cancelButton.setOnClickListener {
-            finish()
-            Toast.makeText(this@ConsumerTradeActivity, "Operação cancelada!", Toast.LENGTH_LONG)
-                .show()
+            cancelBtn()
         }
 
         confirmButton.setOnClickListener {
-
-            val retrofit = SmartCanteenRequests().retrofit
-
-            val service = retrofit.create(TradesService::class.java)
-
-            val sp = SharedPreferencesHelper.getSharedPreferences(this@ConsumerTradeActivity)
-            val token = sp.getString("token", null)
-
-            // TODO: verificar se os spinners foram preenchidos
-                if (checkBox1.isChecked) {
-                    // Faça chamada POST para rota 1
-
-                    // SIM -> isfree a true e paymentmethodid a null
-                    // NÃO -> isfree a false e paymentmethodid string (ir buscar o id do name daquele método)
-
-                    // verificação para ver se todos os campos foram preenchidos - os spinners metem por defeito mas a editText não (troca direta)
-
-                    val body = GeneralTradeBody(isfree, paymentmethodid)
-
-                    alertDialogManager.dialog.show()
-
-                    service.generalTicketTrade(ticketId, "Bearer $token",body).enqueue(object :
-                        Callback<String> {
-                        override fun onResponse(
-                            call: Call<String>,
-                            response: Response<String>
-                        ) {
-                            if (response.code() == 200) {
-
-                                println("Aqui123")
-
-                                alertDialogManager.dialog.dismiss()
-
-                                Toast.makeText(this@ConsumerTradeActivity, "Troca geral realizada com sucesso!", Toast.LENGTH_LONG)
-                                    .show()
-                                finish()
-                            } else if (response.code() == 500) {
-                                alertDialogManager.dialog.dismiss()
-
-                                Toast.makeText(this@ConsumerTradeActivity, "Troca geral falhada!", Toast.LENGTH_LONG)
-                                    .show()
-                            }
-                        }
-
-                        override fun onFailure(calll: Call<String>, t: Throwable) {
-                            alertDialogManager.dialog.dismiss()
-                            println("Deu erro")
-                            Toast.makeText(this@ConsumerTradeActivity, "Erro! Tente novamente (a troca geral pode já ter sido feita).", Toast.LENGTH_LONG)
-                                .show()
-                        }
-
-                    })
-
-                } else if (checkBox2.isChecked) {
-                    // Faça chamada POST para rota 2
-
-                    val receiveremail = editText.text
-
-                    println(receiveremail)
-                    println(isfree)
-                    println(paymentmethodid)
-                    println(ticketId)
-
-                    val body = DirectTradeBody(receiveremail.toString() ,isfree, paymentmethodid)
-
-                    alertDialogManager.dialog.show()
-
-                    service.directTicketTrade(ticketId, "Bearer $token",body).enqueue(object :
-                        Callback<String> {
-                        override fun onResponse(
-                            call: Call<String>,
-                            response: Response<String>
-                        ) {
-                            Log.d("Hrllo", response.toString())
-                            if (response.code() == 200) {
-
-                                println("Aqui")
-                                alertDialogManager.dialog.dismiss()
-
-                                Toast.makeText(this@ConsumerTradeActivity, "Troca direta realizada com sucesso!", Toast.LENGTH_LONG)
-                                    .show()
-                                finish()
-                            } else if (response.code() == 500) {
-                                alertDialogManager.dialog.dismiss()
-
-                                Toast.makeText(this@ConsumerTradeActivity, "Troca direta falhada!", Toast.LENGTH_LONG)
-                                    .show()
-                            }
-
-                        }
-
-                        override fun onFailure(call: Call<String>, t: Throwable) {
-                            alertDialogManager.dialog.dismiss()
-                            println("CAo ${t.toString()} ")
-                            Toast.makeText(this@ConsumerTradeActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
-                                .show()
-                        }
-                    })
-                }
+            confirmBtn()
         }
     }
 
@@ -375,11 +274,11 @@ class ConsumerTradeActivity : AppCompatActivity() {
 
 
 
-                    Toast.makeText(this@ConsumerTradeActivity, "Métodos de pagamento obtidos com sucesso!", Toast.LENGTH_LONG)
+                    Toast.makeText(this@ConsumerTradeActivity, getString(R.string.sucess_methods), Toast.LENGTH_LONG)
                         .show()
                 } else if(response.code() == 500){
                     alertDialogManager.dialog.dismiss()
-                    Toast.makeText(this@ConsumerTradeActivity, "Erro! Não foi possível obter os métodos de pagamento.", Toast.LENGTH_LONG)
+                    Toast.makeText(this@ConsumerTradeActivity, getString(R.string.error_methods), Toast.LENGTH_LONG)
                         .show()
                 } else if(response.code()==401){
                     AuthHelper().newSessionToken(this@ConsumerTradeActivity)
@@ -389,13 +288,107 @@ class ConsumerTradeActivity : AppCompatActivity() {
 
             override fun onFailure(calll: Call<List<RetroPaymentMethod>>, t: Throwable) {
                 alertDialogManager.dialog.dismiss()
-                Toast.makeText(this@ConsumerTradeActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
+                Toast.makeText(this@ConsumerTradeActivity, getString(R.string.error), Toast.LENGTH_LONG)
                     .show()
             }
 
             })
+    }
 
-        // TODO: no POST de fazer troca meter um error 500 (a troca já foi submtida para troca)
+    fun cancelBtn(){
+        finish()
+        Toast.makeText(this@ConsumerTradeActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG)
+            .show()
+    }
 
+    fun confirmBtn(){
+        val retrofit = SmartCanteenRequests().retrofit
+
+        val service = retrofit.create(TradesService::class.java)
+
+        val sp = SharedPreferencesHelper.getSharedPreferences(this@ConsumerTradeActivity)
+        val token = sp.getString("token", null)
+
+        if (checkBox1.isChecked) {
+
+            // SIM -> isfree a true e paymentmethodid a null
+            // NÃO -> isfree a false e paymentmethodid string (ir buscar o id do name daquele método)
+
+            val body = GeneralTradeBody(isfree, paymentmethodid)
+
+            alertDialogManager.dialog.show()
+
+            service.generalTicketTrade(ticketId, "Bearer $token",body).enqueue(object :
+                Callback<String> {
+                override fun onResponse(
+                    call: Call<String>,
+                    response: Response<String>
+                ) {
+                    if (response.code() == 200) {
+
+                        alertDialogManager.dialog.dismiss()
+
+                        Toast.makeText(this@ConsumerTradeActivity, getString(R.string.success_general_trade), Toast.LENGTH_LONG)
+                            .show()
+                        finish()
+                    } else if (response.code() == 500) {
+                        alertDialogManager.dialog.dismiss()
+
+                        Toast.makeText(this@ConsumerTradeActivity, getString(R.string.error_general_trade), Toast.LENGTH_LONG)
+                            .show()
+                    }
+                }
+
+                override fun onFailure(calll: Call<String>, t: Throwable) {
+                    alertDialogManager.dialog.dismiss()
+                    Toast.makeText(this@ConsumerTradeActivity, getString(R.string.error), Toast.LENGTH_LONG)
+                        .show()
+                }
+
+            })
+
+        } else if (checkBox2.isChecked) {
+
+            val receiveremail = editText.text
+
+            println(receiveremail)
+            println(isfree)
+            println(paymentmethodid)
+            println(ticketId)
+
+            val body = DirectTradeBody(receiveremail.toString() ,isfree, paymentmethodid)
+
+            alertDialogManager.dialog.show()
+
+            service.directTicketTrade(ticketId, "Bearer $token",body).enqueue(object :
+                Callback<String> {
+                override fun onResponse(
+                    call: Call<String>,
+                    response: Response<String>
+                ) {
+
+                    if (response.code() == 200) {
+
+                        alertDialogManager.dialog.dismiss()
+
+                        Toast.makeText(this@ConsumerTradeActivity, getString(R.string.success_direct_trade), Toast.LENGTH_LONG)
+                            .show()
+                        finish()
+                    } else if (response.code() == 500) {
+                        alertDialogManager.dialog.dismiss()
+
+                        Toast.makeText(this@ConsumerTradeActivity, getString(R.string.error_direct_trade), Toast.LENGTH_LONG)
+                            .show()
+                    }
+
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    alertDialogManager.dialog.dismiss()
+                    Toast.makeText(this@ConsumerTradeActivity, getString(R.string.error), Toast.LENGTH_LONG)
+                        .show()
+                }
+            })
+        }
     }
 }

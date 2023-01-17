@@ -45,25 +45,17 @@ class IngredientsChangeActivity: AppCompatActivity() {
             getAllowedChanges(mealid,allowedChangesRecyclerView,allowedChangesLinearLayoutManager,textError, numbers)
         }
 
-
-
-
         cancelButton.setOnClickListener {
             finish()
-            Toast.makeText(this@IngredientsChangeActivity, "Operação cancelada!", Toast.LENGTH_LONG)
+            Toast.makeText(this@IngredientsChangeActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG)
                 .show()
         }
-
-
 
         // TODO: saveButtom o POST para adicionar as alterações à Meal
         saveButton.setOnClickListener {
             finish()
-            Toast.makeText(this@IngredientsChangeActivity, "Alterações ao ingrediente guardadas com sucesso!", Toast.LENGTH_LONG)
+            Toast.makeText(this@IngredientsChangeActivity, getString(R.string.success_change_allowed_changes), Toast.LENGTH_LONG)
                 .show()
-
-            // guardar num array as alterações feitas
-
         }
     }
 
@@ -86,7 +78,7 @@ class IngredientsChangeActivity: AppCompatActivity() {
 
                     alertDialogManager.dialog.dismiss()
 
-                    Toast.makeText(this@IngredientsChangeActivity, "Allowed Changes obtidas com sucesso!", Toast.LENGTH_LONG)
+                    Toast.makeText(this@IngredientsChangeActivity, getString(R.string.success_allowed_changes), Toast.LENGTH_LONG)
                         .show()
 
                     val body = response.body()
@@ -114,7 +106,7 @@ class IngredientsChangeActivity: AppCompatActivity() {
                     allowedChangesRecyclerView.visibility = View.VISIBLE
                     textError.visibility = View.GONE
 
-                    Toast.makeText(this@IngredientsChangeActivity, "Erro! Não foi possível obter as allowed changes.", Toast.LENGTH_LONG)
+                    Toast.makeText(this@IngredientsChangeActivity, getString(R.string.error_allowed_changes), Toast.LENGTH_LONG)
                         .show()
                 } else if(response.code() == 401){
                     alertDialogManager.dialog.dismiss()
@@ -133,7 +125,7 @@ class IngredientsChangeActivity: AppCompatActivity() {
                 allowedChangesRecyclerView.visibility = View.VISIBLE
                 textError.visibility = View.GONE
 
-                Toast.makeText(this@IngredientsChangeActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
+                Toast.makeText(this@IngredientsChangeActivity, getString(R.string.error), Toast.LENGTH_LONG)
                     .show()
             }
         })

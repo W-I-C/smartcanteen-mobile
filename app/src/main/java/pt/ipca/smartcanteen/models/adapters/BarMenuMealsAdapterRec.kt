@@ -121,11 +121,9 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
 
             if (isChecked) {
                 favoriteHeart.setBackgroundResource(R.drawable.favorite_heart)
-                println("123")
                 addFavMeal(mealid)
             } else {
                 favoriteHeart.setBackgroundResource(R.drawable.bottom_sheet_heart_not_clicked)
-
                 removeFavMeal(mealid)
             }
         }
@@ -148,7 +146,6 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
 
         alertDialogManager.dialog.show()
 
-        println("Aqui")
         service.addFavoriteMeal(mealid, "Bearer $token").enqueue(object :
             Callback<List<RetroFavoriteMeal>> {
             override fun onResponse(
@@ -159,12 +156,12 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
 
                     alertDialogManager.dialog.dismiss()
 
-                    Toast.makeText(activity, "Refeição adicionada aos favoritos!", Toast.LENGTH_LONG)
+                    Toast.makeText(activity, activity.getString(R.string.add_fav_meal), Toast.LENGTH_LONG)
                         .show()
                 } else if (response.code() == 500) {
                     alertDialogManager.dialog.dismiss()
 
-                    Toast.makeText(activity, "Erro! Não foi possível adicionar a refeição aos favoritos", Toast.LENGTH_LONG)
+                    Toast.makeText(activity, activity.getString(R.string.error_add_fav_meal), Toast.LENGTH_LONG)
                         .show()
                 } else if(response.code()==401){
                     alertDialogManager.dialog.dismiss()
@@ -176,8 +173,7 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
 
             override fun onFailure(calll: Call<List<RetroFavoriteMeal>>, t: Throwable) {
                 alertDialogManager.dialog.dismiss()
-                println("Deu erro")
-                Toast.makeText(activity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
+                Toast.makeText(activity, activity.getString(R.string.error), Toast.LENGTH_LONG)
                     .show()
             }
 
@@ -202,16 +198,15 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
 
                     alertDialogManager.dialog.dismiss()
 
-                    Toast.makeText(activity, "Refeição removida dos favoritos!", Toast.LENGTH_LONG)
+                    Toast.makeText(activity, activity.getString(R.string.remove_fav_meal), Toast.LENGTH_LONG)
                         .show()
                 } else if (response.code() == 500) {
                     alertDialogManager.dialog.dismiss()
 
-                    Toast.makeText(activity, "Erro! Não foi possível remover a refeição dos favoritos", Toast.LENGTH_LONG)
+                    Toast.makeText(activity, activity.getString(R.string.error_remove_fav_meal), Toast.LENGTH_LONG)
                         .show()
                 } else if(response.code()==401){
                     alertDialogManager.dialog.dismiss()
-
                     AuthHelper().newSessionToken(activity)
                     removeFavMeal(mealid)
                 }
@@ -219,7 +214,7 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
 
             override fun onFailure(calll: Call<List<RetroFavoriteMeal>>, t: Throwable) {
                 alertDialogManager.dialog.dismiss()
-                Toast.makeText(activity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
+                Toast.makeText(activity, activity.getString(R.string.error), Toast.LENGTH_LONG)
                     .show()
             }
         })
