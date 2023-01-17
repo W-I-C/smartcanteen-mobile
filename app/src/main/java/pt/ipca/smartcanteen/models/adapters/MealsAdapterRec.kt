@@ -42,11 +42,11 @@ class MealsAdapterRec(private var mealsList: List<RetroMeal>, private var activi
         val title = meal.name
         val price = "${meal.price}€"
         val preptime = "${meal.preparationtime}min"
-        val url = "https://firebasestorage.googleapis.com/v0/b/smartcanteen-9b4a5.appspot.com/o/francesinha.jpeg?alt=media&token=d23bcad0-9b7a-499c-b5e8-d47e50d38025"
+        val url = meal.url
         holder.bindData(title,preptime,price,url)
 
         holder.itemView.setOnClickListener{
-            mealDetails(mealid,mealName,description,price,preptime)
+            mealDetails(mealid,mealName,description,price,preptime, url)
         }
     }
 
@@ -54,13 +54,14 @@ class MealsAdapterRec(private var mealsList: List<RetroMeal>, private var activi
         return mealsList.size
     }
 
-    fun mealDetails(mealid: String,mealName: String,mealDescription: String,mealPrice: String, mealPreptime: String) {
+    fun mealDetails(mealid: String,mealName: String,mealDescription: String,mealPrice: String, mealPreptime: String, url:String) {
         var intent = Intent(activity, AddMealCartActivity::class.java)
         intent.putExtra("mealId", mealid)
         intent.putExtra("name", mealName)
         intent.putExtra("description", mealDescription)
         intent.putExtra("price", mealPrice)
         intent.putExtra("time", mealPreptime)
+        intent.putExtra("url", url)
         activity.startActivity(intent)
     }
 }

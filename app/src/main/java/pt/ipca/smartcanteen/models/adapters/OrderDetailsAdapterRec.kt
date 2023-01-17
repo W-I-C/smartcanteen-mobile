@@ -25,7 +25,7 @@ class OrderDetailsAdapterRec(private var orderMealsList: List<RetroTicketMeal>) 
         val name = orderMeal.name
         val description = orderMeal.description
         val mealchanges = orderMeal.mealchanges
-        val url = "https://firebasestorage.googleapis.com/v0/b/smartcanteen-9b4a5.appspot.com/o/francesinha.jpeg?alt=media&token=d23bcad0-9b7a-499c-b5e8-d47e50d38025"
+        val url = orderMeal.url
 
 
         holder.bindData(name, amount, description, mealchanges, url)

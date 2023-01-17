@@ -35,7 +35,6 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
     RecyclerView.Adapter<BarMenuMealsAdapterRecViewHolder>() {
 
     val retrofit = SmartCanteenRequests().retrofit
-    private lateinit var alertDialogManager: AlertDialogManager
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BarMenuMealsAdapterRecViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -50,10 +49,11 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
         val title = meal.name
         val price = "${meal.price}€"
         val preptime = "${meal.preparationtime}min"
-        holder.bindData(title,preptime,price)
+        val url = meal.url
+        holder.bindData(title,preptime,price, url)
 
         holder.itemView.setOnClickListener{
-            mealDetails(mealid,mealName,description,price,preptime)
+            mealDetails(mealid,mealName,description,price,preptime, url)
         }
     }
 
@@ -61,13 +61,15 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
         return mealsList.size
     }
 
-    fun mealDetails(mealid: String,mealName: String,mealDescription: String,mealPrice: String, mealPreptime: String){
+    fun mealDetails(mealid: String,mealName: String,mealDescription: String,mealPrice: String, mealPreptime: String, url:String){
         var intent = Intent(activity, AddMealCartActivity::class.java)
         intent.putExtra("mealId", mealid)
         intent.putExtra("name", mealName)
         intent.putExtra("description", mealDescription)
         intent.putExtra("price", mealPrice)
         intent.putExtra("time", mealPreptime)
+        intent.putExtra("url", url)
+
         activity.startActivity(intent)
     }
 }

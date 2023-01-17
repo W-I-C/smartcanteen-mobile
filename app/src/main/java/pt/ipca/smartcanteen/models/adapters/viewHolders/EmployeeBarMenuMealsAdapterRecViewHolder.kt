@@ -9,10 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
-import pt.ipca.smartcanteen.models.helpers.AuthHelper
-import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
-import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.helpers.*
 import pt.ipca.smartcanteen.services.MealsService
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,6 +26,7 @@ class EmployeeBarMenuMealsAdapterRecViewHolder(
     val timeTv = itemView.findViewById<TextView>(R.id.layout_card_with_remove_time_tv)
     val priceTv = itemView.findViewById<TextView>(R.id.layout_card_with_remove_price_tv)
     val removeIv = itemView.findViewById<ImageView>(R.id.layout_card_with_remove_delete)
+    val mealImage = itemView.findViewById<ImageView>(R.id.layout_card_with_remove_iv)
 
 
     fun bindData(
@@ -38,11 +36,13 @@ class EmployeeBarMenuMealsAdapterRecViewHolder(
         removeMealAskString: String,
         cantRemoveMealString: String,
         mealId: String,
-        rebuildList: () -> Unit
+        rebuildList: () -> Unit,
+        url:String
     ) {
         nameTv.text = nameText
         timeTv.text = quantityText
         priceTv.text = priceText
+        ImagesHelper().getImage(url,mealImage,false)
 
         removeIv.setOnClickListener {
             alertDialogManager.createConfirmAlertDialog(
