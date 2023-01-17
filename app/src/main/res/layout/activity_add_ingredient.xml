@@ -102,6 +102,7 @@
         />
 
     <EditText
+        android:inputType="number"
         app:layout_constraintTop_toBottomOf="@+id/increment_limit"
         android:id="@+id/cart_increment_limit"
         android:layout_width="match_parent"
@@ -127,6 +128,7 @@
         android:textColor="@color/black" />
 
     <EditText
+        android:inputType="number"
         app:layout_constraintTop_toBottomOf="@+id/decrement_limit"
         android:id="@+id/cart_decrement_limit"
         android:layout_width="match_parent"
@@ -152,6 +154,7 @@
         android:textColor="@color/black" />
 
     <EditText
+        android:inputType="number"
         app:layout_constraintTop_toBottomOf="@+id/cart_default"
         android:id="@+id/cart_default_edittext"
         android:layout_width="match_parent"

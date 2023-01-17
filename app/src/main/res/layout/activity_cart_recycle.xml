@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id='@+id/delete'
+        android:id='@+id/cart_delete'
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:background="@drawable/delete_button"
