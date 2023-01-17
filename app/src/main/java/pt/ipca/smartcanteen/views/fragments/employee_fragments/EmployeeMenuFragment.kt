@@ -34,6 +34,8 @@ class EmployeeMenuFragment(private val supportFragmentManager:FragmentManager, p
     private val deliveredOrdersProgress: ProgressBar by lazy { requireView().findViewById<View>(R.id.employee_menu_delivered_requests_progress_bar) as ProgressBar }
     private val undeliveredOrdersProgress: ProgressBar by lazy { requireView().findViewById<View>(R.id.employee_menu_undelivered_requests_progress_bar) as ProgressBar }
 
+    private val logoutIc: ImageView by lazy {requireView().findViewById<ImageView>(R.id.employee_menu_logout) as ImageView }
+
     private lateinit var alertDialogManager: AlertDialogManager
 
     override fun onCreateView(
@@ -50,13 +52,17 @@ class EmployeeMenuFragment(private val supportFragmentManager:FragmentManager, p
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getCanteenStatistics()
-
+        val retrofit = SmartCanteenRequests().retrofit
         seeMenuIv.setOnClickListener {
             bottomNavigationMenuView.selectedItemId = R.id.menu_employee_meals
         }
 
         seeOrdersIv.setOnClickListener {
             bottomNavigationMenuView.selectedItemId = R.id.menu_employee_orders
+        }
+
+        logoutIc.setOnClickListener{
+            AuthHelper().doLogout(retrofit,requireActivity(),alertDialogManager)
         }
     }
 
