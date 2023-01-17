@@ -66,7 +66,7 @@ class MyOrdersCartRecViewHolder(inflater: LayoutInflater, val parent: ViewGroup,
 
                         if (body != null) {
                             if (body.isNotEmpty()) {
-                                println("estou aqui")
+
                                 rebuildlistOrders(MyOrdersCartRec(body, activity,linearLayoutManager,cartAdapterRec))
                             }
                         }

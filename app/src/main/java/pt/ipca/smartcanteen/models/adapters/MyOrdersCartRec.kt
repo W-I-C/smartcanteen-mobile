@@ -29,8 +29,7 @@ class MyOrdersCartRec(private var ordersList: List<RetroCartMeals>, val activity
 
         val cartmealId=order.cartmealId
 
-         println("aqui")
-         println(name)
+
 
         holder.bindData(name,quantity,price)
         holder.deleteMeal(cartmealId)
