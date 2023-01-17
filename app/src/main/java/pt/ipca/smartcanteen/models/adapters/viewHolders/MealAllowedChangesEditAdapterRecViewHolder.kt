@@ -71,13 +71,13 @@ class MealAllowedChangesEditAdapterRecViewHolder (inflater: LayoutInflater, val 
                             }
                         }
 
-                        Toast.makeText(context, "Alteração de refeição removida com sucesso", Toast.LENGTH_LONG)
+                        Toast.makeText(context, activity.getString(R.string.succes_change), Toast.LENGTH_LONG)
                             .show()
                     } else if(response.code() == 500){
 
                         alertDialogManager.dialog.dismiss()
 
-                        Toast.makeText(context, "Erro! Não foi possível remover a alteração da refeição.", Toast.LENGTH_LONG)
+                        Toast.makeText(context, activity.getString(R.string.error_change), Toast.LENGTH_LONG)
                             .show()
                     } else if(response.code()==401){
                         AuthHelper().newSessionToken(activity)
@@ -86,7 +86,7 @@ class MealAllowedChangesEditAdapterRecViewHolder (inflater: LayoutInflater, val 
                 }
 
                 override fun onFailure(calll: Call<List<RetroAllowedChanges>>, t: Throwable) {
-                    Toast.makeText(context, "Erro! Tente novamente.", Toast.LENGTH_LONG)
+                    Toast.makeText(context, activity.getString(R.string.error), Toast.LENGTH_LONG)
                         .show()
                     alertDialogManager.dialog.dismiss()
                 }
@@ -105,14 +105,14 @@ class MealAllowedChangesEditAdapterRecViewHolder (inflater: LayoutInflater, val 
         ingNameTv.text = ingname
 
         if(isremoveonly){
-            typeTv.text = "Apenas remover"
+            typeTv.text = activity.getString(R.string.only_remove)
         } else {
             if(canbeincremented == true && canbedecremented == true){
-                typeTv.text = "Incrementar e Decrementar"
+                typeTv.text = activity.getString(R.string.increment_decrement)
             } else if(canbeincremented == true && canbedecremented == false){
-                typeTv.text = "Apenas Incrementar"
+                typeTv.text = activity.getString(R.string.only_increment)
             } else if(canbeincremented == false && canbedecremented == true){
-                typeTv.text = "Apenas Decrementar"
+                typeTv.text = activity.getString(R.string.only_decrement)
             }
         }
     }

@@ -18,7 +18,5 @@ class MyFavoriteMealRecViewHolder(inflater: LayoutInflater, val parent: ViewGrou
         nameTv.text=nameText
         timeTv.text = quantityText
         priceTv.text=priceText
-
-
     }
 }

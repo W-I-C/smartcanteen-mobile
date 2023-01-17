@@ -57,10 +57,10 @@ class LoginActivity : AppCompatActivity() {
             println(passwordText)
 
             if (emailText.isEmpty()) {
-                Toast.makeText(this@LoginActivity, "Email vazio", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@LoginActivity, getString(R.string.empty_email), Toast.LENGTH_LONG).show()
             } else {
                 if (passwordText.isEmpty()) {
-                    Toast.makeText(this@LoginActivity, "Password vazia", Toast.LENGTH_LONG)
+                    Toast.makeText(this@LoginActivity, getString(R.string.empty_password), Toast.LENGTH_LONG)
                         .show()
                 } else {
                     if (Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
@@ -107,32 +107,32 @@ class LoginActivity : AppCompatActivity() {
                                             startActivity(intent)
                                         } else {
                                             // O usuário não é nem consumidor nem funcionário, então exiba uma mensagem de erro
-                                            Toast.makeText(this@LoginActivity, "Erro! Role não existe", Toast.LENGTH_LONG)
+                                            Toast.makeText(this@LoginActivity, getString(R.string.error_role), Toast.LENGTH_LONG)
                                                 .show()
                                         }
 
                                     } else {
                                         alertDialogManager.dialog.dismiss()
-                                        Toast.makeText(this@LoginActivity, "Erro! Não foi possível realizar o login, tente novamente", Toast.LENGTH_LONG)
+                                        Toast.makeText(this@LoginActivity, getString(R.string.error_login), Toast.LENGTH_LONG)
                                             .show()
                                     }
                                 }
 
                                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                                     alertDialogManager.dialog.dismiss()
-                                    Toast.makeText(this@LoginActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
+                                    Toast.makeText(this@LoginActivity, getString(R.string.error), Toast.LENGTH_LONG)
                                         .show()
                                 }
                             })
 
 
                         } else {
-                            Toast.makeText(this@LoginActivity, "Password inválida", Toast.LENGTH_LONG)
+                            Toast.makeText(this@LoginActivity, getString(R.string.invalid_password), Toast.LENGTH_LONG)
                                 .show()
                         }
 
                     } else {
-                        Toast.makeText(this@LoginActivity, "Email inválido", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@LoginActivity, getString(R.string.invalid_email), Toast.LENGTH_LONG).show()
 
                     }
                 }
@@ -149,6 +149,4 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-
-
 }

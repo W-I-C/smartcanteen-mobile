@@ -115,14 +115,9 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<List<RetroBar>>, t: Throwable) {
-                //mealsProgressBar.visibility = View.GONE
-                //mealsTextProgress.visibility = View.GONE
                 alertDialogManager.dialog.dismiss()
-                print("error")
             }
-
         })
-
     }
 
     private fun getMealsList(

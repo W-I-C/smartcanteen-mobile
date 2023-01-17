@@ -18,7 +18,5 @@ class MyOrdersCartRecViewHolder(inflater: LayoutInflater, val parent: ViewGroup)
         nameTv.text=nameText
         quantityTv.text = quantityText
         priceTv.text=priceText
-
-
     }
 }

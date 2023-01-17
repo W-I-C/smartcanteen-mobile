@@ -34,9 +34,6 @@ import retrofit2.Response
 
 class EditMealActivity: AppCompatActivity() {
 
-    // TODO: canTakeAway
-    // TODO: lista de mealchanges - servico para ir buscar
-
     private val arrowBack: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_back_arrow_iv) as ImageView }
     private val pencilWhite: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_edit_pencil_white) as ImageView }
     private val pencilGreen: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_edit_pencil_green) as ImageView }
@@ -118,14 +115,9 @@ class EditMealActivity: AppCompatActivity() {
 
         returnButton()
 
-        // TODO: remover o butão de remover as allowed changes - mostrar quando carrego para editar
         if (mealId != null) {
             getAllowedChanges(mealId,allowedChangesRecyclerView,allowedChangesLayoutManager,textError)
         }
-
-        // ao carregar no botão de editar esta recycler view vai ser escondida e vou mostrar a outra
-
-        // TODO: como mudar isto logo sem ir à API? SQLITE
 
         // se ele no início está a true, ao carregar no butão passa a false
         // se ele no início está false, ao carregar no butão passa a true
@@ -192,7 +184,6 @@ class EditMealActivity: AppCompatActivity() {
                 mealDescription.visibility = View.VISIBLE
                 mealChangesTittle.visibility = View.VISIBLE
 
-                // TODO: só é mostrado se a lista for vazia
                 textError.visibility = View.GONE
 
                 mealNameEdit.visibility = View.GONE
@@ -210,7 +201,7 @@ class EditMealActivity: AppCompatActivity() {
                 priceTextError.visibility = View.GONE
                 descriptionTextError.visibility = View.GONE
 
-                Toast.makeText(this@EditMealActivity, "Operação cancelada!", Toast.LENGTH_LONG)
+                Toast.makeText(this@EditMealActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG)
                     .show()
 
                 allowedChangesRecyclerView.visibility = View.VISIBLE
@@ -242,12 +233,6 @@ class EditMealActivity: AppCompatActivity() {
                 alertDialogManager.dialog.show()
                 textError.visibility = View.GONE
 
-                println(mealNameText)
-                println(mealTimeText)
-                println(mealDescriptionText)
-                println(cantakeaway)
-                println(mealPriceText)
-
                 val body = MealBody(mealNameText,mealTimeText,mealDescriptionText,cantakeaway,mealPriceText)
 
                 service.editMeal(mealId, "Bearer $token",body).enqueue(object :
@@ -260,7 +245,7 @@ class EditMealActivity: AppCompatActivity() {
 
                             alertDialogManager.dialog.dismiss()
 
-                            Toast.makeText(this@EditMealActivity, "Refeição editada com sucesso", Toast.LENGTH_LONG)
+                            Toast.makeText(this@EditMealActivity, getString(R.string.edited_meal), Toast.LENGTH_LONG)
                                 .show()
 
                             val body = response.body()
@@ -270,7 +255,7 @@ class EditMealActivity: AppCompatActivity() {
                         } else if (response.code() == 500) {
                             alertDialogManager.dialog.dismiss()
 
-                            Toast.makeText(this@EditMealActivity, "Erro! Não foi possível editar a refeição", Toast.LENGTH_LONG)
+                            Toast.makeText(this@EditMealActivity, getString(R.string.error_edit_meal), Toast.LENGTH_LONG)
                                 .show()
                         } else if(response.code() == 401){
                             alertDialogManager.dialog.dismiss()
@@ -289,7 +274,7 @@ class EditMealActivity: AppCompatActivity() {
                         allowedChangesEditRecyclerView.visibility = View.VISIBLE
                         textError.visibility = View.GONE
 
-                        Toast.makeText(this@EditMealActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
+                        Toast.makeText(this@EditMealActivity, getString(R.string.error), Toast.LENGTH_LONG)
                             .show()
                     }
                 })
@@ -307,11 +292,9 @@ class EditMealActivity: AppCompatActivity() {
                 val sp = SharedPreferencesHelper.getSharedPreferences(this@EditMealActivity)
                 val token = sp.getString("token", null)
 
-                println(token)
 
                 val body = CanBeMadeBody(canBeMade)
 
-                // TODO: meter mensagem de confimação
                 alertDialogManager.dialog.show()
 
                 service.canBeMade(mealId,"Bearer $token",body).enqueue(object :
@@ -328,7 +311,7 @@ class EditMealActivity: AppCompatActivity() {
 
                             Toast.makeText(
                                 this@EditMealActivity,
-                                "Status da refeição alterado com sucesso",
+                                getString(R.string.meal_status),
                                 Toast.LENGTH_LONG
                             ).show()
 
@@ -338,7 +321,7 @@ class EditMealActivity: AppCompatActivity() {
                         } else if(response.code()==500) {
                             alertDialogManager.dialog.dismiss()
 
-                            Toast.makeText(this@EditMealActivity, "Erro! Não foi possível alterar o status da direção", Toast.LENGTH_LONG)
+                            Toast.makeText(this@EditMealActivity, getString(R.string.error_meal_status), Toast.LENGTH_LONG)
                                 .show()
                         } else if(response.code()==401){
                             AuthHelper().newSessionToken(this@EditMealActivity)
@@ -347,8 +330,8 @@ class EditMealActivity: AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<String>, t: Throwable) {
-                        print("error")
-
+                        Toast.makeText(this@EditMealActivity, getString(R.string.error), Toast.LENGTH_LONG)
+                            .show()
                     }
                 })
             }
@@ -363,7 +346,6 @@ class EditMealActivity: AppCompatActivity() {
 
                 val body = CanBeMadeBody(canBeMade)
 
-                // TODO: meter mensagem de confimação
                 alertDialogManager.dialog.show()
 
                 service.canBeMade(mealId,"Bearer $token",body).enqueue(object :
@@ -380,7 +362,7 @@ class EditMealActivity: AppCompatActivity() {
 
                             Toast.makeText(
                                 this@EditMealActivity,
-                                "Status da refeição alterado com sucesso",
+                                getString(R.string.success_meal_status_changed),
                                 Toast.LENGTH_LONG
                             ).show()
 
@@ -390,7 +372,7 @@ class EditMealActivity: AppCompatActivity() {
                         } else if(response.code()==500) {
                             alertDialogManager.dialog.dismiss()
 
-                            Toast.makeText(this@EditMealActivity, "Erro! Não foi possível alterar o status da direção", Toast.LENGTH_LONG)
+                            Toast.makeText(this@EditMealActivity, getString(R.string.error_meal_status_changed), Toast.LENGTH_LONG)
                                 .show()
                         } else if(response.code()==401){
                             AuthHelper().newSessionToken(this@EditMealActivity)
@@ -399,8 +381,8 @@ class EditMealActivity: AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<String>, t: Throwable) {
-                        print("error")
-
+                        Toast.makeText(this@EditMealActivity, getString(R.string.error), Toast.LENGTH_LONG)
+                            .show()
                     }
                 })
             }
@@ -428,14 +410,14 @@ class EditMealActivity: AppCompatActivity() {
 
                     alertDialogManager.dialog.dismiss()
 
-                    Toast.makeText(this@EditMealActivity, "Allowed Changes obtidas com sucesso!", Toast.LENGTH_LONG)
+                    Toast.makeText(this@EditMealActivity, getString(R.string.success_allowed_changes), Toast.LENGTH_LONG)
                         .show()
 
                     val body = response.body()
 
                     if (body != null) {
                         if (body.isNotEmpty()) {
-                            val allowedChangesAdapterRec = MealAllowedChangesAdapterRec(body)
+                            val allowedChangesAdapterRec = MealAllowedChangesAdapterRec(body,this@EditMealActivity)
 
                             allowedChangesRecyclerView.visibility = View.VISIBLE
                             textError.visibility = View.GONE
@@ -456,7 +438,7 @@ class EditMealActivity: AppCompatActivity() {
                     allowedChangesRecyclerView.visibility = View.VISIBLE
                     textError.visibility = View.GONE
 
-                    Toast.makeText(this@EditMealActivity, "Erro! Não foi possível obter as allowed changes.", Toast.LENGTH_LONG)
+                    Toast.makeText(this@EditMealActivity, getString(R.string.error_allowed_changes), Toast.LENGTH_LONG)
                         .show()
                 } else if(response.code() == 401){
                     alertDialogManager.dialog.dismiss()
@@ -475,7 +457,7 @@ class EditMealActivity: AppCompatActivity() {
                 allowedChangesRecyclerView.visibility = View.VISIBLE
                 textError.visibility = View.GONE
 
-                Toast.makeText(this@EditMealActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
+                Toast.makeText(this@EditMealActivity, getString(R.string.error), Toast.LENGTH_LONG)
                     .show()
             }
         })
@@ -501,7 +483,7 @@ class EditMealActivity: AppCompatActivity() {
 
                     alertDialogManager.dialog.dismiss()
 
-                    Toast.makeText(this@EditMealActivity, "Allowed Changes obtidas com sucesso!", Toast.LENGTH_LONG)
+                    Toast.makeText(this@EditMealActivity, getString(R.string.success_allowed_changes), Toast.LENGTH_LONG)
                         .show()
 
                     val body = response.body()
@@ -529,7 +511,7 @@ class EditMealActivity: AppCompatActivity() {
                     allowedChangesEditRecyclerView.visibility = View.VISIBLE
                     textError.visibility = View.GONE
 
-                    Toast.makeText(this@EditMealActivity, "Erro! Não foi possível obter as allowed changes.", Toast.LENGTH_LONG)
+                    Toast.makeText(this@EditMealActivity, getString(R.string.error_allowed_changes), Toast.LENGTH_LONG)
                         .show()
                 } else if(response.code() == 401){
                     alertDialogManager.dialog.dismiss()
@@ -548,7 +530,7 @@ class EditMealActivity: AppCompatActivity() {
                 allowedChangesEditRecyclerView.visibility = View.VISIBLE
                 textError.visibility = View.GONE
 
-                Toast.makeText(this@EditMealActivity, "Erro! Tente novamente.", Toast.LENGTH_LONG)
+                Toast.makeText(this@EditMealActivity, getString(R.string.error), Toast.LENGTH_LONG)
                     .show()
             }
         })
@@ -572,7 +554,6 @@ class EditMealActivity: AppCompatActivity() {
         mealChangesTittle.visibility = View.GONE
         canTakeAway.visibility = View.GONE
 
-        // TODO: só é mostrado se a lista for vazia
         textError.visibility = View.GONE
 
         mealNameEdit.visibility = View.VISIBLE
@@ -600,7 +581,6 @@ class EditMealActivity: AppCompatActivity() {
             }
         }
 
-        // TODO: meter mensagens em baixo que não podem ser nulos
         val nameNotNull = name ?: ""
         mealNameEdit.setHint(nameNotNull)
 

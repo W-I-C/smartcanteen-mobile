@@ -96,7 +96,6 @@ class EmployeeMenuFragment(private val supportFragmentManager:FragmentManager, p
 
             override fun onFailure(calll: Call<RetroBarStatistics>, t: Throwable) {
                 alertDialogManager.dialog.dismiss()
-                print("error")
             }
         })
     }
