@@ -122,7 +122,7 @@ class MenuConsumerFragment : Fragment() {
                     if (body != null) {
                         if (body.isNotEmpty()) {
 
-                            Log.d("bar:", body.toString())
+
                             var adapter = getActivity()?.let {
                                 ArrayAdapter(
                                     it,
