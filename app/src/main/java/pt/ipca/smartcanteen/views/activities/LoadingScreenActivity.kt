@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.LoginResponse
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
@@ -15,6 +17,7 @@ import pt.ipca.smartcanteen.views.fragments.employee_fragments.EmployeeFragmentA
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class LoadingScreenActivity : AppCompatActivity() {
 
@@ -27,12 +30,13 @@ class LoadingScreenActivity : AppCompatActivity() {
         val sp = SharedPreferencesHelper.getSharedPreferences(this@LoadingScreenActivity)
         val token = sp.getString("token", null)
 
-        if(token == null){
+        if (token == null) {
             val intent = Intent(this@LoadingScreenActivity, LoginActivity::class.java)
             finish()
             startActivity(intent)
-        }
-        else{
+        } else {
+
+            getPushToken()
             val retrofit = SmartCanteenRequests().retrofit
 
             val service = retrofit.create(AuthService::class.java)
@@ -49,19 +53,19 @@ class LoadingScreenActivity : AppCompatActivity() {
                             val token = loadingBody?.token
                             val role = loadingBody?.role
 
-                            if(token != null){
+                            if (token != null) {
                                 Log.d("token", token)
                             }
 
                             val sp = SharedPreferencesHelper.getSharedPreferences(this@LoadingScreenActivity)
                             sp.edit().putString("token", token).commit()
 
-                            if(role == "consumer"){
+                            if (role == "consumer") {
 
                                 val intent = Intent(this@LoadingScreenActivity, ConsumerFragmentActivity::class.java)
                                 finish()
                                 startActivity(intent)
-                            } else if(role == "employee"){
+                            } else if (role == "employee") {
 
                                 val intent = Intent(this@LoadingScreenActivity, EmployeeFragmentActivity::class.java)
                                 finish()
@@ -82,6 +86,25 @@ class LoadingScreenActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                 })
-            }
         }
     }
+
+    fun getPushToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("MAIN", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            
+
+            // Log and toast
+            val msg = "InstanceID Token: "+token
+            Log.d("Main", msg)
+            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+        })
+    }
+}
