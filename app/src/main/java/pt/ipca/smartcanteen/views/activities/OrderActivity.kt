@@ -1,16 +1,14 @@
 package pt.ipca.smartcanteen.views.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.RadioButton
-import android.widget.Spinner
-import android.widget.TextView
-import android.widget.TimePicker
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import pt.ipca.smartcanteen.R
+import pt.ipca.smartcanteen.views.fragments.consumer_fragments.MenuConsumerFragment
 
 class OrderActivity : AppCompatActivity() {
 
@@ -20,6 +18,9 @@ class OrderActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order)
         OnClickTime()
+        finalPay()
+
+
 
         val spinner = findViewById<Spinner>(R.id.spinner)
 
@@ -82,6 +83,14 @@ class OrderActivity : AppCompatActivity() {
                 textViewHour.text = msg
                 textViewHour.visibility = ViewGroup.GONE
             }
+        }
+    }
+    private fun finalPay(){
+        val button=findViewById<Button>(R.id.final_pay)
+
+        button.setOnClickListener {
+
+            Toast.makeText(this,"Carrinho finalizado. Aguarda confirmação de pagamento",Toast.LENGTH_SHORT).show()
         }
     }
 

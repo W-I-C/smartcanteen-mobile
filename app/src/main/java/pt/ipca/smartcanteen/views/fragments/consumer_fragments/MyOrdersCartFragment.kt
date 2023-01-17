@@ -38,6 +38,7 @@ class MyOrdersCartFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_cart, parent, false)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
