@@ -85,18 +85,20 @@ class EmployeeMenuFragment(private val supportFragmentManager:FragmentManager, p
             ) {
 
                 if (response.code() == 200) {
-                    val body = response.body()
+                    if(isAdded) {
+                        val body = response.body()
 
-                    if (body != null) {
-                        placeValues(
-                            body.totalTickets,
-                            body.deliveredTickets,
-                            body.toDeliverTickets,
-                            body.tradedTickets
-                        )
+                        if (body != null) {
+                            placeValues(
+                                body.totalTickets,
+                                body.deliveredTickets,
+                                body.toDeliverTickets,
+                                body.tradedTickets
+                            )
 
+                        }
+                        alertDialogManager.dialog.dismiss()
                     }
-                    alertDialogManager.dialog.dismiss()
                 } else if (response.code() == 401) {
                     alertDialogManager.dialog.dismiss()
                     AuthHelper().newSessionToken(requireActivity())

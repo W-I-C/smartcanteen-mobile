@@ -72,9 +72,9 @@ class FavoriteMealFragment : Fragment() {
 
                     if (retroFit2 != null) {
                         if (!retroFit2.isEmpty()) {
-
-                            rebuildlist(MyFavoriteMealAdapterRec(retroFit2,requireActivity(),linearLayoutManager,menuRv ))
-
+                            if(isAdded) {
+                                rebuildlist(MyFavoriteMealAdapterRec(retroFit2, requireActivity(), linearLayoutManager, menuRv))
+                            }
                         }
                     }
                 }else if(response.code()==401){

@@ -69,10 +69,12 @@ class MyOrdersCartFragment : Fragment() {
 
                     if (retroFit2 != null) {
                         if(!retroFit2.isEmpty()){
+                            if(isAdded) {
 
-                            rebuildlist(MyOrdersCartRec(retroFit2,requireActivity(),linearLayoutManager, cartMeals))
-                            if(retroFit2.size>=1)
-                                total.text = "${retroFit2[0].cartTotal} €"
+                                rebuildlist(MyOrdersCartRec(retroFit2, requireActivity(), linearLayoutManager, cartMeals))
+                                if (retroFit2.size >= 1)
+                                    total.text = "${retroFit2[0].cartTotal} €"
+                            }
                         }
                     }
                 }else if(response.code()==401){

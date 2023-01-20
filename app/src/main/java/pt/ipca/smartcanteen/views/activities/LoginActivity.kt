@@ -1,11 +1,15 @@
 package pt.ipca.smartcanteen.views.activities
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
 import android.util.Patterns
 import android.view.View
+import android.view.View.OnFocusChangeListener
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -42,9 +46,25 @@ class LoginActivity : AppCompatActivity() {
         return regexChars.containsMatchIn(password) && regexSymbols.containsMatchIn(password) && password.length >= 6
     }
 
+    fun View.hideKeyboard() {
+        val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(windowToken, 0)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        email.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus && !password.hasFocus()) {
+                v.hideKeyboard()
+            }
+        }
+        password.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus && !email.hasFocus()) {
+                v.hideKeyboard()
+            }
+        }
 
         alertDialogManager = AlertDialogManager(layoutInflater, this)
         alertDialogManager.createLoadingAlertDialog()

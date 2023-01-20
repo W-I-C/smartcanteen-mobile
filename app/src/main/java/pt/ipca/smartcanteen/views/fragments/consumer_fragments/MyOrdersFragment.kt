@@ -108,24 +108,36 @@ class MyOrdersFragment : Fragment() {
                     response: Response<List<RetroTicket>>
                 ) {
                     if (response.code() == 200) {
+                        if(isAdded) {
+                            myOrdersAdater.visibility = View.VISIBLE
+                            progressBar.visibility = View.GONE
+                            textProgress.visibility = View.GONE
+                            val retroFit2 = response.body()
 
-                        myOrdersAdater.visibility = View.VISIBLE
-                        progressBar.visibility = View.GONE
-                        textProgress.visibility = View.GONE
-                        val retroFit2 = response.body()
+                            if (retroFit2 != null)
+                                if (retroFit2.isEmpty()) {
+                                    ordersTextError.visibility = View.VISIBLE
+                                    myOrdersAdater.visibility = View.GONE
+                                } else {
+                                    myOrdersAdater.visibility = View.VISIBLE
+                                    ordersTextError.visibility = View.GONE
+                                    orders.clear()
+                                    orders.addAll(retroFit2)
 
-                        if (retroFit2 != null)
-                            if(retroFit2.isEmpty()){
-                                ordersTextError.visibility = View.VISIBLE
-                                myOrdersAdater.visibility = View.GONE
-                            } else {
-                                myOrdersAdater.visibility = View.VISIBLE
-                                ordersTextError.visibility = View.GONE
-                                orders.clear()
-                                orders.addAll(retroFit2)
-
-                                rebuildlistOrders(OrdersAdapterRec(progressBar, textProgress, linearLayoutManager, sp, myOrdersAdater, orders, requireActivity(), requireContext()))
-                            }
+                                    rebuildlistOrders(
+                                        OrdersAdapterRec(
+                                            progressBar,
+                                            textProgress,
+                                            linearLayoutManager,
+                                            sp,
+                                            myOrdersAdater,
+                                            orders,
+                                            requireActivity(),
+                                            requireContext()
+                                        )
+                                    )
+                                }
+                        }
                     } else if(response.code() == 500){
                         myOrdersAdater.visibility = View.VISIBLE
                         progressBar.visibility = View.GONE
