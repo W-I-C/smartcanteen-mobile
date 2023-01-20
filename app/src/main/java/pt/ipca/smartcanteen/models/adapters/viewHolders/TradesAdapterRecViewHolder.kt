@@ -198,9 +198,16 @@ class TradesAdapterRecViewHolder(val progressBar: ProgressBar, val textProgress:
         } else {
             deleteButton.visibility = View.GONE
             stateTv.text = "Trocado"
-            isGeneralTradeTv.text = receiverNameText
             stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.background_color))
-            isGeneralTradeTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.background_color))
+            if (isgeneraltrade == true) {
+                isGeneralTradeTv.text = receiverNameText
+                isGeneralTradeTv.setTextColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.background_color
+                    )
+                )
+            }
         }
     }
 }

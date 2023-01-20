@@ -10,7 +10,7 @@
     >
 
     <TextView
-        android:id="@+id/description"
+        android:id="@+id/create_meal_description_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/notification"
@@ -25,7 +25,7 @@
         android:id="@+id/time_notification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/description"
+        app:layout_constraintTop_toBottomOf="@+id/create_meal_description_textview"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"/>
 

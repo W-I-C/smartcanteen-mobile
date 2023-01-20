@@ -146,4 +146,10 @@
     <string name="cannot_takeaway">Cannot TakeAway</string>
     <string name="dosage">Dosage</string>
     <string name="view_trades">See Trades</string>
+    <string name="meal_name">Meal Name</string>
+    <string name="allowed_changes">Allowed Changes:</string>
+    <string name="preparation_time">Preparation Time</string>
+    <string name="confirm_allowed_changes">Confirm ingredient changes?</string>
+    <string name="cancel_operation">Cancel operation?</string>
+    <string name="confirm_operation">Confirm the operation?</string>
 </resources>

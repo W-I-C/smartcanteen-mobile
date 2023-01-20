@@ -25,6 +25,7 @@ class TradePaymentActivity : AppCompatActivity() {
     private val price_text: TextView by lazy { findViewById<TextView>(R.id.trade_payment_price_textview) as TextView }
     private val payment_method: TextView by lazy { findViewById<TextView>(R.id.trade_payment_method_general_textview) as TextView }
     private val payment_method_tittle: TextView by lazy { findViewById<TextView>(R.id.type_payment_textview) as TextView }
+    private val backBtn: ImageView by lazy {findViewById<ImageView>(R.id.trade_payment_arrow) as ImageView }
     var paymentmethodid: String? = null
     private lateinit var alertDialogManager: AlertDialogManager
 
@@ -45,7 +46,12 @@ class TradePaymentActivity : AppCompatActivity() {
             payment_method.visibility = View.GONE
             payment_method_tittle.visibility = View.GONE
             confirm_button.setOnClickListener {
-                confirmPaymentTrade(generaltradeid)
+                alertDialogManager.createConfirmAlertDialog(
+                    getString(R.string.confirm_allowed_changes),
+                    {
+                        confirmPaymentTrade(generaltradeid)
+                    }
+                )
             }
         } else {
             price_text.text = "${price.toString()}€"
@@ -53,19 +59,32 @@ class TradePaymentActivity : AppCompatActivity() {
             payment_method_tittle.visibility = View.VISIBLE
             getPaymentMethods(generaltradeid)
             confirm_button.setOnClickListener {
-                confirmPaymentTrade(generaltradeid)
+                alertDialogManager.createConfirmAlertDialog(
+                    getString(R.string.confirm_allowed_changes),
+                    {
+                        confirmPaymentTrade(generaltradeid)
+                    }
+                )
             }
         }
 
-        cancel()
+        backBtn.setOnClickListener{
+            finish()
+        }
+
+        cancel_button.setOnClickListener{
+            alertDialogManager.createConfirmAlertDialog(
+                getString(R.string.cancel_operation),
+                {
+                    cancel()
+                }
+            )
+        }
     }
 
     fun cancel() {
-        cancel_button.setOnClickListener {
-            finish()
-
-            Toasty.error(this@TradePaymentActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG).show()
-        }
+        finish()
+        Toasty.error(this@TradePaymentActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG).show()
     }
 
     fun getPaymentMethods(generaltradeid: String) {
@@ -94,7 +113,6 @@ class TradePaymentActivity : AppCompatActivity() {
                         payment_method.text = paymentMethods.name
                     }
 
-                    Toasty.success(this@TradePaymentActivity, getString(R.string.sucess_methods), Toast.LENGTH_LONG).show()
                 } else if (response.code() == 500) {
                     alertDialogManager.dialog.dismiss()
 
@@ -116,7 +134,6 @@ class TradePaymentActivity : AppCompatActivity() {
 
     fun confirmPaymentTrade(generaltradeid: String) {
 
-        Log.d("teste", generaltradeid)
 
         val retrofit = SmartCanteenRequests().retrofit
 

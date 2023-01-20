@@ -137,4 +137,10 @@
     <string name="cannot_takeaway">Não pode TakeAway</string>
     <string name="dosage">Dosagem</string>
     <string name="view_trades">Ver Trocas</string>
+    <string name="meal_name">Nome da refeição</string>
+    <string name="allowed_changes">Alterações possíveis</string>
+    <string name="preparation_time">Tempo de preparação</string>
+    <string name="confirm_allowed_changes">Confirmar alterações de ingredientes?</string>
+    <string name="cancel_operation">Cancelar operação?</string>
+    <string name="confirm_operation">Confirmar a operação</string>
 </resources>

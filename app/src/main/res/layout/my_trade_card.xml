@@ -35,8 +35,6 @@
         android:textStyle="bold"
         android:text="@string/id"
         android:textColor="@color/white"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
         app:layout_constraintStart_toStartOf="@id/my_trades_card_image"
         app:layout_constraintTop_toTopOf="@id/my_trades_card_image"
         app:layout_constraintEnd_toEndOf="@id/my_trades_card_image"

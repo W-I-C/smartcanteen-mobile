@@ -73,8 +73,6 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
                     if (body != null) {
                         if (body.isNotEmpty()) {
 
-
-                            Log.d("bar:", body.toString())
                             var adapter = ArrayAdapter(
                                 this@ConsumerBarMenuActivity,
                                 android.R.layout.simple_spinner_item,

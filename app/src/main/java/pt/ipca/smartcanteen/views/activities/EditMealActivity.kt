@@ -3,35 +3,30 @@ package pt.ipca.smartcanteen.views.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.CanBeMadeBody
 import pt.ipca.smartcanteen.models.MealBody
 import pt.ipca.smartcanteen.models.RetroAllowedChanges
-import pt.ipca.smartcanteen.models.RetroTicketMeal
-import pt.ipca.smartcanteen.models.adapters.AllowedChangesAdapterRec
 import pt.ipca.smartcanteen.models.adapters.MealAllowedChangesAdapterRec
 import pt.ipca.smartcanteen.models.adapters.MealAllowedChangesEditAdapterRec
-import pt.ipca.smartcanteen.models.adapters.OrderDetailsAdapterRec
 import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.MealsService
-import pt.ipca.smartcanteen.services.OrdersService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class EditMealActivity: AppCompatActivity() {
 
@@ -156,12 +151,23 @@ class EditMealActivity: AppCompatActivity() {
             }
         }
 
+        mealNameEdit.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                hideKeyboard(v)
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         getAllowedChangesEdit(mealId,allowedChangesEditRecyclerView,allowedChangesEditLayoutManager,textError)
+    }
+
+    fun hideKeyboard(view: View) {
+        val inputMethodManager: InputMethodManager =
+            getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     @SuppressLint("MissingInflatedId")
@@ -203,8 +209,7 @@ class EditMealActivity: AppCompatActivity() {
                 priceTextError.visibility = View.GONE
                 descriptionTextError.visibility = View.GONE
 
-                Toast.makeText(this@EditMealActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG)
-                    .show()
+                Toasty.error(this@EditMealActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG).show()
 
                 allowedChangesRecyclerView.visibility = View.VISIBLE
                 allowedChangesEditRecyclerView.visibility = View.GONE
@@ -308,8 +313,6 @@ class EditMealActivity: AppCompatActivity() {
 
                             alertDialogManager.dialog.dismiss()
 
-                            Toasty.success(this@EditMealActivity, getString(R.string.meal_status), Toast.LENGTH_LONG).show()
-
                             warningWhite.visibility = View.GONE
                             warningGreen.visibility = View.VISIBLE
 
@@ -354,8 +357,6 @@ class EditMealActivity: AppCompatActivity() {
 
                             alertDialogManager.dialog.dismiss()
 
-                            Toasty.success(this@EditMealActivity, getString(R.string.success_meal_status_changed), Toast.LENGTH_LONG).show()
-
                             warningGreen.visibility = View.GONE
                             warningWhite.visibility = View.VISIBLE
 
@@ -398,8 +399,6 @@ class EditMealActivity: AppCompatActivity() {
                 if (response.code() == 200) {
 
                     alertDialogManager.dialog.dismiss()
-
-                    Toasty.success(this@EditMealActivity, getString(R.string.success_allowed_changes), Toast.LENGTH_LONG).show()
 
                     val body = response.body()
 
@@ -468,8 +467,6 @@ class EditMealActivity: AppCompatActivity() {
                 if (response.code() == 200) {
 
                     alertDialogManager.dialog.dismiss()
-
-                    Toasty.success(this@EditMealActivity, getString(R.string.success_allowed_changes), Toast.LENGTH_LONG).show()
 
                     val body = response.body()
 

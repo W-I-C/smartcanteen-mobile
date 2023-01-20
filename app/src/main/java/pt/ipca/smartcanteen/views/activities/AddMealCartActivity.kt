@@ -96,12 +96,16 @@ class AddMealCartActivity : AppCompatActivity() {
         }
 
         buttonConfirm.setOnClickListener(){
-            finish()
-            Toasty.success(this@AddMealCartActivity, getString(R.string.add_meal_cart), Toast.LENGTH_LONG).show()
+            alertDialogManager.createConfirmAlertDialog(
+                getString(R.string.confirm_operation),
+                {
+                    finish()
+                    Toasty.success(this@AddMealCartActivity, getString(R.string.add_meal_cart), Toast.LENGTH_LONG).show()
+                }
+            )
         }
 
         arrowBack.setOnClickListener(){
-            Toasty.error(this@AddMealCartActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG).show()
             finish()
         }
     }
@@ -124,7 +128,6 @@ class AddMealCartActivity : AppCompatActivity() {
 
                     alertDialogManager.dialog.dismiss()
 
-                    Toasty.success(this@AddMealCartActivity, getString(R.string.add_fav_meal), Toast.LENGTH_LONG).show()
                 } else if (response.code() == 500) {
                     alertDialogManager.dialog.dismiss()
 
@@ -142,7 +145,6 @@ class AddMealCartActivity : AppCompatActivity() {
 
                 Toasty.error(this@AddMealCartActivity, getString(R.string.error), Toast.LENGTH_LONG).show()
             }
-
         })
     }
 
@@ -164,7 +166,6 @@ class AddMealCartActivity : AppCompatActivity() {
 
                     alertDialogManager.dialog.dismiss()
 
-                    Toasty.success(this@AddMealCartActivity, getString(R.string.remove_fav_meal), Toast.LENGTH_LONG).show()
                 } else if (response.code() == 500) {
                     alertDialogManager.dialog.dismiss()
 
