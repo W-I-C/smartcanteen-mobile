@@ -12,7 +12,7 @@
 
     <TextView
         android:paddingTop="10dp"
-        android:id="@+id/text_ingredient"
+        android:id="@+id/add_ingredient_text_ingredient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/change_ingredient"
@@ -22,9 +22,22 @@
         android:textColor="@color/black"
         tools:ignore="MissingConstraints" />
 
+    <ImageView
+        android:id="@+id/add_ingredient_arrow"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/arrow_back"
+        android:backgroundTint="@color/black"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
     <TextView
         android:paddingTop="10dp"
-        android:id="@+id/text_warning"
+        android:id="@+id/add_ingredient_text_warning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/warning"
@@ -34,11 +47,11 @@
         android:textColor="@color/redButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_ingredient"/>
+        app:layout_constraintTop_toBottomOf="@id/add_ingredient_text_ingredient"/>
 
     <TextView
-        app:layout_constraintTop_toBottomOf="@+id/text_warning"
-        android:id="@+id/name_ingredient"
+        app:layout_constraintTop_toBottomOf="@+id/add_ingredient_text_warning"
+        android:id="@+id/add_ingredient_name_ingredient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/ingredient_name"
@@ -49,7 +62,7 @@
         android:layout_marginTop="10dp" />
 
     <EditText
-        android:id="@+id/cart_name_ingredient"
+        android:id="@+id/add_ingredient_name_edittext"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -61,11 +74,11 @@
         android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/name_ingredient"/>
+        app:layout_constraintTop_toBottomOf="@id/add_ingredient_name_ingredient"/>
 
     <TextView
-        app:layout_constraintTop_toBottomOf="@+id/cart_name_ingredient"
-        android:id="@+id/dosage_ingredient"
+        app:layout_constraintTop_toBottomOf="@+id/add_ingredient_name_edittext"
+        android:id="@+id/add_ingredient_dosage_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/ingredient_dosage"
@@ -76,8 +89,8 @@
         android:textColor="@color/black" />
 
     <EditText
-        app:layout_constraintTop_toBottomOf="@+id/dosage_ingredient"
-        android:id="@+id/cart_dosage_ingredient"
+        app:layout_constraintTop_toBottomOf="@+id/add_ingredient_dosage_textview"
+        android:id="@+id/add_ingredient_dosage_edittext"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -89,8 +102,8 @@
         android:paddingLeft="20dp" />
 
     <TextView
-        app:layout_constraintTop_toBottomOf="@+id/cart_dosage_ingredient"
-        android:id="@+id/increment_limit"
+        app:layout_constraintTop_toBottomOf="@+id/add_ingredient_dosage_edittext"
+        android:id="@+id/add_ingredient_increment_limit_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/increment_limit"
@@ -103,8 +116,8 @@
 
     <EditText
         android:inputType="number"
-        app:layout_constraintTop_toBottomOf="@+id/increment_limit"
-        android:id="@+id/cart_increment_limit"
+        app:layout_constraintTop_toBottomOf="@+id/add_ingredient_increment_limit_textview"
+        android:id="@+id/add_ingredient_increment_limit_edittext"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -117,8 +130,8 @@
         android:paddingLeft="20dp" />
 
     <TextView
-        app:layout_constraintTop_toBottomOf="@+id/cart_increment_limit"
-        android:id="@+id/decrement_limit"
+        app:layout_constraintTop_toBottomOf="@+id/add_ingredient_increment_limit_edittext"
+        android:id="@+id/add_ingredient_decrement_limit_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/decrement_limit"
@@ -130,8 +143,8 @@
 
     <EditText
         android:inputType="number"
-        app:layout_constraintTop_toBottomOf="@+id/decrement_limit"
-        android:id="@+id/cart_decrement_limit"
+        app:layout_constraintTop_toBottomOf="@+id/add_ingredient_decrement_limit_textview"
+        android:id="@+id/add_ingredient_decrement_limit_edittext"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -144,8 +157,8 @@
         android:paddingLeft="20dp" />
 
     <TextView
-        app:layout_constraintTop_toBottomOf="@+id/cart_decrement_limit"
-        android:id="@+id/cart_default"
+        app:layout_constraintTop_toBottomOf="@+id/add_ingredient_decrement_limit_edittext"
+        android:id="@+id/add_ingredient_default_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/default_value"
@@ -157,8 +170,8 @@
 
     <EditText
         android:inputType="number"
-        app:layout_constraintTop_toBottomOf="@+id/cart_default"
-        android:id="@+id/cart_default_edittext"
+        app:layout_constraintTop_toBottomOf="@+id/add_ingredient_default_textview"
+        android:id="@+id/add_ingredient_default_edittext"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -171,11 +184,11 @@
         android:paddingLeft="20dp" />
 
     <CheckBox
-        android:id="@+id/checkbox_can_increment"
+        android:id="@+id/add_ingredient_checkbox_can_increment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/cart_default_edittext"
-        app:layout_constraintLeft_toLeftOf="@+id/decrement_limit"
+        app:layout_constraintTop_toBottomOf="@+id/add_ingredient_default_edittext"
+        app:layout_constraintLeft_toLeftOf="@+id/add_ingredient_decrement_limit_textview"
         android:text="@string/can_increment"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -185,11 +198,11 @@
         />
 
     <CheckBox
-        android:id="@+id/checkbox_can_decrement"
+        android:id="@+id/add_ingredient_checkbox_can_decrement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/cart_default_edittext"
-        app:layout_constraintLeft_toRightOf="@+id/checkbox_can_increment"
+        app:layout_constraintTop_toBottomOf="@+id/add_ingredient_default_edittext"
+        app:layout_constraintLeft_toRightOf="@+id/add_ingredient_checkbox_can_increment"
         android:text="@string/can_decrement"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -199,11 +212,11 @@
         />
 
     <CheckBox
-        android:id="@+id/checkbox_can_isremoveonly"
+        android:id="@+id/add_ingredient_checkbox_can_isremoveonly"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/checkbox_can_decrement"
-        app:layout_constraintLeft_toLeftOf="@+id/decrement_limit"
+        app:layout_constraintTop_toBottomOf="@+id/add_ingredient_checkbox_can_decrement"
+        app:layout_constraintLeft_toLeftOf="@+id/add_ingredient_decrement_limit_textview"
         android:text="@string/is_remove_only"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -212,7 +225,7 @@
         />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/activity_add_cancel"
+        android:id="@+id/add_ingredient_cancel"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:padding="10dp"
@@ -227,7 +240,7 @@
         android:layout_marginLeft="70dp"
         />
     <Button
-        android:id="@+id/activity_add_save"
+        android:id="@+id/add_ingredient_save"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:padding="10dp"

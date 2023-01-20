@@ -8,6 +8,7 @@ import pt.ipca.smartcanteen.services.NotificationService
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -28,12 +29,15 @@ class NotificationActivity : AppCompatActivity() {
 
 
     private val notification: RecyclerView by lazy {findViewById<RecyclerView>(R.id.Recycler_notification) as RecyclerView }
+    private val backBtn: ImageView by lazy {findViewById<ImageView>(R.id.notification_arrow) as ImageView }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notification)
 
-
+        backBtn.setOnClickListener{
+            finish()
+        }
     }
 
     fun getNotification(){

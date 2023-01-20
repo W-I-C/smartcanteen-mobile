@@ -12,6 +12,7 @@ import pt.ipca.smartcanteen.views.fragments.consumer_fragments.MenuConsumerFragm
 
 class OrderActivity : AppCompatActivity() {
 
+    private val backBtn: ImageView by lazy {findViewById<ImageView>(R.id.order_arrow) as ImageView }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         lateinit var camp: EditText
@@ -41,6 +42,10 @@ class OrderActivity : AppCompatActivity() {
                 )
             )
             spinner.adapter = adapter
+        }
+
+        backBtn.setOnClickListener{
+            finish()
         }
     }
 

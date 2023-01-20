@@ -95,6 +95,8 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/black"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_constraintStart_toStartOf="@id/activity_edit_meal_image"
         app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image"/>
 

@@ -8,7 +8,7 @@ import pt.ipca.smartcanteen.R
 
 class NotificationAdapterRecViewHolder (inflater: LayoutInflater, val parent: ViewGroup):
     RecyclerView.ViewHolder(inflater.inflate(R.layout.card_notification, parent, false)) {
-    val description = itemView.findViewById<TextView>(R.id.description)
+    val description = itemView.findViewById<TextView>(R.id.create_meal_description_textview)
     val time=itemView.findViewById<TextView>(R.id.time_notification)
 
 

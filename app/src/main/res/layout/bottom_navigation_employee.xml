@@ -4,8 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--app:labelVisibilityMode="unlabeled" serve para remover o tittle que aparece debaixo de cada butão-->
-    <!--TODO sombras e animação de aumentar o tamanho dos icones quando selecionados-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_employee"
         android:layout_width="match_parent"
