@@ -13,4 +13,6 @@ data class RetroTicket (
     @SerializedName("ticketamount") var ticketamount: Int,
     @SerializedName("total") var total: Float,
     @SerializedName("nencomenda") var norder: Int,
-    @SerializedName("isfree") var isfree: Boolean)
+    @SerializedName("isfree") var isfree: Boolean,
+    @SerializedName("ticketmeals") var ticketmeals: List<RetroTicketMeal>
+    )

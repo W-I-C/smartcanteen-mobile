@@ -76,7 +76,7 @@
     <string name="no_changes_available">No changes available</string>
     <string name="wish_remove_meal_ask">Do you really want to remove this meal?</string>
     <string name="meal_being_used">Cant delete a meal that is being used!!</string>
-    <string name="see_orders">View Orders</string>
+    <string name="see_orders">See Orders</string>
     <string name="total_requests">Total Orders</string>
     <string name="delivered_orders">Delivered Orders</string>
     <string name="undelivered_orders">Undelivered Orders</string>
@@ -144,6 +144,8 @@
     <string name="add_meal_cart">Meal added to cart</string>
     <string name="no_available_trades">No Availabe Trades</string>
     <string name="cannot_takeaway">Cannot TakeAway</string>
+    <string name="dosage">Dosage</string>
+    <string name="view_trades">See Trades</string>
     <string name="meal_name">Meal Name</string>
     <string name="allowed_changes">Allowed Changes:</string>
     <string name="preparation_time">Preparation Time</string>
