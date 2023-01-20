@@ -20,6 +20,20 @@
         android:paddingTop="50dp"
         tools:ignore="MissingConstraints" />
 
+    <ImageView
+        android:id="@+id/order_arrow"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/arrow_back"
+        android:backgroundTint="@color/black"
+        android:layout_marginLeft="10dp"
+        android:paddingTop="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
     <TextView
 
         android:id="@+id/main_timeToOrder_textview"

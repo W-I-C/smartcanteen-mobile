@@ -3,12 +3,14 @@ package pt.ipca.smartcanteen.views.activities
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.RetroAllowedChanges
 import pt.ipca.smartcanteen.models.adapters.AllowedChangesAdapterRec
@@ -23,6 +25,7 @@ class IngredientsChangeActivity: AppCompatActivity() {
 
     private val cancelButton: Button by lazy {findViewById<View>(R.id.ingredients_change_cancel) as Button }
     private val saveButton: Button by lazy {findViewById<View>(R.id.ingredients_change_save) as Button }
+    private val arrowBtn: ImageView by lazy {findViewById<ImageView>(R.id.ingredients_change_arrow) as ImageView }
 
     val retrofit = SmartCanteenRequests().retrofit
     private lateinit var alertDialogManager: AlertDialogManager
@@ -46,16 +49,26 @@ class IngredientsChangeActivity: AppCompatActivity() {
         }
 
         cancelButton.setOnClickListener {
-            finish()
-            Toast.makeText(this@IngredientsChangeActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG)
-                .show()
+            alertDialogManager.createConfirmAlertDialog(
+                getString(R.string.cancel_operation),
+                {
+                    finish()
+                    Toasty.success(this@IngredientsChangeActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG).show()
+                }
+            )
         }
 
-        // TODO: saveButtom o POST para adicionar as alterações à Meal
         saveButton.setOnClickListener {
+            alertDialogManager.createConfirmAlertDialog(
+                getString(R.string.confirm_allowed_changes),
+                { finish()
+                    Toasty.success(this@IngredientsChangeActivity, getString(R.string.success_change_allowed_changes), Toast.LENGTH_LONG).show()
+                }
+            )
+        }
+
+        arrowBtn.setOnClickListener{
             finish()
-            Toast.makeText(this@IngredientsChangeActivity, getString(R.string.success_change_allowed_changes), Toast.LENGTH_LONG)
-                .show()
         }
     }
 
@@ -77,9 +90,6 @@ class IngredientsChangeActivity: AppCompatActivity() {
                 if (response.code() == 200) {
 
                     alertDialogManager.dialog.dismiss()
-
-                    Toast.makeText(this@IngredientsChangeActivity, getString(R.string.success_allowed_changes), Toast.LENGTH_LONG)
-                        .show()
 
                     val body = response.body()
 
@@ -106,8 +116,7 @@ class IngredientsChangeActivity: AppCompatActivity() {
                     allowedChangesRecyclerView.visibility = View.VISIBLE
                     textError.visibility = View.GONE
 
-                    Toast.makeText(this@IngredientsChangeActivity, getString(R.string.error_allowed_changes), Toast.LENGTH_LONG)
-                        .show()
+                    Toasty.error(this@IngredientsChangeActivity, getString(R.string.error_allowed_changes), Toast.LENGTH_LONG).show()
                 } else if(response.code() == 401){
                     alertDialogManager.dialog.dismiss()
 
@@ -125,8 +134,7 @@ class IngredientsChangeActivity: AppCompatActivity() {
                 allowedChangesRecyclerView.visibility = View.VISIBLE
                 textError.visibility = View.GONE
 
-                Toast.makeText(this@IngredientsChangeActivity, getString(R.string.error), Toast.LENGTH_LONG)
-                    .show()
+                Toasty.error(this@IngredientsChangeActivity, getString(R.string.error), Toast.LENGTH_LONG).show()
             }
         })
     }

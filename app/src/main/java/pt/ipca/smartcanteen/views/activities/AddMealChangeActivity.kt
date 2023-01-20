@@ -1,17 +1,13 @@
 package pt.ipca.smartcanteen.views.activities
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DefaultItemAnimator
 import es.dmoral.toasty.Toasty
-import org.w3c.dom.Text
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.MealChangeBody
 import pt.ipca.smartcanteen.models.RetroAllowedChanges
-import pt.ipca.smartcanteen.models.adapters.MealAllowedChangesEditAdapterRec
 import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
@@ -24,20 +20,21 @@ import retrofit2.Response
 
 class AddMealChangeActivity : AppCompatActivity() {
 
-    private val ingName: EditText by lazy { findViewById<View>(R.id.cart_name_ingredient) as EditText }
-    private val ingDosage: EditText by lazy { findViewById<EditText>(R.id.cart_dosage_ingredient) as EditText }
-    private val incrementLimit: EditText by lazy { findViewById<EditText>(R.id.cart_increment_limit) as EditText }
-    private val decrementLimit: EditText by lazy { findViewById<EditText>(R.id.cart_decrement_limit) as EditText }
-    private val defaultValue: EditText by lazy { findViewById<EditText>(R.id.cart_default_edittext) as EditText }
-    private val canbeIncremented: CheckBox by lazy { findViewById<CheckBox>(R.id.checkbox_can_increment) as CheckBox }
-    private val canbeDecremented: CheckBox by lazy { findViewById<CheckBox>(R.id.checkbox_can_decrement) as CheckBox }
-    private val isRemoveonly: CheckBox by lazy { findViewById<CheckBox>(R.id.checkbox_can_isremoveonly) as CheckBox }
+    private val ingName: EditText by lazy { findViewById<View>(R.id.add_ingredient_name_edittext) as EditText }
+    private val ingDosage: EditText by lazy { findViewById<EditText>(R.id.add_ingredient_dosage_edittext) as EditText }
+    private val incrementLimit: EditText by lazy { findViewById<EditText>(R.id.add_ingredient_increment_limit_edittext) as EditText }
+    private val decrementLimit: EditText by lazy { findViewById<EditText>(R.id.add_ingredient_decrement_limit_edittext) as EditText }
+    private val defaultValue: EditText by lazy { findViewById<EditText>(R.id.add_ingredient_default_edittext) as EditText }
+    private val canbeIncremented: CheckBox by lazy { findViewById<CheckBox>(R.id.add_ingredient_checkbox_can_increment) as CheckBox }
+    private val canbeDecremented: CheckBox by lazy { findViewById<CheckBox>(R.id.add_ingredient_checkbox_can_decrement) as CheckBox }
+    private val isRemoveonly: CheckBox by lazy { findViewById<CheckBox>(R.id.add_ingredient_checkbox_can_isremoveonly) as CheckBox }
 
-    private val incrementLimitTittle: TextView by lazy { findViewById<TextView>(R.id.increment_limit) as TextView }
-    private val decrementLimitTittle: TextView by lazy { findViewById<TextView>(R.id.decrement_limit) as TextView }
+    private val incrementLimitTittle: TextView by lazy { findViewById<TextView>(R.id.add_ingredient_increment_limit_textview) as TextView }
+    private val decrementLimitTittle: TextView by lazy { findViewById<TextView>(R.id.add_ingredient_decrement_limit_textview) as TextView }
 
-    private val cancelBtn: Button by lazy { findViewById<Button>(R.id.activity_add_cancel) as Button }
-    private val confirmBtn: Button by lazy { findViewById<Button>(R.id.activity_add_save) as Button }
+    private val cancelBtn: Button by lazy { findViewById<Button>(R.id.add_ingredient_cancel) as Button }
+    private val confirmBtn: Button by lazy { findViewById<Button>(R.id.add_ingredient_save) as Button }
+    private val arrowBtn: ImageView by lazy { findViewById<ImageView>(R.id.add_ingredient_arrow) as ImageView }
 
     private lateinit var alertDialogManager: AlertDialogManager
     val retrofit = SmartCanteenRequests().retrofit
@@ -51,7 +48,7 @@ class AddMealChangeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_ingredient)
 
-        val ingName = findViewById<EditText>(R.id.cart_name_ingredient)
+        val ingName = findViewById<EditText>(R.id.add_ingredient_name_edittext)
 
         incrementLimit.visibility = View.GONE
         decrementLimit.visibility  = View.GONE
@@ -75,11 +72,27 @@ class AddMealChangeActivity : AppCompatActivity() {
                 val incrementlimit = incrementLimit.text.toString().toIntOrNull() ?: null
                 val decrementlimit = decrementLimit.text.toString().toIntOrNull() ?: null
                 val defaultValue = defaultValue.text.toString().toInt()
-                confirmBtn(mealid,ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit,defaultValue)
+                alertDialogManager.createConfirmAlertDialog(
+                    getString(R.string.confirm_allowed_changes),
+                    {
+                        confirmBtn(mealid,ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit,defaultValue)
+                    }
+                )
             }
         }
 
-        cancelBtn()
+        cancelBtn.setOnClickListener{
+            alertDialogManager.createConfirmAlertDialog(
+                getString(R.string.cancel_operation),
+                {
+                    cancelBtn()
+                }
+            )
+        }
+
+        arrowBtn.setOnClickListener{
+            finish()
+        }
     }
 
     fun make(mealid: String){
@@ -169,11 +182,9 @@ class AddMealChangeActivity : AppCompatActivity() {
     }
 
     fun cancelBtn(){
-        cancelBtn.setOnClickListener{
-            finish()
-            Toast.makeText(this@AddMealChangeActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG)
-                .show()
-        }
+        finish()
+        Toast.makeText(this@AddMealChangeActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG)
+            .show()
     }
 
     fun confirmBtn(mealid: String, ingname: String, ingdosage: String, isremoveonly: Boolean, canbeincremented: Boolean, canbedecremented: Boolean, incrementlimit: Int?, decrementlimit: Int?, defaultValue: Int){

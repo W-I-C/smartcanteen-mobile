@@ -34,6 +34,7 @@ class ConsumerTradeActivity : AppCompatActivity() {
     private val generalPaymentMethod: TextView by lazy {findViewById<TextView>(R.id.trade_general_title_payment_method) as TextView}
     private val directIsFree: TextView by lazy {findViewById<TextView>(R.id.trade_direct_title_isfree) as TextView}
     private val directPaymentMethod: TextView by lazy {findViewById<TextView>(R.id.trade_direct_title_payment_method) as TextView}
+    private val backBtn: ImageView by lazy {findViewById<ImageView>(R.id.trade_arrow) as ImageView }
     private lateinit var alertDialogManager: AlertDialogManager
     private lateinit var ticketId: String
 
@@ -136,11 +137,25 @@ class ConsumerTradeActivity : AppCompatActivity() {
             }
 
         cancelButton.setOnClickListener {
-            cancelBtn()
+            alertDialogManager.createConfirmAlertDialog(
+                getString(R.string.cancel_operation),
+                {
+                    cancelBtn()
+                }
+            )
         }
 
         confirmButton.setOnClickListener {
-            confirmBtn()
+            alertDialogManager.createConfirmAlertDialog(
+                getString(R.string.confirm_allowed_changes),
+                {
+                    confirmBtn()
+                }
+            )
+        }
+
+        backBtn.setOnClickListener{
+            finish()
         }
     }
 
@@ -232,7 +247,6 @@ class ConsumerTradeActivity : AppCompatActivity() {
                     if (paymentMethods != null) {
                         if (paymentMethods.isNotEmpty()) {
 
-                            Log.d("bar:", paymentMethods.toString())
                             var adapter =
                                 ArrayAdapter(
                                     this@ConsumerTradeActivity,
@@ -273,7 +287,6 @@ class ConsumerTradeActivity : AppCompatActivity() {
                         }
                     }
 
-                    Toasty.success(this@ConsumerTradeActivity, getString(R.string.sucess_methods), Toast.LENGTH_LONG).show()
                 } else if(response.code() == 500){
                     alertDialogManager.dialog.dismiss()
 
