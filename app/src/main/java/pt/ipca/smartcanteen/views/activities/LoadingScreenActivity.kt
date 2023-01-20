@@ -39,8 +39,10 @@ class LoadingScreenActivity : AppCompatActivity() {
 
         if (token == null) {
             val intent = Intent(this@LoadingScreenActivity, LoginActivity::class.java)
-            finish()
+
             startActivity(intent)
+            finish()
+            overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in,androidx.appcompat.R.anim.abc_fade_out);
         } else {
 
             getPushToken()
@@ -70,32 +72,42 @@ class LoadingScreenActivity : AppCompatActivity() {
                             if (role == "consumer") {
 
                                 val intent = Intent(this@LoadingScreenActivity, ConsumerFragmentActivity::class.java)
-                                finish()
+
                                 startActivity(intent)
-                                overridePendingTransition(androidx.appcompat.R.anim.abc_fade_out, es.dmoral.toasty.R.anim.abc_fade_in);
+                                finish()
+                                overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in,androidx.appcompat.R.anim.abc_fade_out);
                             } else if (role == "employee") {
 
                                 val intent = Intent(this@LoadingScreenActivity, EmployeeFragmentActivity::class.java)
-                                finish()
                                 startActivity(intent)
-                                overridePendingTransition(androidx.appcompat.R.anim.abc_fade_out, es.dmoral.toasty.R.anim.abc_fade_in);
+                                finish()
+                                overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in,androidx.appcompat.R.anim.abc_fade_out);
                             }
 
                         } else if (response.code() == 401) {
 
                             var intent = Intent(this@LoadingScreenActivity, LoginActivity::class.java)
-                            finish()
+
                             startActivity(intent)
+                            finish()
+                            overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in,androidx.appcompat.R.anim.abc_fade_out);
                         }
                     }
 
                     override fun onFailure(calll: Call<LoginResponse>, t: Throwable) {
                         var intent = Intent(this@LoadingScreenActivity, LoginActivity::class.java)
-                        finish()
+
                         startActivity(intent)
+                        finish()
+                        overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in,androidx.appcompat.R.anim.abc_fade_out);
                     }
                 })
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in,androidx.appcompat.R.anim.abc_fade_out);
     }
 
     private fun getPushToken() {

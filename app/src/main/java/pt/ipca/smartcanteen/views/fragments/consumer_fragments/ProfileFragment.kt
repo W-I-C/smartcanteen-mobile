@@ -51,11 +51,13 @@ class ProfileFragment : Fragment() {
                     response: Response<RetroProfile>
                 ) {
                     if (response.code() == 200) {
-                        val retroFit2 = response.body()
-                        name.setText(retroFit2?.name)
-                        spinnerCampus.setText(retroFit2?.campusname)
-                        spinnerBar.setText(retroFit2?.barname)
-                        ImagesHelper().getImage(retroFit2?.imgurl!!,profilePic, true)
+                        if(isAdded) {
+                            val retroFit2 = response.body()
+                            name.setText(retroFit2?.name)
+                            spinnerCampus.setText(retroFit2?.campusname)
+                            spinnerBar.setText(retroFit2?.barname)
+                            ImagesHelper().getImage(retroFit2?.imgurl!!, profilePic, true)
+                        }
 
 
                     }else if(response.code()==401){

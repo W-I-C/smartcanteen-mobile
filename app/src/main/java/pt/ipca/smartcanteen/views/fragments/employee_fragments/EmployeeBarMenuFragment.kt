@@ -82,28 +82,29 @@ class EmployeeBarMenuFragment : Fragment() {
             ) {
                 if (response.code() == 200) {
                     val body = response.body()
+                    if(isAdded) {
+                        menuRv.visibility = View.VISIBLE
+                        loadingProgressBar.visibility = View.INVISIBLE
+                        loadingProgressText.visibility = View.INVISIBLE
 
-                    menuRv.visibility = View.VISIBLE
-                    loadingProgressBar.visibility = View.INVISIBLE
-                    loadingProgressText.visibility = View.INVISIBLE
+                        if (body != null) {
+                            if (body.isNotEmpty()) {
+                                /** bar Meals **/
+                                val barMealsLayoutManager = GridLayoutManager(requireActivity(), 2)
+                                barMealsLayoutManager.orientation = LinearLayoutManager.VERTICAL
+                                val barMealsAdapter = EmployeeBarMenuMealsAdapterRec(
+                                    { getMealsList() },
+                                    requireActivity(),
+                                    alertDialogManager,
+                                    getString(R.string.wish_remove_meal_ask),
+                                    getString(R.string.meal_being_used),
+                                    body
+                                )
 
-                    if (body != null) {
-                        if (body.isNotEmpty()) {
-                            /** bar Meals **/
-                            val barMealsLayoutManager = GridLayoutManager(requireActivity(), 2)
-                            barMealsLayoutManager.orientation = LinearLayoutManager.VERTICAL
-                            val barMealsAdapter = EmployeeBarMenuMealsAdapterRec(
-                                { getMealsList() },
-                                requireActivity(),
-                                alertDialogManager,
-                                getString(R.string.wish_remove_meal_ask),
-                                getString(R.string.meal_being_used),
-                                body
-                            )
-
-                            menuRv.layoutManager = barMealsLayoutManager
-                            menuRv.itemAnimator = DefaultItemAnimator()
-                            menuRv.adapter = barMealsAdapter
+                                menuRv.layoutManager = barMealsLayoutManager
+                                menuRv.itemAnimator = DefaultItemAnimator()
+                                menuRv.adapter = barMealsAdapter
+                            }
                         }
                     }
                 } else if (response.code() == 401) {

@@ -76,18 +76,20 @@ class UndeliveredOrdersFragment : Fragment() {
                     response: Response<List<RetroTicket>>
                 ) {
                     if (response.code() == 200) {
-                        alertDialogManager.dialog.dismiss()
-                        val retroFit2 = response.body()
+                        if(isAdded) {
+                            alertDialogManager.dialog.dismiss()
+                            val retroFit2 = response.body()
 
-                        if (retroFit2 != null)
-                            if(retroFit2.isEmpty()){
-                                textError.visibility = View.VISIBLE
-                                undeliveredOrdersAdater.visibility = View.GONE
-                            } else {
-                                undeliveredOrdersAdater.visibility = View.VISIBLE
-                                textError.visibility = View.GONE
-                                rebuildlist(UndeliveredOrdersAdaterRec(requireActivity(),retroFit2))
-                            }
+                            if (retroFit2 != null)
+                                if (retroFit2.isEmpty()) {
+                                    textError.visibility = View.VISIBLE
+                                    undeliveredOrdersAdater.visibility = View.GONE
+                                } else {
+                                    undeliveredOrdersAdater.visibility = View.VISIBLE
+                                    textError.visibility = View.GONE
+                                    rebuildlist(UndeliveredOrdersAdaterRec(requireActivity(), retroFit2))
+                                }
+                        }
                     }else if(response.code()==401){
                         AuthHelper().newSessionToken(requireActivity())
                         getOrders(retrofit)
