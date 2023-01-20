@@ -100,6 +100,18 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 />
+            <TextView
+                android:id="@+id/consumer_menu_trades_view_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_trades"
+                android:textStyle="bold"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="15dp"
+                android:textColor="@color/green_ipca"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
 
             <ProgressBar
                 android:id="@+id/consumer_menu_trades_progress_bar"

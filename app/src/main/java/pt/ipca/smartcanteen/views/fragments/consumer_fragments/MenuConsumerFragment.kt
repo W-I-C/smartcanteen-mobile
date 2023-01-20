@@ -24,6 +24,7 @@ import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.*
+import pt.ipca.smartcanteen.views.activities.ConsumerAvailableTradesActivity
 import pt.ipca.smartcanteen.views.activities.ConsumerBarMenuActivity
 import pt.ipca.smartcanteen.views.activities.NotificationActivity
 import retrofit2.Call
@@ -39,6 +40,7 @@ class MenuConsumerFragment : Fragment() {
     private val mealsProgressBar: ProgressBar by lazy {requireView().findViewById<ProgressBar>(R.id.consumer_menu_meals_progress_bar) as ProgressBar }
     private val mealsTextProgress: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_meals_progress_bar_text) as TextView }
     private val viewMealsText: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_bar_meals_view_meals_tv) as TextView }
+    private val viewTradesText: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_trades_view_tv) as TextView }
     private val noAvailableTradesText: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_trades_no_trades_text) as TextView }
     private val ordersProgressBar: ProgressBar by lazy {requireView().findViewById<ProgressBar>(R.id.consumer_menu_orders_progress_bar) as ProgressBar }
     private val ordersTextProgress: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_orders_progress_bar_text) as TextView }
@@ -84,6 +86,11 @@ class MenuConsumerFragment : Fragment() {
 
         viewMealsText.setOnClickListener{
             val intent = Intent(requireActivity(), ConsumerBarMenuActivity::class.java)
+            startActivity(intent)
+        }
+
+        viewTradesText.setOnClickListener{
+            val intent = Intent(requireActivity(), ConsumerAvailableTradesActivity::class.java)
             startActivity(intent)
         }
 
@@ -171,8 +178,6 @@ class MenuConsumerFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<RetroBar>>, t: Throwable) {
-                //mealsProgressBar.visibility = View.GONE
-                //mealsTextProgress.visibility = View.GONE
                 alertDialogManager.dialog.dismiss()
                 print("error")
             }

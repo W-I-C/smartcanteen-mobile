@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class RetroTrade (
     @SerializedName("ticketid") val ticketid: String,
     @SerializedName("generaltradeid") val generaltradeid: String?,
+    @SerializedName("barid") val barid: String?,
     @SerializedName("nencomenda") val norder: Int,
     @SerializedName("ticketamount") val ticketamount: Int,
     @SerializedName("total") val total: Float,
@@ -17,5 +18,6 @@ data class RetroTrade (
     @SerializedName("pickuptime") val pickuptime: String,
     @SerializedName("isfree") val isfree: Boolean,
     @SerializedName("paymentmethod") val paymentmethod: Boolean,
-    @SerializedName("isgeneraltrade") val isgeneraltrade: Boolean
+    @SerializedName("isgeneraltrade") val isgeneraltrade: Boolean,
+    @SerializedName("ticketmeals") var ticketmeals: List<RetroTicketMeal>
 ) {}

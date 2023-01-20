@@ -135,4 +135,6 @@
     <string name="add_meal_cart">Refeição adicionada ao carrinho</string>
     <string name="no_available_trades">Sem Trocas disponiveis</string>
     <string name="cannot_takeaway">Não pode TakeAway</string>
+    <string name="dosage">Dosagem</string>
+    <string name="view_trades">Ver Trocas</string>
 </resources>
