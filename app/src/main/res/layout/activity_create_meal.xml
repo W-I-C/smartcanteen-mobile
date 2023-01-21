@@ -6,10 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
+
         android:outlineSpotShadowColor="@color/white"
         android:id='@+id/create_meal_image'
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:drawableRight="@drawable/edit"
         android:background="@color/cardview_dark_background"
         tools:ignore="MissingConstraints" />

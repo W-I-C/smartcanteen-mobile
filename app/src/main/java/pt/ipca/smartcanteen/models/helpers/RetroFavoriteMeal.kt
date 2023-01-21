@@ -7,5 +7,6 @@ class RetroFavoriteMeal(
     @SerializedName("name") var name:String,
     @SerializedName("preparationtime") var time:Int,
     @SerializedName("price") var price:Float,
+    @SerializedName("description") var description:String,
     @SerializedName("url") var url:String, ) {
 }

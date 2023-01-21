@@ -49,11 +49,10 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
         val title = meal.name
         val price = "${meal.price}€"
         val preptime = "${meal.preparationtime}min"
-        val url = meal.url?:""
-        holder.bindData(title,preptime,price, url)
+        holder.bindData(mealid,title,preptime,price)
 
         holder.itemView.setOnClickListener{
-            mealDetails(mealid,mealName,description,price,preptime, url)
+            mealDetails(mealid,mealName,description,price,preptime)
         }
     }
 
@@ -61,14 +60,13 @@ class BarMenuMealsAdapterRec(private var mealsList: List<RetroMeal>, private var
         return mealsList.size
     }
 
-    fun mealDetails(mealid: String,mealName: String,mealDescription: String,mealPrice: String, mealPreptime: String, url:String){
+    fun mealDetails(mealid: String,mealName: String,mealDescription: String,mealPrice: String, mealPreptime: String){
         var intent = Intent(activity, AddMealCartActivity::class.java)
         intent.putExtra("mealId", mealid)
         intent.putExtra("name", mealName)
         intent.putExtra("description", mealDescription)
         intent.putExtra("price", mealPrice)
         intent.putExtra("time", mealPreptime)
-        intent.putExtra("url", url)
 
         activity.startActivity(intent)
     }

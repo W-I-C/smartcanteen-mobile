@@ -1,12 +1,14 @@
 package pt.ipca.smartcanteen.models.adapters.viewHolders
 
 import android.app.Activity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.storage.FirebaseStorage
 import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.helpers.*
@@ -28,6 +30,7 @@ class EmployeeBarMenuMealsAdapterRecViewHolder(
     val removeIv = itemView.findViewById<ImageView>(R.id.layout_card_with_remove_delete)
     val mealImage = itemView.findViewById<ImageView>(R.id.layout_card_with_remove_iv)
 
+    private val storageRef = FirebaseStorage.getInstance().reference
 
     fun bindData(
         nameText: String,
@@ -36,14 +39,12 @@ class EmployeeBarMenuMealsAdapterRecViewHolder(
         removeMealAskString: String,
         cantRemoveMealString: String,
         mealId: String,
-        rebuildList: () -> Unit,
-        url:String
+        rebuildList: () -> Unit
     ) {
         nameTv.text = nameText
         timeTv.text = quantityText
         priceTv.text = priceText
-        ImagesHelper().getImage(url,mealImage,false)
-
+        getImage(mealId)
         removeIv.setOnClickListener {
             alertDialogManager.createConfirmAlertDialog(
                 removeMealAskString,
@@ -51,6 +52,22 @@ class EmployeeBarMenuMealsAdapterRecViewHolder(
             )
         }
 
+
+    }
+
+    private fun getImage(mealId:String){
+        Log.d("MAIN", mealId)
+        storageRef.child("images/meals/${mealId}").downloadUrl.addOnSuccessListener {
+            Log.d("MAIN", it.toString())
+            ImagesHelper().getImage(it.toString(),mealImage,false)
+        }.addOnFailureListener {
+            storageRef.child("images/meals/missing_image.jpg").downloadUrl.addOnSuccessListener {
+                Log.d("MAIN", it.toString())
+                ImagesHelper().getImage(it.toString(),mealImage,false)
+            }.addOnFailureListener {
+                Log.d("MAIN", it.toString())
+            }
+        }
 
     }
 

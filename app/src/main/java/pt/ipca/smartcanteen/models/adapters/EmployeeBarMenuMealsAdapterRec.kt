@@ -37,9 +37,8 @@ class EmployeeBarMenuMealsAdapterRec(
         val canbemade = meal.canbemade
         val cantakeaway = meal.cantakeaway
         val price = "${meal.price}€"
-        val url = meal.url?:""
 
-        holder.bindData(name, time, price, removeMealAskString, cantRemoveMealString, meal.mealid, rebuildList, url)
+        holder.bindData(name, time, price, removeMealAskString, cantRemoveMealString, meal.mealid, rebuildList)
 
         holder.itemView.setOnClickListener{
             var intent = Intent(activity, EditMealActivity::class.java)

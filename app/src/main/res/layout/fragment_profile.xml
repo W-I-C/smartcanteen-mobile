@@ -21,26 +21,29 @@
 
     <ImageView
         android:id="@+id/profile_image_imageview"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginTop="50dp"
-        android:src="@drawable/circle"
+        android:scaleType="centerCrop"
+        android:src="@drawable/grey_circle_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_textview" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_textview"
+        android:elevation="5dp"/>
 
     <ImageView
         android:id="@+id/profile_edit_photo"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginLeft="90dp"
         android:layout_marginTop="40dp"
         android:layout_marginRight="18dp"
-        android:layout_marginBottom="4dp"
-        android:background="@color/white"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/white_circle_background"
         android:src="@drawable/circle_edit"
         app:layout_constraintBottom_toBottomOf="@+id/profile_image_imageview"
         app:layout_constraintRight_toRightOf="@+id/profile_image_imageview"
+        android:elevation="5dp"
         />
 
     <EditText

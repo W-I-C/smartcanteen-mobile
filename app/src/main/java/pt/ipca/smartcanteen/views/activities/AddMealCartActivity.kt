@@ -3,9 +3,11 @@ package pt.ipca.smartcanteen.views.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.storage.FirebaseStorage
 import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.helpers.*
@@ -18,6 +20,7 @@ class AddMealCartActivity : AppCompatActivity() {
 
     val retrofit = SmartCanteenRequests().retrofit
     private lateinit var alertDialogManager: AlertDialogManager
+    private val storageRef = FirebaseStorage.getInstance().reference
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +50,7 @@ class AddMealCartActivity : AppCompatActivity() {
         val mealName = intent.getStringExtra("name")
         val mealPreptime = intent.getStringExtra("time")
         val mealDescription = intent.getStringExtra("description")
-        val url = intent.getStringExtra("url")?:""
+        val url = intent.getStringExtra("url") ?: ""
         val mealPrice = intent.getStringExtra("price")
 
         name.text = mealName
@@ -55,7 +58,7 @@ class AddMealCartActivity : AppCompatActivity() {
         price.text = mealPrice.toString()
         description.text = mealDescription
 
-        ImagesHelper().getImage(url, mealImage, false)
+        getImage(mealid!!, mealImage)
 
         buttonIncrement.setOnClickListener {
             var count: Int = quantity.text.toString().toInt()
@@ -95,7 +98,7 @@ class AddMealCartActivity : AppCompatActivity() {
             }
         }
 
-        buttonConfirm.setOnClickListener(){
+        buttonConfirm.setOnClickListener() {
             alertDialogManager.createConfirmAlertDialog(
                 getString(R.string.confirm_operation),
                 {
@@ -105,12 +108,28 @@ class AddMealCartActivity : AppCompatActivity() {
             )
         }
 
-        arrowBack.setOnClickListener(){
+        arrowBack.setOnClickListener() {
             finish()
         }
     }
 
-    fun addFavMeal(mealid: String){
+    private fun getImage(mealid: String, imageView: ImageView) {
+        storageRef.child("images/meals/${mealid}").downloadUrl.addOnSuccessListener {
+            Log.d("MAIN", it.toString())
+            ImagesHelper().getImage(it.toString(), imageView, false)
+        }.addOnFailureListener {
+            storageRef.child("images/meals/missing_image.jpg").downloadUrl.addOnSuccessListener {
+                Log.d("MAIN", it.toString())
+                ImagesHelper().getImage(it.toString(), imageView, false)
+            }.addOnFailureListener {
+                Log.d("MAIN", it.toString())
+            }
+        }
+
+    }
+
+
+    fun addFavMeal(mealid: String) {
         val service = retrofit.create(FavoritemealService::class.java)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(this@AddMealCartActivity)
@@ -132,7 +151,7 @@ class AddMealCartActivity : AppCompatActivity() {
                     alertDialogManager.dialog.dismiss()
 
                     Toasty.error(this@AddMealCartActivity, getString(R.string.error_add_fav_meal), Toast.LENGTH_LONG).show()
-                } else if(response.code()==401){
+                } else if (response.code() == 401) {
                     alertDialogManager.dialog.dismiss()
 
                     AuthHelper().newSessionToken(this@AddMealCartActivity)
@@ -148,7 +167,7 @@ class AddMealCartActivity : AppCompatActivity() {
         })
     }
 
-    fun removeFavMeal(mealid: String){
+    fun removeFavMeal(mealid: String) {
         val service = retrofit.create(FavoritemealService::class.java)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(this@AddMealCartActivity)
@@ -170,7 +189,7 @@ class AddMealCartActivity : AppCompatActivity() {
                     alertDialogManager.dialog.dismiss()
 
                     Toasty.error(this@AddMealCartActivity, getString(R.string.error_remove_fav_meal), Toast.LENGTH_LONG).show()
-                } else if(response.code()==401){
+                } else if (response.code() == 401) {
                     alertDialogManager.dialog.dismiss()
                     AuthHelper().newSessionToken(this@AddMealCartActivity)
                     removeFavMeal(mealid)

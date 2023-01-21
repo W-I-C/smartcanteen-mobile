@@ -152,4 +152,5 @@
     <string name="confirm_allowed_changes">Confirm ingredient changes?</string>
     <string name="cancel_operation">Cancel operation?</string>
     <string name="confirm_operation">Confirm the operation?</string>
+    <string name="image_upload_error">Error Uploading Image</string>
 </resources>

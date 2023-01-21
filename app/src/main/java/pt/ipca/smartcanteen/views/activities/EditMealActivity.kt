@@ -2,7 +2,9 @@ package pt.ipca.smartcanteen.views.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -11,6 +13,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.storage.FirebaseStorage
 import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.CanBeMadeBody
@@ -18,17 +21,20 @@ import pt.ipca.smartcanteen.models.MealBody
 import pt.ipca.smartcanteen.models.RetroAllowedChanges
 import pt.ipca.smartcanteen.models.adapters.MealAllowedChangesAdapterRec
 import pt.ipca.smartcanteen.models.adapters.MealAllowedChangesEditAdapterRec
-import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
-import pt.ipca.smartcanteen.models.helpers.AuthHelper
-import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
-import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.helpers.*
 import pt.ipca.smartcanteen.services.MealsService
+import pt.ipca.smartcanteen.views.fragments.consumer_fragments.ProfileFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class EditMealActivity: AppCompatActivity() {
+class EditMealActivity : AppCompatActivity() {
+    private val storageRef = FirebaseStorage.getInstance().reference
+
+    companion object {
+        val IMAGE_REQUEST_CODE = 100
+    }
 
     private val arrowBack: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_back_arrow_iv) as ImageView }
     private val pencilWhite: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_edit_pencil_white) as ImageView }
@@ -36,6 +42,7 @@ class EditMealActivity: AppCompatActivity() {
     private val warningWhite: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_edit_warning_white) as ImageView }
     private val warningGreen: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_edit_warning_green) as ImageView }
 
+    private val mealImage: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_image) as ImageView }
     private val mealName: TextView by lazy { findViewById<TextView>(R.id.activity_edit_meal_name) as TextView }
     private val mealTime: TextView by lazy { findViewById<TextView>(R.id.activity_edit_meal_time) as TextView }
     private val mealPrice: TextView by lazy { findViewById<TextView>(R.id.activity_edit_meal_price) as TextView }
@@ -80,20 +87,20 @@ class EditMealActivity: AppCompatActivity() {
         alertDialogManager = AlertDialogManager(layoutInflater, this)
         alertDialogManager.createLoadingAlertDialog()
 
-        mealId = intent.getStringExtra("mealId")?:""
+        mealId = intent.getStringExtra("mealId") ?: ""
         val name = intent.getStringExtra("name")
         val time = intent.getStringExtra("time")
         val description = intent.getStringExtra("description")
-        var canbemade = intent.getBooleanExtra("canbemade",true)
+        var canbemade = intent.getBooleanExtra("canbemade", true)
         val price = intent.getStringExtra("price")
-        cantakeaway = intent.getBooleanExtra("cantakeaway",false)
+        cantakeaway = intent.getBooleanExtra("cantakeaway", false)
 
         mealName.text = name
         mealTime.text = time
         mealPrice.text = price
         mealDescription.text = description
 
-        if(cantakeaway == true){
+        if (cantakeaway == true) {
             canTakeAway.text = getString(R.string.cantakeaway)
         } else {
             canTakeAway.text = getString(R.string.cannot_takeaway)
@@ -112,19 +119,19 @@ class EditMealActivity: AppCompatActivity() {
         returnButton()
 
         if (mealId != null) {
-            getAllowedChanges(mealId,allowedChangesRecyclerView,allowedChangesLayoutManager,textError)
+            getAllowedChanges(mealId, allowedChangesRecyclerView, allowedChangesLayoutManager, textError)
         }
 
         // se ele no início está a true, ao carregar no butão passa a false
         // se ele no início está false, ao carregar no butão passa a true
-        if(canbemade == true){
+        if (canbemade == true) {
             warningWhite.visibility = View.VISIBLE
             warningGreen.visibility = View.GONE
 
             canbemade = false
 
             if (mealId != null) {
-                canBeMade(mealId,canbemade)
+                canBeMade(mealId, canbemade)
             }
 
         } else {
@@ -135,7 +142,7 @@ class EditMealActivity: AppCompatActivity() {
 
             // ao carregar no butão o canBeMade passa a false
             if (mealId != null) {
-                canBeMade(mealId,canbemade)
+                canBeMade(mealId, canbemade)
             }
         }
 
@@ -144,12 +151,23 @@ class EditMealActivity: AppCompatActivity() {
                 if (time != null) {
                     if (description != null) {
                         if (price != null) {
-                            edit(mealId,name,time, price,description,allowedChangesRecyclerView,allowedChangesEditRecyclerView,allowedChangesLayoutManager,allowedChangesEditLayoutManager)
+                            edit(
+                                mealId,
+                                name,
+                                time,
+                                price,
+                                description,
+                                allowedChangesRecyclerView,
+                                allowedChangesEditRecyclerView,
+                                allowedChangesLayoutManager,
+                                allowedChangesEditLayoutManager
+                            )
                         }
                     }
                 }
             }
         }
+        getImage()
 
         mealNameEdit.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
@@ -158,10 +176,59 @@ class EditMealActivity: AppCompatActivity() {
         }
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == ProfileFragment.IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
+            if (data != null) {
+                ImagesHelper().getImageFromDevice(data.data as Uri, this@EditMealActivity, mealImage, false)
+                sendImage(data.data as Uri)
+            }
 
-        getAllowedChangesEdit(mealId,allowedChangesEditRecyclerView,allowedChangesEditLayoutManager,textError)
+        } else {
+            getAllowedChangesEdit(mealId, allowedChangesEditRecyclerView, allowedChangesEditLayoutManager, textError)
+        }
+
+    }
+
+
+    private fun pickImageGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, ProfileFragment.IMAGE_REQUEST_CODE)
+    }
+
+
+    private fun sendImage(file: Uri) {
+
+        val stRef = storageRef.child("images/meals/${mealId}")
+        val uploadTask = stRef.putFile(file)
+
+        // Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener {
+            Log.d("MAIN", it.toString())
+            Toasty.error(this@EditMealActivity, getString(R.string.image_upload_error)).show()
+        }.addOnSuccessListener { taskSnapshot ->
+
+        }
+
+
+    }
+
+    private fun getImage() {
+
+        storageRef.child("images/meals/${mealId}").downloadUrl.addOnSuccessListener {
+            Log.d("MAIN", it.toString())
+            ImagesHelper().getImage(it.toString(), mealImage, false)
+        }.addOnFailureListener {
+            storageRef.child("images/meals/missing_image.jpg").downloadUrl.addOnSuccessListener {
+                Log.d("MAIN", it.toString())
+                ImagesHelper().getImage(it.toString(), mealImage, false)
+            }.addOnFailureListener {
+                Log.d("MAIN", it.toString())
+            }
+        }
+
     }
 
     fun hideKeyboard(view: View) {
@@ -171,16 +238,33 @@ class EditMealActivity: AppCompatActivity() {
     }
 
     @SuppressLint("MissingInflatedId")
-    fun edit (
-        mealId: String, name: String,time: String,price: String,description: String,allowedChangesRecyclerView: RecyclerView, allowedChangesEditRecyclerView: RecyclerView,
-        allowedChangesLayoutManager: RecyclerView.LayoutManager,allowedChangesEditLayoutManager: LinearLayoutManager){
+    fun edit(
+        mealId: String,
+        name: String,
+        time: String,
+        price: String,
+        description: String,
+        allowedChangesRecyclerView: RecyclerView,
+        allowedChangesEditRecyclerView: RecyclerView,
+        allowedChangesLayoutManager: RecyclerView.LayoutManager,
+        allowedChangesEditLayoutManager: LinearLayoutManager
+    ) {
 
 
-        pencilWhite.setOnClickListener(){
+        pencilWhite.setOnClickListener() {
+            mealImage.setOnClickListener {
+                pickImageGallery()
+            }
 
-            pencilWhite(name,time,price,description,allowedChangesRecyclerView)
 
-            cancelBtn.setOnClickListener{
+
+
+            pencilWhite(name, time, price, description, allowedChangesRecyclerView)
+
+            cancelBtn.setOnClickListener {
+
+                mealImage.setOnClickListener { }
+
 
                 pencilWhite.visibility = View.VISIBLE
                 pencilGreen.visibility = View.GONE
@@ -216,16 +300,16 @@ class EditMealActivity: AppCompatActivity() {
 
                 textErrorEdit.visibility = View.GONE
 
-                getAllowedChanges(mealId,allowedChangesRecyclerView,allowedChangesLayoutManager,textError)
+                getAllowedChanges(mealId, allowedChangesRecyclerView, allowedChangesLayoutManager, textError)
             }
 
-            incrementBtn.setOnClickListener{
+            incrementBtn.setOnClickListener {
                 val intent = Intent(this, AddMealChangeActivity::class.java)
                 intent.putExtra("mealid", mealId)
                 startActivity(intent)
             }
 
-            confirmBtn.setOnClickListener{
+            confirmBtn.setOnClickListener {
 
                 val mealNameText = mealNameEdit.text.toString()
                 val mealTimeText = mealTimeEdit.text.toString().toInt()
@@ -240,9 +324,9 @@ class EditMealActivity: AppCompatActivity() {
                 alertDialogManager.dialog.show()
                 textError.visibility = View.GONE
 
-                val body = MealBody(mealNameText,mealTimeText,mealDescriptionText,cantakeaway,mealPriceText)
+                val body = MealBody(mealNameText, mealTimeText, mealDescriptionText, cantakeaway, mealPriceText)
 
-                service.editMeal(mealId, "Bearer $token",body).enqueue(object :
+                service.editMeal(mealId, "Bearer $token", body).enqueue(object :
                     Callback<String> {
                     override fun onResponse(
                         call: Call<String>,
@@ -262,14 +346,14 @@ class EditMealActivity: AppCompatActivity() {
                             alertDialogManager.dialog.dismiss()
 
                             Toasty.error(this@EditMealActivity, getString(R.string.error_edit_meal), Toast.LENGTH_LONG).show()
-                        } else if(response.code() == 401){
+                        } else if (response.code() == 401) {
                             alertDialogManager.dialog.dismiss()
 
                             allowedChangesEditRecyclerView.visibility = View.VISIBLE
                             textError.visibility = View.GONE
 
                             AuthHelper().newSessionToken(this@EditMealActivity)
-                            getAllowedChangesEdit(mealId,allowedChangesEditRecyclerView,allowedChangesEditLayoutManager,textError)
+                            getAllowedChangesEdit(mealId, allowedChangesEditRecyclerView, allowedChangesEditLayoutManager, textError)
                         }
                     }
 
@@ -286,10 +370,11 @@ class EditMealActivity: AppCompatActivity() {
         }
     }
 
-    fun canBeMade(mealId: String, canBeMade: Boolean){
+    fun canBeMade(mealId: String, canBeMade: Boolean) {
 
-        if(canBeMade == false){
-            warningWhite.setOnClickListener{
+        if (canBeMade == false) {
+            warningWhite.setOnClickListener {
+
 
                 val service = retrofit.create(MealsService::class.java)
 
@@ -301,7 +386,7 @@ class EditMealActivity: AppCompatActivity() {
 
                 alertDialogManager.dialog.show()
 
-                service.canBeMade(mealId,"Bearer $token",body).enqueue(object :
+                service.canBeMade(mealId, "Bearer $token", body).enqueue(object :
                     Callback<String> {
                     override fun onResponse(
                         call: Call<String>,
@@ -316,13 +401,13 @@ class EditMealActivity: AppCompatActivity() {
                             warningWhite.visibility = View.GONE
                             warningGreen.visibility = View.VISIBLE
 
-                        } else if(response.code()==500) {
+                        } else if (response.code() == 500) {
                             alertDialogManager.dialog.dismiss()
 
                             Toasty.success(this@EditMealActivity, getString(R.string.error_meal_status), Toast.LENGTH_LONG).show()
-                        } else if(response.code()==401){
+                        } else if (response.code() == 401) {
                             AuthHelper().newSessionToken(this@EditMealActivity)
-                            canBeMade(mealId,canBeMade)
+                            canBeMade(mealId, canBeMade)
                         }
                     }
 
@@ -345,7 +430,7 @@ class EditMealActivity: AppCompatActivity() {
 
                 alertDialogManager.dialog.show()
 
-                service.canBeMade(mealId,"Bearer $token",body).enqueue(object :
+                service.canBeMade(mealId, "Bearer $token", body).enqueue(object :
                     Callback<String> {
                     override fun onResponse(
                         call: Call<String>,
@@ -360,13 +445,13 @@ class EditMealActivity: AppCompatActivity() {
                             warningGreen.visibility = View.GONE
                             warningWhite.visibility = View.VISIBLE
 
-                        } else if(response.code()==500) {
+                        } else if (response.code() == 500) {
                             alertDialogManager.dialog.dismiss()
 
                             Toasty.error(this@EditMealActivity, getString(R.string.error_meal_status_changed), Toast.LENGTH_LONG).show()
-                        } else if(response.code()==401){
+                        } else if (response.code() == 401) {
                             AuthHelper().newSessionToken(this@EditMealActivity)
-                            canBeMade(mealId,canBeMade)
+                            canBeMade(mealId, canBeMade)
                         }
                     }
 
@@ -380,7 +465,12 @@ class EditMealActivity: AppCompatActivity() {
 
     }
 
-    fun getAllowedChanges(mealId: String, allowedChangesRecyclerView: RecyclerView, allowedChangesLinearLayoutManager: RecyclerView.LayoutManager, textError: TextView){
+    fun getAllowedChanges(
+        mealId: String,
+        allowedChangesRecyclerView: RecyclerView,
+        allowedChangesLinearLayoutManager: RecyclerView.LayoutManager,
+        textError: TextView
+    ) {
 
         val service = retrofit.create(MealsService::class.java)
 
@@ -404,7 +494,7 @@ class EditMealActivity: AppCompatActivity() {
 
                     if (body != null) {
                         if (body.isNotEmpty()) {
-                            val allowedChangesAdapterRec = MealAllowedChangesAdapterRec(body,this@EditMealActivity)
+                            val allowedChangesAdapterRec = MealAllowedChangesAdapterRec(body, this@EditMealActivity)
 
                             allowedChangesRecyclerView.visibility = View.VISIBLE
                             textError.visibility = View.GONE
@@ -426,14 +516,14 @@ class EditMealActivity: AppCompatActivity() {
                     textError.visibility = View.GONE
 
                     Toasty.error(this@EditMealActivity, getString(R.string.error_allowed_changes), Toast.LENGTH_LONG).show()
-                } else if(response.code() == 401){
+                } else if (response.code() == 401) {
                     alertDialogManager.dialog.dismiss()
 
                     allowedChangesRecyclerView.visibility = View.VISIBLE
                     textError.visibility = View.GONE
 
                     AuthHelper().newSessionToken(this@EditMealActivity)
-                    getAllowedChanges(mealId,allowedChangesRecyclerView,allowedChangesLinearLayoutManager,textError)
+                    getAllowedChanges(mealId, allowedChangesRecyclerView, allowedChangesLinearLayoutManager, textError)
                 }
             }
 
@@ -448,7 +538,12 @@ class EditMealActivity: AppCompatActivity() {
         })
     }
 
-    fun getAllowedChangesEdit(mealId: String, allowedChangesEditRecyclerView: RecyclerView, allowedChangesEditLayoutManager: LinearLayoutManager, textError: TextView){
+    fun getAllowedChangesEdit(
+        mealId: String,
+        allowedChangesEditRecyclerView: RecyclerView,
+        allowedChangesEditLayoutManager: LinearLayoutManager,
+        textError: TextView
+    ) {
 
         val service = retrofit.create(MealsService::class.java)
 
@@ -472,7 +567,16 @@ class EditMealActivity: AppCompatActivity() {
 
                     if (body != null) {
                         if (body.isNotEmpty()) {
-                            val allowedChangesAdapterRec = MealAllowedChangesEditAdapterRec(body,sp,this@EditMealActivity,this@EditMealActivity,allowedChangesEditRecyclerView,allowedChangesEditLayoutManager,alertDialogManager,getString(R.string.wish_remove_allowed_change_ask))
+                            val allowedChangesAdapterRec = MealAllowedChangesEditAdapterRec(
+                                body,
+                                sp,
+                                this@EditMealActivity,
+                                this@EditMealActivity,
+                                allowedChangesEditRecyclerView,
+                                allowedChangesEditLayoutManager,
+                                alertDialogManager,
+                                getString(R.string.wish_remove_allowed_change_ask)
+                            )
 
                             allowedChangesEditRecyclerView.visibility = View.VISIBLE
                             textError.visibility = View.GONE
@@ -494,14 +598,14 @@ class EditMealActivity: AppCompatActivity() {
                     textError.visibility = View.GONE
 
                     Toasty.error(this@EditMealActivity, getString(R.string.error_allowed_changes), Toast.LENGTH_LONG).show()
-                } else if(response.code() == 401){
+                } else if (response.code() == 401) {
                     alertDialogManager.dialog.dismiss()
 
                     allowedChangesEditRecyclerView.visibility = View.VISIBLE
                     textError.visibility = View.GONE
 
                     AuthHelper().newSessionToken(this@EditMealActivity)
-                    getAllowedChangesEdit(mealId,allowedChangesEditRecyclerView,allowedChangesEditLayoutManager,textError)
+                    getAllowedChangesEdit(mealId, allowedChangesEditRecyclerView, allowedChangesEditLayoutManager, textError)
                 }
             }
 
@@ -516,7 +620,7 @@ class EditMealActivity: AppCompatActivity() {
         })
     }
 
-    fun pencilWhite(name: String,time: String,price: String,description: String,allowedChangesRecyclerView: RecyclerView){
+    fun pencilWhite(name: String, time: String, price: String, description: String, allowedChangesRecyclerView: RecyclerView) {
         pencilWhite.visibility = View.GONE
         pencilGreen.visibility = View.VISIBLE
 
@@ -541,14 +645,14 @@ class EditMealActivity: AppCompatActivity() {
         cancelBtn.visibility = View.VISIBLE
         confirmBtn.visibility = View.VISIBLE
 
-        if(canTakeAwayCheckBox.isChecked == true){
+        if (canTakeAwayCheckBox.isChecked == true) {
             cantakeaway = true
         } else {
             cantakeaway = false
         }
 
-        canTakeAwayCheckBox.setOnClickListener{
-            if(canTakeAwayCheckBox.isChecked == true){
+        canTakeAwayCheckBox.setOnClickListener {
+            if (canTakeAwayCheckBox.isChecked == true) {
                 cantakeaway = true
             } else {
                 cantakeaway = false
@@ -568,14 +672,14 @@ class EditMealActivity: AppCompatActivity() {
         mealDescriptionEdit.setHint(descriptionNotNull)
 
 
-        if(mealNameEdit.text.isEmpty()){
+        if (mealNameEdit.text.isEmpty()) {
             nameTextError.visibility = View.VISIBLE
         } else {
             nameTextError.visibility = View.GONE
         }
         mealNameEdit.addTextChangedListener {
             if (it != null) {
-                if(it.isEmpty()){
+                if (it.isEmpty()) {
                     nameTextError.visibility = View.VISIBLE
                 } else {
                     nameTextError.visibility = View.GONE
@@ -583,14 +687,14 @@ class EditMealActivity: AppCompatActivity() {
             }
         }
 
-        if(mealTimeEdit.text.isEmpty()){
+        if (mealTimeEdit.text.isEmpty()) {
             timeTextError.visibility = View.VISIBLE
         } else {
             timeTextError.visibility = View.GONE
         }
         mealTimeEdit.addTextChangedListener {
             if (it != null) {
-                if(it.isEmpty()){
+                if (it.isEmpty()) {
                     timeTextError.visibility = View.VISIBLE
                 } else {
                     timeTextError.visibility = View.GONE
@@ -598,14 +702,14 @@ class EditMealActivity: AppCompatActivity() {
             }
         }
 
-        if(mealPriceEdit.text.isEmpty()){
+        if (mealPriceEdit.text.isEmpty()) {
             priceTextError.visibility = View.VISIBLE
         } else {
             priceTextError.visibility = View.GONE
         }
         mealPriceEdit.addTextChangedListener {
             if (it != null) {
-                if(it.isEmpty()){
+                if (it.isEmpty()) {
                     priceTextError.visibility = View.VISIBLE
                 } else {
                     priceTextError.visibility = View.GONE
@@ -613,14 +717,14 @@ class EditMealActivity: AppCompatActivity() {
             }
         }
 
-        if(mealDescriptionEdit.text.isEmpty()){
+        if (mealDescriptionEdit.text.isEmpty()) {
             descriptionTextError.visibility = View.VISIBLE
         } else {
             descriptionTextError.visibility = View.GONE
         }
         mealDescriptionEdit.addTextChangedListener {
             if (it != null) {
-                if(it.isEmpty()){
+                if (it.isEmpty()) {
                     descriptionTextError.visibility = View.VISIBLE
                 } else {
                     descriptionTextError.visibility = View.GONE
@@ -634,8 +738,8 @@ class EditMealActivity: AppCompatActivity() {
         getAllowedChangesEdit(mealId, allowedChangesEditRecyclerView, allowedChangesEditLayoutManager, textErrorEdit)
     }
 
-    fun returnButton(){
-        arrowBack.setOnClickListener{
+    fun returnButton() {
+        arrowBack.setOnClickListener {
             finish()
         }
     }
