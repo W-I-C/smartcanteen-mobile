@@ -61,6 +61,7 @@ class LoadingScreenActivity : AppCompatActivity() {
 
                             val token = loadingBody?.token
                             val role = loadingBody?.role
+                            val uid = loadingBody?.uid
 
                             if (token != null) {
                                 Log.d("token", token)
@@ -68,6 +69,8 @@ class LoadingScreenActivity : AppCompatActivity() {
 
                             val sp = SharedPreferencesHelper.getSharedPreferences(this@LoadingScreenActivity)
                             sp.edit().putString("token", token).commit()
+                            sp.edit().putString("role", role).commit()
+                            sp.edit().putString("uid", uid).commit()
 
                             if (role == "consumer") {
 

@@ -104,6 +104,7 @@ class LoginActivity : AppCompatActivity() {
                                         val loginBody = response.body()
                                         val token = loginBody?.token
                                         val role = loginBody?.role
+                                        val uid = loginBody?.uid
 
                                         if(token != null){
                                             Log.d("token", token)
@@ -111,6 +112,7 @@ class LoginActivity : AppCompatActivity() {
                                         val sp = SharedPreferencesHelper.getSharedPreferences(this@LoginActivity)
                                         sp.edit().putString("token", token).commit()
                                         sp.edit().putString("role", role).commit()
+                                        sp.edit().putString("uid", uid).commit()
 
                                         alertDialogManager.dialog.dismiss()
 

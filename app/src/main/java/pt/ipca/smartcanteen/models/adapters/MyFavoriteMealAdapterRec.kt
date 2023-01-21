@@ -1,6 +1,7 @@
 package pt.ipca.smartcanteen.models.adapters
 
 import android.app.Activity
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +11,7 @@ import pt.ipca.smartcanteen.models.RetroMeal
 import pt.ipca.smartcanteen.models.adapters.viewHolders.MyFavoriteMealRecViewHolder
 import pt.ipca.smartcanteen.models.adapters.viewHolders.MyOrdersCartRecViewHolder
 import pt.ipca.smartcanteen.models.helpers.RetroFavoriteMeal
+import pt.ipca.smartcanteen.views.activities.AddMealCartActivity
 
 class MyFavoriteMealAdapterRec(private var listFavorite: List<RetroFavoriteMeal>, val activity: Activity, var linearLayoutManager: LinearLayoutManager,
                                 val FavAdapterRec:RecyclerView) :
@@ -22,22 +24,32 @@ class MyFavoriteMealAdapterRec(private var listFavorite: List<RetroFavoriteMeal>
     }
 
     override fun onBindViewHolder(holder: MyFavoriteMealRecViewHolder, position: Int) {
-        val order = listFavorite.get(position)
-        val name = order.name
-        val time = "${order.time}min"
-        val price = "${order.price}€"
-        val url = order.url?:""
+        val meal = listFavorite.get(position)
+        val name = meal.name
+        val time = "${meal.time}min"
+        val price = "${meal.price}€"
 
-        val mealId= order.mealId
+        val mealId= meal.mealId
 
-        holder.bindData(name,time,price, url)
-        holder.deleteMeal(mealId)
-
+        holder.bindData(mealId,name,time,price)
+        holder.itemView.setOnClickListener {
+            mealDetails(mealId,name,meal.description,price,time)
+        }
 
     }
 
     override fun getItemCount(): Int {
         return listFavorite.size
+    }
+
+    fun mealDetails(mealid: String,mealName: String,mealDescription: String,mealPrice: String, mealPreptime: String) {
+        var intent = Intent(activity, AddMealCartActivity::class.java)
+        intent.putExtra("mealId", mealid)
+        intent.putExtra("name", mealName)
+        intent.putExtra("description", mealDescription)
+        intent.putExtra("price", mealPrice)
+        intent.putExtra("time", mealPreptime)
+        activity.startActivity(intent)
     }
 
 

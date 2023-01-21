@@ -25,10 +25,9 @@ class OrderDetailsAdapterRec(private var orderMealsList: List<RetroTicketMeal>) 
         val name = orderMeal.name
         val description = orderMeal.description
         val mealchanges = orderMeal.mealchanges
-        val url = orderMeal.url?:""
 
 
-        holder.bindData(name, amount, description, mealchanges, url)
+        holder.bindData(orderMeal.mealid,name, amount, description, mealchanges)
 
     }
 
