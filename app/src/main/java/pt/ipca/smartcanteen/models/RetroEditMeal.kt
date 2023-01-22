@@ -9,5 +9,5 @@ class RetroEditMeal(
     @SerializedName("description") var description: String,
     @SerializedName("canTakeAway") var cantakeaway: Boolean,
     @SerializedName("price") var price: Float,
-    @SerializedName("url") var url: Float,
+
 )

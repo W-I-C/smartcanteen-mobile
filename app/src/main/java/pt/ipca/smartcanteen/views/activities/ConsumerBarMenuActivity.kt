@@ -75,11 +75,11 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
 
                             var adapter = ArrayAdapter(
                                 this@ConsumerBarMenuActivity,
-                                android.R.layout.simple_spinner_item,
+                                android.R.layout.simple_spinner_dropdown_item,
                                 body.map { retroBar -> retroBar.name }
                             )
 
-                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            adapter.setDropDownViewResource(R.layout.spinner_item);
                             barSpinner.adapter = adapter
 
                             barSpinner.onItemSelectedListener =

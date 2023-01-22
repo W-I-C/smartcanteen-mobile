@@ -46,66 +46,57 @@
         android:elevation="5dp"
         />
 
-    <EditText
-        android:id="@+id/profile_name_edittext"
+    <TextView
+        android:id="@+id/profile_name_tv"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="40dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/edit_text_style"
-        android:drawableRight="@drawable/edit"
-        android:drawableBottom="@drawable/rounded_button_style"
-        android:padding="10dp"
-        android:src="@drawable/rounded_button_style"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textAlignment="center"
         android:text="@string/name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image_imageview"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/profile_image_imageview"/>
 
-    <EditText
-        android:id="@+id/profile_preferencecantine_edittext"
+
+    <Spinner
+        android:id="@+id/profile_preferred_campus_sp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="20dp"
         android:background="@drawable/spinner_style"
-        android:drawableBottom="@drawable/rounded_button_style"
-        android:padding="10dp"
-        android:src="@drawable/rounded_button_style"
-        android:text="@string/institute"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_name_edittext"
+        app:layout_constraintTop_toBottomOf="@+id/profile_name_tv"
         />
 
-    <EditText
-        android:id="@+id/main_institute_edittext"
+    <Spinner
+        android:id="@+id/profile_preferred_bar_sp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="20dp"
         android:background="@drawable/spinner_style"
-        android:drawableBottom="@drawable/rounded_button_style"
-        android:padding="10dp"
-        android:text="@string/preferred_canteen"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_preferencecantine_edittext"
+        app:layout_constraintTop_toBottomOf="@+id/profile_preferred_campus_sp"
         />
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/profile_button_cancel"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="80dp"
+        android:layout_marginStart="80dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/button_grey"
         android:hint="@string/cancel"
-        android:onClick="funCancel"
         android:padding="10dp"
         android:textAlignment="center"
         android:textSize="14sp"
@@ -114,6 +105,7 @@
 
 
     <Button
+        android:id="@+id/profile_save_btn"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginRight="80dp"

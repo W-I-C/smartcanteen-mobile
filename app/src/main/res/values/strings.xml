@@ -153,4 +153,5 @@
     <string name="cancel_operation">Cancel operation?</string>
     <string name="confirm_operation">Confirm the operation?</string>
     <string name="image_upload_error">Error Uploading Image</string>
+    <string name="didnt_change">There are no changes</string>
 </resources>
