@@ -68,9 +68,10 @@ class ConsumerTradeActivity : AppCompatActivity() {
         if (spinner_general_payable != null) {
             val adapter = ArrayAdapter(
                 this,
-                android.R.layout.simple_spinner_item,
+                android.R.layout.simple_spinner_dropdown_item,
                 listOf("Sim", "Não")
             )
+            adapter.setDropDownViewResource(R.layout.spinner_item);
             spinner_general_payable.adapter = adapter
         }
 
@@ -104,9 +105,10 @@ class ConsumerTradeActivity : AppCompatActivity() {
         if (spinner_direct_payable != null) {
             val adapter = ArrayAdapter(
                 this,
-                android.R.layout.simple_spinner_item,
+                android.R.layout.simple_spinner_dropdown_item,
                 listOf("Sim", "Não")
             )
+            adapter.setDropDownViewResource(R.layout.spinner_item);
             spinner_direct_payable.adapter = adapter
         }
 
@@ -250,10 +252,10 @@ class ConsumerTradeActivity : AppCompatActivity() {
                             var adapter =
                                 ArrayAdapter(
                                     this@ConsumerTradeActivity,
-                                    android.R.layout.simple_spinner_item,
+                                    android.R.layout.simple_spinner_dropdown_item,
                                     paymentMethods.map { retroPaymentMethods -> retroPaymentMethods.name }
                                 )
-                            adapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            adapter.setDropDownViewResource(R.layout.spinner_item);
                             spinner_general.adapter = adapter
                             spinner_direct.adapter = adapter
                         }

@@ -143,4 +143,6 @@
     <string name="confirm_allowed_changes">Confirmar alterações de ingredientes?</string>
     <string name="cancel_operation">Cancelar operação?</string>
     <string name="confirm_operation">Confirmar a operação</string>
+    <string name="didnt_change">Não existem alterações</string>
+    <string name="image_upload_error">Erro ao carregar a imagem</string>
 </resources>

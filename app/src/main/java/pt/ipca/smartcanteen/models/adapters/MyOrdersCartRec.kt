@@ -22,14 +22,15 @@ class MyOrdersCartRec(private var ordersList: List<RetroCartMeals>, val activity
     }
 
     override fun onBindViewHolder(holder: MyOrdersCartRecViewHolder, position: Int) {
-        val order = ordersList.get(position)
-        val name = order.name
-        val quantity = "${order.quantity} ${if(order.quantity > 1) "doses" else "dose"}"
-        val price = "${order.price}€"
-        val url = order.url?:""
-        val cartmealId=order.cartmealId
+        val meal = ordersList.get(position)
+        val mealId =meal.mealId
+        val name = meal.name
+        val quantity = "${meal.quantity} ${if(meal.quantity > 1) "doses" else "dose"}"
+        val price = "${meal.price}€"
 
-        holder.bindData(name,quantity,price, url)
+        val cartmealId=meal.cartmealId
+
+        holder.bindData(mealId,name,quantity,price)
         holder.deleteMeal(cartmealId)
     }
 

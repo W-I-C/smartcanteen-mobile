@@ -28,7 +28,7 @@ class OrderActivity : AppCompatActivity() {
         if (spinner != null) {
             val adapter = ArrayAdapter(
                 this,
-                android.R.layout.simple_spinner_item,
+                android.R.layout.simple_spinner_dropdown_item,
                 listOf(
                     "Cantina Barcelos",
                     "\n",
@@ -41,6 +41,7 @@ class OrderActivity : AppCompatActivity() {
                     "Cantina Famalicão"
                 )
             )
+            adapter.setDropDownViewResource(R.layout.spinner_item);
             spinner.adapter = adapter
         }
 

@@ -15,6 +15,7 @@
         <!-- Text Color -->
         <item name="android:textColor">@android:color/black</item>
         <item name="android:windowBackground">@android:color/white</item>
+
     </style>
 
     <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">

@@ -130,11 +130,11 @@ class MenuConsumerFragment : Fragment() {
                             var adapter = getActivity()?.let {
                                 ArrayAdapter(
                                     it,
-                                    android.R.layout.simple_spinner_item,
+                                    android.R.layout.simple_spinner_dropdown_item,
                                     body.map { retroBar -> retroBar.name }
                                 )
                             }
-                            adapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                adapter?.setDropDownViewResource(R.layout.spinner_item);
                             barSpinner.adapter = adapter
 
                             barSpinner.onItemSelectedListener =

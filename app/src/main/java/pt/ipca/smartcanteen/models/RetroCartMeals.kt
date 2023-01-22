@@ -8,7 +8,7 @@ class RetroCartMeals(
     @SerializedName("amount") var quantity:Int,
     @SerializedName("carttotal") var cartTotal:Double,
     @SerializedName("cartmealid") var cartmealId:String,
-    @SerializedName("url") var url:String,
+    @SerializedName("mealid") var mealId:String,
     )
 
 {
