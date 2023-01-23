@@ -16,7 +16,6 @@ class MyFavoriteMealAdapterRec(
 ) :
     RecyclerView.Adapter<MyFavoriteMealRecViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyFavoriteMealRecViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return MyFavoriteMealRecViewHolder(inflater, parent, activity, linearLayoutManager, FavAdapterRec)
@@ -27,30 +26,29 @@ class MyFavoriteMealAdapterRec(
         val name = meal.name
         val time = "${meal.time}min"
         val price = "${meal.price}€"
-
+        val canbemade = meal.canbemade
         val mealId = meal.mealId
 
         holder.bindData(mealId, name, time, price)
         holder.itemView.setOnClickListener {
-            mealDetails(mealId, name, meal.description, price, time)
+            mealDetails(mealId, name, meal.description, price, time, canbemade)
         }
-
     }
 
     override fun getItemCount(): Int {
         return listFavorite.size
     }
 
-    fun mealDetails(mealid: String, mealName: String, mealDescription: String, mealPrice: String, mealPreptime: String) {
+    fun mealDetails(mealid: String, mealName: String, mealDescription: String, mealPrice: String, mealPreptime: String, canBeMade: Boolean) {
         var intent = Intent(activity, AddMealCartActivity::class.java)
         intent.putExtra("mealId", mealid)
         intent.putExtra("name", mealName)
         intent.putExtra("description", mealDescription)
         intent.putExtra("price", mealPrice)
         intent.putExtra("time", mealPreptime)
+        intent.putExtra("canbemade", canBeMade)
+        intent.putExtra("isfavorite", true)
         activity.startActivity(intent)
     }
-
-
 }
 

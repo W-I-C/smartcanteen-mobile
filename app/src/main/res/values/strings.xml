@@ -155,4 +155,7 @@
     <string name="image_upload_error">Error Uploading Image</string>
     <string name="didnt_change">There are no changes</string>
     <string name="cannot_made">This meal cannot be made</string>
+    <string name="canbemade">Can Be Made</string>
+    <string name="change_image">Click to Change Image</string>
+    <string name="cannot_be_made">Cannot Be Made</string>
 </resources>
