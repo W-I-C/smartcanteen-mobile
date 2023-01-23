@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.models.adapters.viewHolders.MyFavoriteMealRecViewHolder
-import pt.ipca.smartcanteen.models.helpers.RetroFavoriteMeal
+import pt.ipca.smartcanteen.models.retrofit.response.RetroFavoriteMeal
 import pt.ipca.smartcanteen.views.activities.AddMealCartActivity
 
 class MyFavoriteMealAdapterRec(

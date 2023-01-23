@@ -13,6 +13,7 @@ import com.google.firebase.storage.FirebaseStorage
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.adapters.MyFavoriteMealAdapterRec
 import pt.ipca.smartcanteen.models.helpers.*
+import pt.ipca.smartcanteen.models.retrofit.response.RetroFavoriteMeal
 import pt.ipca.smartcanteen.services.FavoritemealService
 import retrofit2.Call
 import retrofit2.Callback
