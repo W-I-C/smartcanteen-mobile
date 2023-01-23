@@ -4,13 +4,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.models.retrofit.body.DeviceRegisterBody
 import pt.ipca.smartcanteen.models.retrofit.response.LoginResponse
+import pt.ipca.smartcanteen.models.room.SmartCanteenDB
+import pt.ipca.smartcanteen.models.room.tables.Profile
 import pt.ipca.smartcanteen.services.AuthService
 import pt.ipca.smartcanteen.views.fragments.consumer_fragments.ConsumerFragmentActivity
 import pt.ipca.smartcanteen.views.fragments.employee_fragments.EmployeeFragmentActivity
@@ -26,6 +31,27 @@ class LoadingScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading_screen)
+
+        val db = Room.databaseBuilder(
+            applicationContext,
+            SmartCanteenDB::class.java, "smartcanteen.db"
+        ).build()
+        GlobalScope.launch {
+            /*db.profileDao().insertAll(
+                Profile(
+                    uid = "5fa801a1-2645-4dbc-a633-3a5cec7202be",
+                    name = "Consumer2",
+                    email = "consumer2@ipca.pt",
+                    campusId="13be23c1-2e9b-43fc-acaa-839c6b3573bc",
+                    campusName="Barcelos",
+                    barId="a91aa933-440b-4c80-beef-f4cadd1aefff",
+                    barName="Est"
+                )
+            )*/
+            val data = db.profileDao().getProfile()
+            Log.d("MAIN",data.toString())
+        }
+
 
         val sp = SharedPreferencesHelper.getSharedPreferences(this@LoadingScreenActivity)
         val token = sp.getString("token", null)

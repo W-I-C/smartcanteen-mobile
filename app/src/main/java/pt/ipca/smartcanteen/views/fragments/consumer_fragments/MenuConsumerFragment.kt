@@ -27,6 +27,7 @@ import pt.ipca.smartcanteen.services.CampusService
 import pt.ipca.smartcanteen.services.MealsService
 import pt.ipca.smartcanteen.services.OrdersService
 import pt.ipca.smartcanteen.services.TradesService
+import pt.ipca.smartcanteen.views.activities.ConsumerAvailableTradesActivity
 import pt.ipca.smartcanteen.views.activities.ConsumerBarMenuActivity
 import pt.ipca.smartcanteen.views.activities.NotificationActivity
 import retrofit2.Call
@@ -41,7 +42,9 @@ class MenuConsumerFragment : Fragment() {
     private val tradesTextProgress: TextView by lazy { requireView().findViewById<TextView>(R.id.consumer_menu_trades_progress_bar_text) as TextView }
     private val mealsProgressBar: ProgressBar by lazy { requireView().findViewById<ProgressBar>(R.id.consumer_menu_meals_progress_bar) as ProgressBar }
     private val mealsTextProgress: TextView by lazy { requireView().findViewById<TextView>(R.id.consumer_menu_meals_progress_bar_text) as TextView }
-    private val viewMealsText: TextView by lazy { requireView().findViewById<TextView>(R.id.consumer_menu_bar_meals_view_meals_tv) as TextView }
+    private val seeMealsText: TextView by lazy { requireView().findViewById<TextView>(R.id.consumer_menu_bar_meals_view_meals_tv) as TextView }
+    private val seeTradesText: TextView by lazy { requireView().findViewById<TextView>(R.id.consumer_menu_trades_view_tv) as TextView }
+    private val tradesTitleText: TextView by lazy { requireView().findViewById<TextView>(R.id.consumer_menu_trades_tv) as TextView }
     private val noAvailableTradesText: TextView by lazy { requireView().findViewById<TextView>(R.id.consumer_menu_trades_no_trades_text) as TextView }
     private val ordersProgressBar: ProgressBar by lazy { requireView().findViewById<ProgressBar>(R.id.consumer_menu_orders_progress_bar) as ProgressBar }
     private val ordersTextProgress: TextView by lazy { requireView().findViewById<TextView>(R.id.consumer_menu_orders_progress_bar_text) as TextView }
@@ -80,12 +83,23 @@ class MenuConsumerFragment : Fragment() {
             startActivity(intent)
         }
 
+        tradesTitleText.setOnClickListener{
+            val intent = Intent(requireActivity(), ConsumerAvailableTradesActivity::class.java)
+            startActivity(intent)
+        }
+
+
+        seeTradesText.setOnClickListener{
+            val intent = Intent(requireActivity(), ConsumerAvailableTradesActivity::class.java)
+            startActivity(intent)
+        }
+
         barMealsTitleTv.setOnClickListener {
             val intent = Intent(requireActivity(), ConsumerBarMenuActivity::class.java)
             startActivity(intent)
         }
 
-        viewMealsText.setOnClickListener {
+        seeMealsText.setOnClickListener {
             val intent = Intent(requireActivity(), ConsumerBarMenuActivity::class.java)
             startActivity(intent)
         }
