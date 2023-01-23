@@ -1,11 +1,13 @@
 package pt.ipca.smartcanteen.views.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import pt.ipca.smartcanteen.R
+import pt.ipca.smartcanteen.views.fragments.consumer_fragments.MenuConsumerFragment
 
 class OrderActivity : AppCompatActivity() {
 
@@ -93,9 +95,11 @@ class OrderActivity : AppCompatActivity() {
         button.setOnClickListener {
 
             Toast.makeText(this, "Carrinho finalizado. Aguarda confirmação de pagamento", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this@OrderActivity, MenuConsumerFragment::class.java)
+            startActivity(intent)
         }
     }
-
 }
 
 
