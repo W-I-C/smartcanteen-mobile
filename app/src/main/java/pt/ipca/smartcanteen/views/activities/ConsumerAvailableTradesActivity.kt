@@ -25,6 +25,7 @@ import retrofit2.Retrofit
 class ConsumerAvailableTradesActivity : AppCompatActivity() {
     private val mealsProgressBar: ProgressBar by lazy { findViewById<ProgressBar>(R.id.consumer_trades_progress_bar) as ProgressBar }
     private val mealsTextProgress: TextView by lazy { findViewById<TextView>(R.id.consumer_trades_progress_bar_text) as TextView }
+    private val backArrow: ImageView by lazy { findViewById<ImageView>(R.id.consumer_trades_arrow) as ImageView }
 
     private val tradesRv: RecyclerView by lazy { findViewById<RecyclerView>(R.id.consumer_trades_rv) as RecyclerView }
 
@@ -34,6 +35,10 @@ class ConsumerAvailableTradesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_consumer_available_trades)
 
         getBarInfo()
+
+        backArrow.setOnClickListener{
+            finish()
+        }
     }
 
     fun getBarInfo(
