@@ -17,7 +17,7 @@
         android:layout_marginTop="20dp"
         android:textColor="@color/background_color"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/trade_payment_arrow"
@@ -29,8 +29,7 @@
         android:backgroundTint="@color/black"
         android:layout_marginLeft="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/type_payment_textview"
@@ -56,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/type_payment_textview"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:elevation="5dp"/>
+        android:elevation="5dp" />
 
     <TextView
         android:id="@+id/total_payment_textview"
@@ -96,8 +95,7 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/rounded_button_style"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/trade_cancel_payment_pay"
@@ -112,7 +110,6 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/button_grey"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

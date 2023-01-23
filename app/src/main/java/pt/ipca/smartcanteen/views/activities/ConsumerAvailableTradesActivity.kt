@@ -1,25 +1,20 @@
 package pt.ipca.smartcanteen.views.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
-import androidx.recyclerview.widget.RecyclerView.Orientation
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.RetroBar
-import pt.ipca.smartcanteen.models.RetroTrade
-import pt.ipca.smartcanteen.models.adapters.BarMenuMealsAdapterRec
 import pt.ipca.smartcanteen.models.adapters.ConsumerAvailableTradesAdapterRec
-import pt.ipca.smartcanteen.models.adapters.TradeMealsAdapterRec
-import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.retrofit.response.RetroBar
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTrade
 import pt.ipca.smartcanteen.services.CampusService
 import pt.ipca.smartcanteen.services.TradesService
 import retrofit2.Call
@@ -74,7 +69,7 @@ class ConsumerAvailableTradesActivity : AppCompatActivity() {
                                 body.map { retroBar -> retroBar.name }
                             )
 
-                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
                             barSpinner.adapter = adapter
 
                             barSpinner.onItemSelectedListener =

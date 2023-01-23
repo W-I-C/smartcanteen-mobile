@@ -14,11 +14,11 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.storage.FirebaseStorage
 import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.ProfileBody
-import pt.ipca.smartcanteen.models.RetroBar
-import pt.ipca.smartcanteen.models.RetroCampus
-import pt.ipca.smartcanteen.models.RetroProfile
 import pt.ipca.smartcanteen.models.helpers.*
+import pt.ipca.smartcanteen.models.retrofit.body.ProfileBody
+import pt.ipca.smartcanteen.models.retrofit.response.RetroBar
+import pt.ipca.smartcanteen.models.retrofit.response.RetroCampus
+import pt.ipca.smartcanteen.models.retrofit.response.RetroProfile
 import pt.ipca.smartcanteen.services.CampusService
 import pt.ipca.smartcanteen.services.ProfileService
 import retrofit2.Call
@@ -64,10 +64,10 @@ class ProfileFragment : Fragment() {
         }
 
         saveBtn.setOnClickListener {
-            if(selectedCampus!=null && selectedBar!= null){
+            if (selectedCampus != null && selectedBar != null) {
                 saveProfile()
-            }else{
-                Toasty.error(requireContext(),requireContext().getString(R.string.didnt_change)).show()
+            } else {
+                Toasty.error(requireContext(), requireContext().getString(R.string.didnt_change)).show()
             }
         }
 
@@ -86,9 +86,9 @@ class ProfileFragment : Fragment() {
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
 
-        val body = ProfileBody(selectedCampus!!,selectedBar!!)
+        val body = ProfileBody(selectedCampus!!, selectedBar!!)
 
-        service.editProfile(body,"Bearer $token").enqueue(object :
+        service.editProfile(body, "Bearer $token").enqueue(object :
             Callback<RetroProfile> {
             override fun onResponse(
                 call: Call<RetroProfile>,
@@ -134,14 +134,14 @@ class ProfileFragment : Fragment() {
                         if (body.isNotEmpty()) {
                             if (isAdded) {
 
-                                var adapter = getActivity()?.let {
+                                var adapter = activity?.let {
                                     ArrayAdapter(
                                         it,
                                         android.R.layout.simple_spinner_dropdown_item,
                                         body.map { retroBar -> retroBar.name }
                                     )
                                 }
-                                adapter?.setDropDownViewResource(R.layout.spinner_item);
+                                adapter?.setDropDownViewResource(R.layout.spinner_item)
                                 spinnerBar.adapter = adapter
 
                                 val index = body.indexOfFirst { bar -> bar.name == defaultBar }
@@ -205,14 +205,14 @@ class ProfileFragment : Fragment() {
                         if (body.isNotEmpty()) {
                             if (isAdded) {
 
-                                var adapter = getActivity()?.let {
+                                var adapter = activity?.let {
                                     ArrayAdapter(
                                         it,
                                         android.R.layout.simple_spinner_dropdown_item,
                                         body.map { campus -> campus.name }
                                     )
                                 }
-                                adapter?.setDropDownViewResource(R.layout.spinner_item);
+                                adapter?.setDropDownViewResource(R.layout.spinner_item)
                                 spinnerCampus.adapter = adapter
                                 val index = body.indexOfFirst { campus -> campus.name == defaultCampus }
                                 spinnerCampus.setSelection(index)
@@ -323,7 +323,7 @@ class ProfileFragment : Fragment() {
                     if (response.code() == 200) {
                         val body = response.body()
                         if (isAdded && body != null) {
-                            name.setText(body.name)
+                            name.text = body.name
                             getBarInfo(body.barname)
                             getCampusInfo(body.campusname)
                         }

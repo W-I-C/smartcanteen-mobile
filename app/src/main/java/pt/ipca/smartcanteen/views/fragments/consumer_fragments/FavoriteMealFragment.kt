@@ -1,20 +1,18 @@
 package pt.ipca.smartcanteen.views.fragments.consumer_fragments
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.adapters.MyFavoriteMealAdapterRec
-import pt.ipca.smartcanteen.models.adapters.MyOrdersCartRec
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.RetroFavoriteMeal
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
@@ -25,18 +23,18 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-
-
 class FavoriteMealFragment : Fragment() {
 
     private val menuRv: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.favourites_menu_rv) as RecyclerView }
     private val loadingProgressBar: ProgressBar by lazy { requireView().findViewById<RecyclerView>(R.id.favourites_menu_progress_bar) as ProgressBar }
     private val loadingProgressText: TextView by lazy { requireView().findViewById<RecyclerView>(R.id.favourites_menu_progress_bar_text) as TextView }
 
-    val linearLayoutManager=LinearLayoutManager(activity)
+    val linearLayoutManager = LinearLayoutManager(activity)
 
-    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, parent: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return inflater.inflate(R.layout.fragment_favorite_meal, parent, false)
     }
 
@@ -48,7 +46,7 @@ class FavoriteMealFragment : Fragment() {
     }
 
 
-    fun getFavs(){
+    fun getFavs() {
         val retrofit = SmartCanteenRequests().retrofit
         val service = retrofit.create(FavoritemealService::class.java)
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
@@ -72,12 +70,12 @@ class FavoriteMealFragment : Fragment() {
 
                     if (retroFit2 != null) {
                         if (!retroFit2.isEmpty()) {
-                            if(isAdded) {
+                            if (isAdded) {
                                 rebuildlist(MyFavoriteMealAdapterRec(retroFit2, requireActivity(), linearLayoutManager, menuRv))
                             }
                         }
                     }
-                }else if(response.code()==401){
+                } else if (response.code() == 401) {
                     AuthHelper().newSessionToken(requireActivity())
                     getFavs()
                 }

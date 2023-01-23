@@ -1,8 +1,8 @@
-package pt.ipca.smartcanteen.models
+package pt.ipca.smartcanteen.models.retrofit.response
 
 import com.google.gson.annotations.SerializedName
 
-class RetroMealChange (
+class RetroMealChange(
     @SerializedName("ingname") var ingname: String,
     @SerializedName("ingamount") var ingamount: Int,
     @SerializedName("isremoveonly") var isremoveonly: Boolean,

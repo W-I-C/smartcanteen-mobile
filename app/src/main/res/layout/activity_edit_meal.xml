@@ -13,7 +13,7 @@
         android:background="@drawable/scroll_bottom_sheet_rectangle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/activity_edit_meal_back_arrow_iv"
@@ -24,8 +24,7 @@
         android:background="@drawable/arrow_back"
         android:elevation="5dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image"
-        />
+        app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image" />
 
     <ImageView
         android:id="@+id/activity_edit_meal_edit_pencil_white"
@@ -36,8 +35,7 @@
         android:background="@drawable/edit_white"
         android:elevation="5dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image"
-        />
+        app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image" />
 
     <ImageView
         android:id="@+id/activity_edit_meal_edit_pencil_green"
@@ -49,8 +47,7 @@
         android:elevation="5dp"
         android:visibility="gone"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image"
-        />
+        app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image" />
 
     <ImageView
         android:id="@+id/activity_edit_meal_edit_warning_white"
@@ -62,8 +59,7 @@
         android:visibility="gone"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image"
-        android:elevation="5dp"
-        />
+        android:elevation="5dp" />
 
     <ImageView
         android:id="@+id/activity_edit_meal_edit_warning_green"
@@ -75,8 +71,7 @@
         android:visibility="gone"
         android:elevation="5dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image"
-        />
+        app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image" />
 
     <TextView
         android:id="@+id/activity_edit_meal_name"
@@ -89,7 +84,7 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@id/activity_edit_meal_image"
-        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image"/>
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image" />
 
     <EditText
         android:id="@+id/activity_edit_meal_name_edittext"
@@ -104,7 +99,7 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         app:layout_constraintStart_toStartOf="@id/activity_edit_meal_image"
-        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image"/>
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image" />
 
     <TextView
         android:id="@+id/trade_name_edit_textview_error"
@@ -116,7 +111,7 @@
         android:visibility="gone"
         android:textColorHint="@color/redButton"
         app:layout_constraintStart_toStartOf="@+id/activity_edit_meal_name_edittext"
-        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_name_edittext"/>
+        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_name_edittext" />
 
     <TextView
         android:id="@+id/activity_edit_meal_time"
@@ -127,7 +122,7 @@
         android:textSize="15sp"
         android:textColor="@color/black"
         app:layout_constraintRight_toLeftOf="@id/activity_edit_meal_clock"
-        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image"/>
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image" />
 
     <EditText
         android:id="@+id/activity_edit_meal_time_edittext"
@@ -140,7 +135,7 @@
         android:inputType="number"
         android:digits="0123456789"
         app:layout_constraintRight_toLeftOf="@id/activity_edit_meal_clock"
-        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image"/>
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image" />
 
     <TextView
         android:id="@+id/trade_time_edit_textview_error"
@@ -152,7 +147,7 @@
         android:visibility="gone"
         android:textColorHint="@color/redButton"
         app:layout_constraintEnd_toEndOf="@+id/activity_edit_meal_time_edittext"
-        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_time_edittext"/>
+        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_time_edittext" />
 
     <TextView
         android:id="@+id/activity_edit_meal_clock"
@@ -164,7 +159,7 @@
         android:textSize="15sp"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@id/activity_edit_meal_image"
-        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image"/>
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image" />
 
     <TextView
         android:id="@+id/activity_edit_meal_price"
@@ -177,7 +172,7 @@
         android:textStyle="bold"
         android:textColor="@color/background_color"
         app:layout_constraintStart_toStartOf="@id/activity_edit_meal_name"
-        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_name"/>
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_name" />
 
     <EditText
         android:id="@+id/activity_edit_meal_price_edittext"
@@ -192,7 +187,7 @@
         android:textStyle="bold"
         android:textColor="@color/background_color"
         app:layout_constraintStart_toStartOf="@id/trade_name_edit_textview_error"
-        app:layout_constraintTop_toBottomOf="@+id/trade_name_edit_textview_error"/>
+        app:layout_constraintTop_toBottomOf="@+id/trade_name_edit_textview_error" />
 
     <TextView
         android:id="@+id/trade_price_edit_textview_error"
@@ -204,7 +199,7 @@
         android:visibility="gone"
         android:textColorHint="@color/redButton"
         app:layout_constraintStart_toStartOf="@+id/activity_edit_meal_price_edittext"
-        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_price_edittext"/>
+        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_price_edittext" />
 
     <TextView
         android:id="@+id/activity_edit_meal_description_tittle"
@@ -216,7 +211,7 @@
         android:textSize="18sp"
         android:textColor="#515050"
         app:layout_constraintStart_toStartOf="@id/activity_edit_meal_price"
-        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_price"/>
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_price" />
 
     <TextView
         android:id="@+id/activity_edit_meal_description_tittle_edittext"
@@ -229,7 +224,7 @@
         android:textSize="18sp"
         android:textColor="#515050"
         app:layout_constraintStart_toStartOf="@id/trade_price_edit_textview_error"
-        app:layout_constraintTop_toBottomOf="@+id/trade_price_edit_textview_error"/>
+        app:layout_constraintTop_toBottomOf="@+id/trade_price_edit_textview_error" />
 
     <TextView
         android:id="@+id/activity_edit_meal_description"
@@ -240,7 +235,7 @@
         android:textSize="14sp"
         android:textColor="#515050"
         app:layout_constraintStart_toStartOf="@id/activity_edit_meal_price"
-        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_description_tittle"/>
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_description_tittle" />
 
     <EditText
         android:id="@+id/activity_edit_meal_description_edittext"
@@ -252,7 +247,7 @@
         android:textColor="#515050"
         app:layout_constraintStart_toStartOf="@id/activity_edit_meal_price"
         app:layout_constraintEnd_toEndOf="@id/activity_edit_meal_clock"
-        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_description_tittle_edittext"/>
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_description_tittle_edittext" />
 
     <TextView
         android:id="@+id/trade_description_edit_textview_error"
@@ -264,7 +259,7 @@
         android:visibility="gone"
         android:textColorHint="@color/redButton"
         app:layout_constraintStart_toStartOf="@+id/activity_edit_meal_description_edittext"
-        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_description_edittext"/>
+        app:layout_constraintTop_toBottomOf="@id/activity_edit_meal_description_edittext" />
 
     <TextView
         android:id="@+id/activity_edit_meal_cantakeaway"
@@ -276,7 +271,7 @@
         android:textColor="@color/background_color"
         app:layout_constraintStart_toStartOf="@id/activity_edit_meal_price"
         app:layout_constraintEnd_toEndOf="@id/activity_edit_meal_clock"
-        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_description"/>
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_description" />
 
     <CheckBox
         android:id="@+id/activity_edit_meal_cantakeaway_checkbox"
@@ -288,7 +283,7 @@
         android:text="@string/cantakeaway"
         android:textColor="@color/background_color"
         app:layout_constraintStart_toStartOf="@id/activity_edit_meal_price_edittext"
-        app:layout_constraintTop_toBottomOf="@+id/trade_description_edit_textview_error"/>
+        app:layout_constraintTop_toBottomOf="@+id/trade_description_edit_textview_error" />
 
 
     <TextView
@@ -324,8 +319,7 @@
         android:visibility="gone"
         android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="@+id/activity_edit_meal_clock"
-        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_description_edittext"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_description_edittext" />
 
     <TextView
         android:id="@+id/activity_edit_meal_textError"
@@ -397,8 +391,7 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/button_grey"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <Button
         android:id="@+id/activity_edit_meal_confirm"
@@ -415,7 +408,6 @@
         android:background="@drawable/rounded_button_style"
         android:textAlignment="center"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

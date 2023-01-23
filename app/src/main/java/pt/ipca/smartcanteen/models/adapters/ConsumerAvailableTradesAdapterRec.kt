@@ -1,19 +1,12 @@
 package pt.ipca.smartcanteen.models.adapters
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.viewHolders.ConsumerAvailableTradesRecViewHolder
-import pt.ipca.smartcanteen.models.adapters.viewHolders.TradesAdapterRecViewHolder
-import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTrade
 import pt.ipca.smartcanteen.views.activities.ConsumerOrderDetailsActivity
 
 class ConsumerAvailableTradesAdapterRec(
@@ -34,12 +27,12 @@ class ConsumerAvailableTradesAdapterRec(
     override fun onBindViewHolder(holder: ConsumerAvailableTradesRecViewHolder, position: Int) {
         val trade = tradesList[position]
         val ticketid = trade.ticketid
-        val nencomenda =trade.norder
+        val nencomenda = trade.norder
         val total = "${trade.total}€"
         val statename = trade.statename
         val owner = trade.ownername
         val meals = trade.ticketmeals.take(5)
-        holder.bindData(owner, total,statename,meals)
+        holder.bindData(owner, total, statename, meals)
 
 
         holder.itemView.setOnClickListener {

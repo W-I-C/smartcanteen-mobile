@@ -3,11 +3,11 @@ package pt.ipca.smartcanteen.models.helpers
 import com.google.gson.annotations.SerializedName
 
 class RetroCreateMeal(
-@SerializedName("name") var name:String,
-@SerializedName("preparationtime") var time:String,
-@SerializedName("description") var description:String,
-@SerializedName("price") var price:Double,
-@SerializedName("allowedchanges") var allowedChanges: List<AllowedChange>
+    @SerializedName("name") var name: String,
+    @SerializedName("preparationtime") var time: String,
+    @SerializedName("description") var description: String,
+    @SerializedName("price") var price: Double,
+    @SerializedName("allowedchanges") var allowedChanges: List<AllowedChange>
 )
 
 class AllowedChange(
@@ -19,6 +19,3 @@ class AllowedChange(
     @SerializedName("incrementlimit") var incrementLimit: Int,
     @SerializedName("decrementlimit") var decrementLimit: Int
 )
-
- {
-}

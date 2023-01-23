@@ -30,7 +30,7 @@ class BitmapHelper {
         paint.isAntiAlias = true
         canvas.drawARGB(0, 0, 0, 0)
         paint.color = color
-        canvas.drawCircle(bitmap.width.toFloat()/2, bitmap.height.toFloat()/2, bitmap.width.toFloat()/2, paint)
+        canvas.drawCircle(bitmap.width.toFloat() / 2, bitmap.height.toFloat() / 2, bitmap.width.toFloat() / 2, paint)
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
         canvas.drawBitmap(bitmap, 0f, 0f, paint)
 

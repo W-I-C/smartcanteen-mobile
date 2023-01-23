@@ -16,7 +16,7 @@
         android:layout_marginTop="20dp"
         android:textColor="@color/background_color"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/trade_arrow"
@@ -29,8 +29,7 @@
         android:layout_marginLeft="10dp"
         android:paddingTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
         android:id="@+id/trade_general_checkbox"
@@ -58,7 +57,7 @@
         android:layout_marginTop="5dp"
         android:textColor="@color/background_color"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trade_general_checkbox"/>
+        app:layout_constraintTop_toBottomOf="@+id/trade_general_checkbox" />
 
     <Spinner
         android:id="@+id/trade_ispayable_general_spinner"
@@ -72,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/trade_general_title_isfree"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:elevation="5dp"/>
+        android:elevation="5dp" />
 
     <TextView
         android:id="@+id/trade_general_title_payment_method"
@@ -85,7 +84,7 @@
         android:layout_marginLeft="50dp"
         android:textColor="@color/background_color"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trade_ispayable_general_spinner"/>
+        app:layout_constraintTop_toBottomOf="@+id/trade_ispayable_general_spinner" />
 
     <Spinner
         android:id="@+id/trade_general_spinner"
@@ -99,7 +98,7 @@
         app:layout_constraintTop_toBottomOf="@+id/trade_general_title_payment_method"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:elevation="5dp"/>
+        android:elevation="5dp" />
 
     <CheckBox
         android:id="@+id/trade_direct_checkbox"
@@ -131,7 +130,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/trade_direct_checkbox"
-        android:elevation="5dp"/>
+        android:elevation="5dp" />
 
     <TextView
         android:id="@+id/trade_email_textview_error"
@@ -145,7 +144,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/trade_email_edittext"
-        android:elevation="5dp"/>
+        android:elevation="5dp" />
 
     <TextView
         android:id="@+id/trade_direct_title_isfree"
@@ -158,7 +157,7 @@
         android:layout_marginTop="15dp"
         android:textColor="@color/background_color"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trade_email_textview_error"/>
+        app:layout_constraintTop_toBottomOf="@+id/trade_email_textview_error" />
 
     <Spinner
         android:id="@+id/trade_ispayable_direct_spinner"
@@ -172,7 +171,7 @@
         app:layout_constraintTop_toBottomOf="@+id/trade_direct_title_isfree"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:elevation="5dp"/>
+        android:elevation="5dp" />
 
     <TextView
         android:id="@+id/trade_direct_title_payment_method"
@@ -185,7 +184,7 @@
         android:layout_marginLeft="50dp"
         android:textColor="@color/background_color"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trade_ispayable_direct_spinner"/>
+        app:layout_constraintTop_toBottomOf="@+id/trade_ispayable_direct_spinner" />
 
     <Spinner
         android:id="@+id/trade_direct_spinner"
@@ -199,7 +198,7 @@
         app:layout_constraintTop_toBottomOf="@+id/trade_direct_title_payment_method"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:elevation="5dp"/>
+        android:elevation="5dp" />
 
     <Button
         android:id="@+id/trade_confirm"
@@ -215,8 +214,7 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/rounded_button_style"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/trade_cancel"
@@ -231,7 +229,6 @@
         android:layout_marginBottom="30dp"
         android:background="@drawable/button_grey"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

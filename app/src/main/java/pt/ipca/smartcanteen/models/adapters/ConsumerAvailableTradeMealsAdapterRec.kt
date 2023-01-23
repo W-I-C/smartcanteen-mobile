@@ -4,8 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import pt.ipca.smartcanteen.models.RetroTicketMeal
 import pt.ipca.smartcanteen.models.adapters.viewHolders.ConsumerAvailableTradeMealsViewHolder
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTicketMeal
 
 class ConsumerAvailableTradeMealsAdapterRec(private var meals: List<RetroTicketMeal>, private var context: Context) :
     RecyclerView.Adapter<ConsumerAvailableTradeMealsViewHolder>() {

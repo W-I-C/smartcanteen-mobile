@@ -4,16 +4,14 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import pt.ipca.smartcanteen.models.RetroAllowedChanges
-import pt.ipca.smartcanteen.models.RetroMealChange
-import pt.ipca.smartcanteen.models.adapters.viewHolders.AllowedChangesAdapterRecViewHolder
 import pt.ipca.smartcanteen.models.adapters.viewHolders.MealAllowedChangesAdapterRecViewHolder
-import pt.ipca.smartcanteen.models.adapters.viewHolders.MealsAdapterRecViewHolder
-import pt.ipca.smartcanteen.models.adapters.viewHolders.OrderDetailsMealsChangesViewHolder
+import pt.ipca.smartcanteen.models.retrofit.response.RetroAllowedChanges
 
 
-class MealAllowedChangesAdapterRec(private var allowedChanges: List<RetroAllowedChanges>,
-                                   private var activity: Activity) :
+class MealAllowedChangesAdapterRec(
+    private var allowedChanges: List<RetroAllowedChanges>,
+    private var activity: Activity
+) :
     RecyclerView.Adapter<MealAllowedChangesAdapterRecViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealAllowedChangesAdapterRecViewHolder {
@@ -30,7 +28,7 @@ class MealAllowedChangesAdapterRec(private var allowedChanges: List<RetroAllowed
         val canbeincremented = allowedChanges.canbeincremented
         val canbedecremented = allowedChanges.canbedecremented
 
-        holder.bindData(changeid,mealid,ingname,isremoveonly,canbeincremented,canbedecremented,)
+        holder.bindData(changeid, mealid, ingname, isremoveonly, canbeincremented, canbedecremented)
     }
 
     override fun getItemCount(): Int {

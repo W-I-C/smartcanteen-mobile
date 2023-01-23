@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.FirebaseStorage
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.helpers.ImagesHelper
-import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 
 
 class MealsAdapterRecViewHolder(inflater: LayoutInflater, val parent: ViewGroup) :
@@ -20,32 +19,28 @@ class MealsAdapterRecViewHolder(inflater: LayoutInflater, val parent: ViewGroup)
     val cardImage = itemView.findViewById<ImageView>(R.id.layout_card_iv)
     private val storageRef = FirebaseStorage.getInstance().reference
 
-    fun bindData(mealId:String,titleText: String, prepTimeText: String, priceText: String) {
+    fun bindData(mealId: String, titleText: String, prepTimeText: String, priceText: String) {
         titleTv.text = titleText
         preptimeTv.text = prepTimeText
         priceTv.text = priceText
         getImage(mealId)
     }
 
-    private fun getImage(mealId:String){
+    private fun getImage(mealId: String) {
 
         storageRef.child("images/meals/${mealId}").downloadUrl.addOnSuccessListener {
             Log.d("MAIN", it.toString())
-            ImagesHelper().getImage(it.toString(),cardImage,false)
+            ImagesHelper().getImage(it.toString(), cardImage, false)
         }.addOnFailureListener {
             storageRef.child("images/meals/missing_image.jpg").downloadUrl.addOnSuccessListener {
                 Log.d("MAIN", it.toString())
-                ImagesHelper().getImage(it.toString(),cardImage,false)
+                ImagesHelper().getImage(it.toString(), cardImage, false)
             }.addOnFailureListener {
                 Log.d("MAIN", it.toString())
             }
         }
 
     }
-
-
-
-
 
 
 }

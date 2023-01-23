@@ -1,8 +1,8 @@
-package pt.ipca.smartcanteen.models
+package pt.ipca.smartcanteen.models.retrofit.response
 
 import com.google.gson.annotations.SerializedName
 
-data class RetroTrade (
+data class RetroTrade(
     @SerializedName("ticketid") val ticketid: String,
     @SerializedName("generaltradeid") val generaltradeid: String?,
     @SerializedName("barid") val barid: String?,
@@ -20,4 +20,4 @@ data class RetroTrade (
     @SerializedName("paymentmethod") val paymentmethod: Boolean,
     @SerializedName("isgeneraltrade") val isgeneraltrade: Boolean,
     @SerializedName("ticketmeals") var ticketmeals: List<RetroTicketMeal>
-) {}
+)

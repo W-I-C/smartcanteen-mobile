@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".views.activities.OrderActivity"
-    >
+    tools:context=".views.activities.OrderActivity">
 
     <TextView
 
@@ -31,8 +30,7 @@
         android:layout_marginLeft="10dp"
         android:paddingTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
 
@@ -55,7 +53,8 @@
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:timePickerMode="spinner"/>
+        android:timePickerMode="spinner" />
+
     <TextView
         app:layout_constraintTop_toBottomOf="@+id/timePicker"
         android:layout_marginLeft="10dp"
@@ -71,9 +70,9 @@
         android:id="@+id/textViewhours"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       android:textAlignment="center"
+        android:textAlignment="center"
         android:textSize="18dp"
-        android:paddingLeft="80dp"/>
+        android:paddingLeft="80dp" />
 
     <TextView
 
@@ -120,21 +119,23 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginLeft="20dp"
-        android:id="@+id/main_choose_button_radiu_take"
-        >
+        android:id="@+id/main_choose_button_radiu_take">
 
-        <RadioButton android:id="@+id/levar_sim"
+        <RadioButton
+            android:id="@+id/levar_sim"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/yes"
             android:onClick="onRadioButtonClicked"
-            android:layout_marginRight="50dp"/>
-        <RadioButton android:id="@+id/levar_nao"
+            android:layout_marginRight="50dp" />
+
+        <RadioButton
+            android:id="@+id/levar_nao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/no"
 
-            android:onClick="onRadioButtonClicked"/>
+            android:onClick="onRadioButtonClicked" />
     </RadioGroup>
 
     <TextView
@@ -156,15 +157,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginLeft="20dp"
-        android:id="@+id/main_choose_button_radiu_payment"
-        >
+        android:id="@+id/main_choose_button_radiu_payment">
 
-        <RadioButton android:id="@+id/mbWay"
+        <RadioButton
+            android:id="@+id/mbWay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="MBWAy"
             android:onClick="onRadioButtonClicked"
-            android:layout_marginRight="50dp"/>
+            android:layout_marginRight="50dp" />
 
         <RadioButton
             android:id="@+id/MB"
@@ -189,8 +190,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginBottom="30dp"
         android:background="@drawable/rounded_button_style"
-        android:textAlignment="center"
-        />
+        android:textAlignment="center" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

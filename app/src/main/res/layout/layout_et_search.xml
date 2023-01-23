@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/edit_text_style"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <EditText
         android:id="@+id/custom_search_et"
         android:layout_width="match_parent"
@@ -19,8 +20,8 @@
         android:textColorHint="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -29,6 +30,5 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@id/custom_search_et"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

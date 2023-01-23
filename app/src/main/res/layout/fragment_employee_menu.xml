@@ -16,8 +16,7 @@
         app:layout_constraintBottom_toTopOf="@+id/employee_menu_see_menu_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/employee_menu_title"
-        />
+        app:layout_constraintRight_toLeftOf="@id/employee_menu_title" />
 
     <TextView
         android:id="@+id/employee_menu_title"
@@ -59,8 +58,8 @@
         android:textColor="@color/white"
         android:elevation="5dp"
         app:layout_constraintLeft_toLeftOf="@+id/employee_menu_see_menu_button"
-        app:layout_constraintTop_toTopOf="@+id/employee_menu_see_menu_button"
-        />
+        app:layout_constraintTop_toTopOf="@+id/employee_menu_see_menu_button" />
+
     <ImageView
         android:id="@+id/employee_menu_see_menu_button_icon"
         android:layout_width="90dp"
@@ -70,7 +69,7 @@
         android:layout_marginBottom="5dp"
         android:elevation="5dp"
         app:layout_constraintRight_toRightOf="@+id/employee_menu_see_menu_button"
-        app:layout_constraintBottom_toBottomOf="@+id/employee_menu_see_menu_button"/>
+        app:layout_constraintBottom_toBottomOf="@+id/employee_menu_see_menu_button" />
 
 
     <ImageView
@@ -83,7 +82,7 @@
         android:layout_marginTop="30dp"
         android:elevation="5dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/employee_menu_title"/>
+        app:layout_constraintTop_toBottomOf="@+id/employee_menu_title" />
 
     <TextView
         android:id="@+id/employee_menu_see_orders_button_text"
@@ -97,8 +96,8 @@
         android:textColor="@color/white"
         android:elevation="5dp"
         app:layout_constraintLeft_toLeftOf="@+id/employee_menu_see_orders_button"
-        app:layout_constraintTop_toTopOf="@+id/employee_menu_see_orders_button"
-        />
+        app:layout_constraintTop_toTopOf="@+id/employee_menu_see_orders_button" />
+
     <ImageView
         android:id="@+id/employee_menu_see_orders_button_icon"
         android:layout_width="90dp"
@@ -107,7 +106,7 @@
         android:backgroundTint="#B7A255"
         android:elevation="5dp"
         app:layout_constraintRight_toRightOf="@+id/employee_menu_see_orders_button"
-        app:layout_constraintBottom_toBottomOf="@+id/employee_menu_see_orders_button"/>
+        app:layout_constraintBottom_toBottomOf="@+id/employee_menu_see_orders_button" />
 
 
     <ImageView
@@ -119,7 +118,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginStart="20dp"
         app:layout_constraintTop_toBottomOf="@id/employee_menu_see_menu_button"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/employee_menu_total_orders_card_title"
@@ -157,7 +156,8 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintTop_toBottomOf="@id/employee_menu_see_menu_button"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent" />
+
     <TextView
         android:id="@+id/employee_menu_delivered_orders_card_title"
         android:layout_width="wrap_content"
@@ -184,6 +184,7 @@
         app:layout_constraintStart_toStartOf="@+id/employee_menu_delivered_orders_card"
         app:layout_constraintEnd_toEndOf="@+id/employee_menu_delivered_orders_card"
         app:layout_constraintTop_toBottomOf="@+id/employee_menu_delivered_orders_card_title" />
+
     <ImageView
         android:id="@+id/employee_menu_undelivered_orders_card"
         android:layout_width="170dp"
@@ -193,7 +194,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         app:layout_constraintTop_toBottomOf="@id/employee_menu_total_orders_card"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent" />
+
     <TextView
         android:id="@+id/employee_menu_total_undelivered_card_title"
         android:layout_width="170dp"
@@ -221,6 +223,7 @@
         app:layout_constraintStart_toStartOf="@+id/employee_menu_undelivered_orders_card"
         app:layout_constraintEnd_toEndOf="@+id/employee_menu_undelivered_orders_card"
         app:layout_constraintTop_toBottomOf="@+id/employee_menu_total_undelivered_card_title" />
+
     <ImageView
         android:id="@+id/employee_menu_trades_done_card"
         android:layout_width="170dp"
@@ -230,7 +233,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintTop_toBottomOf="@id/employee_menu_delivered_orders_card"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent" />
+
     <TextView
         android:id="@+id/employee_menu_trades_done_card_title"
         android:layout_width="wrap_content"
@@ -257,6 +261,7 @@
         app:layout_constraintStart_toStartOf="@+id/employee_menu_trades_done_card"
         app:layout_constraintEnd_toEndOf="@+id/employee_menu_trades_done_card"
         app:layout_constraintTop_toBottomOf="@+id/employee_menu_trades_done_card_title" />
+
     <TextView
         android:id="@+id/employee_menu_total_requests_title"
         android:layout_width="wrap_content"
@@ -269,7 +274,7 @@
         android:textStyle="bold"
         android:elevation="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/employee_menu_undelivered_orders_card"/>
+        app:layout_constraintTop_toBottomOf="@+id/employee_menu_undelivered_orders_card" />
 
     <TextView
         android:id="@+id/employee_menu_delivered_requests_progress_lable"
@@ -282,7 +287,7 @@
         android:textSize="20sp"
         android:elevation="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/employee_menu_total_requests_title"/>
+        app:layout_constraintTop_toBottomOf="@+id/employee_menu_total_requests_title" />
 
     <ProgressBar
         android:elevation="5dp"
@@ -302,7 +307,8 @@
         android:progress="90"
         app:layout_constraintTop_toBottomOf="@+id/employee_menu_delivered_requests_progress_lable"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent" />
+
     <TextView
         android:id="@+id/employee_menu_undelivered_requests_progress_lable"
         android:layout_width="wrap_content"
@@ -314,7 +320,7 @@
         android:textSize="20sp"
         android:elevation="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/employee_menu_delivered_requests_progress_bar"/>
+        app:layout_constraintTop_toBottomOf="@+id/employee_menu_delivered_requests_progress_bar" />
 
     <ProgressBar
         android:elevation="5dp"
@@ -334,7 +340,7 @@
         android:progress="90"
         app:layout_constraintTop_toBottomOf="@+id/employee_menu_undelivered_requests_progress_lable"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

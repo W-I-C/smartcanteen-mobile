@@ -4,10 +4,8 @@
     android:layout_height="110dp"
     android:layout_marginTop="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:elevation="5dp"
-    android:background="@drawable/my_cart_order"
-    >
+    android:background="@drawable/my_cart_order">
 
     <ImageView
         android:id='@+id/my_orders_cart_card_image'
@@ -24,8 +22,7 @@
         android:layout_height="30dp"
         android:background="@drawable/delete_button"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
@@ -38,7 +35,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         app:layout_constraintLeft_toRightOf="@id/my_orders_cart_card_image"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/my_orders_cart_card_quantity"
@@ -50,7 +47,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         app:layout_constraintLeft_toRightOf="@id/my_orders_cart_card_image"
-        app:layout_constraintTop_toBottomOf="@id/my_orders_cart_card_name"/>
+        app:layout_constraintTop_toBottomOf="@id/my_orders_cart_card_name" />
 
     <TextView
         android:id="@+id/my_orders_cart_card_price"
@@ -62,8 +59,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         app:layout_constraintLeft_toRightOf="@id/my_orders_cart_card_image"
-        app:layout_constraintTop_toBottomOf="@id/my_orders_cart_card_quantity"/>
-
+        app:layout_constraintTop_toBottomOf="@id/my_orders_cart_card_quantity" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

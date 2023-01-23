@@ -11,19 +11,22 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import pt.ipca.smartcanteen.*
-import pt.ipca.smartcanteen.models.RetroBar
-import pt.ipca.smartcanteen.models.RetroMeal
-import pt.ipca.smartcanteen.models.RetroTicket
-import pt.ipca.smartcanteen.models.RetroTrade
+import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.adapters.MealsAdapterRec
 import pt.ipca.smartcanteen.models.adapters.MenuOrdersAdapterRec
 import pt.ipca.smartcanteen.models.adapters.TradeMealsAdapterRec
-import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
-import pt.ipca.smartcanteen.services.*
+import pt.ipca.smartcanteen.models.retrofit.response.RetroBar
+import pt.ipca.smartcanteen.models.retrofit.response.RetroMeal
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTicket
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTrade
+import pt.ipca.smartcanteen.services.CampusService
+import pt.ipca.smartcanteen.services.MealsService
+import pt.ipca.smartcanteen.services.OrdersService
+import pt.ipca.smartcanteen.services.TradesService
 import pt.ipca.smartcanteen.views.activities.ConsumerBarMenuActivity
 import pt.ipca.smartcanteen.views.activities.NotificationActivity
 import retrofit2.Call
@@ -34,25 +37,25 @@ import retrofit2.Retrofit
 
 class MenuConsumerFragment : Fragment() {
 
-    private val tradesProgressBar: ProgressBar by lazy {requireView().findViewById<ProgressBar>(R.id.consumer_menu_trades_progress_bar) as ProgressBar }
-    private val tradesTextProgress: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_trades_progress_bar_text) as TextView }
-    private val mealsProgressBar: ProgressBar by lazy {requireView().findViewById<ProgressBar>(R.id.consumer_menu_meals_progress_bar) as ProgressBar }
-    private val mealsTextProgress: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_meals_progress_bar_text) as TextView }
-    private val viewMealsText: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_bar_meals_view_meals_tv) as TextView }
-    private val noAvailableTradesText: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_trades_no_trades_text) as TextView }
-    private val ordersProgressBar: ProgressBar by lazy {requireView().findViewById<ProgressBar>(R.id.consumer_menu_orders_progress_bar) as ProgressBar }
-    private val ordersTextProgress: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_orders_progress_bar_text) as TextView }
-    private val logoutIc: ImageView by lazy {requireView().findViewById<ImageView>(R.id.consumer_menu_logout) as ImageView }
-    private val notiIc: ImageView by lazy {requireView().findViewById<ImageView>(R.id.consumer_menu_notification_bell) as ImageView }
+    private val tradesProgressBar: ProgressBar by lazy { requireView().findViewById<ProgressBar>(R.id.consumer_menu_trades_progress_bar) as ProgressBar }
+    private val tradesTextProgress: TextView by lazy { requireView().findViewById<TextView>(R.id.consumer_menu_trades_progress_bar_text) as TextView }
+    private val mealsProgressBar: ProgressBar by lazy { requireView().findViewById<ProgressBar>(R.id.consumer_menu_meals_progress_bar) as ProgressBar }
+    private val mealsTextProgress: TextView by lazy { requireView().findViewById<TextView>(R.id.consumer_menu_meals_progress_bar_text) as TextView }
+    private val viewMealsText: TextView by lazy { requireView().findViewById<TextView>(R.id.consumer_menu_bar_meals_view_meals_tv) as TextView }
+    private val noAvailableTradesText: TextView by lazy { requireView().findViewById<TextView>(R.id.consumer_menu_trades_no_trades_text) as TextView }
+    private val ordersProgressBar: ProgressBar by lazy { requireView().findViewById<ProgressBar>(R.id.consumer_menu_orders_progress_bar) as ProgressBar }
+    private val ordersTextProgress: TextView by lazy { requireView().findViewById<TextView>(R.id.consumer_menu_orders_progress_bar_text) as TextView }
+    private val logoutIc: ImageView by lazy { requireView().findViewById<ImageView>(R.id.consumer_menu_logout) as ImageView }
+    private val notiIc: ImageView by lazy { requireView().findViewById<ImageView>(R.id.consumer_menu_notification_bell) as ImageView }
 
-    private val barMealsTitleTv: TextView by lazy {requireView().findViewById<TextView>(R.id.consumer_menu_bar_meals_tv) as TextView }
+    private val barMealsTitleTv: TextView by lazy { requireView().findViewById<TextView>(R.id.consumer_menu_bar_meals_tv) as TextView }
 
-    private val barMealsRecyclerView : RecyclerView by lazy {requireView().findViewById<RecyclerView>(R.id.consumer_menu_bar_meals_rv) as RecyclerView }
-    private val tradeMealsRecyclerView : RecyclerView by lazy {requireView().findViewById<RecyclerView>(R.id.consumer_menu_available_trades_rv) as RecyclerView }
-    private val ordersRecyclerView : RecyclerView by lazy {requireView().findViewById<RecyclerView>(R.id.consumer_menu_orders_rv) as RecyclerView }
-    private val barSpinner : Spinner by lazy {requireView().findViewById<Spinner>(R.id.consumer_menu_bar_select_sp) as Spinner }
+    private val barMealsRecyclerView: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.consumer_menu_bar_meals_rv) as RecyclerView }
+    private val tradeMealsRecyclerView: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.consumer_menu_available_trades_rv) as RecyclerView }
+    private val ordersRecyclerView: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.consumer_menu_orders_rv) as RecyclerView }
+    private val barSpinner: Spinner by lazy { requireView().findViewById<Spinner>(R.id.consumer_menu_bar_select_sp) as Spinner }
 
-    private lateinit var alertDialogManager :AlertDialogManager
+    private lateinit var alertDialogManager: AlertDialogManager
 
     override fun onCreateView(
         inflater: LayoutInflater, parent: ViewGroup?,
@@ -67,22 +70,22 @@ class MenuConsumerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val retrofit = SmartCanteenRequests().retrofit
-        noAvailableTradesText.visibility=View.GONE
-        logoutIc.setOnClickListener{
-            AuthHelper().doLogout(retrofit,requireActivity(),alertDialogManager)
+        noAvailableTradesText.visibility = View.GONE
+        logoutIc.setOnClickListener {
+            AuthHelper().doLogout(retrofit, requireActivity(), alertDialogManager)
         }
 
-        notiIc.setOnClickListener{
+        notiIc.setOnClickListener {
             val intent = Intent(requireActivity(), NotificationActivity::class.java)
             startActivity(intent)
         }
 
-        barMealsTitleTv.setOnClickListener{
+        barMealsTitleTv.setOnClickListener {
             val intent = Intent(requireActivity(), ConsumerBarMenuActivity::class.java)
             startActivity(intent)
         }
 
-        viewMealsText.setOnClickListener{
+        viewMealsText.setOnClickListener {
             val intent = Intent(requireActivity(), ConsumerBarMenuActivity::class.java)
             startActivity(intent)
         }
@@ -99,10 +102,8 @@ class MenuConsumerFragment : Fragment() {
     }
 
 
-
-
     fun getBarInfo(
-        retrofit:Retrofit
+        retrofit: Retrofit
     ) {
 
 
@@ -125,44 +126,43 @@ class MenuConsumerFragment : Fragment() {
 
                     if (body != null) {
                         if (body.isNotEmpty()) {
-                            if(isAdded) {
+                            if (isAdded) {
 
-                            var adapter = getActivity()?.let {
-                                ArrayAdapter(
-                                    it,
-                                    android.R.layout.simple_spinner_dropdown_item,
-                                    body.map { retroBar -> retroBar.name }
-                                )
-                            }
-                                adapter?.setDropDownViewResource(R.layout.spinner_item);
-                            barSpinner.adapter = adapter
-
-                            barSpinner.onItemSelectedListener =
-                                object : AdapterView.OnItemSelectedListener {
-                                    override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-                                    override fun onItemSelected(
-                                        parent: AdapterView<*>?,
-                                        view: View?,
-                                        position: Int,
-                                        id: Long
-                                    ) {
-
-                                        val barId = body[position].barid
-
-                                        Log.d("spinner:","Before")
-                                        getMealsList(
-                                            barId,
-                                            retrofit
-                                        )
-                                        Log.d("spinner:","After")
-                                    }
+                                var adapter = activity?.let {
+                                    ArrayAdapter(
+                                        it,
+                                        android.R.layout.simple_spinner_dropdown_item,
+                                        body.map { retroBar -> retroBar.name }
+                                    )
                                 }
+                                adapter?.setDropDownViewResource(R.layout.spinner_item)
+                                barSpinner.adapter = adapter
+
+                                barSpinner.onItemSelectedListener =
+                                    object : AdapterView.OnItemSelectedListener {
+                                        override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+                                        override fun onItemSelected(
+                                            parent: AdapterView<*>?,
+                                            view: View?,
+                                            position: Int,
+                                            id: Long
+                                        ) {
+
+                                            val barId = body[position].barid
+
+                                            Log.d("spinner:", "Before")
+                                            getMealsList(
+                                                barId,
+                                                retrofit
+                                            )
+                                            Log.d("spinner:", "After")
+                                        }
+                                    }
                             }
                         }
                     }
-                }
-                else if(response.code()==401){
+                } else if (response.code() == 401) {
                     AuthHelper().newSessionToken(requireActivity())
                     getBarInfo(
                         retrofit
@@ -212,7 +212,7 @@ class MenuConsumerFragment : Fragment() {
                     if (body != null) {
                         if (body.isNotEmpty()) {
                             /** bar Meals **/
-                            if(isAdded) {
+                            if (isAdded) {
                                 val barMealsAdapter = MealsAdapterRec(body, requireActivity(), layoutInflater)
                                 val barMealsLinearLayoutManager = LinearLayoutManager(requireContext())
                                 barMealsLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -269,7 +269,7 @@ class MenuConsumerFragment : Fragment() {
                     if (body != null) {
                         if (body.isNotEmpty()) {
                             /** Campus trades **/
-                            if(isAdded) {
+                            if (isAdded) {
                                 val barMealsAdapter =
                                     TradeMealsAdapterRec(requireActivity(), getString(R.string.ordernum), getString(R.string.free), body)
                                 val tradeMealsLinearLayoutManager = LinearLayoutManager(requireActivity())
@@ -278,11 +278,11 @@ class MenuConsumerFragment : Fragment() {
                                 tradeMealsRecyclerView.itemAnimator = DefaultItemAnimator()
                                 tradeMealsRecyclerView.adapter = barMealsAdapter
                             }
-                        }else{
-                            noAvailableTradesText.visibility=View.VISIBLE
+                        } else {
+                            noAvailableTradesText.visibility = View.VISIBLE
                         }
                     }
-                }else if(response.code()==401){
+                } else if (response.code() == 401) {
                     AuthHelper().newSessionToken(requireActivity())
                     getTradeList(
                         retrofit
@@ -331,7 +331,7 @@ class MenuConsumerFragment : Fragment() {
                     if (body != null) {
                         if (body.isNotEmpty()) {
                             /** my orders **/
-                            if(isAdded) {
+                            if (isAdded) {
                                 var ordersAdapter =
                                     MenuOrdersAdapterRec(requireActivity(), getString(R.string.qty), getString(R.string.ordernum), body)
                                 val ordersLinearLayoutManager = LinearLayoutManager(requireContext())
@@ -343,8 +343,7 @@ class MenuConsumerFragment : Fragment() {
 
                         }
                     }
-                }
-                else if(response.code()==401){
+                } else if (response.code() == 401) {
                     AuthHelper().newSessionToken(requireActivity())
                     getOrdersList(
                         retrofit

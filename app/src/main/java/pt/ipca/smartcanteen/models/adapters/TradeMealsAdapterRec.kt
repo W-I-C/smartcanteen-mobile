@@ -6,12 +6,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.viewHolders.TradeMealsAdapterRecViewHolder
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTrade
 import pt.ipca.smartcanteen.views.activities.ConsumerOrderDetailsActivity
 
-class TradeMealsAdapterRec(private val activity:Activity,private val orderString:String, private val freeString: String, private var tradesList: List<RetroTrade>) :
+class TradeMealsAdapterRec(
+    private val activity: Activity,
+    private val orderString: String,
+    private val freeString: String,
+    private var tradesList: List<RetroTrade>
+) :
     RecyclerView.Adapter<TradeMealsAdapterRecViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -28,16 +32,16 @@ class TradeMealsAdapterRec(private val activity:Activity,private val orderString
         val status = trade.statename
         val norder = "${orderString}: ${trade.norder}"
         Log.d("generaltradeid", trade.generaltradeid.toString())
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
 
-            Log.d("isFree",trade.isfree.toString())
+            Log.d("isFree", trade.isfree.toString())
             val intent = Intent(activity, ConsumerOrderDetailsActivity::class.java).apply {
-                putExtra("ticketid",trade.ticketid)
-                putExtra("norder",trade.norder)
-                putExtra("generaltradeid",trade.generaltradeid)
-                putExtra("total",trade.total)
-                putExtra("isMyOrder",false)
-                putExtra("isFreeTrade",trade.isfree)
+                putExtra("ticketid", trade.ticketid)
+                putExtra("norder", trade.norder)
+                putExtra("generaltradeid", trade.generaltradeid)
+                putExtra("total", trade.total)
+                putExtra("isMyOrder", false)
+                putExtra("isFreeTrade", trade.isfree)
             }
             activity.startActivity(intent)
         }

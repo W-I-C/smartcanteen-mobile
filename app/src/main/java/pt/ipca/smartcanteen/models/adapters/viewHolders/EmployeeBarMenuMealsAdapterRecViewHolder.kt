@@ -48,22 +48,22 @@ class EmployeeBarMenuMealsAdapterRecViewHolder(
         removeIv.setOnClickListener {
             alertDialogManager.createConfirmAlertDialog(
                 removeMealAskString,
-                { removeMeal(mealId, cantRemoveMealString,rebuildList) }
+                { removeMeal(mealId, cantRemoveMealString, rebuildList) }
             )
         }
 
 
     }
 
-    private fun getImage(mealId:String){
+    private fun getImage(mealId: String) {
         Log.d("MAIN", mealId)
         storageRef.child("images/meals/${mealId}").downloadUrl.addOnSuccessListener {
             Log.d("MAIN", it.toString())
-            ImagesHelper().getImage(it.toString(),mealImage,false)
+            ImagesHelper().getImage(it.toString(), mealImage, false)
         }.addOnFailureListener {
             storageRef.child("images/meals/missing_image.jpg").downloadUrl.addOnSuccessListener {
                 Log.d("MAIN", it.toString())
-                ImagesHelper().getImage(it.toString(),mealImage,false)
+                ImagesHelper().getImage(it.toString(), mealImage, false)
             }.addOnFailureListener {
                 Log.d("MAIN", it.toString())
             }
@@ -102,8 +102,8 @@ class EmployeeBarMenuMealsAdapterRecViewHolder(
                 } else if (response.code() == 401) {
                     alertDialogManager.dialog.dismiss()
                     AuthHelper().newSessionToken(activity)
-                    removeMeal(mealId,cantRemoveMealString, rebuildList)
-                }else{
+                    removeMeal(mealId, cantRemoveMealString, rebuildList)
+                } else {
                     alertDialogManager.dialog.dismiss()
                     Toasty.error(activity, cantRemoveMealString, Toast.LENGTH_LONG).show()
                 }

@@ -1,7 +1,5 @@
 package pt.ipca.smartcanteen.services
 
-import pt.ipca.smartcanteen.models.LoginResponse
-import pt.ipca.smartcanteen.models.RetroCartMeals
 import pt.ipca.smartcanteen.models.helpers.RetroFavoriteMeal
 import retrofit2.Call
 import retrofit2.http.*

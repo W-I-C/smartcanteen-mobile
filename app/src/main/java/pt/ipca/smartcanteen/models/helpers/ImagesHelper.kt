@@ -1,7 +1,8 @@
 package pt.ipca.smartcanteen.models.helpers
 
 import android.app.Activity
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
@@ -10,7 +11,7 @@ import android.widget.ImageView
 import java.util.concurrent.Executors
 
 class ImagesHelper {
-    fun getImage(imageURL: String, imageView: ImageView, circle:Boolean) {
+    fun getImage(imageURL: String, imageView: ImageView, circle: Boolean) {
         // Declaring executor to parse the URL
         val executor = Executors.newSingleThreadExecutor()
 
@@ -33,8 +34,8 @@ class ImagesHelper {
 
                 // Only for making changes in UI
                 handler.post {
-                    if(!circle)
-                        imageView.setImageBitmap(BitmapHelper().getRoundedCornerBitmap(image!!,imageView))
+                    if (!circle)
+                        imageView.setImageBitmap(BitmapHelper().getRoundedCornerBitmap(image!!, imageView))
                     else
                         imageView.setImageBitmap(BitmapHelper().getCircleBitmap(image!!))
 
@@ -49,7 +50,8 @@ class ImagesHelper {
             }
         }
     }
-    fun getImageFromDevice(uri: Uri,activity: Activity, imageView: ImageView, circle:Boolean) {
+
+    fun getImageFromDevice(uri: Uri, activity: Activity, imageView: ImageView, circle: Boolean) {
         // Declaring executor to parse the URL
         val executor = Executors.newSingleThreadExecutor()
 
@@ -68,12 +70,12 @@ class ImagesHelper {
             // with the help of Handler
             try {
 
-                image = MediaStore.Images.Media.getBitmap(activity.contentResolver,uri)
+                image = MediaStore.Images.Media.getBitmap(activity.contentResolver, uri)
 
                 // Only for making changes in UI
                 handler.post {
-                    if(!circle)
-                        imageView.setImageBitmap(BitmapHelper().getRoundedCornerBitmap(image!!,imageView))
+                    if (!circle)
+                        imageView.setImageBitmap(BitmapHelper().getRoundedCornerBitmap(image!!, imageView))
                     else
                         imageView.setImageBitmap(BitmapHelper().getCircleBitmap(image!!))
 

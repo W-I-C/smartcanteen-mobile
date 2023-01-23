@@ -18,8 +18,7 @@
         android:layout_marginLeft="30dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        />
+        app:layout_constraintLeft_toLeftOf="parent" />
     <!-- 1 -->
     <ImageView
         android:id="@+id/ingredients_change_card_1_decrement_circle"
@@ -29,7 +28,7 @@
         android:layout_marginLeft="40dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/ingredients_change_card_1_quantity"/>
+        app:layout_constraintRight_toLeftOf="@id/ingredients_change_card_1_quantity" />
 
     <ImageView
         android:id="@+id/ingredients_change_card_1_decrement"
@@ -38,8 +37,7 @@
         android:background="@drawable/quantity_decrease"
         android:layout_marginBottom="7dp"
         app:layout_constraintEnd_toEndOf="@+id/ingredients_change_card_1_decrement_circle"
-        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_1_decrement_circle"
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_1_decrement_circle" />
 
     <TextView
         android:id="@+id/ingredients_change_card_1_quantity"
@@ -55,8 +53,7 @@
         android:textAlignment="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/ingredients_change_card_1_decrement_circle"
-        />
+        app:layout_constraintLeft_toRightOf="@+id/ingredients_change_card_1_decrement_circle" />
 
     <ImageView
         android:id="@+id/ingredients_change_card_1_increment_circle"
@@ -68,8 +65,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/ingredients_change_card_1_quantity"
-        app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
         android:id="@+id/ingredients_change_card_1_increment"
@@ -79,8 +75,7 @@
         android:layout_marginBottom="7dp"
         android:layout_marginRight="6dp"
         app:layout_constraintEnd_toEndOf="@+id/ingredients_change_card_1_increment_circle"
-        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_1_increment_circle"
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_1_increment_circle" />
     <!-- 2 -->
     <TextView
         android:id="@+id/ingredients_change_card_2_quantity"
@@ -96,8 +91,7 @@
         android:textAlignment="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/ingredients_change_card_2_increment"
-        />
+        app:layout_constraintRight_toLeftOf="@+id/ingredients_change_card_2_increment" />
 
     <ImageView
         android:id="@+id/ingredients_change_card_2_increment_circle"
@@ -109,8 +103,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/ingredients_change_card_2_quantity"
-        app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
         android:id="@+id/ingredients_change_card_2_increment"
@@ -120,8 +113,7 @@
         android:layout_marginBottom="7dp"
         android:layout_marginRight="6dp"
         app:layout_constraintEnd_toEndOf="@+id/ingredients_change_card_2_increment_circle"
-        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_2_increment_circle"
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_2_increment_circle" />
 
     <!-- 3 -->
 
@@ -134,8 +126,7 @@
         android:layout_marginLeft="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
         android:id="@+id/ingredients_change_card_3_decrement"
@@ -145,8 +136,7 @@
         android:layout_marginBottom="7dp"
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="@+id/ingredients_change_card_3_decrement_circle"
-        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_3_decrement_circle"
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_3_decrement_circle" />
 
     <!-- 4 -->
     <ImageView
@@ -158,8 +148,8 @@
         android:layout_marginRight="15dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/ingredients_change_card_4_check"
-        />
+        app:layout_constraintRight_toLeftOf="@+id/ingredients_change_card_4_check" />
+
     <ImageView
         android:id="@+id/ingredients_change_card_4_uncheck_circle_green"
         android:layout_width="35dp"
@@ -169,8 +159,7 @@
         android:layout_marginRight="15dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/ingredients_change_card_4_check"
-        />
+        app:layout_constraintRight_toLeftOf="@+id/ingredients_change_card_4_check" />
 
     <ImageView
         android:id="@+id/ingredients_change_card_4_remove"
@@ -180,8 +169,7 @@
         android:layout_marginBottom="3dp"
         android:layout_marginRight="3dp"
         app:layout_constraintEnd_toEndOf="@+id/ingredients_change_card_4_uncheck_circle"
-        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_4_uncheck_circle"
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_4_uncheck_circle" />
 
     <ImageView
         android:id="@+id/ingredients_change_card_4_remove_white"
@@ -191,8 +179,7 @@
         android:layout_marginBottom="3dp"
         android:layout_marginRight="3dp"
         app:layout_constraintEnd_toEndOf="@+id/ingredients_change_card_4_uncheck_circle_green"
-        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_4_uncheck_circle_green"
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_4_uncheck_circle_green" />
 
     <ImageView
         android:id="@+id/ingredients_change_card_4_check_circle"
@@ -204,8 +191,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/ingredients_change_card_4_uncheck_circle"
-        app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintRight_toRightOf="parent" />
 
 
     <ImageView
@@ -218,8 +204,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/ingredients_change_card_4_uncheck_circle"
-        app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
         android:id="@+id/ingredients_change_card_4_check"
@@ -229,8 +214,7 @@
         android:layout_marginBottom="3dp"
         android:layout_marginRight="3dp"
         app:layout_constraintEnd_toEndOf="@+id/ingredients_change_card_4_check_circle"
-        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_4_check_circle"
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_4_check_circle" />
 
     <ImageView
         android:id="@+id/ingredients_change_card_4_check_white"
@@ -240,8 +224,7 @@
         android:layout_marginBottom="3dp"
         android:layout_marginRight="3dp"
         app:layout_constraintEnd_toEndOf="@+id/ingredients_change_card_4_check_circle_green"
-        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_4_check_circle_green"
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/ingredients_change_card_4_check_circle_green" />
     <!-- 5 -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

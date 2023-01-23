@@ -1,7 +1,6 @@
 package pt.ipca.smartcanteen.views.fragments.consumer_fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,19 +9,20 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import es.dmoral.toasty.Toasty
-import pt.ipca.smartcanteen.*
-import pt.ipca.smartcanteen.models.RetroTicket
-import pt.ipca.smartcanteen.models.RetroTrade
-import pt.ipca.smartcanteen.models.adapters.TradesAdapterRec
+import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
+import pt.ipca.smartcanteen.models.adapters.TradesAdapterRec
 import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTicket
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTrade
 import pt.ipca.smartcanteen.services.OrdersService
 import pt.ipca.smartcanteen.services.TradesService
 import retrofit2.Call
@@ -31,15 +31,15 @@ import retrofit2.Response
 
 class MyOrdersFragment : Fragment() {
 
-    private val ordersTextError: TextView by lazy {requireView().findViewById<TextView>(R.id.my_orders_empty_message) as TextView }
-    private val tradesTextError: TextView by lazy {requireView().findViewById<TextView>(R.id.my_trades_empty_message) as TextView }
-    val myOrdersAdater: RecyclerView by lazy {requireView().findViewById<RecyclerView>(R.id.my_orders_recycler_view) as RecyclerView }
-    val myTradesAdater: RecyclerView by lazy {requireView().findViewById<RecyclerView>(R.id.my_trades_recycler_view) as RecyclerView }
-    private val buttonMyOrders: Button by lazy {requireView().findViewById<Button>(R.id.my_orders_button) as Button }
-    private val buttonMyTrades: Button by lazy {requireView().findViewById<Button>(R.id.my_trades_button) as Button }
-    private val textTittle: TextView by lazy {requireView().findViewById<TextView>(R.id.my_orders_title) as TextView }
-    private val progressBar: ProgressBar by lazy {requireView().findViewById<ProgressBar>(R.id.my_orders_progress_bar) as ProgressBar }
-    private val textProgress: TextView by lazy {requireView().findViewById<TextView>(R.id.my_orders_progress_bar_text) as TextView }
+    private val ordersTextError: TextView by lazy { requireView().findViewById<TextView>(R.id.my_orders_empty_message) as TextView }
+    private val tradesTextError: TextView by lazy { requireView().findViewById<TextView>(R.id.my_trades_empty_message) as TextView }
+    val myOrdersAdater: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.my_orders_recycler_view) as RecyclerView }
+    val myTradesAdater: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.my_trades_recycler_view) as RecyclerView }
+    private val buttonMyOrders: Button by lazy { requireView().findViewById<Button>(R.id.my_orders_button) as Button }
+    private val buttonMyTrades: Button by lazy { requireView().findViewById<Button>(R.id.my_trades_button) as Button }
+    private val textTittle: TextView by lazy { requireView().findViewById<TextView>(R.id.my_orders_title) as TextView }
+    private val progressBar: ProgressBar by lazy { requireView().findViewById<ProgressBar>(R.id.my_orders_progress_bar) as ProgressBar }
+    private val textProgress: TextView by lazy { requireView().findViewById<TextView>(R.id.my_orders_progress_bar_text) as TextView }
     var orders = ArrayList<RetroTicket>()
     val linearLayoutManager = LinearLayoutManager(activity)
     val linearLayoutTradeManager = LinearLayoutManager(activity)
@@ -66,7 +66,7 @@ class MyOrdersFragment : Fragment() {
             myOrders()
         }
 
-        buttonMyTrades.setOnClickListener{
+        buttonMyTrades.setOnClickListener {
             myTrades()
         }
     }
@@ -83,11 +83,11 @@ class MyOrdersFragment : Fragment() {
         myTradesAdater.adapter = adapter
     }
 
-    private fun myOrders(){
+    private fun myOrders() {
         tradesTextError.visibility = View.GONE
         myTradesAdater.visibility = View.GONE
 
-        textTittle.setText(getString(R.string.my_orders))
+        textTittle.text = getString(R.string.my_orders)
 
         val retrofit = SmartCanteenRequests().retrofit
 
@@ -108,7 +108,7 @@ class MyOrdersFragment : Fragment() {
                     response: Response<List<RetroTicket>>
                 ) {
                     if (response.code() == 200) {
-                        if(isAdded) {
+                        if (isAdded) {
                             myOrdersAdater.visibility = View.VISIBLE
                             progressBar.visibility = View.GONE
                             textProgress.visibility = View.GONE
@@ -138,13 +138,13 @@ class MyOrdersFragment : Fragment() {
                                     )
                                 }
                         }
-                    } else if(response.code() == 500){
+                    } else if (response.code() == 500) {
                         myOrdersAdater.visibility = View.VISIBLE
                         progressBar.visibility = View.GONE
                         textProgress.visibility = View.GONE
 
                         Toasty.error(requireActivity(), getString(R.string.no_orders), Toast.LENGTH_LONG).show()
-                    } else if(response.code()==401){
+                    } else if (response.code() == 401) {
                         AuthHelper().newSessionToken(requireActivity())
                         myOrders()
                     }
@@ -160,11 +160,11 @@ class MyOrdersFragment : Fragment() {
             })
     }
 
-    private fun myTrades(){
+    private fun myTrades() {
         ordersTextError.visibility = View.GONE
         myOrdersAdater.visibility = View.GONE
 
-        textTittle.setText(getString(R.string.my_trades))
+        textTittle.text = getString(R.string.my_trades)
 
         val retrofit = SmartCanteenRequests().retrofit
 
@@ -198,21 +198,34 @@ class MyOrdersFragment : Fragment() {
                         }
 
                         if (retroFit2 != null)
-                            if(retroFit2.isEmpty()){
+                            if (retroFit2.isEmpty()) {
                                 tradesTextError.visibility = View.VISIBLE
                                 myTradesAdater.visibility = View.GONE
                             } else {
                                 myTradesAdater.visibility = View.VISIBLE
                                 tradesTextError.visibility = View.GONE
-                                rebuildlistTrades(TradesAdapterRec(progressBar, textProgress, linearLayoutTradeManager, sp, myTradesAdater, retroFit2, requireActivity(), requireContext(),getString(R.string.wish_remove_trade_ask), alertDialogManager))
+                                rebuildlistTrades(
+                                    TradesAdapterRec(
+                                        progressBar,
+                                        textProgress,
+                                        linearLayoutTradeManager,
+                                        sp,
+                                        myTradesAdater,
+                                        retroFit2,
+                                        requireActivity(),
+                                        requireContext(),
+                                        getString(R.string.wish_remove_trade_ask),
+                                        alertDialogManager
+                                    )
+                                )
                             }
-                    } else if(response.code() == 500){
+                    } else if (response.code() == 500) {
                         myTradesAdater.visibility = View.VISIBLE
                         progressBar.visibility = View.GONE
                         textProgress.visibility = View.GONE
 
                         Toasty.error(requireActivity(), getString(R.string.no_trades), Toast.LENGTH_LONG).show()
-                    } else if(response.code()==401){
+                    } else if (response.code() == 401) {
                         AuthHelper().newSessionToken(requireActivity())
                         myTrades()
                     }

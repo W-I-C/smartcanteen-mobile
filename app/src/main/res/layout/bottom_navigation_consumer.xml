@@ -14,8 +14,7 @@
         app:menu="@menu/consumer_bottom_navigation_menu"
         app:labelVisibilityMode="unlabeled"
         app:itemIconSize="30dp"
-        app:itemIconTint="@color/background_color"
-        />
+        app:itemIconTint="@color/background_color" />
 
     <FrameLayout
         android:id="@+id/consumer_fragment_container"
@@ -23,6 +22,5 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="60dp"
         android:background="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_consumer">
-    </FrameLayout>
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_consumer"></FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

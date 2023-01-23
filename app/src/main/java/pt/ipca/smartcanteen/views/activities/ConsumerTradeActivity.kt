@@ -8,11 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.*
-import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.retrofit.body.DirectTradeBody
+import pt.ipca.smartcanteen.models.retrofit.body.GeneralTradeBody
+import pt.ipca.smartcanteen.models.retrofit.response.RetroPaymentMethod
 import pt.ipca.smartcanteen.services.TradesService
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,21 +22,21 @@ import retrofit2.Response
 
 class ConsumerTradeActivity : AppCompatActivity() {
 
-    private val checkBox1: CheckBox by lazy {findViewById<View>(R.id.trade_general_checkbox) as CheckBox};
-    private val checkBox2: CheckBox by lazy {findViewById<View>(R.id.trade_direct_checkbox) as CheckBox};
-    private val editText: EditText by lazy {findViewById<View>(R.id.trade_email_edittext) as EditText}
-    private val spinner_general_payable: Spinner by lazy {findViewById<View>(R.id.trade_ispayable_general_spinner) as Spinner}
-    private val spinner_general: Spinner by lazy {findViewById<View>(R.id.trade_general_spinner) as Spinner}
-    private val spinner_direct: Spinner by lazy {findViewById<View>(R.id.trade_direct_spinner) as Spinner}
-    private val spinner_direct_payable: Spinner by lazy {findViewById<View>(R.id.trade_ispayable_direct_spinner) as Spinner}
-    private val cancelButton: Button by lazy {findViewById<View>(R.id.trade_cancel) as Button}
-    private val confirmButton: Button by lazy {findViewById<View>(R.id.trade_confirm) as Button}
-    private val textError: TextView by lazy {findViewById<TextView>(R.id.trade_email_textview_error) as TextView}
-    private val generalIsFree: TextView by lazy {findViewById<TextView>(R.id.trade_general_title_isfree) as TextView}
-    private val generalPaymentMethod: TextView by lazy {findViewById<TextView>(R.id.trade_general_title_payment_method) as TextView}
-    private val directIsFree: TextView by lazy {findViewById<TextView>(R.id.trade_direct_title_isfree) as TextView}
-    private val directPaymentMethod: TextView by lazy {findViewById<TextView>(R.id.trade_direct_title_payment_method) as TextView}
-    private val backBtn: ImageView by lazy {findViewById<ImageView>(R.id.trade_arrow) as ImageView }
+    private val checkBox1: CheckBox by lazy { findViewById<View>(R.id.trade_general_checkbox) as CheckBox }
+    private val checkBox2: CheckBox by lazy { findViewById<View>(R.id.trade_direct_checkbox) as CheckBox }
+    private val editText: EditText by lazy { findViewById<View>(R.id.trade_email_edittext) as EditText }
+    private val spinner_general_payable: Spinner by lazy { findViewById<View>(R.id.trade_ispayable_general_spinner) as Spinner }
+    private val spinner_general: Spinner by lazy { findViewById<View>(R.id.trade_general_spinner) as Spinner }
+    private val spinner_direct: Spinner by lazy { findViewById<View>(R.id.trade_direct_spinner) as Spinner }
+    private val spinner_direct_payable: Spinner by lazy { findViewById<View>(R.id.trade_ispayable_direct_spinner) as Spinner }
+    private val cancelButton: Button by lazy { findViewById<View>(R.id.trade_cancel) as Button }
+    private val confirmButton: Button by lazy { findViewById<View>(R.id.trade_confirm) as Button }
+    private val textError: TextView by lazy { findViewById<TextView>(R.id.trade_email_textview_error) as TextView }
+    private val generalIsFree: TextView by lazy { findViewById<TextView>(R.id.trade_general_title_isfree) as TextView }
+    private val generalPaymentMethod: TextView by lazy { findViewById<TextView>(R.id.trade_general_title_payment_method) as TextView }
+    private val directIsFree: TextView by lazy { findViewById<TextView>(R.id.trade_direct_title_isfree) as TextView }
+    private val directPaymentMethod: TextView by lazy { findViewById<TextView>(R.id.trade_direct_title_payment_method) as TextView }
+    private val backBtn: ImageView by lazy { findViewById<ImageView>(R.id.trade_arrow) as ImageView }
     private lateinit var alertDialogManager: AlertDialogManager
     private lateinit var ticketId: String
 
@@ -71,7 +73,7 @@ class ConsumerTradeActivity : AppCompatActivity() {
                 android.R.layout.simple_spinner_dropdown_item,
                 listOf("Sim", "Não")
             )
-            adapter.setDropDownViewResource(R.layout.spinner_item);
+            adapter.setDropDownViewResource(R.layout.spinner_item)
             spinner_general_payable.adapter = adapter
         }
 
@@ -108,7 +110,7 @@ class ConsumerTradeActivity : AppCompatActivity() {
                 android.R.layout.simple_spinner_dropdown_item,
                 listOf("Sim", "Não")
             )
-            adapter.setDropDownViewResource(R.layout.spinner_item);
+            adapter.setDropDownViewResource(R.layout.spinner_item)
             spinner_direct_payable.adapter = adapter
         }
 
@@ -156,7 +158,7 @@ class ConsumerTradeActivity : AppCompatActivity() {
             )
         }
 
-        backBtn.setOnClickListener{
+        backBtn.setOnClickListener {
             finish()
         }
     }
@@ -190,14 +192,14 @@ class ConsumerTradeActivity : AppCompatActivity() {
                 editText.visibility = View.VISIBLE
                 directIsFree.visibility = View.VISIBLE
                 directPaymentMethod.visibility = View.GONE
-                if(editText.text.isEmpty()){
+                if (editText.text.isEmpty()) {
                     textError.visibility = View.VISIBLE
                 } else {
                     textError.visibility = View.GONE
                 }
                 editText.addTextChangedListener {
                     if (it != null) {
-                        if(it.isEmpty()){
+                        if (it.isEmpty()) {
                             textError.visibility = View.VISIBLE
                         } else {
                             textError.visibility = View.GONE
@@ -255,7 +257,7 @@ class ConsumerTradeActivity : AppCompatActivity() {
                                     android.R.layout.simple_spinner_dropdown_item,
                                     paymentMethods.map { retroPaymentMethods -> retroPaymentMethods.name }
                                 )
-                            adapter.setDropDownViewResource(R.layout.spinner_item);
+                            adapter.setDropDownViewResource(R.layout.spinner_item)
                             spinner_general.adapter = adapter
                             spinner_direct.adapter = adapter
                         }
@@ -289,11 +291,11 @@ class ConsumerTradeActivity : AppCompatActivity() {
                         }
                     }
 
-                } else if(response.code() == 500){
+                } else if (response.code() == 500) {
                     alertDialogManager.dialog.dismiss()
 
                     Toasty.error(this@ConsumerTradeActivity, getString(R.string.error_methods), Toast.LENGTH_LONG).show()
-                } else if(response.code()==401){
+                } else if (response.code() == 401) {
                     AuthHelper().newSessionToken(this@ConsumerTradeActivity)
                     getPaymentMethods()
                 }
@@ -305,17 +307,17 @@ class ConsumerTradeActivity : AppCompatActivity() {
 
             }
 
-            })
+        })
     }
 
-    fun cancelBtn(){
+    fun cancelBtn() {
         finish()
 
         Toasty.success(this@ConsumerTradeActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG).show()
 
     }
 
-    fun confirmBtn(){
+    fun confirmBtn() {
         val retrofit = SmartCanteenRequests().retrofit
 
         val service = retrofit.create(TradesService::class.java)
@@ -332,7 +334,7 @@ class ConsumerTradeActivity : AppCompatActivity() {
 
             alertDialogManager.dialog.show()
 
-            service.generalTicketTrade(ticketId, "Bearer $token",body).enqueue(object :
+            service.generalTicketTrade(ticketId, "Bearer $token", body).enqueue(object :
                 Callback<String> {
                 override fun onResponse(
                     call: Call<String>,
@@ -364,11 +366,11 @@ class ConsumerTradeActivity : AppCompatActivity() {
 
             val receiveremail = editText.text
 
-            val body = DirectTradeBody(receiveremail.toString() ,isfree, paymentmethodid)
+            val body = DirectTradeBody(receiveremail.toString(), isfree, paymentmethodid)
 
             alertDialogManager.dialog.show()
 
-            service.directTicketTrade(ticketId, "Bearer $token",body).enqueue(object :
+            service.directTicketTrade(ticketId, "Bearer $token", body).enqueue(object :
                 Callback<String> {
                 override fun onResponse(
                     call: Call<String>,

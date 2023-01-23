@@ -1,15 +1,9 @@
 package pt.ipca.smartcanteen.services
 
-import pt.ipca.smartcanteen.models.RetroState
-import pt.ipca.smartcanteen.models.RetroTicket
-import pt.ipca.smartcanteen.models.RetroTicketMeal
-import pt.ipca.smartcanteen.models.RetroTrade
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTicket
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTicketMeal
 import retrofit2.Call
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.PUT
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface OrdersService {
     // TODO: mudar para a rota do Henrique

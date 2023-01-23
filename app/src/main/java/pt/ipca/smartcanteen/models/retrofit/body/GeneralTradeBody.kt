@@ -1,10 +1,8 @@
-package pt.ipca.smartcanteen.models
+package pt.ipca.smartcanteen.models.retrofit.body
 
-import android.text.Editable
 import com.google.gson.annotations.SerializedName
 
-data class DirectTradeBody(
-    @SerializedName("receiverEmail") val receiveremail: String,
+data class GeneralTradeBody(
     @SerializedName("isFree") val isfree: Boolean,
     @SerializedName("paymentMethodId") val paymentmethodid: String?,
 )

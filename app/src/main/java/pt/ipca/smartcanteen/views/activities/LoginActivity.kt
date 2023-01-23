@@ -1,6 +1,5 @@
 package pt.ipca.smartcanteen.views.activities
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -16,11 +15,11 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.LoginBody
-import pt.ipca.smartcanteen.models.LoginResponse
 import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.retrofit.body.LoginBody
+import pt.ipca.smartcanteen.models.retrofit.response.LoginResponse
 import pt.ipca.smartcanteen.services.AuthService
 import pt.ipca.smartcanteen.views.fragments.consumer_fragments.ConsumerFragmentActivity
 import pt.ipca.smartcanteen.views.fragments.employee_fragments.EmployeeFragmentActivity
@@ -32,14 +31,14 @@ import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
 
     private var sessionToken: String? = null
-    private val checkBoxPassword: CheckBox by lazy {findViewById<View>(R.id.login_password_visibility_checkbox) as CheckBox };
-    private val email: EditText by lazy {findViewById<View>(R.id.login_email_edittext) as EditText};
-    private val password: EditText by lazy {findViewById<View>(R.id.login_password_edittext) as EditText}
-    private val button: Button by lazy {findViewById<View>(R.id.login_button_login) as Button}
+    private val checkBoxPassword: CheckBox by lazy { findViewById<View>(R.id.login_password_visibility_checkbox) as CheckBox }
+    private val email: EditText by lazy { findViewById<View>(R.id.login_email_edittext) as EditText }
+    private val password: EditText by lazy { findViewById<View>(R.id.login_password_edittext) as EditText }
+    private val button: Button by lazy { findViewById<View>(R.id.login_button_login) as Button }
     private lateinit var alertDialogManager: AlertDialogManager
     // val myButton = findViewById<Button>(R.id.login_button_login)
 
-    private fun validatePassword(password:String):Boolean{
+    private fun validatePassword(password: String): Boolean {
         val regexChars = """(.*([A-Z][a-z]|[a-z][A-Z]).*)""".toRegex()
         val regexSymbols = """[^A-Za-z0-9]""".toRegex()
 
@@ -106,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
                                         val role = loginBody?.role
                                         val uid = loginBody?.uid
 
-                                        if(token != null){
+                                        if (token != null) {
                                             Log.d("token", token)
                                         }
                                         val sp = SharedPreferencesHelper.getSharedPreferences(this@LoginActivity)

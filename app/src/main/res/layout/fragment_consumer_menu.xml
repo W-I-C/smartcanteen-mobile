@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".views.activities.MainActivity">
+
     <ImageView
         android:id="@+id/consumer_menu_logout"
         android:layout_width="25dp"
@@ -16,8 +17,8 @@
         android:background="@drawable/ic_baseline_logout_24"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/consumer_menu_search_et"
-        />
+        app:layout_constraintBottom_toTopOf="@id/consumer_menu_search_et" />
+
     <TextView
         android:id="@+id/consumer_menu_title_tv"
         android:layout_width="wrap_content"
@@ -29,8 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/consumer_menu_search_et"/>
-
+        app:layout_constraintBottom_toTopOf="@+id/consumer_menu_search_et" />
 
 
     <ImageView
@@ -42,8 +42,7 @@
         android:background="@drawable/ic_notification_bell"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/consumer_menu_search_et"
-        />
+        app:layout_constraintBottom_toTopOf="@id/consumer_menu_search_et" />
 
     <EditText
         android:id="@+id/consumer_menu_search_et"
@@ -62,8 +61,8 @@
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/consumer_menu_title_tv"
-        />
+        app:layout_constraintTop_toBottomOf="@id/consumer_menu_title_tv" />
+
     <Spinner
         android:id="@+id/consumer_menu_bar_select_sp"
         android:layout_width="80dp"
@@ -74,8 +73,7 @@
         android:layout_marginStart="5dp"
         app:layout_constraintLeft_toRightOf="@id/consumer_menu_search_et"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/consumer_menu_notification_bell"
-        />
+        app:layout_constraintTop_toBottomOf="@id/consumer_menu_notification_bell" />
 
 
     <androidx.core.widget.NestedScrollView
@@ -87,9 +85,11 @@
         app:layout_constraintTop_toBottomOf="@+id/consumer_menu_search_et"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 android:id="@+id/consumer_menu_trades_tv"
                 android:layout_width="wrap_content"
@@ -98,8 +98,8 @@
                 android:layout_marginStart="15dp"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                />
+                app:layout_constraintLeft_toLeftOf="parent" />
+
             <TextView
                 android:id="@+id/consumer_menu_trades_view_tv"
                 android:layout_width="wrap_content"
@@ -110,8 +110,7 @@
                 android:layout_marginStart="15dp"
                 android:textColor="@color/green_ipca"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                />
+                app:layout_constraintRight_toRightOf="parent" />
 
             <ProgressBar
                 android:id="@+id/consumer_menu_trades_progress_bar"
@@ -123,7 +122,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/consumer_menu_trades_tv"
                 app:layout_constraintBottom_toTopOf="@+id/consumer_menu_bar_meals_tv"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/consumer_menu_trades_progress_bar_text"
@@ -137,7 +136,7 @@
                 android:textColor="@color/background_color"
                 app:layout_constraintTop_toBottomOf="@+id/consumer_menu_trades_progress_bar"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/consumer_menu_trades_no_trades_text"
@@ -152,7 +151,7 @@
                 app:layout_constraintTop_toTopOf="@+id/consumer_menu_available_trades_rv"
                 app:layout_constraintBottom_toBottomOf="@+id/consumer_menu_available_trades_rv"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/consumer_menu_available_trades_rv"
@@ -174,8 +173,7 @@
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/consumer_menu_available_trades_rv"
-                app:layout_constraintLeft_toLeftOf="parent"
-                />
+                app:layout_constraintLeft_toLeftOf="parent" />
 
             <TextView
                 android:id="@+id/consumer_menu_bar_meals_view_meals_tv"
@@ -188,8 +186,7 @@
                 android:layout_marginTop="10dp"
                 android:textColor="@color/green_ipca"
                 app:layout_constraintTop_toBottomOf="@id/consumer_menu_available_trades_rv"
-                app:layout_constraintRight_toRightOf="parent"
-                />
+                app:layout_constraintRight_toRightOf="parent" />
 
             <ProgressBar
                 android:id="@+id/consumer_menu_meals_progress_bar"
@@ -201,7 +198,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/consumer_menu_bar_meals_tv"
                 app:layout_constraintBottom_toTopOf="@+id/consumer_menu_orders_tv"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/consumer_menu_meals_progress_bar_text"
@@ -215,7 +212,7 @@
                 android:textColor="@color/background_color"
                 app:layout_constraintTop_toBottomOf="@+id/consumer_menu_meals_progress_bar"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/consumer_menu_bar_meals_rv"
@@ -226,7 +223,7 @@
                 android:layout_marginTop="5dp"
                 app:layout_constraintTop_toBottomOf="@id/consumer_menu_bar_meals_tv"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                app:layout_constraintLeft_toLeftOf="parent" />
 
             <TextView
                 android:id="@+id/consumer_menu_orders_tv"
@@ -237,8 +234,7 @@
                 android:layout_marginTop="10dp"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/consumer_menu_bar_meals_rv"
-                app:layout_constraintLeft_toLeftOf="parent"
-                />
+                app:layout_constraintLeft_toLeftOf="parent" />
 
             <ProgressBar
                 android:id="@+id/consumer_menu_orders_progress_bar"
@@ -250,7 +246,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/consumer_menu_orders_tv"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/consumer_menu_orders_progress_bar_text"
@@ -264,7 +260,7 @@
                 android:textColor="@color/background_color"
                 app:layout_constraintTop_toBottomOf="@+id/consumer_menu_orders_progress_bar"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/consumer_menu_orders_rv"
@@ -277,7 +273,7 @@
                 app:layout_constraintTop_toBottomOf="@id/consumer_menu_orders_tv"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

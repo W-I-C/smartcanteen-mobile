@@ -18,8 +18,7 @@
         android:layout_marginEnd="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/trades_menu_card_divider"
-        app:layout_constraintBottom_toTopOf="@+id/trades_menu_card_meal_price_tv"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/trades_menu_card_meal_price_tv" />
 
     <TextView
         android:id="@+id/trades_menu_card_meal_price_tv"
@@ -33,8 +32,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/trades_menu_card_divider"
-        />
+        app:layout_constraintRight_toLeftOf="@+id/trades_menu_card_divider" />
 
     <TextView
         android:id="@+id/trades_menu_card_meal_state_tv"
@@ -48,8 +46,7 @@
         android:layout_marginEnd="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/trades_menu_card_divider"
-        app:layout_constraintTop_toBottomOf="@+id/trades_menu_card_meal_price_tv"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/trades_menu_card_meal_price_tv" />
 
 
     <View
@@ -72,8 +69,7 @@
         android:layout_marginBottom="40dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/trades_menu_card_divider"
-        />
+        app:layout_constraintLeft_toRightOf="@+id/trades_menu_card_divider" />
 
     <TextView
         android:id="@+id/trades_menu_card_etc_tv"
@@ -86,9 +82,7 @@
         android:layout_marginEnd="10dp"
         app:layout_constraintTop_toBottomOf="@+id/trades_menu_card_meals_rv"
         app:layout_constraintLeft_toRightOf="@+id/trades_menu_card_divider"
-        app:layout_constraintRight_toRightOf="parent"
-        />
-
+        app:layout_constraintRight_toRightOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

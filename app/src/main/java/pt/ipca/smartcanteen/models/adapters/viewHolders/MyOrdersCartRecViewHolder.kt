@@ -1,13 +1,9 @@
 package pt.ipca.smartcanteen.models.adapters.viewHolders
 
 import android.app.Activity
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -15,44 +11,47 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.FirebaseStorage
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.RetroBar
-import pt.ipca.smartcanteen.models.RetroCartMeals
 import pt.ipca.smartcanteen.models.adapters.MyOrdersCartRec
-import pt.ipca.smartcanteen.models.adapters.TradesAdapterRec
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.ImagesHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
-import pt.ipca.smartcanteen.services.CampusService
+import pt.ipca.smartcanteen.models.retrofit.response.RetroCartMeals
 import pt.ipca.smartcanteen.services.MealsService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MyOrdersCartRecViewHolder(inflater: LayoutInflater, val parent: ViewGroup, val activity: Activity, var linearLayoutManager: LinearLayoutManager,val cartAdapterRec:RecyclerView):
-    RecyclerView.ViewHolder(inflater.inflate(R.layout.activity_cart_recycle, parent, false)){
+class MyOrdersCartRecViewHolder(
+    inflater: LayoutInflater,
+    val parent: ViewGroup,
+    val activity: Activity,
+    var linearLayoutManager: LinearLayoutManager,
+    val cartAdapterRec: RecyclerView
+) :
+    RecyclerView.ViewHolder(inflater.inflate(R.layout.activity_cart_recycle, parent, false)) {
     val nameTv = itemView.findViewById<TextView>(R.id.my_orders_cart_card_name)
     val quantityTv = itemView.findViewById<TextView>(R.id.my_orders_cart_card_quantity)
     val priceTv = itemView.findViewById<TextView>(R.id.my_orders_cart_card_price)
-    val deleteIv=itemView.findViewById<ImageView>(R.id.cart_delete)
-    val image=itemView.findViewById<ImageView>(R.id.my_orders_cart_card_image)
+    val deleteIv = itemView.findViewById<ImageView>(R.id.cart_delete)
+    val image = itemView.findViewById<ImageView>(R.id.my_orders_cart_card_image)
     private val storageRef = FirebaseStorage.getInstance().reference
-    fun bindData(mealId:String,nameText: String, quantityText: String, priceText: String){
-        nameTv.text=nameText?:""
+    fun bindData(mealId: String, nameText: String, quantityText: String, priceText: String) {
+        nameTv.text = nameText
         quantityTv.text = quantityText
-        priceTv.text=priceText
+        priceTv.text = priceText
         getImage(mealId)
     }
 
-    private fun getImage(mealId:String){
+    private fun getImage(mealId: String) {
 
         storageRef.child("images/meals/${mealId}").downloadUrl.addOnSuccessListener {
             Log.d("MAIN", it.toString())
-            ImagesHelper().getImage(it.toString(),image,false)
+            ImagesHelper().getImage(it.toString(), image, false)
         }.addOnFailureListener {
             storageRef.child("images/meals/missing_image.jpg").downloadUrl.addOnSuccessListener {
                 Log.d("MAIN", it.toString())
-                ImagesHelper().getImage(it.toString(),image,false)
+                ImagesHelper().getImage(it.toString(), image, false)
             }.addOnFailureListener {
                 Log.d("MAIN", it.toString())
             }
@@ -60,7 +59,7 @@ class MyOrdersCartRecViewHolder(inflater: LayoutInflater, val parent: ViewGroup,
 
     }
 
-    fun deleteMeal(cartmealId:String){
+    fun deleteMeal(cartmealId: String) {
         deleteIv.setOnClickListener {
 
             val retrofit = SmartCanteenRequests().retrofit
@@ -85,7 +84,7 @@ class MyOrdersCartRecViewHolder(inflater: LayoutInflater, val parent: ViewGroup,
                         if (body != null) {
                             if (body.isNotEmpty()) {
 
-                                rebuildlistOrders(MyOrdersCartRec(body, activity,linearLayoutManager,cartAdapterRec))
+                                rebuildlistOrders(MyOrdersCartRec(body, activity, linearLayoutManager, cartAdapterRec))
                             }
                         }
                     } else if (response.code() == 401) {
@@ -107,4 +106,4 @@ class MyOrdersCartRecViewHolder(inflater: LayoutInflater, val parent: ViewGroup,
         cartAdapterRec.itemAnimator = DefaultItemAnimator()
         cartAdapterRec.adapter = adapter
     }
-    }
+}

@@ -1,8 +1,8 @@
-package pt.ipca.smartcanteen.models
+package pt.ipca.smartcanteen.models.retrofit.response
 
 import com.google.gson.annotations.SerializedName
 
-data class RetroTicket (
+data class RetroTicket(
     @SerializedName("barname") var barname: String,
     @SerializedName("ticketid") var ticketid: String,
     @SerializedName("ownername") var ownername: String,
@@ -15,4 +15,4 @@ data class RetroTicket (
     @SerializedName("nencomenda") var norder: Int,
     @SerializedName("isfree") var isfree: Boolean,
     @SerializedName("ticketmeals") var ticketmeals: List<RetroTicketMeal>
-    )
+)

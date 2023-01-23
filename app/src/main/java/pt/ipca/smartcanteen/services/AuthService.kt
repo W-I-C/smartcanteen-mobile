@@ -1,8 +1,8 @@
 package pt.ipca.smartcanteen.services
 
-import pt.ipca.smartcanteen.models.DeviceRegisterBody
-import pt.ipca.smartcanteen.models.LoginBody
-import pt.ipca.smartcanteen.models.LoginResponse
+import pt.ipca.smartcanteen.models.retrofit.body.DeviceRegisterBody
+import pt.ipca.smartcanteen.models.retrofit.body.LoginBody
+import pt.ipca.smartcanteen.models.retrofit.response.LoginResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -15,7 +15,7 @@ interface AuthService {
 
 
     @POST("/api/v1/device")
-    fun sendDeviceToken(@Body body: DeviceRegisterBody,@Header("Authorization") authorization: String): Call<String>
+    fun sendDeviceToken(@Body body: DeviceRegisterBody, @Header("Authorization") authorization: String): Call<String>
 
     @GET("/api/v1/logout")
     fun logout(@Header("Authorization") authorization: String): Call<String>

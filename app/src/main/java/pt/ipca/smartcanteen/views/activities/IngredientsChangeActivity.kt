@@ -12,20 +12,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.RetroAllowedChanges
 import pt.ipca.smartcanteen.models.adapters.AllowedChangesAdapterRec
-import pt.ipca.smartcanteen.models.adapters.OrderDetailsAdapterRec
-import pt.ipca.smartcanteen.models.helpers.*
+import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
+import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
+import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.retrofit.response.RetroAllowedChanges
 import pt.ipca.smartcanteen.services.MealsService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class IngredientsChangeActivity: AppCompatActivity() {
+class IngredientsChangeActivity : AppCompatActivity() {
 
-    private val cancelButton: Button by lazy {findViewById<View>(R.id.ingredients_change_cancel) as Button }
-    private val saveButton: Button by lazy {findViewById<View>(R.id.ingredients_change_save) as Button }
-    private val arrowBtn: ImageView by lazy {findViewById<ImageView>(R.id.ingredients_change_arrow) as ImageView }
+    private val cancelButton: Button by lazy { findViewById<View>(R.id.ingredients_change_cancel) as Button }
+    private val saveButton: Button by lazy { findViewById<View>(R.id.ingredients_change_save) as Button }
+    private val arrowBtn: ImageView by lazy { findViewById<ImageView>(R.id.ingredients_change_arrow) as ImageView }
 
     val retrofit = SmartCanteenRequests().retrofit
     private lateinit var alertDialogManager: AlertDialogManager
@@ -45,7 +47,7 @@ class IngredientsChangeActivity: AppCompatActivity() {
         val allowedChangesLinearLayoutManager = LinearLayoutManager(this@IngredientsChangeActivity)
 
         if (mealid != null) {
-            getAllowedChanges(mealid,allowedChangesRecyclerView,allowedChangesLinearLayoutManager,textError, numbers)
+            getAllowedChanges(mealid, allowedChangesRecyclerView, allowedChangesLinearLayoutManager, textError, numbers)
         }
 
         cancelButton.setOnClickListener {
@@ -61,18 +63,25 @@ class IngredientsChangeActivity: AppCompatActivity() {
         saveButton.setOnClickListener {
             alertDialogManager.createConfirmAlertDialog(
                 getString(R.string.confirm_allowed_changes),
-                { finish()
+                {
+                    finish()
                     Toasty.success(this@IngredientsChangeActivity, getString(R.string.success_change_allowed_changes), Toast.LENGTH_LONG).show()
                 }
             )
         }
 
-        arrowBtn.setOnClickListener{
+        arrowBtn.setOnClickListener {
             finish()
         }
     }
 
-    fun getAllowedChanges(mealid: String, allowedChangesRecyclerView:RecyclerView, allowedChangesLinearLayoutManager: RecyclerView.LayoutManager, textError: TextView,numbers: ArrayList<String>){
+    fun getAllowedChanges(
+        mealid: String,
+        allowedChangesRecyclerView: RecyclerView,
+        allowedChangesLinearLayoutManager: RecyclerView.LayoutManager,
+        textError: TextView,
+        numbers: ArrayList<String>
+    ) {
         val service = retrofit.create(MealsService::class.java)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(this@IngredientsChangeActivity)
@@ -117,14 +126,14 @@ class IngredientsChangeActivity: AppCompatActivity() {
                     textError.visibility = View.GONE
 
                     Toasty.error(this@IngredientsChangeActivity, getString(R.string.error_allowed_changes), Toast.LENGTH_LONG).show()
-                } else if(response.code() == 401){
+                } else if (response.code() == 401) {
                     alertDialogManager.dialog.dismiss()
 
                     allowedChangesRecyclerView.visibility = View.VISIBLE
                     textError.visibility = View.GONE
 
                     AuthHelper().newSessionToken(this@IngredientsChangeActivity)
-                    getAllowedChanges(mealid,allowedChangesRecyclerView,allowedChangesLinearLayoutManager,textError,numbers)
+                    getAllowedChanges(mealid, allowedChangesRecyclerView, allowedChangesLinearLayoutManager, textError, numbers)
                 }
             }
 

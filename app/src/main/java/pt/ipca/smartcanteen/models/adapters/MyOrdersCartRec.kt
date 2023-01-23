@@ -1,36 +1,36 @@
-
 package pt.ipca.smartcanteen.models.adapters
 
 import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import pt.ipca.smartcanteen.models.RetroCartMeals
 import pt.ipca.smartcanteen.models.adapters.viewHolders.MyOrdersCartRecViewHolder
+import pt.ipca.smartcanteen.models.retrofit.response.RetroCartMeals
 
 
-class MyOrdersCartRec(private var ordersList: List<RetroCartMeals>, val activity: Activity, var linearLayoutManager: LinearLayoutManager,
-                      val cartAdapterRec:RecyclerView) :
+class MyOrdersCartRec(
+    private var ordersList: List<RetroCartMeals>, val activity: Activity, var linearLayoutManager: LinearLayoutManager,
+    val cartAdapterRec: RecyclerView
+) :
     RecyclerView.Adapter<MyOrdersCartRecViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyOrdersCartRecViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return MyOrdersCartRecViewHolder(inflater,parent,activity,linearLayoutManager ,cartAdapterRec)
+        return MyOrdersCartRecViewHolder(inflater, parent, activity, linearLayoutManager, cartAdapterRec)
     }
 
     override fun onBindViewHolder(holder: MyOrdersCartRecViewHolder, position: Int) {
         val meal = ordersList.get(position)
-        val mealId =meal.mealId
+        val mealId = meal.mealId
         val name = meal.name
-        val quantity = "${meal.quantity} ${if(meal.quantity > 1) "doses" else "dose"}"
+        val quantity = "${meal.quantity} ${if (meal.quantity > 1) "doses" else "dose"}"
         val price = "${meal.price}€"
 
-        val cartmealId=meal.cartmealId
+        val cartmealId = meal.cartmealId
 
-        holder.bindData(mealId,name,quantity,price)
+        holder.bindData(mealId, name, quantity, price)
         holder.deleteMeal(cartmealId)
     }
 
