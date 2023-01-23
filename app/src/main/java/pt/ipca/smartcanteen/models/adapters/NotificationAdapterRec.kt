@@ -4,14 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.models.adapters.viewHolders.NotificationAdapterRecViewHolder
-import pt.ipca.smartcanteen.models.helpers.RetroNotification
+import pt.ipca.smartcanteen.models.retrofit.response.RetroNotification
 import pt.ipca.smartcanteen.models.retrofit.response.RetroTicket
 import java.text.SimpleDateFormat
 
 class NotificationAdapterRec(private val notification_list: List<RetroNotification>) :
     RecyclerView.Adapter<NotificationAdapterRecViewHolder>() {
 
-    var onItemClick: ((RetroTicket) -> Unit)? = null
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationAdapterRecViewHolder {
         val inflater = LayoutInflater.from(parent.context)

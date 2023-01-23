@@ -1,6 +1,6 @@
 package pt.ipca.smartcanteen.services
 
-import pt.ipca.smartcanteen.models.helpers.RetroCreateMeal
+import pt.ipca.smartcanteen.models.retrofit.response.RetroCreateMeal
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
