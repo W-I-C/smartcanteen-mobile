@@ -34,27 +34,6 @@ class LoadingScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading_screen)
 
-        val db = Room.databaseBuilder(
-            applicationContext,
-            SmartCanteenDB::class.java, "smartcanteen.db"
-        ).build()
-        GlobalScope.launch {
-            /*db.profileDao().insertAll(
-                Profile(
-                    uid = "5fa801a1-2645-4dbc-a633-3a5cec7202be",
-                    name = "Consumer2",
-                    email = "consumer2@ipca.pt",
-                    campusId="13be23c1-2e9b-43fc-acaa-839c6b3573bc",
-                    campusName="Barcelos",
-                    barId="a91aa933-440b-4c80-beef-f4cadd1aefff",
-                    barName="Est"
-                )
-            )*/
-            //val data = db.profileDao().getProfile()
-            //Log.d("MAIN",data.toString())
-        }
-
-
         val sp = SharedPreferencesHelper.getSharedPreferences(this@LoadingScreenActivity)
         val token = sp.getString("token", null)
 
@@ -181,7 +160,7 @@ class LoadingScreenActivity : AppCompatActivity() {
                                 barId = body.barid,
                                 barName = body.barname
                             )
-                            GlobalScope.launch {
+                            /*GlobalScope.launch {
                                 val data = db.profileDao().getProfile()
                                 if (data.uid != null) {
                                     db.profileDao().update(profile)
@@ -190,7 +169,7 @@ class LoadingScreenActivity : AppCompatActivity() {
                                     db.profileDao().insertAll(profile)
                                     Log.d("MAIN", data.toString())
                                 }
-                            }
+                            }*/
                         }
 
                     } else if (response.code() == 401) {
