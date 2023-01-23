@@ -11,5 +11,5 @@ class RetroMeal(
     @SerializedName("cantakeaway") var cantakeaway: Boolean,
     @SerializedName("price") var price: String,
     @SerializedName("canbemade") var canbemade: Boolean,
-
+    @SerializedName("isfavorite") var isfavorite: Boolean,
     )

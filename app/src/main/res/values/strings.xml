@@ -154,4 +154,5 @@
     <string name="confirm_operation">Confirm the operation?</string>
     <string name="image_upload_error">Error Uploading Image</string>
     <string name="didnt_change">There are no changes</string>
+    <string name="cannot_made">This meal cannot be made</string>
 </resources>

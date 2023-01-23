@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.storage.FirebaseStorage
 import es.dmoral.toasty.Toasty
+import org.w3c.dom.Text
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.helpers.*
 import pt.ipca.smartcanteen.services.FavoritemealService
@@ -41,7 +43,7 @@ class AddMealCartActivity : AppCompatActivity() {
         val buttonConfirm = findViewById<Button>(R.id.meal_bottom_sheet_add_cart)
         val arrowBack = findViewById<ImageView>(R.id.meal_bottom_sheet_arrow)
         val mealImage = findViewById<ImageView>(R.id.meal_bottom_sheet_image)
-        // tem que ir para a bottom sheet (manda no intent) que recebe na resposta a lista
+        val cannotBeMadeMessage = findViewById<TextView>(R.id.meal_cannotbemade_error_message)
         val numbers = arrayListOf<String>()
 
 
@@ -50,6 +52,8 @@ class AddMealCartActivity : AppCompatActivity() {
         val mealPreptime = intent.getStringExtra("time")
         val mealDescription = intent.getStringExtra("description")
         val mealPrice = intent.getStringExtra("price")
+        val canBeMade = intent.getBooleanExtra("canbemade", true)
+        val isFavorite = intent.getBooleanExtra("isfavorite", false)
 
         name.text = mealName
         time.text = mealPreptime.toString()
@@ -80,7 +84,20 @@ class AddMealCartActivity : AppCompatActivity() {
         }
 
         var isChecked: Boolean = false
+
+        println("Aqui")
+        println(isFavorite)
+
+        if(isFavorite == true){
+            favoriteHeart.setBackgroundResource(R.drawable.favorite_heart)
+            isChecked = true
+        } else {
+            favoriteHeart.setBackgroundResource(R.drawable.bottom_sheet_heart_not_clicked)
+            isChecked = false
+        }
+
         favoriteHeart.setOnClickListener {
+            // true passa a false
             isChecked = !isChecked
 
             if (isChecked) {
@@ -94,6 +111,16 @@ class AddMealCartActivity : AppCompatActivity() {
                     removeFavMeal(mealid)
                 }
             }
+        }
+
+        if(canBeMade == true){
+            buttonConfirm.visibility = View.VISIBLE
+            ingredientsChange.visibility = View.VISIBLE
+            cannotBeMadeMessage.visibility = View.GONE
+        } else {
+            buttonConfirm.visibility = View.GONE
+            ingredientsChange.visibility = View.GONE
+            cannotBeMadeMessage.visibility = View.VISIBLE
         }
 
         buttonConfirm.setOnClickListener {
