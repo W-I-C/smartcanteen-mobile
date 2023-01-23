@@ -39,8 +39,7 @@ class EditMealActivity : AppCompatActivity() {
     private val arrowBack: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_back_arrow_iv) as ImageView }
     private val pencilWhite: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_edit_pencil_white) as ImageView }
     private val pencilGreen: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_edit_pencil_green) as ImageView }
-    private val warningWhite: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_edit_warning_white) as ImageView }
-    private val warningGreen: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_edit_warning_green) as ImageView }
+    private val warning: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_edit_warning_white) as ImageView }
 
     private val mealImage: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_image) as ImageView }
     private val mealName: TextView by lazy { findViewById<TextView>(R.id.activity_edit_meal_name) as TextView }
@@ -122,27 +121,31 @@ class EditMealActivity : AppCompatActivity() {
             getAllowedChanges(mealId, allowedChangesRecyclerView, allowedChangesLayoutManager, textError)
         }
 
+        var CanBeMade: Boolean = true
+
         // se ele no início está a true, ao carregar no butão passa a false
         // se ele no início está false, ao carregar no butão passa a true
         if (canbemade == true) {
-            warningWhite.visibility = View.VISIBLE
-            warningGreen.visibility = View.GONE
-
-            canbemade = false
-
-            if (mealId != null) {
-                canBeMade(mealId, canbemade)
-            }
-
+            warning.setBackgroundResource(R.drawable.warning_green)
+            CanBeMade = true
         } else {
-            warningGreen.visibility = View.VISIBLE
-            warningWhite.visibility = View.GONE
+            warning.setBackgroundResource(R.drawable.warning_white)
+            CanBeMade = false
+        }
 
-            canbemade = true
+        warning.setOnClickListener{
+            CanBeMade = !CanBeMade
 
-            // ao carregar no butão o canBeMade passa a false
-            if (mealId != null) {
-                canBeMade(mealId, canbemade)
+            if(CanBeMade){
+                if (mealId != null) {
+                    canBeMade(mealId, CanBeMade)
+                    warning.setBackgroundResource(R.drawable.warning_green)
+                }
+            } else {
+                if (mealId != null) {
+                    canBeMade(mealId, CanBeMade)
+                    warning.setBackgroundResource(R.drawable.warning_white)
+                }
             }
         }
 
@@ -371,98 +374,43 @@ class EditMealActivity : AppCompatActivity() {
     }
 
     fun canBeMade(mealId: String, canBeMade: Boolean) {
+        val service = retrofit.create(MealsService::class.java)
 
-        if (canBeMade == false) {
-            warningWhite.setOnClickListener {
-
-
-                val service = retrofit.create(MealsService::class.java)
-
-                val sp = SharedPreferencesHelper.getSharedPreferences(this@EditMealActivity)
-                val token = sp.getString("token", null)
+        val sp = SharedPreferencesHelper.getSharedPreferences(this@EditMealActivity)
+        val token = sp.getString("token", null)
 
 
-                val body = CanBeMadeBody(canBeMade)
+        val body = CanBeMadeBody(canBeMade)
 
-                alertDialogManager.dialog.show()
+        alertDialogManager.dialog.show()
 
-                service.canBeMade(mealId, "Bearer $token", body).enqueue(object :
-                    Callback<String> {
-                    override fun onResponse(
-                        call: Call<String>,
-                        response: Response<String>
-                    ) {
-                        if (response.code() == 200) {
+        service.canBeMade(mealId, "Bearer $token", body).enqueue(object :
+            Callback<String> {
+            override fun onResponse(
+                call: Call<String>,
+                response: Response<String>
+            ) {
+                if (response.code() == 200) {
 
-                            val body = response.body()
+                    val body = response.body()
 
-                            alertDialogManager.dialog.dismiss()
+                    alertDialogManager.dialog.dismiss()
 
-                            warningWhite.visibility = View.GONE
-                            warningGreen.visibility = View.VISIBLE
+                } else if (response.code() == 500) {
+                    alertDialogManager.dialog.dismiss()
 
-                        } else if (response.code() == 500) {
-                            alertDialogManager.dialog.dismiss()
-
-                            Toasty.success(this@EditMealActivity, getString(R.string.error_meal_status), Toast.LENGTH_LONG).show()
-                        } else if (response.code() == 401) {
-                            AuthHelper().newSessionToken(this@EditMealActivity)
-                            canBeMade(mealId, canBeMade)
-                        }
-                    }
-
-                    override fun onFailure(call: Call<String>, t: Throwable) {
-
-                        Toasty.success(this@EditMealActivity, getString(R.string.error), Toast.LENGTH_LONG).show()
-                    }
-                })
+                    Toasty.success(this@EditMealActivity, getString(R.string.error_meal_status), Toast.LENGTH_LONG).show()
+                } else if (response.code() == 401) {
+                    AuthHelper().newSessionToken(this@EditMealActivity)
+                    canBeMade(mealId, canBeMade)
+                }
             }
-        } else {
-            warningGreen.setOnClickListener {
-                val service = retrofit.create(MealsService::class.java)
 
-                val sp = SharedPreferencesHelper.getSharedPreferences(this@EditMealActivity)
-                val token = sp.getString("token", null)
+            override fun onFailure(call: Call<String>, t: Throwable) {
 
-                println(token)
-
-                val body = CanBeMadeBody(canBeMade)
-
-                alertDialogManager.dialog.show()
-
-                service.canBeMade(mealId, "Bearer $token", body).enqueue(object :
-                    Callback<String> {
-                    override fun onResponse(
-                        call: Call<String>,
-                        response: Response<String>
-                    ) {
-                        if (response.code() == 200) {
-
-                            val body = response.body()
-
-                            alertDialogManager.dialog.dismiss()
-
-                            warningGreen.visibility = View.GONE
-                            warningWhite.visibility = View.VISIBLE
-
-                        } else if (response.code() == 500) {
-                            alertDialogManager.dialog.dismiss()
-
-                            Toasty.error(this@EditMealActivity, getString(R.string.error_meal_status_changed), Toast.LENGTH_LONG).show()
-                        } else if (response.code() == 401) {
-                            AuthHelper().newSessionToken(this@EditMealActivity)
-                            canBeMade(mealId, canBeMade)
-                        }
-                    }
-
-                    override fun onFailure(call: Call<String>, t: Throwable) {
-
-                        Toasty.error(this@EditMealActivity, getString(R.string.error), Toast.LENGTH_LONG).show()
-                    }
-                })
+                Toasty.success(this@EditMealActivity, getString(R.string.error), Toast.LENGTH_LONG).show()
             }
-        }
-
+        })
     }
 
     fun getAllowedChanges(

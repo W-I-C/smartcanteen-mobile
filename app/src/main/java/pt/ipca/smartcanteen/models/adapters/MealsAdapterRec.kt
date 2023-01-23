@@ -28,12 +28,14 @@ class MealsAdapterRec(private var mealsList: List<RetroMeal>, private var activi
         val description = meal.description
         val mealName = meal.name
         val title = meal.name
+        val isfavorite = meal.isfavorite
+        val canbemade = meal.canbemade
         val price = "${meal.price}€"
         val preptime = "${meal.preparationtime}min"
         holder.bindData(mealid, title, preptime, price)
 
         holder.itemView.setOnClickListener {
-            mealDetails(mealid, mealName, description, price, preptime)
+            mealDetails(mealid, mealName, description, price, preptime, canbemade,isfavorite)
         }
     }
 
@@ -41,13 +43,15 @@ class MealsAdapterRec(private var mealsList: List<RetroMeal>, private var activi
         return mealsList.size
     }
 
-    fun mealDetails(mealid: String, mealName: String, mealDescription: String, mealPrice: String, mealPreptime: String) {
+    fun mealDetails(mealid: String, mealName: String, mealDescription: String, mealPrice: String, mealPreptime: String, canBeMade: Boolean,isFavorite: Boolean) {
         var intent = Intent(activity, AddMealCartActivity::class.java)
         intent.putExtra("mealId", mealid)
         intent.putExtra("name", mealName)
         intent.putExtra("description", mealDescription)
         intent.putExtra("price", mealPrice)
         intent.putExtra("time", mealPreptime)
+        intent.putExtra("canbemade", canBeMade)
+        intent.putExtra("isfavorite", isFavorite)
         activity.startActivity(intent)
     }
 }
