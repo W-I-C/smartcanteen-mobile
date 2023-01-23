@@ -152,4 +152,6 @@
     <string name="no_notifications">Não há notificações disponíveis</string>
     <string name="decision">Decisão:</string>
     <string name="accept">Aceitar</string>
+    <string name="wish_remove_meal_cart">Tem a certexa que pretende eliminar a refeição do carrinho?</string>
+    <string name="wish_remove_favorite_meal">Deseja remover refeição dos favoritos?</string>
 </resources>

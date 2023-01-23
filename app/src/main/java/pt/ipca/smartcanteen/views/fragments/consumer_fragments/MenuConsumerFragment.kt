@@ -57,26 +57,40 @@ class MenuConsumerFragment : Fragment() {
     private val tradeMealsRecyclerView: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.consumer_menu_available_trades_rv) as RecyclerView }
     private val ordersRecyclerView: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.consumer_menu_orders_rv) as RecyclerView }
     private val barSpinner: Spinner by lazy { requireView().findViewById<Spinner>(R.id.consumer_menu_bar_select_sp) as Spinner }
-
+    private val searchBar: EditText by lazy{requireView().findViewById<EditText>(R.id.consumer_menu_search_et)}
     private lateinit var alertDialogManager: AlertDialogManager
 
     override fun onCreateView(
         inflater: LayoutInflater, parent: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View {
 
         alertDialogManager = AlertDialogManager(inflater, requireActivity())
         alertDialogManager.createLoadingAlertDialog()
         return inflater.inflate(R.layout.fragment_consumer_menu, parent, false)
     }
-
+         fun goToMenu(){
+             searchBar.setOnClickListener{
+                 val intent= Intent(requireActivity(), ConsumerBarMenuActivity::class.java)
+                 startActivity(intent)
+             }
+         }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val retrofit = SmartCanteenRequests().retrofit
         noAvailableTradesText.visibility = View.GONE
+        searchBar.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                val intent = Intent(requireActivity(), ConsumerBarMenuActivity::class.java)
+                intent.putExtra("shouldFocusEditText", true)
+                startActivity(intent)
+            }
+        }
         logoutIc.setOnClickListener {
             AuthHelper().doLogout(retrofit, requireActivity(), alertDialogManager)
         }
+
 
         notiIc.setOnClickListener {
             val intent = Intent(requireActivity(), NotificationActivity::class.java)
@@ -113,6 +127,7 @@ class MenuConsumerFragment : Fragment() {
         getBarInfo(
             retrofit
         )
+
     }
 
 

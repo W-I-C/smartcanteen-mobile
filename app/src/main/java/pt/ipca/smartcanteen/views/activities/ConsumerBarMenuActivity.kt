@@ -1,9 +1,12 @@
 package pt.ipca.smartcanteen.views.activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +21,7 @@ import pt.ipca.smartcanteen.models.retrofit.response.RetroBar
 import pt.ipca.smartcanteen.models.retrofit.response.RetroMeal
 import pt.ipca.smartcanteen.services.CampusService
 import pt.ipca.smartcanteen.services.MealsService
+import pt.ipca.smartcanteen.views.fragments.consumer_fragments.MenuConsumerFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,14 +35,25 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
     private val barMealsRecyclerView: RecyclerView by lazy { findViewById<RecyclerView>(R.id.consumer_bar_menu_rv) as RecyclerView }
 
     private val barSpinner: Spinner by lazy { findViewById<Spinner>(R.id.consumer_bar_menu_bar_select_sp) as Spinner }
+    private val searchBar: EditText by lazy { findViewById<EditText>(R.id.consumer_menu_meals) as EditText }
 
+    private val listRetroMeals= mutableListOf<RetroMeal>()
 
     private lateinit var alertDialogManager: AlertDialogManager
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_consumer_bar_menu)
-
+        searchBar.addTextChangedListener {
+            if(it!=null){
+                if(it.isNotEmpty()){
+                   val data= listRetroMeals.filter{item->item.name.lowercase().contains(it.toString().lowercase())}
+                    buildMeals(data)
+                    Log.d("teste",it.toString())
+                }
+            }
+        }
         alertDialogManager = AlertDialogManager(layoutInflater, this@ConsumerBarMenuActivity)
         alertDialogManager.createLoadingAlertDialog()
 
@@ -46,8 +61,18 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
             finish()
         }
 
+
         getBarInfo()
     }
+    private var cameFromOtherScreen = false
+
+    override fun onResume() {
+        super.onResume()
+        if (intent.getBooleanExtra("shouldFocusEditText", false)) {
+            searchBar.requestFocus()
+        }
+    }
+
 
 
     fun getBarInfo(
@@ -119,6 +144,14 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
         })
     }
 
+    private fun buildMeals(meals:List<RetroMeal>){
+        val barMealsLayoutManager = GridLayoutManager(this@ConsumerBarMenuActivity, 2)
+        barMealsLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        val barMealsAdapter = BarMenuMealsAdapterRec(meals, this@ConsumerBarMenuActivity, layoutInflater)
+        barMealsRecyclerView.layoutManager = barMealsLayoutManager
+        barMealsRecyclerView.itemAnimator = DefaultItemAnimator()
+        barMealsRecyclerView.adapter = barMealsAdapter
+    }
     private fun getMealsList(
         barId: String,
         retrofit: Retrofit
@@ -148,14 +181,12 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
 
                     if (body != null) {
                         if (body.isNotEmpty()) {
-                            /** bar Meals **/
-                            val barMealsLayoutManager = GridLayoutManager(this@ConsumerBarMenuActivity, 2)
-                            barMealsLayoutManager.orientation = LinearLayoutManager.VERTICAL
-                            val barMealsAdapter = BarMenuMealsAdapterRec(body, this@ConsumerBarMenuActivity, layoutInflater)
 
-                            barMealsRecyclerView.layoutManager = barMealsLayoutManager
-                            barMealsRecyclerView.itemAnimator = DefaultItemAnimator()
-                            barMealsRecyclerView.adapter = barMealsAdapter
+                            /** bar Meals **/
+                            body.forEach{listRetroMeals.add(it)}
+
+                            buildMeals(body)
+
                         }
                     }
                 } else if (response.code() == 401) {
@@ -173,6 +204,7 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
                 mealsTextProgress.visibility = View.INVISIBLE
                 print("error")
             }
+
 
         })
         barMealsRecyclerView.visibility = View.VISIBLE

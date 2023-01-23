@@ -34,6 +34,9 @@ class LoadingScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading_screen)
 
+
+
+
         val sp = SharedPreferencesHelper.getSharedPreferences(this@LoadingScreenActivity)
         val token = sp.getString("token", null)
 
@@ -160,14 +163,14 @@ class LoadingScreenActivity : AppCompatActivity() {
                                 barId = body.barid,
                                 barName = body.barname
                             )
-                            /*GlobalScope.launch {
+                           /*GlobalScope.launch {
                                 val data = db.profileDao().getProfile()
-                                if (data.uid != null) {
+                                if (data != null) {
                                     db.profileDao().update(profile)
                                     Log.d("MAIN", data.toString())
                                 } else {
                                     db.profileDao().insertAll(profile)
-                                    Log.d("MAIN", data.toString())
+                                   // Log.d("MAIN", data.toString())
                                 }
                             }*/
                         }

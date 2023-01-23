@@ -12,10 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.FirebaseStorage
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.adapters.MyOrdersCartRec
-import pt.ipca.smartcanteen.models.helpers.AuthHelper
-import pt.ipca.smartcanteen.models.helpers.ImagesHelper
-import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
-import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.helpers.*
 import pt.ipca.smartcanteen.models.retrofit.response.RetroCartMeals
 import pt.ipca.smartcanteen.services.MealsService
 import retrofit2.Call
@@ -59,8 +56,17 @@ class MyOrdersCartRecViewHolder(
 
     }
 
-    fun deleteMeal(cartmealId: String) {
-        deleteIv.setOnClickListener {
+    fun deleteMeal(cartmealId: String,alertDialogManager: AlertDialogManager, string:String){
+        deleteIv.setOnClickListener{
+            alertDialogManager.createConfirmAlertDialog(
+                string,
+                { delete(cartmealId,alertDialogManager,string) }
+            )
+        }
+    }
+
+    fun delete(cartmealId: String,alertDialogManager: AlertDialogManager, string:String) {
+
 
             val retrofit = SmartCanteenRequests().retrofit
 
@@ -84,12 +90,12 @@ class MyOrdersCartRecViewHolder(
                         if (body != null) {
                             if (body.isNotEmpty()) {
 
-                                rebuildlistOrders(MyOrdersCartRec(body, activity, linearLayoutManager, cartAdapterRec))
+                                rebuildlistOrders(MyOrdersCartRec(body, activity, linearLayoutManager, cartAdapterRec, string,alertDialogManager))
                             }
                         }
                     } else if (response.code() == 401) {
                         AuthHelper().newSessionToken(activity)
-                        deleteMeal(cartmealId)
+                        delete(cartmealId,alertDialogManager,string)
                     }
                 }
 
@@ -98,7 +104,7 @@ class MyOrdersCartRecViewHolder(
                 }
 
             })
-        }
+
     }
 
     fun rebuildlistOrders(adapter: MyOrdersCartRec) {

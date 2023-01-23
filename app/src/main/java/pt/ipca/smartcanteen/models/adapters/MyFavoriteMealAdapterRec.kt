@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.models.adapters.viewHolders.MyFavoriteMealRecViewHolder
+import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.retrofit.response.RetroFavoriteMeal
 import pt.ipca.smartcanteen.views.activities.AddMealCartActivity
 
 class MyFavoriteMealAdapterRec(
     private var listFavorite: List<RetroFavoriteMeal>, val activity: Activity, var linearLayoutManager: LinearLayoutManager,
-    val FavAdapterRec: RecyclerView
+    val FavAdapterRec: RecyclerView,private var removeTradeAskString: String,
+    private var alertDialogManager: AlertDialogManager
 ) :
     RecyclerView.Adapter<MyFavoriteMealRecViewHolder>() {
 
@@ -28,7 +30,7 @@ class MyFavoriteMealAdapterRec(
         val price = "${meal.price}€"
         val canbemade = meal.canbemade
         val mealId = meal.mealId
-
+        holder.deleteMeal(mealId,alertDialogManager, removeTradeAskString)
         holder.bindData(mealId, name, time, price)
         holder.itemView.setOnClickListener {
             mealDetails(mealId, name, meal.description, price, time, canbemade)

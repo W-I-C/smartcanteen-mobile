@@ -6,12 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.models.adapters.viewHolders.MyOrdersCartRecViewHolder
+import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.retrofit.response.RetroCartMeals
 
 
 class MyOrdersCartRec(
     private var ordersList: List<RetroCartMeals>, val activity: Activity, var linearLayoutManager: LinearLayoutManager,
-    val cartAdapterRec: RecyclerView
+    val cartAdapterRec: RecyclerView,private var removeTradeAskString: String,
+    private var alertDialogManager: AlertDialogManager
 ) :
     RecyclerView.Adapter<MyOrdersCartRecViewHolder>() {
 
@@ -31,8 +33,9 @@ class MyOrdersCartRec(
         val cartmealId = meal.cartmealId
 
         holder.bindData(mealId, name, quantity, price)
-        holder.deleteMeal(cartmealId)
+        holder.deleteMeal(cartmealId,alertDialogManager, removeTradeAskString)
     }
+
 
     override fun getItemCount(): Int {
         return ordersList.size
