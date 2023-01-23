@@ -24,8 +24,10 @@ class MyOrdersCartRecViewHolder(
     val parent: ViewGroup,
     val activity: Activity,
     var linearLayoutManager: LinearLayoutManager,
-    val cartAdapterRec: RecyclerView
-) :
+    val cartAdapterRec: RecyclerView,
+    val alertDialogManager: AlertDialogManager,
+
+    ) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.cart_meal_card, parent, false)) {
     val nameTv = itemView.findViewById<TextView>(R.id.my_orders_cart_card_name)
     val quantityTv = itemView.findViewById<TextView>(R.id.my_orders_cart_card_quantity)
@@ -33,11 +35,24 @@ class MyOrdersCartRecViewHolder(
     val deleteIv = itemView.findViewById<ImageView>(R.id.cart_delete)
     val image = itemView.findViewById<ImageView>(R.id.my_orders_cart_card_image)
     private val storageRef = FirebaseStorage.getInstance().reference
-    fun bindData(mealId: String, nameText: String, quantityText: String, priceText: String) {
+    fun bindData(
+        mealId: String,
+        nameText: String,
+        quantityText: String,
+        priceText: String,
+        deleteString: String,
+        cartmealId: String
+    ) {
         nameTv.text = nameText
         quantityTv.text = quantityText
         priceTv.text = priceText
         getImage(mealId)
+        deleteIv.setOnClickListener {
+            alertDialogManager.createConfirmAlertDialog(
+                deleteString,
+                { delete(cartmealId, alertDialogManager, deleteString) }
+            )
+        }
     }
 
     private fun getImage(mealId: String) {
@@ -56,55 +71,52 @@ class MyOrdersCartRecViewHolder(
 
     }
 
-    fun deleteMeal(cartmealId: String,alertDialogManager: AlertDialogManager, string:String){
-        deleteIv.setOnClickListener{
-            alertDialogManager.createConfirmAlertDialog(
-                string,
-                { delete(cartmealId,alertDialogManager,string) }
-            )
-        }
-    }
 
-    fun delete(cartmealId: String,alertDialogManager: AlertDialogManager, string:String) {
+    fun delete(cartmealId: String, alertDialogManager: AlertDialogManager, string: String) {
 
+        val retrofit = SmartCanteenRequests().retrofit
 
-            val retrofit = SmartCanteenRequests().retrofit
+        val service = retrofit.create(MealsService::class.java)
 
-            val service = retrofit.create(MealsService::class.java)
-
-            val sp = SharedPreferencesHelper.getSharedPreferences(activity)
-            val token = sp.getString("token", null)
+        val sp = SharedPreferencesHelper.getSharedPreferences(activity)
+        val token = sp.getString("token", null)
 
 
-            service.deleteMealsCart(cartmealId, "Bearer $token").enqueue(object :
-                Callback<List<RetroCartMeals>> {
-                override fun onResponse(
-                    call: Call<List<RetroCartMeals>>,
-                    response: Response<List<RetroCartMeals>>
-                ) {
-                    if (response.code() == 200) {
+        service.deleteMealsCart(cartmealId, "Bearer $token").enqueue(object :
+            Callback<List<RetroCartMeals>> {
+            override fun onResponse(
+                call: Call<List<RetroCartMeals>>,
+                response: Response<List<RetroCartMeals>>
+            ) {
+                if (response.code() == 200) {
+                    val body = response.body()
 
+                    if (body != null) {
+                        if (body.isNotEmpty()) {
 
-                        val body = response.body()
-
-                        if (body != null) {
-                            if (body.isNotEmpty()) {
-
-                                rebuildlistOrders(MyOrdersCartRec(body, activity, linearLayoutManager, cartAdapterRec, string,alertDialogManager))
-                            }
+                            rebuildlistOrders(
+                                MyOrdersCartRec(
+                                    body,
+                                    activity,
+                                    linearLayoutManager,
+                                    cartAdapterRec,
+                                    string,
+                                    alertDialogManager
+                                )
+                            )
                         }
-                    } else if (response.code() == 401) {
-                        AuthHelper().newSessionToken(activity)
-                        delete(cartmealId,alertDialogManager,string)
                     }
+                } else if (response.code() == 401) {
+                    AuthHelper().newSessionToken(activity)
+                    delete(cartmealId, alertDialogManager, string)
                 }
+            }
 
-                override fun onFailure(call: Call<List<RetroCartMeals>>, t: Throwable) {
-                    print("error")
-                }
+            override fun onFailure(call: Call<List<RetroCartMeals>>, t: Throwable) {
+                print("error")
+            }
 
-            })
-
+        })
     }
 
     fun rebuildlistOrders(adapter: MyOrdersCartRec) {
