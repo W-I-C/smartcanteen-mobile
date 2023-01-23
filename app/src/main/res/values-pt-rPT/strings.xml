@@ -145,4 +145,5 @@
     <string name="confirm_operation">Confirmar a operação</string>
     <string name="didnt_change">Não existem alterações</string>
     <string name="image_upload_error">Erro ao carregar a imagem</string>
+    <string name="cannot_made">Esta refeição não pode ser confecionada</string>
 </resources>

@@ -26,6 +26,7 @@ import retrofit2.Retrofit
 class ConsumerBarMenuActivity : AppCompatActivity() {
     private val mealsProgressBar: ProgressBar by lazy { findViewById<ProgressBar>(R.id.consumer_bar_menu_meals_progress_bar) as ProgressBar }
     private val mealsTextProgress: TextView by lazy { findViewById<TextView>(R.id.consumer_bar_menu_meals_progress_bar_text) as TextView }
+    private val backArrow: ImageView by lazy { findViewById<ImageView>(R.id.consumer_bar_menu_arrow) as ImageView }
 
     private val barMealsRecyclerView: RecyclerView by lazy { findViewById<RecyclerView>(R.id.consumer_bar_menu_rv) as RecyclerView }
 
@@ -38,10 +39,12 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_consumer_bar_menu)
 
-
         alertDialogManager = AlertDialogManager(layoutInflater, this@ConsumerBarMenuActivity)
         alertDialogManager.createLoadingAlertDialog()
 
+        backArrow.setOnClickListener{
+            finish()
+        }
 
         getBarInfo()
     }
