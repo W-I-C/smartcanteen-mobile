@@ -18,11 +18,8 @@ import pt.ipca.smartcanteen.models.adapters.MealsAdapterRec
 import pt.ipca.smartcanteen.models.adapters.MenuOrdersAdapterRec
 import pt.ipca.smartcanteen.models.adapters.TradeMealsAdapterRec
 import pt.ipca.smartcanteen.models.helpers.*
-import pt.ipca.smartcanteen.models.retrofit.response.RetroBar
-import pt.ipca.smartcanteen.models.retrofit.response.RetroMeal
-import pt.ipca.smartcanteen.models.retrofit.response.RetroTicket
-import pt.ipca.smartcanteen.models.retrofit.response.RetroTrade
-import pt.ipca.smartcanteen.models.room.tables.Meals
+import pt.ipca.smartcanteen.models.retrofit.response.*
+import pt.ipca.smartcanteen.models.room.tables.*
 import pt.ipca.smartcanteen.services.CampusService
 import pt.ipca.smartcanteen.services.MealsService
 import pt.ipca.smartcanteen.services.OrdersService
@@ -44,8 +41,6 @@ class MenuConsumerFragment : Fragment() {
     private val seeTradesText: TextView by lazy { requireView().findViewById<TextView>(R.id.consumer_menu_trades_view_tv) as TextView }
     private val tradesTitleText: TextView by lazy { requireView().findViewById<TextView>(R.id.consumer_menu_trades_tv) as TextView }
     private val noAvailableTradesText: TextView by lazy { requireView().findViewById<TextView>(R.id.consumer_menu_trades_no_trades_text) as TextView }
-    private val ordersProgressBar: ProgressBar by lazy { requireView().findViewById<ProgressBar>(R.id.consumer_menu_orders_progress_bar) as ProgressBar }
-    private val ordersTextProgress: TextView by lazy { requireView().findViewById<TextView>(R.id.consumer_menu_orders_progress_bar_text) as TextView }
     private val logoutIc: ImageView by lazy { requireView().findViewById<ImageView>(R.id.consumer_menu_logout) as ImageView }
     private val notiIc: ImageView by lazy { requireView().findViewById<ImageView>(R.id.consumer_menu_notification_bell) as ImageView }
 
@@ -57,6 +52,7 @@ class MenuConsumerFragment : Fragment() {
     private val barSpinner: Spinner by lazy { requireView().findViewById<Spinner>(R.id.consumer_menu_bar_select_sp) as Spinner }
 
     private var localMeals = mutableListOf<RetroMeal>()
+    private var localTickets = mutableListOf<RetroTicket>()
 
     private lateinit var alertDialogManager: AlertDialogManager
 
@@ -105,10 +101,10 @@ class MenuConsumerFragment : Fragment() {
 
         val db = SmartCanteenDBHelper.getInstance(requireContext().applicationContext)
         GlobalScope.launch {
-            val data = db.mealsDao().getAllMeals()
-            if (data.isNotEmpty()) {
-                Log.d("MAIN", "NOT EMPTY")
-                data.forEach { meal ->
+            val mealsData = db.mealsDao().getAllMeals()
+            if (mealsData.isNotEmpty()) {
+                Log.d("MAIN", "MEALS NOT EMPTY")
+                mealsData.forEach { meal ->
                     run {
                         localMeals.add(
                             RetroMeal(
@@ -127,7 +123,74 @@ class MenuConsumerFragment : Fragment() {
                 }
                 val barMealsAdapter = MealsAdapterRec(localMeals, requireActivity(), layoutInflater)
                 buildMealsList(barMealsAdapter)
+
+                val ticketsData = db.ticketsDao().getAllTickets()
+                if (ticketsData.isNotEmpty()) {
+                    Log.d("MAIN", "Tickets NOT EMPTY")
+                    ticketsData.forEach { ticket ->
+                        run {
+                            var ticketMeals = mutableListOf<RetroTicketMeal>()
+                            var cartData = db.cartDao().getCart(ticket.cartId)
+                            if (cartData != null) {
+                                var cartMealsData = db.cartMealsDao().getAllCartMeals(ticket.cartId)
+                                if (cartMealsData.isNotEmpty()) {
+                                    cartMealsData.forEach { cartMeal ->
+                                        var mealChanges = mutableListOf<RetroMealChange>()
+                                        var cartMealsChangesData = db.cartMealsChangesDao().getAllMealChanges(cartMeal.cartMealId)
+                                        cartMealsChangesData.forEach { change ->
+                                            mealChanges.add(
+                                                RetroMealChange(
+                                                    change.cartChangeId,
+                                                    change.cartMealId,
+                                                    change.ingName,
+                                                    change.ingAmount,
+                                                    change.isRemoveOnly,
+                                                    change.canBeIncremented,
+                                                    change.canBeDecremented
+                                                )
+                                            )
+                                        }
+                                        ticketMeals.add(
+                                            RetroTicketMeal(
+                                                cartMeal.cartMealId,
+                                                cartMeal.mealId,
+                                                cartMeal.amount,
+                                                cartMeal.mealPrice,
+                                                cartMeal.name,
+                                                cartMeal.description,
+                                                cartMeal.canTakeaway,
+                                                mealChanges
+                                            )
+                                        )
+                                    }
+
+                                }
+                            }
+                            localTickets.add(
+                                RetroTicket(
+                                    ticket.barname,
+                                    ticket.ticketid,
+                                    ticket.ownername,
+                                    ticket.stateName,
+                                    ticket.cartId,
+                                    ticket.emissionDate,
+                                    ticket.pickupTime,
+                                    ticket.ticketAmount,
+                                    ticket.total,
+                                    ticket.nEncomenda,
+                                    ticket.isFree,
+                                    ticketMeals
+                                )
+                            )
+                        }
+                    }
+                }
+                var ordersAdapter =
+                    MenuOrdersAdapterRec(requireActivity(), getString(R.string.qty), getString(R.string.ordernum), localTickets)
+                builOrdersList(ordersAdapter)
             }
+
+
         }
 
 
@@ -232,8 +295,23 @@ class MenuConsumerFragment : Fragment() {
                                 GlobalScope.launch {
                                     body.forEach { meal ->
                                         run {
-                                            if(db.mealsDao().getMeal(meal.mealid) == null) {
+                                            if (db.mealsDao().getMeal(meal.mealid) == null) {
                                                 db.mealsDao().insertAll(
+                                                    Meals(
+                                                        meal.mealid,
+                                                        meal.barid,
+                                                        meal.name,
+                                                        meal.description,
+                                                        meal.preparationtime,
+                                                        meal.cantakeaway,
+                                                        meal.price,
+                                                        false,
+                                                        meal.canbemade,
+                                                        meal.isfavorite
+                                                    )
+                                                )
+                                            } else {
+                                                db.mealsDao().update(
                                                     Meals(
                                                         meal.mealid,
                                                         meal.barid,
@@ -306,13 +384,13 @@ class MenuConsumerFragment : Fragment() {
                         if (body.isNotEmpty()) {
                             /** Campus trades **/
                             if (isAdded) {
-                                val barMealsAdapter =
+                                val tradeMealsAdapter =
                                     TradeMealsAdapterRec(requireActivity(), getString(R.string.ordernum), getString(R.string.free), body)
                                 val tradeMealsLinearLayoutManager = LinearLayoutManager(requireActivity())
                                 tradeMealsLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
                                 tradeMealsRecyclerView.layoutManager = tradeMealsLinearLayoutManager
                                 tradeMealsRecyclerView.itemAnimator = DefaultItemAnimator()
-                                tradeMealsRecyclerView.adapter = barMealsAdapter
+                                tradeMealsRecyclerView.adapter = tradeMealsAdapter
                             }
                         } else {
                             noAvailableTradesText.visibility = View.VISIBLE
@@ -337,6 +415,13 @@ class MenuConsumerFragment : Fragment() {
 
     }
 
+    private fun builOrdersList(adapter: MenuOrdersAdapterRec) {
+        val ordersLinearLayoutManager = LinearLayoutManager(requireContext())
+        ordersLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        ordersRecyclerView.layoutManager = ordersLinearLayoutManager
+        ordersRecyclerView.itemAnimator = DefaultItemAnimator()
+        ordersRecyclerView.adapter = adapter
+    }
 
     private fun getOrdersList(
         retrofit: Retrofit
@@ -346,10 +431,8 @@ class MenuConsumerFragment : Fragment() {
 
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
+        val uid = sp.getString("uid", null)
 
-        ordersRecyclerView.visibility = View.INVISIBLE
-        ordersProgressBar.visibility = View.VISIBLE
-        ordersTextProgress.visibility = View.VISIBLE
 
         service.seeMyOrders("Bearer $token").enqueue(object : Callback<List<RetroTicket>> {
             override fun onResponse(
@@ -358,22 +441,145 @@ class MenuConsumerFragment : Fragment() {
                 if (response.code() == 200) {
                     val body = response.body()
 
-                    ordersRecyclerView.visibility = View.VISIBLE
-                    ordersProgressBar.visibility = View.INVISIBLE
-                    ordersTextProgress.visibility = View.INVISIBLE
 
                     Log.d("Encomendas: ", body.toString())
                     if (body != null) {
                         if (body.isNotEmpty()) {
                             /** my orders **/
                             if (isAdded) {
+
+                                val db = SmartCanteenDBHelper.getInstance(requireContext().applicationContext)
+                                GlobalScope.launch {
+                                    body.forEach { ticket ->
+                                        run {
+
+                                            if (db.cartDao().getCart(ticket.cartid) == null) {
+                                                db.cartDao().insertAll(
+                                                    Cart(
+                                                        ticket.cartid,
+                                                        uid!!,
+                                                        ticket.emissiondate,
+                                                        true
+                                                    )
+                                                )
+                                            } else {
+                                                db.cartDao().update(
+                                                    Cart(
+                                                        ticket.cartid,
+                                                        uid!!,
+                                                        ticket.emissiondate,
+                                                        true
+                                                    )
+                                                )
+                                            }
+
+                                            ticket.ticketmeals.forEach { meal ->
+                                                run {
+                                                    if (db.cartMealsDao().getCartMeal(meal.cartmealid) == null) {
+                                                        db.cartMealsDao().insertAll(
+                                                            CartMeals(
+                                                                meal.cartmealid,
+                                                                meal.mealid,
+                                                                ticket.cartid,
+                                                                meal.amount,
+                                                                meal.mealprice,
+                                                                meal.name,
+                                                                meal.description,
+                                                                meal.cantakeaway,
+                                                            )
+                                                        )
+                                                    } else {
+                                                        db.cartMealsDao().update(
+                                                            CartMeals(
+                                                                meal.cartmealid,
+                                                                meal.mealid,
+                                                                ticket.cartid,
+                                                                meal.amount,
+                                                                meal.mealprice,
+                                                                meal.name,
+                                                                meal.description,
+                                                                meal.cantakeaway,
+                                                            )
+                                                        )
+                                                    }
+
+                                                    meal.mealchanges.forEach { change ->
+                                                        run {
+                                                            if (db.cartMealsChangesDao().getMealChange(change.cartmealchangeid) == null) {
+                                                                db.cartMealsChangesDao().insertAll(
+                                                                    CartMealsChanges(
+                                                                        change.cartmealchangeid,
+                                                                        meal.cartmealid,
+                                                                        change.ingname,
+                                                                        change.ingamount,
+                                                                        change.isremoveonly,
+                                                                        change.canbeincremented,
+                                                                        change.canbedecremented
+                                                                    )
+                                                                )
+                                                            } else {
+                                                                db.cartMealsChangesDao().update(
+                                                                    CartMealsChanges(
+                                                                        change.cartmealchangeid,
+                                                                        meal.cartmealid,
+                                                                        change.ingname,
+                                                                        change.ingamount,
+                                                                        change.isremoveonly,
+                                                                        change.canbeincremented,
+                                                                        change.canbedecremented
+                                                                    )
+                                                                )
+                                                            }
+
+                                                        }
+                                                    }
+                                                }
+
+                                            }
+                                            if (db.ticketsDao().getTicket(ticket.ticketid) == null) {
+                                                db.ticketsDao().insertAll(
+                                                    Tickets(
+                                                        ticket.ticketid,
+                                                        ticket.barname,
+                                                        ticket.ownername,
+                                                        ticket.statename,
+                                                        ticket.cartid,
+                                                        ticket.emissiondate,
+                                                        ticket.pickuptime,
+                                                        ticket.ticketamount,
+                                                        ticket.total,
+                                                        ticket.norder,
+                                                        ticket.isfree,
+                                                    )
+                                                )
+                                            } else {
+                                                db.ticketsDao().update(
+                                                    Tickets(
+                                                        ticket.ticketid,
+                                                        ticket.barname,
+                                                        ticket.ownername,
+                                                        ticket.statename,
+                                                        ticket.cartid,
+                                                        ticket.emissiondate,
+                                                        ticket.pickuptime,
+                                                        ticket.ticketamount,
+                                                        ticket.total,
+                                                        ticket.norder,
+                                                        ticket.isfree,
+                                                    )
+                                                )
+
+
+                                            }
+
+                                        }
+                                    }
+
+                                }
+
                                 var ordersAdapter =
                                     MenuOrdersAdapterRec(requireActivity(), getString(R.string.qty), getString(R.string.ordernum), body)
-                                val ordersLinearLayoutManager = LinearLayoutManager(requireContext())
-                                ordersLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-                                ordersRecyclerView.layoutManager = ordersLinearLayoutManager
-                                ordersRecyclerView.itemAnimator = DefaultItemAnimator()
-                                ordersRecyclerView.adapter = ordersAdapter
+                                builOrdersList(ordersAdapter)
                             }
 
                         }
@@ -387,9 +593,7 @@ class MenuConsumerFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<RetroTicket>>, t: Throwable) {
-                ordersRecyclerView.visibility = View.VISIBLE
-                ordersProgressBar.visibility = View.INVISIBLE
-                ordersTextProgress.visibility = View.INVISIBLE
+
                 print("error")
             }
 

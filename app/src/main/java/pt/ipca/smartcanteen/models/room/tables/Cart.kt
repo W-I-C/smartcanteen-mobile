@@ -5,11 +5,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.Date
 
-@Entity(tableName = "Cart")
+@Entity(
+    tableName = "Cart"
+)
 data class Cart(
-    @PrimaryKey val ticketid: String,
-    @ColumnInfo(name = "cartId") val name: String,
+    @PrimaryKey val cartId: String,
     @ColumnInfo(name = "uid") val uid: String,
-    @ColumnInfo(name = "date") val date: Date,
+    @ColumnInfo(name = "date") val date: String,
     @ColumnInfo(name = "isCompleted") val isCompleted: Boolean,
 )

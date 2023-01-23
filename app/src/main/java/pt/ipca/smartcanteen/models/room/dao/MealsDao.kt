@@ -9,7 +9,7 @@ interface MealsDao {
     fun getAllMeals(): List<Meals>
 
     @Query("SELECT * FROM Meals WHERE mealId=:mealId")
-    fun getMeal(vararg mealId:String): Meals?
+    fun getMeal(vararg mealId: String): Meals?
 
     @Insert
     fun insertAll(vararg profile: Meals)
