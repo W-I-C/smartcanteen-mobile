@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.adapters.MyFavoriteMealAdapterRec
+import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.retrofit.response.RetroFavoriteMeal
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
@@ -30,6 +31,7 @@ class FavoriteMealFragment : Fragment() {
     private val loadingProgressText: TextView by lazy { requireView().findViewById<RecyclerView>(R.id.favourites_menu_progress_bar_text) as TextView }
 
     val linearLayoutManager = LinearLayoutManager(activity)
+    private lateinit var alertDialogManager: AlertDialogManager
 
     override fun onCreateView(
         inflater: LayoutInflater, parent: ViewGroup?,
@@ -40,7 +42,8 @@ class FavoriteMealFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        alertDialogManager = AlertDialogManager(layoutInflater, requireActivity())
+        alertDialogManager.createLoadingAlertDialog()
 
         getFavs()
     }
@@ -71,7 +74,8 @@ class FavoriteMealFragment : Fragment() {
                     if (retroFit2 != null) {
                         if (!retroFit2.isEmpty()) {
                             if (isAdded) {
-                                rebuildlist(MyFavoriteMealAdapterRec(retroFit2, requireActivity(), linearLayoutManager, menuRv))
+                                rebuildlist(MyFavoriteMealAdapterRec(retroFit2, requireActivity(), linearLayoutManager, menuRv, getString(R.string.wish_remove_favorite_meal),
+                                    alertDialogManager))
                             }
                         }
                     }

@@ -31,8 +31,8 @@ class MyOrdersCartFragment : Fragment() {
     private val cartAdapterRec: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.myorders_cart_recycler_view) as RecyclerView }
 
     val linearLayoutManager = LinearLayoutManager(activity)
-
     private lateinit var alertDialogManager: AlertDialogManager
+
 
     override fun onCreateView(
         inflater: LayoutInflater, parent: ViewGroup?,
@@ -44,7 +44,8 @@ class MyOrdersCartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        alertDialogManager = AlertDialogManager(layoutInflater, requireActivity())
+        alertDialogManager.createLoadingAlertDialog()
         getMyOrders()
 
         Finalizar.setOnClickListener {
@@ -72,7 +73,8 @@ class MyOrdersCartFragment : Fragment() {
                         if (!retroFit2.isEmpty()) {
                             if (isAdded) {
 
-                                rebuildlist(MyOrdersCartRec(retroFit2, requireActivity(), linearLayoutManager, cartAdapterRec))
+                                rebuildlist(MyOrdersCartRec(retroFit2, requireActivity(), linearLayoutManager, cartAdapterRec, getString(R.string.wish_remove_meal_cart),
+                                    alertDialogManager))
                                 if (retroFit2.size >= 1)
                                     total.text = "${retroFit2[0].cartTotal} €"
                             }

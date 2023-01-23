@@ -158,4 +158,6 @@
     <string name="canbemade">Can Be Made</string>
     <string name="change_image">Click to Change Image</string>
     <string name="cannot_be_made">Cannot Be Made</string>
+    <string name="wish_remove_meal_cart">Wish remove meal from cart?</string>
+    <string name="wish_remove_favorite_meal">Wish remove favorite meal?</string>
 </resources>
