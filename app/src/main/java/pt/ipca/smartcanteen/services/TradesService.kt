@@ -1,8 +1,7 @@
 package pt.ipca.smartcanteen.services
 
-import pt.ipca.smartcanteen.models.*
-import pt.ipca.smartcanteen.models.retrofit.*
 import pt.ipca.smartcanteen.models.retrofit.body.DirectTradeBody
+import pt.ipca.smartcanteen.models.retrofit.body.DirectTradePaymentBody
 import pt.ipca.smartcanteen.models.retrofit.body.GeneralTradeBody
 import pt.ipca.smartcanteen.models.retrofit.response.RetroPaymentMethod
 import pt.ipca.smartcanteen.models.retrofit.response.RetroTrade
@@ -56,5 +55,18 @@ interface TradesService {
     fun acceptGeneralTrade(
         @Path("generalTradeId") generaltradetd: String,
         @Header("Authorization") authorization: String
+    ): Call<String>
+
+    @GET("/api/v1/consumer/direct/trade/{tradeId}")
+    fun getDirectTradePaymentMethod(
+        @Path("tradeId") tradeid: String,
+        @Header("Authorization") authorization: String
+    ): Call<RetroTradePayment>
+
+    @PUT("/api/v1/consumer/trades/{ticketId}")
+    fun acceptDirectTrade(
+        @Path("ticketId") ticketId: String,
+        @Header("Authorization") authorization: String,
+        @Body body: DirectTradePaymentBody
     ): Call<String>
 }

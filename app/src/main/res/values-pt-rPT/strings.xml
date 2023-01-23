@@ -149,4 +149,7 @@
     <string name="canbemade">Pode ser feito</string>
     <string name="change_image">Clique para mudar a imagem</string>
     <string name="cannot_be_made">Não pode ser feito</string>
+    <string name="no_notifications">Não há notificações disponíveis</string>
+    <string name="decision">Decisão:</string>
+    <string name="accept">Aceitar</string>
 </resources>
