@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.models.adapters.viewHolders.MealAllowedChangesEditAdapterRecViewHolder
@@ -20,7 +21,7 @@ class MealAllowedChangesEditAdapterRec(
     val allowedChangesEditRecyclerView: RecyclerView,
     private val linearLayoutManager: LinearLayoutManager,
     private val alertDialogManager: AlertDialogManager,
-    private var removeAllowedChangeAskString: String,
+    private var removeAllowedChangeAskString: String
 ) :
     RecyclerView.Adapter<MealAllowedChangesEditAdapterRecViewHolder>() {
 

@@ -155,4 +155,12 @@
     <string name="image_upload_error">Error Uploading Image</string>
     <string name="didnt_change">There are no changes</string>
     <string name="cannot_made">This meal cannot be made</string>
+    <string name="canbemade">Can Be Made</string>
+    <string name="change_image">Click to Change Image</string>
+    <string name="cannot_be_made">Cannot Be Made</string>
+    <string name="no_notifications">No Notifications Available</string>
+    <string name="decision">Decision:</string>
+    <string name="accept">Accept</string>
+    <string name="wish_remove_meal_cart">Wish remove meal from cart?</string>
+    <string name="wish_remove_favorite_meal">Wish remove favorite meal?</string>
 </resources>

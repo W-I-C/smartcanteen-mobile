@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DefaultItemAnimator
 import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
+import pt.ipca.smartcanteen.models.adapters.MealAllowedChangesEditAdapterRec
 import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
@@ -54,6 +56,11 @@ class AddMealChangeActivity : AppCompatActivity() {
         decrementLimit.visibility = View.GONE
         incrementLimitTittle.visibility = View.GONE
         decrementLimitTittle.visibility = View.GONE
+
+        isRemoveonly.isChecked = true
+        var isremoveonly: Boolean = true
+        var canbeincremented: Boolean = false
+        var canbedecremented: Boolean = false
 
 
         alertDialogManager = AlertDialogManager(layoutInflater, this)
@@ -150,6 +157,8 @@ class AddMealChangeActivity : AppCompatActivity() {
             isremoveonly = false
             canbeincremented = true
 
+            isRemoveonly.isChecked = false
+
             if (canbeDecremented.isChecked == false) {
                 decrementLimit.visibility = View.GONE
                 decrementLimitTittle.visibility = View.GONE
@@ -176,6 +185,8 @@ class AddMealChangeActivity : AppCompatActivity() {
 
             isremoveonly = false
             canbedecremented = true
+
+            isRemoveonly.isChecked = false
 
             if (canbeIncremented.isChecked == false) {
                 incrementLimit.visibility = View.GONE

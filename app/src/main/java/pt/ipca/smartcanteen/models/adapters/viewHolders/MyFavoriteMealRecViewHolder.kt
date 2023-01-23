@@ -40,7 +40,7 @@ class MyFavoriteMealRecViewHolder(
         timeTv.text = quantityText
         priceTv.text = priceText
         getImage(mealId)
-        deleteMeal(mealId)
+
 
     }
 
@@ -59,9 +59,18 @@ class MyFavoriteMealRecViewHolder(
         }
 
     }
+    fun deleteMeal(mealId:String,alertDialogManager: AlertDialogManager, string:String){
+        delete.setOnClickListener{
+            alertDialogManager.createConfirmAlertDialog(
+                string,
+                { delete(mealId,alertDialogManager,string) }
+            )
+        }
+    }
 
-    fun deleteMeal(mealId: String) {
-        delete.setOnClickListener {
+
+    fun delete(mealId: String,alertDialogManager: AlertDialogManager,string: String) {
+
 
             val retrofit = SmartCanteenRequests().retrofit
 
@@ -85,12 +94,12 @@ class MyFavoriteMealRecViewHolder(
                         if (body != null) {
                             if (body.isNotEmpty()) {
 
-                                rebuildlistOrders(MyFavoriteMealAdapterRec(body, activity, linearLayoutManager, FavAdapterRec))
+                                rebuildlistOrders(MyFavoriteMealAdapterRec(body, activity, linearLayoutManager, FavAdapterRec,string,alertDialogManager))
                             }
                         }
                     } else if (response.code() == 401) {
                         AuthHelper().newSessionToken(activity)
-                        deleteMeal(mealId)
+                        delete(mealId,alertDialogManager,string)
                     }
                 }
 
@@ -99,7 +108,7 @@ class MyFavoriteMealRecViewHolder(
                 }
 
             })
-        }
+
     }
 
     fun rebuildlistOrders(adapter: MyFavoriteMealAdapterRec) {

@@ -56,11 +56,11 @@ class EmployeeBarMenuFragment : Fragment() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    override fun onResume() {
+        super.onResume()
+
         getMealsList()
     }
-
 
     private fun getMealsList(
     ) {

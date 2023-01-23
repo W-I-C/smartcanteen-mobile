@@ -11,9 +11,26 @@
         android:layout_height="250dp"
         android:scaleType="centerCrop"
         android:background="@drawable/scroll_bottom_sheet_rectangle"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_edit_canbemade_button" />
+
+    <ImageView
+        android:id="@+id/activity_edit_meal_image_black_background"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/black_background"
+        android:visibility="gone"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_edit_canbemade_button" />
 
     <ImageView
         android:id="@+id/activity_edit_meal_back_arrow_iv"
@@ -24,49 +41,65 @@
         android:background="@drawable/arrow_back"
         android:elevation="5dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/activity_edit_meal_edit_pencil_white"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/edit_white"
         android:elevation="5dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image" />
+        app:layout_constraintRight_toLeftOf="@+id/activity_edit_meal_edit_canbemade_button"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/activity_edit_meal_edit_pencil_green"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/edit"
         android:elevation="5dp"
         android:visibility="gone"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image" />
+        app:layout_constraintRight_toRightOf="@+id/activity_edit_meal_edit_canbemade_button"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/activity_edit_meal_edit_warning_white"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+    <TextView
+        android:id="@+id/activity_edit_meal_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/change_image"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/activity_edit_meal_image_black_background"
+        app:layout_constraintEnd_toEndOf="@id/activity_edit_meal_image_black_background"
+        app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image_black_background"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_edit_meal_image_black_background" />
+
+    <Button
+        android:id="@+id/activity_edit_meal_edit_canbemade_button"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/warning_selector"
+        android:layout_marginTop="13dp"
+        android:text="@string/canbemade"
+        android:textSize="10sp"
+        android:background="@drawable/green_circle_background"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/activity_edit_meal_image"
+        app:layout_constraintTop_toTopOf="parent"
         android:elevation="5dp" />
 
     <TextView
         android:id="@+id/activity_edit_meal_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:text="Nome da Refeição"
-        android:layout_marginLeft="20dp"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/black"
@@ -85,8 +118,8 @@
         android:textColor="@color/black"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        app:layout_constraintStart_toStartOf="@id/activity_edit_meal_image"
-        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image" />
+        app:layout_constraintStart_toStartOf="@id/activity_edit_meal_image_black_background"
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image_black_background" />
 
     <TextView
         android:id="@+id/trade_name_edit_textview_error"
@@ -104,7 +137,7 @@
         android:id="@+id/activity_edit_meal_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:text="10min"
         android:textSize="15sp"
         android:textColor="@color/black"
@@ -122,7 +155,7 @@
         android:inputType="number"
         android:digits="0123456789"
         app:layout_constraintRight_toLeftOf="@id/activity_edit_meal_clock"
-        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image" />
+        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image_black_background" />
 
     <TextView
         android:id="@+id/trade_time_edit_textview_error"
@@ -140,13 +173,14 @@
         android:id="@+id/activity_edit_meal_clock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="65dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/clock"
         android:textSize="15sp"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@id/activity_edit_meal_image"
-        app:layout_constraintTop_toBottomOf="@+id/activity_edit_meal_image" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/activity_edit_meal_price"
@@ -192,7 +226,7 @@
         android:id="@+id/activity_edit_meal_description_tittle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         android:text="@string/description_2"
         android:textStyle="bold"
         android:textSize="18sp"

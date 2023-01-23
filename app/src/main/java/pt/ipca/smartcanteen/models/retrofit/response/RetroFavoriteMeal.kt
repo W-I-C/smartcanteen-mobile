@@ -8,5 +8,5 @@ class RetroFavoriteMeal(
     @SerializedName("preparationtime") var time: Int,
     @SerializedName("price") var price: Float,
     @SerializedName("description") var description: String,
-    @SerializedName("url") var url: String,
+    @SerializedName("canbemade") var canbemade: Boolean,
 )

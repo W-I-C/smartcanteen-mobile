@@ -146,4 +146,12 @@
     <string name="didnt_change">Não existem alterações</string>
     <string name="image_upload_error">Erro ao carregar a imagem</string>
     <string name="cannot_made">Esta refeição não pode ser confecionada</string>
+    <string name="canbemade">Pode ser feito</string>
+    <string name="change_image">Clique para mudar a imagem</string>
+    <string name="cannot_be_made">Não pode ser feito</string>
+    <string name="no_notifications">Não há notificações disponíveis</string>
+    <string name="decision">Decisão:</string>
+    <string name="accept">Aceitar</string>
+    <string name="wish_remove_meal_cart">Tem a certexa que pretende eliminar a refeição do carrinho?</string>
+    <string name="wish_remove_favorite_meal">Deseja remover refeição dos favoritos?</string>
 </resources>

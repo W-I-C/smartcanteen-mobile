@@ -39,9 +39,11 @@ class EditMealActivity : AppCompatActivity() {
     private val arrowBack: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_back_arrow_iv) as ImageView }
     private val pencilWhite: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_edit_pencil_white) as ImageView }
     private val pencilGreen: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_edit_pencil_green) as ImageView }
-    private val warning: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_edit_warning_white) as ImageView }
+    private val canBeMadeButton: Button by lazy { findViewById<Button>(R.id.activity_edit_meal_edit_canbemade_button) as Button }
 
     private val mealImage: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_image) as ImageView }
+    private val mealEditImage: ImageView by lazy { findViewById<ImageView>(R.id.activity_edit_meal_image_black_background) as ImageView }
+    private val mealEditPhoto: TextView by lazy { findViewById<TextView>(R.id.activity_edit_meal_photo) as TextView }
     private val mealName: TextView by lazy { findViewById<TextView>(R.id.activity_edit_meal_name) as TextView }
     private val mealTime: TextView by lazy { findViewById<TextView>(R.id.activity_edit_meal_time) as TextView }
     private val mealPrice: TextView by lazy { findViewById<TextView>(R.id.activity_edit_meal_price) as TextView }
@@ -78,6 +80,8 @@ class EditMealActivity : AppCompatActivity() {
 
     private lateinit var alertDialogManager: AlertDialogManager
     val retrofit = SmartCanteenRequests().retrofit
+
+    private var editing: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,25 +130,28 @@ class EditMealActivity : AppCompatActivity() {
         // se ele no início está a true, ao carregar no butão passa a false
         // se ele no início está false, ao carregar no butão passa a true
         if (canbemade == true) {
-            warning.setBackgroundResource(R.drawable.warning_green)
+            canBeMadeButton.setText(getString(R.string.canbemade))
+            //canBeMadeButton.setBackgroundColor("#000000")
             CanBeMade = true
         } else {
-            warning.setBackgroundResource(R.drawable.warning_white)
+            canBeMadeButton.setText(getString(R.string.cannot_be_made))
             CanBeMade = false
         }
 
-        warning.setOnClickListener{
+        canBeMadeButton.setOnClickListener{
             CanBeMade = !CanBeMade
 
             if(CanBeMade){
                 if (mealId != null) {
                     canBeMade(mealId, CanBeMade)
-                    warning.setBackgroundResource(R.drawable.warning_green)
+                    canBeMadeButton.setText(getString(R.string.canbemade))
+                    //warning.setBackgroundResource(R.drawable.warning_white)
                 }
             } else {
                 if (mealId != null) {
                     canBeMade(mealId, CanBeMade)
-                    warning.setBackgroundResource(R.drawable.warning_white)
+                    canBeMadeButton.setText(getString(R.string.cannot_be_made))
+                    //warning.setBackgroundResource(R.drawable.warning_green)
                 }
             }
         }
@@ -187,20 +194,24 @@ class EditMealActivity : AppCompatActivity() {
                 ImagesHelper().getImageFromDevice(data.data as Uri, this@EditMealActivity, mealImage, false)
                 sendImage(data.data as Uri)
             }
-
-        } else {
-            getAllowedChangesEdit(mealId, allowedChangesEditRecyclerView, allowedChangesEditLayoutManager, textError)
         }
-
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        if(editing){
+            getAllowedChangesEdit(mealId, allowedChangesEditRecyclerView, allowedChangesEditLayoutManager, textErrorEdit)
+        }
+
+        textErrorEdit.visibility = View.GONE
+    }
 
     private fun pickImageGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, ProfileFragment.IMAGE_REQUEST_CODE)
     }
-
 
     private fun sendImage(file: Uri) {
 
@@ -214,8 +225,6 @@ class EditMealActivity : AppCompatActivity() {
         }.addOnSuccessListener { taskSnapshot ->
 
         }
-
-
     }
 
     private fun getImage() {
@@ -255,18 +264,18 @@ class EditMealActivity : AppCompatActivity() {
 
 
         pencilWhite.setOnClickListener {
-            mealImage.setOnClickListener {
+
+            editing = true
+
+            mealEditImage.setOnClickListener {
                 pickImageGallery()
             }
-
-
-
 
             pencilWhite(name, time, price, description, allowedChangesRecyclerView)
 
             cancelBtn.setOnClickListener {
 
-                mealImage.setOnClickListener { }
+                mealEditImage.setOnClickListener { }
 
 
                 pencilWhite.visibility = View.VISIBLE
@@ -295,6 +304,12 @@ class EditMealActivity : AppCompatActivity() {
                 timeTextError.visibility = View.GONE
                 priceTextError.visibility = View.GONE
                 descriptionTextError.visibility = View.GONE
+
+                mealEditImage.visibility = View.GONE
+                mealEditPhoto.visibility = View.GONE
+
+                canTakeAwayCheckBox.visibility = View.GONE
+                canTakeAway.visibility = View.VISIBLE
 
                 Toasty.error(this@EditMealActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG).show()
 
@@ -490,7 +505,7 @@ class EditMealActivity : AppCompatActivity() {
         mealId: String,
         allowedChangesEditRecyclerView: RecyclerView,
         allowedChangesEditLayoutManager: LinearLayoutManager,
-        textError: TextView
+        textErrorEdit: TextView
     ) {
 
         val service = retrofit.create(MealsService::class.java)
@@ -553,7 +568,7 @@ class EditMealActivity : AppCompatActivity() {
                     textError.visibility = View.GONE
 
                     AuthHelper().newSessionToken(this@EditMealActivity)
-                    getAllowedChangesEdit(mealId, allowedChangesEditRecyclerView, allowedChangesEditLayoutManager, textError)
+                    getAllowedChangesEdit(mealId, allowedChangesEditRecyclerView, allowedChangesEditLayoutManager, textErrorEdit)
                 }
             }
 
@@ -592,6 +607,9 @@ class EditMealActivity : AppCompatActivity() {
         incrementBtn.visibility = View.VISIBLE
         cancelBtn.visibility = View.VISIBLE
         confirmBtn.visibility = View.VISIBLE
+
+        mealEditImage.visibility = View.VISIBLE
+        mealEditPhoto.visibility = View.VISIBLE
 
         cantakeaway = canTakeAwayCheckBox.isChecked == true
 

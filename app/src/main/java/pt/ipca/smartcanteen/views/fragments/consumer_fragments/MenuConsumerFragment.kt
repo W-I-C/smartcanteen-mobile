@@ -58,10 +58,22 @@ class MenuConsumerFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?
+    private val searchBar: EditText by lazy{requireView().findViewById<EditText>(R.id.consumer_menu_search_et)}
+    private lateinit var alertDialogManager: AlertDialogManager
+
+    override fun onCreateView(
+        inflater: LayoutInflater, parent: ViewGroup?,
+        savedInstanceState: Bundle?
+
     ): View {
         return inflater.inflate(R.layout.fragment_consumer_menu, parent, false)
     }
-
+         fun goToMenu(){
+             searchBar.setOnClickListener{
+                 val intent= Intent(requireActivity(), ConsumerBarMenuActivity::class.java)
+                 startActivity(intent)
+             }
+         }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val retrofit = SmartCanteenRequests().retrofit
@@ -69,9 +81,17 @@ class MenuConsumerFragment : Fragment() {
         alertDialogManager = AlertDialogManager(layoutInflater, requireActivity())
         alertDialogManager.createLoadingAlertDialog()
 
+        searchBar.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                val intent = Intent(requireActivity(), ConsumerBarMenuActivity::class.java)
+                intent.putExtra("shouldFocusEditText", true)
+                startActivity(intent)
+            }
+        }
         logoutIc.setOnClickListener {
             AuthHelper().doLogout(retrofit, requireActivity(), alertDialogManager)
         }
+
 
         notiIc.setOnClickListener {
             val intent = Intent(requireActivity(), NotificationActivity::class.java)
@@ -204,6 +224,7 @@ class MenuConsumerFragment : Fragment() {
         getBarInfo(
             retrofit
         )
+
     }
 
 
