@@ -9,9 +9,9 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.storage.FirebaseStorage
 import es.dmoral.toasty.Toasty
-import org.w3c.dom.Text
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.helpers.*
+import pt.ipca.smartcanteen.models.retrofit.response.RetroFavoriteMeal
 import pt.ipca.smartcanteen.services.FavoritemealService
 import retrofit2.Call
 import retrofit2.Callback

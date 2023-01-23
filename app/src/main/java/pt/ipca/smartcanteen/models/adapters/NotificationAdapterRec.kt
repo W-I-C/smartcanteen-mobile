@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.models.adapters.viewHolders.NotificationAdapterRecViewHolder
-import pt.ipca.smartcanteen.models.helpers.RetroNotification
+import pt.ipca.smartcanteen.models.retrofit.response.RetroNotification
 import pt.ipca.smartcanteen.models.retrofit.response.RetroTicket
 import java.text.SimpleDateFormat
 

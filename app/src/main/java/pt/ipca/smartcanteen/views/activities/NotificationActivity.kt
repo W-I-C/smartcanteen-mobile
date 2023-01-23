@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.adapters.NotificationAdapterRec
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
-import pt.ipca.smartcanteen.models.helpers.RetroNotification
+import pt.ipca.smartcanteen.models.retrofit.response.RetroNotification
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
 import pt.ipca.smartcanteen.services.NotificationService
