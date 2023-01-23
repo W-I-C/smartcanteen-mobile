@@ -25,29 +25,39 @@ class ConsumerFragmentActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_consumer_cart -> {
-                    val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-                    ft.replace(R.id.consumer_fragment_container, MyOrdersCartFragment())
-                    ft.commit()
+                    if(bottomNavigationView.selectedItemId != R.id.menu_consumer_cart){
+                        val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+                        ft.replace(R.id.consumer_fragment_container, MyOrdersCartFragment())
+                        ft.commit()
+                    }
                 }
                 R.id.menu_consumer_favorites -> {
-                    val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-                    ft.replace(R.id.consumer_fragment_container, FavoriteMealFragment())
-                    ft.commit()
+                    if(bottomNavigationView.selectedItemId != R.id.menu_consumer_favorites) {
+                        val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+                        ft.replace(R.id.consumer_fragment_container, FavoriteMealFragment())
+                        ft.commit()
+                    }
                 }
                 R.id.menu_consumer_main -> {
-                    val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-                    ft.replace(R.id.consumer_fragment_container, MenuConsumerFragment())
-                    ft.commit()
+                    if(bottomNavigationView.selectedItemId != R.id.menu_consumer_main) {
+                        val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+                        ft.replace(R.id.consumer_fragment_container, MenuConsumerFragment())
+                        ft.commit()
+                    }
                 }
                 R.id.menu_consumer_orders -> {
-                    val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-                    ft.replace(R.id.consumer_fragment_container, MyOrdersFragment())
-                    ft.commit()
+                    if(bottomNavigationView.selectedItemId != R.id.menu_consumer_orders) {
+                        val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+                        ft.replace(R.id.consumer_fragment_container, MyOrdersFragment())
+                        ft.commit()
+                    }
                 }
                 R.id.menu_consumer_profile -> {
-                    val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-                    ft.replace(R.id.consumer_fragment_container, ProfileFragment())
-                    ft.commit()
+                    if(bottomNavigationView.selectedItemId != R.id.menu_consumer_profile) {
+                        val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+                        ft.replace(R.id.consumer_fragment_container, ProfileFragment())
+                        ft.commit()
+                    }
                 }
             }
             true

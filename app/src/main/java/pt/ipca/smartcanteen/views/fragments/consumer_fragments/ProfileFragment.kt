@@ -13,12 +13,15 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.firebase.storage.FirebaseStorage
 import es.dmoral.toasty.Toasty
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.helpers.*
 import pt.ipca.smartcanteen.models.retrofit.body.ProfileBody
 import pt.ipca.smartcanteen.models.retrofit.response.RetroBar
 import pt.ipca.smartcanteen.models.retrofit.response.RetroCampus
 import pt.ipca.smartcanteen.models.retrofit.response.RetroProfile
+import pt.ipca.smartcanteen.models.room.tables.Profile
 import pt.ipca.smartcanteen.services.CampusService
 import pt.ipca.smartcanteen.services.ProfileService
 import retrofit2.Call
@@ -35,12 +38,15 @@ class ProfileFragment : Fragment() {
 
 
     private val saveBtn: Button by lazy { requireView().findViewById<Button>(R.id.profile_save_btn) as Button }
+    private val cancelBtn: Button by lazy { requireView().findViewById<Button>(R.id.profile_button_cancel) as Button }
 
     private lateinit var alertDialogManager: AlertDialogManager
 
+    private var localProfile: Profile? = null
 
-    private var selectedCampus: String? = null
-    private var selectedBar: String? = null
+
+    private var selectedCampus: RetroCampus? = null
+    private var selectedBar: RetroBar? = null
 
     private val storageRef = FirebaseStorage.getInstance().reference
 
@@ -65,19 +71,80 @@ class ProfileFragment : Fragment() {
         }
 
         saveBtn.setOnClickListener {
-            if (selectedCampus != null && selectedBar != null) {
-                saveProfile()
-            } else {
-                Toasty.error(requireContext(), requireContext().getString(R.string.didnt_change)).show()
+            if(selectedBar!= null && selectedCampus!= null && localProfile!=null) {
+                if (!(selectedCampus!!.campusid == localProfile!!.campusId && selectedBar!!.barid == localProfile!!.barId)) {
+                    saveProfile()
+                } else {
+                    Toasty.error(requireContext(), requireContext().getString(R.string.didnt_change)).show()
+                }
             }
         }
 
 
+        cancelBtn.setOnClickListener {
+            var barAdapter = activity?.let {
+                ArrayAdapter(
+                    it,
+                    android.R.layout.simple_spinner_dropdown_item,
+                    arrayOf(localProfile!!.barName)
+                )
+            }
+
+            var campusAdapter = activity?.let {
+                ArrayAdapter(
+                    it,
+                    android.R.layout.simple_spinner_dropdown_item,
+                    arrayOf(localProfile!!.campusName)
+                )
+            }
+            buildBarSpinner(barAdapter, listOf(RetroBar(localProfile!!.barId, localProfile!!.barName)), localProfile!!.barName)
+            buildCampusSpinner(
+                campusAdapter,
+                listOf(RetroCampus(localProfile!!.campusId, localProfile!!.campusName)),
+                localProfile!!.campusName,
+                localProfile!!.barName
+            )
+            getData()
+        }
+
+        val db = SmartCanteenDBHelper.getInstance(requireContext().applicationContext)
+        GlobalScope.launch {
+            localProfile = db.profileDao().getProfile()
+            if (localProfile != null) {
+                Log.d("MAIN", "Found Local Profile")
+                Log.d("MAIN", localProfile.toString())
+
+                var barAdapter = activity?.let {
+                    ArrayAdapter(
+                        it,
+                        android.R.layout.simple_spinner_dropdown_item,
+                        arrayOf(localProfile!!.barName)
+                    )
+                }
+
+                var campusAdapter = activity?.let {
+                    ArrayAdapter(
+                        it,
+                        android.R.layout.simple_spinner_dropdown_item,
+                        arrayOf(localProfile!!.campusName)
+                    )
+                }
+
+
+                buildBarSpinner(barAdapter, listOf(RetroBar(localProfile!!.barId, localProfile!!.barName)), localProfile!!.barName)
+                buildCampusSpinner(
+                    campusAdapter,
+                    listOf(RetroCampus(localProfile!!.campusId, localProfile!!.campusName)),
+                    localProfile!!.campusName,
+                    localProfile!!.barName
+                )
+                name.text = localProfile!!.name
+            }
+        }
         getImage()
         getData()
-
-
     }
+
 
     fun saveProfile() {
         val retrofit = SmartCanteenRequests().retrofit
@@ -87,7 +154,7 @@ class ProfileFragment : Fragment() {
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
 
-        val body = ProfileBody(selectedCampus!!, selectedBar!!)
+        val body = ProfileBody(selectedCampus?.campusid!!, selectedBar?.barid!!)
 
         service.editProfile(body, "Bearer $token").enqueue(object :
             Callback<RetroProfile> {
@@ -96,7 +163,31 @@ class ProfileFragment : Fragment() {
                 response: Response<RetroProfile>
             ) {
                 if (response.code() == 200) {
+                    val db = SmartCanteenDBHelper.getInstance(requireContext().applicationContext)
+                    if (localProfile != null) {
+                        val profile = Profile(
+                            uid = localProfile!!.uid,
+                            name = localProfile!!.name,
+                            email = localProfile!!.email,
+                            campusId = selectedCampus!!.campusid,
+                            campusName = selectedCampus!!.name,
+                            barId = selectedBar!!.barid,
+                            barName = selectedCampus!!.name
+                        )
 
+                        GlobalScope.launch {
+                            val data = db.profileDao().getProfile()
+                            if (data != null) {
+                                db.profileDao().update(profile)
+                                localProfile = db.profileDao().getProfile()
+                                Log.d("MAIN", localProfile.toString())
+                            } else {
+                                db.profileDao().insertAll(profile)
+                                localProfile = db.profileDao().getProfile()
+                                Log.d("MAIN", localProfile.toString())
+                            }
+                        }
+                    }
 
                 } else if (response.code() == 401) {
                     AuthHelper().newSessionToken(requireActivity())
@@ -110,6 +201,57 @@ class ProfileFragment : Fragment() {
             }
 
         })
+    }
+
+    fun getCampusBarInfo(
+        defaultBar: String,
+        campusId: String,
+    ) {
+        val retrofit = SmartCanteenRequests().retrofit
+
+        val service = retrofit.create(CampusService::class.java)
+
+        val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
+        val token = sp.getString("token", null)
+
+        service.getCampusIdBars(campusId,"Bearer $token").enqueue(object :
+            Callback<List<RetroBar>> {
+            override fun onResponse(
+                call: Call<List<RetroBar>>,
+                response: Response<List<RetroBar>>
+            ) {
+                if (response.code() == 200) {
+                    val body = response.body()
+
+                    if (body != null) {
+                        if (body.isNotEmpty()) {
+                            if (isAdded) {
+
+                                var adapter = activity?.let {
+                                    ArrayAdapter(
+                                        it,
+                                        android.R.layout.simple_spinner_dropdown_item,
+                                        body.map { retroBar -> retroBar.name }
+                                    )
+                                }
+                                Log.d("MAIN", body.toString())
+                                buildBarSpinner(adapter, body, defaultBar)
+                            }
+                        }
+                    }
+                } else if (response.code() == 401) {
+                    AuthHelper().newSessionToken(requireActivity())
+                    getBarInfo(defaultBar)
+                }
+
+            }
+
+            override fun onFailure(call: Call<List<RetroBar>>, t: Throwable) {
+                print("error")
+            }
+
+        })
+
     }
 
     fun getBarInfo(
@@ -142,29 +284,7 @@ class ProfileFragment : Fragment() {
                                         body.map { retroBar -> retroBar.name }
                                     )
                                 }
-                                adapter?.setDropDownViewResource(R.layout.spinner_item)
-                                spinnerBar.adapter = adapter
-
-                                val index = body.indexOfFirst { bar -> bar.name == defaultBar }
-
-                                spinnerBar.setSelection(index)
-
-                                spinnerBar.onItemSelectedListener =
-                                    object : AdapterView.OnItemSelectedListener {
-                                        override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-                                        override fun onItemSelected(
-                                            parent: AdapterView<*>?,
-                                            view: View?,
-                                            position: Int,
-                                            id: Long
-                                        ) {
-
-                                            val barId = body[position].barid
-                                            selectedBar = barId
-
-                                        }
-                                    }
+                                buildBarSpinner(adapter, body, defaultBar)
                             }
                         }
                     }
@@ -184,7 +304,8 @@ class ProfileFragment : Fragment() {
     }
 
     fun getCampusInfo(
-        defaultCampus: String
+        defaultCampus: String,
+        defaultBar: String
     ) {
         val retrofit = SmartCanteenRequests().retrofit
 
@@ -205,34 +326,15 @@ class ProfileFragment : Fragment() {
                     if (body != null) {
                         if (body.isNotEmpty()) {
                             if (isAdded) {
-
                                 var adapter = activity?.let {
                                     ArrayAdapter(
                                         it,
                                         android.R.layout.simple_spinner_dropdown_item,
                                         body.map { campus -> campus.name }
                                     )
+
                                 }
-                                adapter?.setDropDownViewResource(R.layout.spinner_item)
-                                spinnerCampus.adapter = adapter
-                                val index = body.indexOfFirst { campus -> campus.name == defaultCampus }
-                                spinnerCampus.setSelection(index)
-                                spinnerCampus.onItemSelectedListener =
-                                    object : AdapterView.OnItemSelectedListener {
-                                        override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-                                        override fun onItemSelected(
-                                            parent: AdapterView<*>?,
-                                            view: View?,
-                                            position: Int,
-                                            id: Long
-                                        ) {
-
-                                            val campusId = body[position].campusid
-                                            selectedCampus = campusId
-
-                                        }
-                                    }
+                                buildCampusSpinner(adapter, body, defaultCampus, defaultBar)
                             }
                         }
                     }
@@ -244,13 +346,61 @@ class ProfileFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<RetroCampus>>, t: Throwable) {
-                //mealsProgressBar.visibility = View.GONE
-                //mealsTextProgress.visibility = View.GONE
                 print("error")
             }
 
         })
 
+    }
+
+    private fun buildCampusSpinner(adapter: ArrayAdapter<String>?, body: List<RetroCampus>, defaultCampus: String, defaultBar: String) {
+
+        adapter?.setDropDownViewResource(R.layout.spinner_item)
+        spinnerCampus.adapter = adapter
+        val index = body.indexOfFirst { campus -> campus.name == defaultCampus }
+        spinnerCampus.setSelection(index)
+        spinnerCampus.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+
+                    val campusId = body[position].campusid
+                    val name = body[position].name
+                    selectedCampus = RetroCampus(campusId, name)
+                    getCampusBarInfo(defaultBar,campusId)
+                }
+            }
+    }
+
+    private fun buildBarSpinner(adapter: ArrayAdapter<String>?, body: List<RetroBar>, defaultBar: String) {
+
+        adapter?.setDropDownViewResource(R.layout.spinner_item)
+        spinnerBar.adapter = adapter
+        val index = body.indexOfFirst { bar -> bar.name == defaultBar }
+        spinnerBar.setSelection(index)
+        spinnerBar.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+
+                    val barId = body[position].barid
+                    val name = body[position].name
+                    selectedBar = RetroBar(barId, name)
+
+                }
+            }
     }
 
 
@@ -313,6 +463,7 @@ class ProfileFragment : Fragment() {
 
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
+        val uid = sp.getString("uid", null)
 
         var call =
             service.getViewProfile("Bearer $token").enqueue(object :
@@ -324,9 +475,33 @@ class ProfileFragment : Fragment() {
                     if (response.code() == 200) {
                         val body = response.body()
                         if (isAdded && body != null) {
+                            val db = SmartCanteenDBHelper.getInstance(requireContext().applicationContext)
+                            if (body != null && uid != null) {
+                                val profile = Profile(
+                                    uid = uid,
+                                    name = body.name,
+                                    email = body.email,
+                                    campusId = body.campusid,
+                                    campusName = body.campusname,
+                                    barId = body.barid,
+                                    barName = body.barname
+                                )
+                                GlobalScope.launch {
+                                    val data = db.profileDao().getProfile()
+                                    if (data != null) {
+                                        db.profileDao().update(profile)
+                                        localProfile = db.profileDao().getProfile()
+                                        Log.d("MAIN", localProfile.toString())
+                                    } else {
+                                        db.profileDao().insertAll(profile)
+                                        localProfile = db.profileDao().getProfile()
+                                        Log.d("MAIN", localProfile.toString())
+                                    }
+                                }
+                            }
                             name.text = body.name
-                            getBarInfo(body.barname)
-                            getCampusInfo(body.campusname)
+
+                            getCampusInfo(body.campusname, body.barname)
                         }
                     } else if (response.code() == 401) {
                         AuthHelper().newSessionToken(requireActivity())

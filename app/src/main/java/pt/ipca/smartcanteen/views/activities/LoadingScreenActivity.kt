@@ -34,9 +34,6 @@ class LoadingScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading_screen)
 
-
-
-
         val sp = SharedPreferencesHelper.getSharedPreferences(this@LoadingScreenActivity)
         val token = sp.getString("token", null)
 
@@ -67,8 +64,6 @@ class LoadingScreenActivity : AppCompatActivity() {
                                 val token = loadingBody.token
                                 val role = loadingBody.role
                                 val uid = loadingBody.uid
-
-                                getUserInfo(token, uid)
 
                                 Log.d("token", token)
 
@@ -138,54 +133,6 @@ class LoadingScreenActivity : AppCompatActivity() {
         })
     }
 
-    private fun getUserInfo(token: String, uid: String) {
-        val retrofit = SmartCanteenRequests().retrofit
-
-        val service = retrofit.create(ProfileService::class.java)
-
-        var call =
-            service.getViewProfile("Bearer $token").enqueue(object :
-                Callback<RetroProfile> {
-                override fun onResponse(
-                    call: Call<RetroProfile>,
-                    response: Response<RetroProfile>
-                ) {
-                    if (response.code() == 200) {
-                        val body = response.body()
-                        val db = SmartCanteenDBHelper.getInstance(applicationContext)
-                        if (body != null) {
-                            val profile = Profile(
-                                uid = uid,
-                                name = body.name,
-                                email = body.email,
-                                campusId = body.campusid,
-                                campusName = body.campusname,
-                                barId = body.barid,
-                                barName = body.barname
-                            )
-                           /*GlobalScope.launch {
-                                val data = db.profileDao().getProfile()
-                                if (data != null) {
-                                    db.profileDao().update(profile)
-                                    Log.d("MAIN", data.toString())
-                                } else {
-                                    db.profileDao().insertAll(profile)
-                                   // Log.d("MAIN", data.toString())
-                                }
-                            }*/
-                        }
-
-                    } else if (response.code() == 401) {
-                        AuthHelper().newSessionToken(this@LoadingScreenActivity)
-                        getUserInfo(token, uid)
-                    }
-                }
-
-                override fun onFailure(calll: Call<RetroProfile>, t: Throwable) {
-                    print("error")
-                }
-            })
-    }
 
     private fun sendToken(deviceToken: String) {
         val retrofit = SmartCanteenRequests().retrofit
