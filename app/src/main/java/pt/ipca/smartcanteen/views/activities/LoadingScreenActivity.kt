@@ -48,8 +48,8 @@ class LoadingScreenActivity : AppCompatActivity() {
                     barName="Est"
                 )
             )*/
-            val data = db.profileDao().getProfile()
-            Log.d("MAIN",data.toString())
+            //val data = db.profileDao().getProfile()
+            //Log.d("MAIN",data.toString())
         }
 
 
