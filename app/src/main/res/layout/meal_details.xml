@@ -198,6 +198,20 @@
         app:layout_constraintBottom_toBottomOf="@+id/meal_bottom_sheet_quantity_decrement_circle"
         app:layout_constraintEnd_toEndOf="@+id/meal_bottom_sheet_quantity_decrement_circle" />
 
+    <TextView
+        android:id="@+id/meal_cannotbemade_error_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="80dp"
+        android:text="@string/cannot_made"
+        android:textColor="@color/redButton"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meal_bottom_sheet_quantity_decrement_circle" />
+
     <Button
         android:id="@+id/meal_bottom_sheet_change_ingredient"
         android:layout_width="181dp"

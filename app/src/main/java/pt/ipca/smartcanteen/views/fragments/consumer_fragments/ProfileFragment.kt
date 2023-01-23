@@ -41,6 +41,7 @@ class ProfileFragment : Fragment() {
 
     private var selectedCampus: String? = null
     private var selectedBar: String? = null
+
     private val storageRef = FirebaseStorage.getInstance().reference
 
     companion object {
