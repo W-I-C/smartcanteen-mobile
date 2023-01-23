@@ -55,11 +55,7 @@ class MenuConsumerFragment : Fragment() {
     private var localTickets = mutableListOf<RetroTicket>()
 
     private lateinit var alertDialogManager: AlertDialogManager
-
-    override fun onCreateView(
-        inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?
     private val searchBar: EditText by lazy{requireView().findViewById<EditText>(R.id.consumer_menu_search_et)}
-    private lateinit var alertDialogManager: AlertDialogManager
 
     override fun onCreateView(
         inflater: LayoutInflater, parent: ViewGroup?,
