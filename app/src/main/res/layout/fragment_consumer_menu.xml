@@ -45,6 +45,7 @@
         app:layout_constraintBottom_toTopOf="@id/consumer_menu_search_et" />
 
     <EditText
+        android:onClick="goToMenu"
         android:id="@+id/consumer_menu_search_et"
         android:layout_width="290dp"
         android:layout_height="wrap_content"
