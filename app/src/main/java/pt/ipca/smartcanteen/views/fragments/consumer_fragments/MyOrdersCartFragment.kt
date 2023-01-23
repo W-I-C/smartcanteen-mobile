@@ -2,6 +2,7 @@ package pt.ipca.smartcanteen.views.fragments.consumer_fragmentshttps
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +29,7 @@ import retrofit2.Response
 class MyOrdersCartFragment : Fragment() {
     private val Finalizar: Button by lazy { requireView().findViewById<Button>(R.id.pay_button) as Button }
     private val total: TextView by lazy { requireView().findViewById<TextView>(R.id.numeric) as TextView }
-    private val cartAdapterRec: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.myorders_cart_recycler_view) as RecyclerView }
+    private val cartRec: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.myorders_cart_recycler_view) as RecyclerView }
 
     val linearLayoutManager = LinearLayoutManager(activity)
     private lateinit var alertDialogManager: AlertDialogManager
@@ -60,12 +61,17 @@ class MyOrdersCartFragment : Fragment() {
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
 
+        cartRec.visibility = View.VISIBLE
+
+
         var call = service.getMealsCart("Bearer $token").enqueue(object :
             Callback<List<RetroCartMeals>> {
             override fun onResponse(
                 call: Call<List<RetroCartMeals>>,
+
                 response: Response<List<RetroCartMeals>>
             ) {
+                cartRec.visibility = View.VISIBLE
                 if (response.code() == 200) {
                     val retroFit2 = response.body()
 
@@ -73,10 +79,18 @@ class MyOrdersCartFragment : Fragment() {
                         if (!retroFit2.isEmpty()) {
                             if (isAdded) {
 
-                                rebuildlist(MyOrdersCartRec(retroFit2, requireActivity(), linearLayoutManager, cartAdapterRec, getString(R.string.wish_remove_meal_cart),
-                                    alertDialogManager))
-                                if (retroFit2.size >= 1)
-                                    total.text = "${retroFit2[0].cartTotal} €"
+                                rebuildlist(
+                                    MyOrdersCartRec(
+                                        retroFit2,
+                                        requireActivity(),
+                                        linearLayoutManager,
+                                        cartRec,
+                                        getString(R.string.wish_remove_meal_cart),
+                                        alertDialogManager
+                                    )
+                                )
+
+                                total.text = "${retroFit2[0].cartTotal} €"
                             }
                         }
                     }
@@ -94,9 +108,9 @@ class MyOrdersCartFragment : Fragment() {
     }
 
     fun rebuildlist(adapter: MyOrdersCartRec) {
-        cartAdapterRec.layoutManager = linearLayoutManager
-        cartAdapterRec.itemAnimator = DefaultItemAnimator()
-        cartAdapterRec.adapter = adapter
+        cartRec.layoutManager = linearLayoutManager
+        cartRec.itemAnimator = DefaultItemAnimator()
+        cartRec.adapter = adapter
 
     }
 }
