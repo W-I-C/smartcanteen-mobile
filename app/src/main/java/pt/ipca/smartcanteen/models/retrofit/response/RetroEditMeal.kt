@@ -1,4 +1,4 @@
-package pt.ipca.smartcanteen.models
+package pt.ipca.smartcanteen.models.retrofit.response
 
 import com.google.gson.annotations.SerializedName
 
@@ -10,4 +10,4 @@ class RetroEditMeal(
     @SerializedName("canTakeAway") var cantakeaway: Boolean,
     @SerializedName("price") var price: Float,
 
-)
+    )

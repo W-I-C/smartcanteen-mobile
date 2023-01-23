@@ -2,10 +2,9 @@ package pt.ipca.smartcanteen.models.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import pt.ipca.smartcanteen.models.RetroMealChange
 import pt.ipca.smartcanteen.models.adapters.viewHolders.OrderDetailsMealsChangesViewHolder
+import pt.ipca.smartcanteen.models.retrofit.response.RetroMealChange
 
 class OrderDetailsMealsChangesAdapterRec(private var mealChanges: List<RetroMealChange>) :
     RecyclerView.Adapter<OrderDetailsMealsChangesViewHolder>() {
@@ -20,7 +19,7 @@ class OrderDetailsMealsChangesAdapterRec(private var mealChanges: List<RetroMeal
         val isRemoveOnly = mealChange.isremoveonly
         val amount = mealChange.ingamount
         val name = mealChange.ingname
-        holder.bindData(name,amount,isRemoveOnly)
+        holder.bindData(name, amount, isRemoveOnly)
     }
 
     override fun getItemCount(): Int {

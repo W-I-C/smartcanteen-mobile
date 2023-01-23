@@ -1,28 +1,29 @@
 package pt.ipca.smartcanteen.views.fragments.employee_fragments
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.RetroBarStatistics
-import pt.ipca.smartcanteen.models.helpers.*
+import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
+import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
+import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.retrofit.response.RetroBarStatistics
 import pt.ipca.smartcanteen.services.CampusService
-import pt.ipca.smartcanteen.views.activities.CreateMealActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class EmployeeMenuFragment(private val supportFragmentManager:FragmentManager, private val bottomNavigationMenuView: BottomNavigationView) : Fragment() {
+class EmployeeMenuFragment(private val supportFragmentManager: FragmentManager, private val bottomNavigationMenuView: BottomNavigationView) :
+    Fragment() {
     private val seeMenuIv: ImageView by lazy { requireView().findViewById<View>(R.id.employee_menu_see_menu_button) as ImageView }
     private val seeOrdersIv: ImageView by lazy { requireView().findViewById<View>(R.id.employee_menu_see_orders_button) as ImageView }
 
@@ -36,7 +37,7 @@ class EmployeeMenuFragment(private val supportFragmentManager:FragmentManager, p
     private val deliveredOrdersProgress: ProgressBar by lazy { requireView().findViewById<View>(R.id.employee_menu_delivered_requests_progress_bar) as ProgressBar }
     private val undeliveredOrdersProgress: ProgressBar by lazy { requireView().findViewById<View>(R.id.employee_menu_undelivered_requests_progress_bar) as ProgressBar }
 
-    private val logoutIc: ImageView by lazy {requireView().findViewById<ImageView>(R.id.employee_menu_logout) as ImageView }
+    private val logoutIc: ImageView by lazy { requireView().findViewById<ImageView>(R.id.employee_menu_logout) as ImageView }
 
 
     private lateinit var alertDialogManager: AlertDialogManager
@@ -65,8 +66,8 @@ class EmployeeMenuFragment(private val supportFragmentManager:FragmentManager, p
             bottomNavigationMenuView.selectedItemId = R.id.menu_employee_orders
         }
 
-        logoutIc.setOnClickListener{
-            AuthHelper().doLogout(retrofit,requireActivity(),alertDialogManager)
+        logoutIc.setOnClickListener {
+            AuthHelper().doLogout(retrofit, requireActivity(), alertDialogManager)
         }
     }
 
@@ -85,7 +86,7 @@ class EmployeeMenuFragment(private val supportFragmentManager:FragmentManager, p
             ) {
 
                 if (response.code() == 200) {
-                    if(isAdded) {
+                    if (isAdded) {
                         val body = response.body()
 
                         if (body != null) {
@@ -127,7 +128,7 @@ class EmployeeMenuFragment(private val supportFragmentManager:FragmentManager, p
 
         deliveredOrdersProgress.max = totalOrders
         undeliveredOrdersProgress.max = totalOrders
-        deliveredOrdersProgress.setProgress(totalDeliveredOrders)
-        undeliveredOrdersProgress.setProgress(totalUndeliveredOrders)
+        deliveredOrdersProgress.progress = totalDeliveredOrders
+        undeliveredOrdersProgress.progress = totalUndeliveredOrders
     }
 }

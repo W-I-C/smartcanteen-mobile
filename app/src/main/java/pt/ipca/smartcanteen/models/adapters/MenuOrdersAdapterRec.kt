@@ -5,12 +5,16 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import pt.ipca.smartcanteen.models.RetroTicket
-import pt.ipca.smartcanteen.models.RetroTrade
 import pt.ipca.smartcanteen.models.adapters.viewHolders.MenuOrdersAdapterRecViewHolder
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTicket
 import pt.ipca.smartcanteen.views.activities.ConsumerOrderDetailsActivity
 
-class MenuOrdersAdapterRec(private val activity: Activity, private val qtyString:String,private val orderString:String,private var ordersList: List<RetroTicket>) :
+class MenuOrdersAdapterRec(
+    private val activity: Activity,
+    private val qtyString: String,
+    private val orderString: String,
+    private var ordersList: List<RetroTicket>
+) :
     RecyclerView.Adapter<MenuOrdersAdapterRecViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuOrdersAdapterRecViewHolder {
@@ -25,11 +29,11 @@ class MenuOrdersAdapterRec(private val activity: Activity, private val qtyString
         val statename = ordersList[position].statename
 
 
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             val intent = Intent(activity, ConsumerOrderDetailsActivity::class.java).apply {
-                putExtra("ticketid",ordersList[position].ticketid)
-                putExtra("norder",ordersList[position].norder)
-                putExtra("total",ordersList[position].total)
+                putExtra("ticketid", ordersList[position].ticketid)
+                putExtra("norder", ordersList[position].norder)
+                putExtra("total", ordersList[position].total)
             }
             activity.startActivity(intent)
         }

@@ -3,10 +3,8 @@ package pt.ipca.smartcanteen.models.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import pt.ipca.smartcanteen.models.RetroAllowedChanges
-import pt.ipca.smartcanteen.models.RetroMealChange
 import pt.ipca.smartcanteen.models.adapters.viewHolders.AllowedChangesAdapterRecViewHolder
-import pt.ipca.smartcanteen.models.adapters.viewHolders.OrderDetailsMealsChangesViewHolder
+import pt.ipca.smartcanteen.models.retrofit.response.RetroAllowedChanges
 
 
 class AllowedChangesAdapterRec(private var allowedChanges: List<RetroAllowedChanges>) :
@@ -30,7 +28,18 @@ class AllowedChangesAdapterRec(private var allowedChanges: List<RetroAllowedChan
         val decrementlimit = allowedChanges.decrementlimit
         val default = allowedChanges.default
 
-        holder.bindData(changeid,mealid,ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit,default)
+        holder.bindData(
+            changeid,
+            mealid,
+            ingname,
+            ingdosage,
+            isremoveonly,
+            canbeincremented,
+            canbedecremented,
+            incrementlimit,
+            decrementlimit,
+            default
+        )
     }
 
     override fun getItemCount(): Int {

@@ -5,10 +5,9 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import pt.ipca.smartcanteen.models.RetroMeal
 import pt.ipca.smartcanteen.models.adapters.viewHolders.EmployeeBarMenuMealsAdapterRecViewHolder
 import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
-import pt.ipca.smartcanteen.views.activities.ConsumerOrderDetailsActivity
+import pt.ipca.smartcanteen.models.retrofit.response.RetroMeal
 import pt.ipca.smartcanteen.views.activities.EditMealActivity
 
 
@@ -40,7 +39,7 @@ class EmployeeBarMenuMealsAdapterRec(
 
         holder.bindData(name, time, price, removeMealAskString, cantRemoveMealString, meal.mealid, rebuildList)
 
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             var intent = Intent(activity, EditMealActivity::class.java)
             intent.putExtra("mealId", mealId)
             intent.putExtra("name", name)

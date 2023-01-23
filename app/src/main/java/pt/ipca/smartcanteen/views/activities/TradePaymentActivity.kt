@@ -1,18 +1,19 @@
 package pt.ipca.smartcanteen.views.activities
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.RetroPaymentMethod
-import pt.ipca.smartcanteen.models.RetroTradePayment
-import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTradePayment
 import pt.ipca.smartcanteen.services.TradesService
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,7 +26,7 @@ class TradePaymentActivity : AppCompatActivity() {
     private val price_text: TextView by lazy { findViewById<TextView>(R.id.trade_payment_price_textview) as TextView }
     private val payment_method: TextView by lazy { findViewById<TextView>(R.id.trade_payment_method_general_textview) as TextView }
     private val payment_method_tittle: TextView by lazy { findViewById<TextView>(R.id.type_payment_textview) as TextView }
-    private val backBtn: ImageView by lazy {findViewById<ImageView>(R.id.trade_payment_arrow) as ImageView }
+    private val backBtn: ImageView by lazy { findViewById<ImageView>(R.id.trade_payment_arrow) as ImageView }
     var paymentmethodid: String? = null
     private lateinit var alertDialogManager: AlertDialogManager
 
@@ -54,7 +55,7 @@ class TradePaymentActivity : AppCompatActivity() {
                 )
             }
         } else {
-            price_text.text = "${price.toString()}€"
+            price_text.text = "${price}€"
             payment_method.visibility = View.VISIBLE
             payment_method_tittle.visibility = View.VISIBLE
             getPaymentMethods(generaltradeid)
@@ -68,11 +69,11 @@ class TradePaymentActivity : AppCompatActivity() {
             }
         }
 
-        backBtn.setOnClickListener{
+        backBtn.setOnClickListener {
             finish()
         }
 
-        cancel_button.setOnClickListener{
+        cancel_button.setOnClickListener {
             alertDialogManager.createConfirmAlertDialog(
                 getString(R.string.cancel_operation),
                 {

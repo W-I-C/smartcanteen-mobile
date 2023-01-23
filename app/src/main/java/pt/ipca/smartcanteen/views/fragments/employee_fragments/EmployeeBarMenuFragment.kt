@@ -2,22 +2,24 @@ package pt.ipca.smartcanteen.views.fragments.employee_fragments
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.RetroMeal
 import pt.ipca.smartcanteen.models.adapters.EmployeeBarMenuMealsAdapterRec
-import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.retrofit.response.RetroMeal
 import pt.ipca.smartcanteen.services.MealsService
 import pt.ipca.smartcanteen.views.activities.CreateMealActivity
 import retrofit2.Call
@@ -29,7 +31,7 @@ class EmployeeBarMenuFragment : Fragment() {
     private val loadingProgressBar: ProgressBar by lazy { requireView().findViewById<RecyclerView>(R.id.employee_bar_menu_progress_bar) as ProgressBar }
     private val loadingProgressText: TextView by lazy { requireView().findViewById<RecyclerView>(R.id.employee_bar_menu_progress_bar_text) as TextView }
 
-    private val addMeal:ImageView by  lazy {requireView().findViewById<ImageView>(R.id.employee_bar_menu_add_meal) as ImageView }
+    private val addMeal: ImageView by lazy { requireView().findViewById<ImageView>(R.id.employee_bar_menu_add_meal) as ImageView }
 
     private lateinit var alertDialogManager: AlertDialogManager
 
@@ -48,8 +50,8 @@ class EmployeeBarMenuFragment : Fragment() {
 
         getMealsList()
 
-        addMeal.setOnClickListener{
-            val intent= Intent(requireContext(), CreateMealActivity::class.java)
+        addMeal.setOnClickListener {
+            val intent = Intent(requireContext(), CreateMealActivity::class.java)
             startActivity(intent)
         }
     }
@@ -82,7 +84,7 @@ class EmployeeBarMenuFragment : Fragment() {
             ) {
                 if (response.code() == 200) {
                     val body = response.body()
-                    if(isAdded) {
+                    if (isAdded) {
                         menuRv.visibility = View.VISIBLE
                         loadingProgressBar.visibility = View.INVISIBLE
                         loadingProgressText.visibility = View.INVISIBLE

@@ -1,20 +1,23 @@
 package pt.ipca.smartcanteen.views.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.RetroState
-import pt.ipca.smartcanteen.models.RetroTicketMeal
 import pt.ipca.smartcanteen.models.adapters.OrderDetailsAdapterRec
-import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.retrofit.response.RetroState
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTicketMeal
 import pt.ipca.smartcanteen.services.OrdersService
 import pt.ipca.smartcanteen.services.StatesService
 import retrofit2.Call
@@ -40,7 +43,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
     private val stateTitleTv: TextView by lazy { findViewById<View>(R.id.employee_order_current_state_title_tv) as TextView }
     private val stateTv: TextView by lazy { findViewById<View>(R.id.employee_order_details_current_state_tv) as TextView }
 
-    private lateinit var currentState:String
+    private lateinit var currentState: String
     private lateinit var alertDialogManager: AlertDialogManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,12 +54,12 @@ class EmployeeTicketDetails : AppCompatActivity() {
 
         val ticketid = intent.getStringExtra("ticketid")
         val norder = intent.getIntExtra("norder", 0)
-        currentState = intent.getStringExtra("statename")?:""
+        currentState = intent.getStringExtra("statename") ?: ""
 
         val orderMealsRecyclerView = findViewById<RecyclerView>(R.id.employee_order_details_rv)
         val orderMealsLinearLayoutManager = LinearLayoutManager(this@EmployeeTicketDetails)
 
-        backArrow.setOnClickListener{
+        backArrow.setOnClickListener {
             finish()
         }
 
@@ -99,15 +102,15 @@ class EmployeeTicketDetails : AppCompatActivity() {
 
                     if (body != null) {
                         if (body.isNotEmpty()) {
-                            val states = body.sortedBy { state :RetroState -> state.priority  }
+                            val states = body.sortedBy { state: RetroState -> state.priority }
 
                             deliverBtn.setOnClickListener {
-                                setTicketState(retrofit,ticketid,states[states.size-1].stateid,true)
-                                stateTv.text = states[states.size-1].name
+                                setTicketState(retrofit, ticketid, states[states.size - 1].stateid, true)
+                                stateTv.text = states[states.size - 1].name
                             }
 
                             inPrepBtn.setOnClickListener {
-                                setTicketState(retrofit,ticketid,states[1].stateid,true)
+                                setTicketState(retrofit, ticketid, states[1].stateid, true)
                                 stateTv.text = states[1].name
                                 delayedBtn.setBackgroundResource(R.drawable.button_grey)
                                 readyBtn.setBackgroundResource(R.drawable.button_grey)
@@ -115,7 +118,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
                             }
 
                             delayedBtn.setOnClickListener {
-                                setTicketState(retrofit,ticketid,states[2].stateid,true)
+                                setTicketState(retrofit, ticketid, states[2].stateid, true)
                                 stateTv.text = states[2].name
                                 inPrepBtn.setBackgroundResource(R.drawable.button_grey)
                                 readyBtn.setBackgroundResource(R.drawable.button_grey)
@@ -123,7 +126,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
                             }
 
                             readyBtn.setOnClickListener {
-                                setTicketState(retrofit,ticketid,states[3].stateid,true)
+                                setTicketState(retrofit, ticketid, states[3].stateid, true)
                                 stateTv.text = states[3].name
                                 delayedBtn.setBackgroundResource(R.drawable.button_grey)
                                 inPrepBtn.setBackgroundResource(R.drawable.button_grey)
@@ -135,7 +138,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
                             getTicket(ticketid, orderMealsRecyclerView, orderMealsLinearLayoutManager)
                         }
                     }
-                }else if(response.code()==401){
+                } else if (response.code() == 401) {
                     AuthHelper().newSessionToken(this@EmployeeTicketDetails)
                     getStatesInfo(retrofit, ticketid, orderMealsRecyclerView, orderMealsLinearLayoutManager)
                 }
@@ -192,8 +195,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
                     loadingBar.visibility = View.GONE
                     loadingText.visibility = View.GONE
 
-                }
-                else if(response.code()==401){
+                } else if (response.code() == 401) {
                     AuthHelper().newSessionToken(this@EmployeeTicketDetails)
                     getTicket(ticketid, orderMealsRecyclerView, orderMealsLinearLayoutManager)
                 }
@@ -214,7 +216,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
         retrofit: Retrofit,
         ticketid: String,
         stateId: String,
-        finishActivity:Boolean,
+        finishActivity: Boolean,
     ) {
 
 
@@ -233,7 +235,7 @@ class EmployeeTicketDetails : AppCompatActivity() {
             ) {
 
                 if (response.code() == 200) {
-                    if(finishActivity){
+                    if (finishActivity) {
                         finish()
                     }
                 }

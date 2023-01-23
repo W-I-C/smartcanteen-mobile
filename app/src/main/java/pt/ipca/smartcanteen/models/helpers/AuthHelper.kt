@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import androidx.core.content.ContextCompat.startActivity
-import pt.ipca.smartcanteen.models.LoginResponse
+import pt.ipca.smartcanteen.models.retrofit.response.LoginResponse
 import pt.ipca.smartcanteen.services.AuthService
 import pt.ipca.smartcanteen.views.activities.LoginActivity
 import retrofit2.Call

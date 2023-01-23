@@ -1,6 +1,12 @@
 package pt.ipca.smartcanteen.services
 
 import pt.ipca.smartcanteen.models.*
+import pt.ipca.smartcanteen.models.retrofit.*
+import pt.ipca.smartcanteen.models.retrofit.body.DirectTradeBody
+import pt.ipca.smartcanteen.models.retrofit.body.GeneralTradeBody
+import pt.ipca.smartcanteen.models.retrofit.response.RetroPaymentMethod
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTrade
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTradePayment
 import retrofit2.Call
 import retrofit2.http.*
 

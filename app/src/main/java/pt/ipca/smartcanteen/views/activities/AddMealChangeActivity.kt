@@ -6,12 +6,12 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.MealChangeBody
-import pt.ipca.smartcanteen.models.RetroAllowedChanges
 import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.retrofit.body.MealChangeBody
+import pt.ipca.smartcanteen.models.retrofit.response.RetroAllowedChanges
 import pt.ipca.smartcanteen.services.MealsService
 import retrofit2.Call
 import retrofit2.Callback
@@ -51,7 +51,7 @@ class AddMealChangeActivity : AppCompatActivity() {
         val ingName = findViewById<EditText>(R.id.add_ingredient_name_edittext)
 
         incrementLimit.visibility = View.GONE
-        decrementLimit.visibility  = View.GONE
+        decrementLimit.visibility = View.GONE
         incrementLimitTittle.visibility = View.GONE
         decrementLimitTittle.visibility = View.GONE
 
@@ -66,7 +66,7 @@ class AddMealChangeActivity : AppCompatActivity() {
         }
 
         if (mealid != null) {
-            confirmBtn.setOnClickListener{
+            confirmBtn.setOnClickListener {
                 val ingname = ingName.text.toString()
                 val ingdosage = ingDosage.text.toString()
                 val incrementlimit = incrementLimit.text.toString().toIntOrNull() ?: null
@@ -75,13 +75,23 @@ class AddMealChangeActivity : AppCompatActivity() {
                 alertDialogManager.createConfirmAlertDialog(
                     getString(R.string.confirm_allowed_changes),
                     {
-                        confirmBtn(mealid,ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit,defaultValue)
+                        confirmBtn(
+                            mealid,
+                            ingname,
+                            ingdosage,
+                            isremoveonly,
+                            canbeincremented,
+                            canbedecremented,
+                            incrementlimit,
+                            decrementlimit,
+                            defaultValue
+                        )
                     }
                 )
             }
         }
 
-        cancelBtn.setOnClickListener{
+        cancelBtn.setOnClickListener {
             alertDialogManager.createConfirmAlertDialog(
                 getString(R.string.cancel_operation),
                 {
@@ -90,12 +100,12 @@ class AddMealChangeActivity : AppCompatActivity() {
             )
         }
 
-        arrowBtn.setOnClickListener{
+        arrowBtn.setOnClickListener {
             finish()
         }
     }
 
-    fun make(mealid: String){
+    fun make(mealid: String) {
 
         isRemoveonly.setOnClickListener {
             isRemoveOnly()
@@ -110,7 +120,7 @@ class AddMealChangeActivity : AppCompatActivity() {
         }
     }
 
-    fun isRemoveOnly(){
+    fun isRemoveOnly() {
         if (isRemoveonly.isChecked) {
             incrementLimit.visibility = View.GONE
             decrementLimit.visibility = View.GONE
@@ -121,10 +131,10 @@ class AddMealChangeActivity : AppCompatActivity() {
             canbeincremented = false
             canbedecremented = false
 
-            if(canbeDecremented.isChecked == true){
+            if (canbeDecremented.isChecked == true) {
                 canbeDecremented.isChecked = false
             }
-            if(canbeIncremented.isChecked == true){
+            if (canbeIncremented.isChecked == true) {
                 canbeIncremented.isChecked = false
             }
         } else {
@@ -132,7 +142,7 @@ class AddMealChangeActivity : AppCompatActivity() {
         }
     }
 
-    fun canbeIncremented(){
+    fun canbeIncremented() {
         if (canbeIncremented.isChecked) {
             incrementLimit.visibility = View.VISIBLE
             incrementLimitTittle.visibility = View.VISIBLE
@@ -140,15 +150,15 @@ class AddMealChangeActivity : AppCompatActivity() {
             isremoveonly = false
             canbeincremented = true
 
-            if(canbeDecremented.isChecked == false){
+            if (canbeDecremented.isChecked == false) {
                 decrementLimit.visibility = View.GONE
                 decrementLimitTittle.visibility = View.GONE
-            } else{
+            } else {
                 decrementLimit.visibility = View.VISIBLE
                 decrementLimitTittle.visibility = View.VISIBLE
             }
 
-            if(isRemoveonly.isChecked == true){
+            if (isRemoveonly.isChecked == true) {
                 isRemoveonly.isChecked = false
             }
         } else {
@@ -159,7 +169,7 @@ class AddMealChangeActivity : AppCompatActivity() {
         }
     }
 
-    fun canbeDecremented(){
+    fun canbeDecremented() {
         if (canbeDecremented.isChecked) {
             decrementLimit.visibility = View.VISIBLE
             decrementLimitTittle.visibility = View.VISIBLE
@@ -167,10 +177,10 @@ class AddMealChangeActivity : AppCompatActivity() {
             isremoveonly = false
             canbedecremented = true
 
-            if(canbeIncremented.isChecked == false){
+            if (canbeIncremented.isChecked == false) {
                 incrementLimit.visibility = View.GONE
                 incrementLimitTittle.visibility = View.GONE
-            } else{
+            } else {
                 incrementLimit.visibility = View.VISIBLE
                 incrementLimitTittle.visibility = View.VISIBLE
             }
@@ -181,13 +191,23 @@ class AddMealChangeActivity : AppCompatActivity() {
         }
     }
 
-    fun cancelBtn(){
+    fun cancelBtn() {
         finish()
         Toast.makeText(this@AddMealChangeActivity, getString(R.string.canceled_operation), Toast.LENGTH_LONG)
             .show()
     }
 
-    fun confirmBtn(mealid: String, ingname: String, ingdosage: String, isremoveonly: Boolean, canbeincremented: Boolean, canbedecremented: Boolean, incrementlimit: Int?, decrementlimit: Int?, defaultValue: Int){
+    fun confirmBtn(
+        mealid: String,
+        ingname: String,
+        ingdosage: String,
+        isremoveonly: Boolean,
+        canbeincremented: Boolean,
+        canbedecremented: Boolean,
+        incrementlimit: Int?,
+        decrementlimit: Int?,
+        defaultValue: Int
+    ) {
 
         val service = retrofit.create(MealsService::class.java)
 
@@ -195,11 +215,11 @@ class AddMealChangeActivity : AppCompatActivity() {
         val token = sp.getString("token", null)
 
 
-        val body = MealChangeBody(ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit,defaultValue)
+        val body = MealChangeBody(ingname, ingdosage, isremoveonly, canbeincremented, canbedecremented, incrementlimit, decrementlimit, defaultValue)
 
         alertDialogManager.dialog.show()
 
-        service.addMealChange(mealid,"Bearer $token",body).enqueue(object :
+        service.addMealChange(mealid, "Bearer $token", body).enqueue(object :
             Callback<List<RetroAllowedChanges>> {
             override fun onResponse(
                 call: Call<List<RetroAllowedChanges>>,
@@ -215,13 +235,23 @@ class AddMealChangeActivity : AppCompatActivity() {
 
                     finish()
 
-                } else if(response.code()==500) {
+                } else if (response.code() == 500) {
                     alertDialogManager.dialog.dismiss()
 
                     Toasty.error(this@AddMealChangeActivity, getString(R.string.error_add_meal_change), Toast.LENGTH_LONG).show()
-                } else if(response.code()==401){
+                } else if (response.code() == 401) {
                     AuthHelper().newSessionToken(this@AddMealChangeActivity)
-                    confirmBtn(mealid,ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit,defaultValue)
+                    confirmBtn(
+                        mealid,
+                        ingname,
+                        ingdosage,
+                        isremoveonly,
+                        canbeincremented,
+                        canbedecremented,
+                        incrementlimit,
+                        decrementlimit,
+                        defaultValue
+                    )
                 }
             }
 

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.FirebaseStorage
 import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
@@ -97,7 +96,7 @@ class AddMealCartActivity : AppCompatActivity() {
             }
         }
 
-        buttonConfirm.setOnClickListener() {
+        buttonConfirm.setOnClickListener {
             alertDialogManager.createConfirmAlertDialog(
                 getString(R.string.confirm_operation),
                 {
@@ -107,7 +106,7 @@ class AddMealCartActivity : AppCompatActivity() {
             )
         }
 
-        arrowBack.setOnClickListener() {
+        arrowBack.setOnClickListener {
             finish()
         }
     }

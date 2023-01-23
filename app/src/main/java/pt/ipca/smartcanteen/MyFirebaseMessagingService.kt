@@ -14,7 +14,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import pt.ipca.smartcanteen.views.activities.LoadingScreenActivity
 
-class MyFirebaseMessagingService:FirebaseMessagingService() {
+class MyFirebaseMessagingService : FirebaseMessagingService() {
     val TAG = "MAIN"
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "From: ${remoteMessage.from}")
@@ -42,13 +42,16 @@ class MyFirebaseMessagingService:FirebaseMessagingService() {
             .setPriority(2)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel("1",
+            val channel = NotificationChannel(
+                "1",
                 "Channel human readable title",
-                NotificationManager.IMPORTANCE_HIGH)
+                NotificationManager.IMPORTANCE_HIGH
+            )
             notificationManager.createNotificationChannel(channel)
         }
         notificationManager.notify(0, notificationBuilder.build())
     }
+
     override fun onNewToken(token: String) {
         Log.d(TAG, "Refreshed token: $token")
 

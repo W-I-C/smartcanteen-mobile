@@ -1,25 +1,23 @@
 package pt.ipca.smartcanteen.views.fragments.employee_fragments
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import es.dmoral.toasty.Toasty
-import pt.ipca.smartcanteen.*
-import pt.ipca.smartcanteen.models.RetroTicket
-import pt.ipca.smartcanteen.models.RetroTrade
+import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.adapters.UndeliveredOrdersAdaterRec
-import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
+import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTicket
 import pt.ipca.smartcanteen.services.OrdersService
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,7 +28,7 @@ class UndeliveredOrdersFragment : Fragment() {
 
     private val textError: TextView by lazy { requireView().findViewById<TextView>(R.id.undelivered_orders_empty_message) as TextView }
     private val undeliveredOrdersAdater: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.undelivered_orders_recycler_view) as RecyclerView }
-    private lateinit var alertDialogManager :AlertDialogManager
+    private lateinit var alertDialogManager: AlertDialogManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +57,7 @@ class UndeliveredOrdersFragment : Fragment() {
 
     private fun getOrders(
         retrofit: Retrofit
-    ){
+    ) {
 
         val service = retrofit.create(OrdersService::class.java)
 
@@ -76,7 +74,7 @@ class UndeliveredOrdersFragment : Fragment() {
                     response: Response<List<RetroTicket>>
                 ) {
                     if (response.code() == 200) {
-                        if(isAdded) {
+                        if (isAdded) {
                             alertDialogManager.dialog.dismiss()
                             val retroFit2 = response.body()
 
@@ -90,7 +88,7 @@ class UndeliveredOrdersFragment : Fragment() {
                                     rebuildlist(UndeliveredOrdersAdaterRec(requireActivity(), retroFit2))
                                 }
                         }
-                    }else if(response.code()==401){
+                    } else if (response.code() == 401) {
                         AuthHelper().newSessionToken(requireActivity())
                         getOrders(retrofit)
                     }

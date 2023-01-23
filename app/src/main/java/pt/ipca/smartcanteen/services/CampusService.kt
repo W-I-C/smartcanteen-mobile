@@ -1,9 +1,9 @@
 package pt.ipca.smartcanteen.services
 
 
-import pt.ipca.smartcanteen.models.RetroBar
-import pt.ipca.smartcanteen.models.RetroBarStatistics
-import pt.ipca.smartcanteen.models.RetroCampus
+import pt.ipca.smartcanteen.models.retrofit.response.RetroBar
+import pt.ipca.smartcanteen.models.retrofit.response.RetroBarStatistics
+import pt.ipca.smartcanteen.models.retrofit.response.RetroCampus
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header

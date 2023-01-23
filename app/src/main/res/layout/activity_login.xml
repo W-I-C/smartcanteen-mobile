@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -22,7 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/smartcanteen_logo"/>
+        android:src="@drawable/smartcanteen_logo" />
 
     <TextView
         android:id="@+id/login_email_textview"
@@ -35,7 +34,7 @@
         android:text="@string/login_email"
         android:textColor="@color/background_color"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_ipca_image"/>
+        app:layout_constraintTop_toBottomOf="@id/login_ipca_image" />
 
     <EditText
         android:id="@+id/login_email_edittext"
@@ -68,7 +67,7 @@
         android:textStyle="bold"
         android:textColor="@color/background_color"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_email_edittext"/>
+        app:layout_constraintTop_toBottomOf="@id/login_email_edittext" />
 
     <EditText
         android:id="@+id/login_password_edittext"
@@ -88,7 +87,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login_password_textview"
-        android:elevation="5dp"/>
+        android:elevation="5dp" />
 
     <CheckBox
         android:id="@+id/login_password_visibility_checkbox"
@@ -118,7 +117,6 @@
         android:onClick="doLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_password_visibility_checkbox"
-        />
+        app:layout_constraintTop_toBottomOf="@id/login_password_visibility_checkbox" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

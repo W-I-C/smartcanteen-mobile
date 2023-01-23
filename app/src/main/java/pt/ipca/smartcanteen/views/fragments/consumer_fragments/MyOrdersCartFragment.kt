@@ -2,23 +2,22 @@ package pt.ipca.smartcanteen.views.fragments.consumer_fragmentshttps
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import pt.ipca.smartcanteen.models.adapters.MyOrdersCartRec
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.RetroCartMeals
+import pt.ipca.smartcanteen.models.adapters.MyOrdersCartRec
 import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.retrofit.response.RetroCartMeals
 import pt.ipca.smartcanteen.services.MealsService
 import pt.ipca.smartcanteen.views.activities.OrderActivity
 import retrofit2.Call
@@ -27,16 +26,18 @@ import retrofit2.Response
 
 
 class MyOrdersCartFragment : Fragment() {
-    private val Finalizar: Button by lazy {requireView().findViewById<Button>(R.id.pay_button) as Button }
-    private val total: TextView by lazy {requireView().findViewById<TextView>(R.id.numeric) as TextView }
+    private val Finalizar: Button by lazy { requireView().findViewById<Button>(R.id.pay_button) as Button }
+    private val total: TextView by lazy { requireView().findViewById<TextView>(R.id.numeric) as TextView }
     private val cartMeals: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.myorders_cart_recycler_view) as RecyclerView }
 
-    val linearLayoutManager=LinearLayoutManager(activity)
+    val linearLayoutManager = LinearLayoutManager(activity)
 
     private lateinit var alertDialogManager: AlertDialogManager
 
-    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, parent: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return inflater.inflate(R.layout.fragment_cart, parent, false)
 
     }
@@ -52,7 +53,7 @@ class MyOrdersCartFragment : Fragment() {
         }
     }
 
-    fun getMyOrders(){
+    fun getMyOrders() {
         val retrofit = SmartCanteenRequests().retrofit
         val service = retrofit.create(MealsService::class.java)
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
@@ -68,8 +69,8 @@ class MyOrdersCartFragment : Fragment() {
                     val retroFit2 = response.body()
 
                     if (retroFit2 != null) {
-                        if(!retroFit2.isEmpty()){
-                            if(isAdded) {
+                        if (!retroFit2.isEmpty()) {
+                            if (isAdded) {
 
                                 rebuildlist(MyOrdersCartRec(retroFit2, requireActivity(), linearLayoutManager, cartMeals))
                                 if (retroFit2.size >= 1)
@@ -77,7 +78,7 @@ class MyOrdersCartFragment : Fragment() {
                             }
                         }
                     }
-                }else if(response.code()==401){
+                } else if (response.code() == 401) {
                     AuthHelper().newSessionToken(requireActivity())
                     getMyOrders()
                 }
@@ -89,7 +90,7 @@ class MyOrdersCartFragment : Fragment() {
         })
     }
 
-    fun rebuildlist(adapter:MyOrdersCartRec) {
+    fun rebuildlist(adapter: MyOrdersCartRec) {
         cartMeals.layoutManager = linearLayoutManager
         cartMeals.itemAnimator = DefaultItemAnimator()
         cartMeals.adapter = adapter

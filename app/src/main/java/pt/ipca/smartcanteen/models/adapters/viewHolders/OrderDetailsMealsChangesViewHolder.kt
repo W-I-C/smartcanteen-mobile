@@ -1,6 +1,5 @@
 package pt.ipca.smartcanteen.models.adapters.viewHolders
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +8,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.R
 
-class OrderDetailsMealsChangesViewHolder (inflater: LayoutInflater, val parent: ViewGroup):
-    RecyclerView.ViewHolder(inflater.inflate(R.layout.ingredients_change_card, parent, false)){
+class OrderDetailsMealsChangesViewHolder(inflater: LayoutInflater, val parent: ViewGroup) :
+    RecyclerView.ViewHolder(inflater.inflate(R.layout.ingredients_change_card, parent, false)) {
     val ingNameTv = itemView.findViewById<TextView>(R.id.ingredients_change_card_1_name)
 
     // incrementar e decrementar
     val decrementCircle1 = itemView.findViewById<ImageView>(R.id.ingredients_change_card_1_decrement_circle)
     val decrementCircle1Btn = itemView.findViewById<ImageView>(R.id.ingredients_change_card_1_decrement)
 
-    val quantity1 =  itemView.findViewById<TextView>(R.id.ingredients_change_card_1_quantity)
+    val quantity1 = itemView.findViewById<TextView>(R.id.ingredients_change_card_1_quantity)
 
     val incrementCircle1 = itemView.findViewById<ImageView>(R.id.ingredients_change_card_1_increment_circle)
     val incrementCircle1Btn = itemView.findViewById<ImageView>(R.id.ingredients_change_card_1_increment)
@@ -37,6 +36,7 @@ class OrderDetailsMealsChangesViewHolder (inflater: LayoutInflater, val parent: 
     val removeGreenBckg = itemView.findViewById<ImageView>(R.id.ingredients_change_card_4_uncheck_circle_green)
     val removeBlack = itemView.findViewById<ImageView>(R.id.ingredients_change_card_4_remove)
     val removeWhite = itemView.findViewById<ImageView>(R.id.ingredients_change_card_4_remove_white)
+
     //    adicionar
     val addWhiteBckg = itemView.findViewById<ImageView>(R.id.ingredients_change_card_4_check_circle)
     val addGreenBckg = itemView.findViewById<ImageView>(R.id.ingredients_change_card_4_check_circle_green)
@@ -44,8 +44,7 @@ class OrderDetailsMealsChangesViewHolder (inflater: LayoutInflater, val parent: 
     val addWhite = itemView.findViewById<ImageView>(R.id.ingredients_change_card_4_check_white)
 
 
-
-    fun bindData(title:String,amount:Int,isremoveonly:Boolean){
+    fun bindData(title: String, amount: Int, isremoveonly: Boolean) {
 
         // incrementar e decrementar
         decrementCircle1.visibility = View.GONE
@@ -70,8 +69,8 @@ class OrderDetailsMealsChangesViewHolder (inflater: LayoutInflater, val parent: 
         addWhite.visibility = View.GONE
 
         ingNameTv.text = title
-        if(isremoveonly){
-            if(amount == 0){
+        if (isremoveonly) {
+            if (amount == 0) {
                 // removido
                 removeGreenBckg.visibility = View.VISIBLE
                 removeWhite.visibility = View.VISIBLE
@@ -79,7 +78,7 @@ class OrderDetailsMealsChangesViewHolder (inflater: LayoutInflater, val parent: 
                 addWhiteBckg.visibility = View.VISIBLE
                 addBlack.visibility = View.VISIBLE
 
-            }else{
+            } else {
                 // adicionado
                 removeWhiteBckg.visibility = View.VISIBLE
                 removeBlack.visibility = View.VISIBLE
@@ -87,9 +86,9 @@ class OrderDetailsMealsChangesViewHolder (inflater: LayoutInflater, val parent: 
                 addGreenBckg.visibility = View.VISIBLE
                 addWhite.visibility = View.VISIBLE
             }
-        }else{
+        } else {
             quantity2.visibility = View.VISIBLE
-            quantity2.text=amount.toString()
+            quantity2.text = amount.toString()
         }
     }
 }

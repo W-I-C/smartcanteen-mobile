@@ -16,12 +16,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.FirebaseStorage
 import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.CanBeMadeBody
-import pt.ipca.smartcanteen.models.MealBody
-import pt.ipca.smartcanteen.models.RetroAllowedChanges
 import pt.ipca.smartcanteen.models.adapters.MealAllowedChangesAdapterRec
 import pt.ipca.smartcanteen.models.adapters.MealAllowedChangesEditAdapterRec
 import pt.ipca.smartcanteen.models.helpers.*
+import pt.ipca.smartcanteen.models.retrofit.body.CanBeMadeBody
+import pt.ipca.smartcanteen.models.retrofit.body.MealBody
+import pt.ipca.smartcanteen.models.retrofit.response.RetroAllowedChanges
 import pt.ipca.smartcanteen.services.MealsService
 import pt.ipca.smartcanteen.views.fragments.consumer_fragments.ProfileFragment
 import retrofit2.Call
@@ -251,7 +251,7 @@ class EditMealActivity : AppCompatActivity() {
     ) {
 
 
-        pencilWhite.setOnClickListener() {
+        pencilWhite.setOnClickListener {
             mealImage.setOnClickListener {
                 pickImageGallery()
             }
@@ -645,31 +645,23 @@ class EditMealActivity : AppCompatActivity() {
         cancelBtn.visibility = View.VISIBLE
         confirmBtn.visibility = View.VISIBLE
 
-        if (canTakeAwayCheckBox.isChecked == true) {
-            cantakeaway = true
-        } else {
-            cantakeaway = false
-        }
+        cantakeaway = canTakeAwayCheckBox.isChecked == true
 
         canTakeAwayCheckBox.setOnClickListener {
-            if (canTakeAwayCheckBox.isChecked == true) {
-                cantakeaway = true
-            } else {
-                cantakeaway = false
-            }
+            cantakeaway = canTakeAwayCheckBox.isChecked == true
         }
 
-        val nameNotNull = name ?: ""
-        mealNameEdit.setHint(nameNotNull)
+        val nameNotNull = name
+        mealNameEdit.hint = nameNotNull
 
-        val timeNotNull = time ?: ""
-        mealTimeEdit.setHint(timeNotNull)
+        val timeNotNull = time
+        mealTimeEdit.hint = timeNotNull
 
-        val priceNotNull = price ?: ""
-        mealPriceEdit.setHint(priceNotNull)
+        val priceNotNull = price
+        mealPriceEdit.hint = priceNotNull
 
-        val descriptionNotNull = description ?: ""
-        mealDescriptionEdit.setHint(descriptionNotNull)
+        val descriptionNotNull = description
+        mealDescriptionEdit.hint = descriptionNotNull
 
 
         if (mealNameEdit.text.isEmpty()) {

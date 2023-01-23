@@ -1,14 +1,10 @@
 package pt.ipca.smartcanteen.models.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import pt.ipca.smartcanteen.models.RetroTicket
-import pt.ipca.smartcanteen.models.RetroTicketMeal
-
 import pt.ipca.smartcanteen.models.adapters.viewHolders.OrderDetailsAdapterRecViewHolder
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTicketMeal
 
 class OrderDetailsAdapterRec(private var orderMealsList: List<RetroTicketMeal>) :
     RecyclerView.Adapter<OrderDetailsAdapterRecViewHolder>() {
@@ -27,7 +23,7 @@ class OrderDetailsAdapterRec(private var orderMealsList: List<RetroTicketMeal>) 
         val mealchanges = orderMeal.mealchanges
 
 
-        holder.bindData(orderMeal.mealid,name, amount, description, mealchanges)
+        holder.bindData(orderMeal.mealid, name, amount, description, mealchanges)
 
     }
 

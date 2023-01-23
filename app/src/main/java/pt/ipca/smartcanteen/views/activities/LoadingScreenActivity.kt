@@ -3,22 +3,15 @@ package pt.ipca.smartcanteen.views.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.DeviceRegisterBody
-import pt.ipca.smartcanteen.models.LoginResponse
-import pt.ipca.smartcanteen.models.adapters.MyFavoriteMealAdapterRec
-import pt.ipca.smartcanteen.models.helpers.AuthHelper
-import pt.ipca.smartcanteen.models.helpers.RetroFavoriteMeal
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.retrofit.body.DeviceRegisterBody
+import pt.ipca.smartcanteen.models.retrofit.response.LoginResponse
 import pt.ipca.smartcanteen.services.AuthService
-import pt.ipca.smartcanteen.services.FavoritemealService
 import pt.ipca.smartcanteen.views.fragments.consumer_fragments.ConsumerFragmentActivity
 import pt.ipca.smartcanteen.views.fragments.employee_fragments.EmployeeFragmentActivity
 import retrofit2.Call
@@ -42,7 +35,7 @@ class LoadingScreenActivity : AppCompatActivity() {
 
             startActivity(intent)
             finish()
-            overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in,androidx.appcompat.R.anim.abc_fade_out);
+            overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
         } else {
 
             getPushToken()
@@ -78,13 +71,13 @@ class LoadingScreenActivity : AppCompatActivity() {
 
                                 startActivity(intent)
                                 finish()
-                                overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in,androidx.appcompat.R.anim.abc_fade_out);
+                                overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
                             } else if (role == "employee") {
 
                                 val intent = Intent(this@LoadingScreenActivity, EmployeeFragmentActivity::class.java)
                                 startActivity(intent)
                                 finish()
-                                overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in,androidx.appcompat.R.anim.abc_fade_out);
+                                overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
                             }
 
                         } else if (response.code() == 401) {
@@ -93,7 +86,7 @@ class LoadingScreenActivity : AppCompatActivity() {
 
                             startActivity(intent)
                             finish()
-                            overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in,androidx.appcompat.R.anim.abc_fade_out);
+                            overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
                         }
                     }
 
@@ -102,7 +95,7 @@ class LoadingScreenActivity : AppCompatActivity() {
 
                         startActivity(intent)
                         finish()
-                        overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in,androidx.appcompat.R.anim.abc_fade_out);
+                        overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
                     }
                 })
         }
@@ -110,7 +103,7 @@ class LoadingScreenActivity : AppCompatActivity() {
 
     override fun finish() {
         super.finish()
-        overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in,androidx.appcompat.R.anim.abc_fade_out);
+        overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
     }
 
     private fun getPushToken() {
@@ -126,18 +119,18 @@ class LoadingScreenActivity : AppCompatActivity() {
             sendToken(token)
 
             // Log and toast
-            val msg = "InstanceID Token: "+token
+            val msg = "InstanceID Token: " + token
             Log.d("Main", msg)
         })
     }
 
-    private fun sendToken(deviceToken:String){
+    private fun sendToken(deviceToken: String) {
         val retrofit = SmartCanteenRequests().retrofit
         val service = retrofit.create(AuthService::class.java)
         val sp = SharedPreferencesHelper.getSharedPreferences(this@LoadingScreenActivity)
         val token = sp.getString("token", null)
         val sendBody = DeviceRegisterBody(deviceToken)
-        var call = service.sendDeviceToken(sendBody,"Bearer $token").enqueue(object :
+        var call = service.sendDeviceToken(sendBody, "Bearer $token").enqueue(object :
             Callback<String> {
             override fun onResponse(
                 call: Call<String>,

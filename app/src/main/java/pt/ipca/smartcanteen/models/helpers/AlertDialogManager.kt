@@ -21,7 +21,7 @@ class AlertDialogManager(private val layoutInflater: LayoutInflater, private val
     }
 
     fun createConfirmAlertDialog(message: String, onConfirmFunction: () -> Unit) {
-        val builder = AlertDialog.Builder(context,R.style.AlertDialogTheme)
+        val builder = AlertDialog.Builder(context, R.style.AlertDialogTheme)
         builder.setMessage(message)
             .setCancelable(false)
             .setPositiveButton(context.getString(R.string.confirm)) { dialog, id ->
@@ -32,7 +32,7 @@ class AlertDialogManager(private val layoutInflater: LayoutInflater, private val
             }
         val dialog = builder.create()
 
-        dialog.window?.setBackgroundDrawable(ResourcesCompat.getDrawable(context.resources,R.drawable.square_card_background, null))
+        dialog.window?.setBackgroundDrawable(ResourcesCompat.getDrawable(context.resources, R.drawable.square_card_background, null))
         dialog.show()
     }
 }

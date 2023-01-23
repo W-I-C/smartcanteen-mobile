@@ -11,12 +11,11 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.FirebaseStorage
-import es.dmoral.toasty.Toasty
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.helpers.ImagesHelper
 import pt.ipca.smartcanteen.views.fragments.consumer_fragments.ProfileFragment
 
-class CreateMealActivity: AppCompatActivity() {
+class CreateMealActivity : AppCompatActivity() {
     private val listChange: RecyclerView by lazy { findViewById<RecyclerView>(R.id.crate_meal_recycler_view) as RecyclerView }
     private val mealName: EditText by lazy { findViewById<EditText>(R.id.create_meal_name_edittext) as EditText }
     private val preparationTime: EditText by lazy { findViewById<EditText>(R.id.create_meal_preparation_time_edittext) as EditText }
@@ -26,9 +25,10 @@ class CreateMealActivity: AppCompatActivity() {
     private val saveBtn: Button by lazy { findViewById<Button>(R.id.create_meal_save_button) as Button }
 
     private val storageRef = FirebaseStorage.getInstance().reference
-    private var imageUri:Uri? = null
-    companion object{
-        val IMAGE_REQUEST_CODE=100
+    private var imageUri: Uri? = null
+
+    companion object {
+        val IMAGE_REQUEST_CODE = 100
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +39,7 @@ class CreateMealActivity: AppCompatActivity() {
         }
     }
 
-    fun addIngredient(view: View){
+    fun addIngredient(view: View) {
         val intent = Intent(this, AddMealChangeActivity::class.java)
         startActivity(intent)
 
@@ -65,7 +65,7 @@ class CreateMealActivity: AppCompatActivity() {
     }
 
 
-    private fun sendImage(file: Uri, mealId:String) {
+    private fun sendImage(file: Uri, mealId: String) {
 
         val stRef = storageRef.child("images/meals/${mealId}")
         val uploadTask = stRef.putFile(file)
@@ -79,8 +79,6 @@ class CreateMealActivity: AppCompatActivity() {
 
 
     }
-
-
 
 
 }

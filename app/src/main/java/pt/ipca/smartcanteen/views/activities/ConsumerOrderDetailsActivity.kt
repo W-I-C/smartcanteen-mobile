@@ -2,7 +2,6 @@ package pt.ipca.smartcanteen.views.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -14,28 +13,27 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.RetroTicket
-import pt.ipca.smartcanteen.models.RetroTicketMeal
 import pt.ipca.smartcanteen.models.adapters.OrderDetailsAdapterRec
 import pt.ipca.smartcanteen.models.helpers.AuthHelper
 import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
 import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTicketMeal
 import pt.ipca.smartcanteen.services.OrdersService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class ConsumerOrderDetailsActivity : AppCompatActivity() {
-    private val tradeBtn: Button by lazy {findViewById<View>(R.id.order_details_trade_btn) as Button }
-    private val cancelBtn: Button by lazy {findViewById<View>(R.id.order_details_cancel_btn) as Button }
-    private val backArrow: ImageView by lazy {findViewById<View>(R.id.order_details_back_arrow_iv) as ImageView }
-    private val totalTv: TextView by lazy {findViewById<View>(R.id.order_details_total_tv) as TextView }
+    private val tradeBtn: Button by lazy { findViewById<View>(R.id.order_details_trade_btn) as Button }
+    private val cancelBtn: Button by lazy { findViewById<View>(R.id.order_details_cancel_btn) as Button }
+    private val backArrow: ImageView by lazy { findViewById<View>(R.id.order_details_back_arrow_iv) as ImageView }
+    private val totalTv: TextView by lazy { findViewById<View>(R.id.order_details_total_tv) as TextView }
 
-    private val detailsRv: RecyclerView by lazy {findViewById<View>(R.id.order_details_rv) as RecyclerView }
-    private val loadingBar: ProgressBar by lazy {findViewById<View>(R.id.order_details_progress_bar) as ProgressBar }
-    private val loadingText: TextView by lazy {findViewById<View>(R.id.order_details_progress_bar_text) as TextView }
+    private val detailsRv: RecyclerView by lazy { findViewById<View>(R.id.order_details_rv) as RecyclerView }
+    private val loadingBar: ProgressBar by lazy { findViewById<View>(R.id.order_details_progress_bar) as ProgressBar }
+    private val loadingText: TextView by lazy { findViewById<View>(R.id.order_details_progress_bar_text) as TextView }
 
-    private val titleTv: TextView by lazy {findViewById<View>(R.id.order_details_title_tv) as TextView }
+    private val titleTv: TextView by lazy { findViewById<View>(R.id.order_details_title_tv) as TextView }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,18 +42,18 @@ class ConsumerOrderDetailsActivity : AppCompatActivity() {
 
         val ticketid = intent.getStringExtra("ticketid")
         val generaltradeid = intent.getStringExtra("generaltradeid")
-        val norder = intent.getIntExtra("norder",0)
+        val norder = intent.getIntExtra("norder", 0)
         val ticketTotal = intent.getFloatExtra("total", 0.0F)
-        val isMyOrder = intent.getBooleanExtra("isMyOrder",true)
+        val isMyOrder = intent.getBooleanExtra("isMyOrder", true)
         val isFreeTrade = intent.getBooleanExtra("isFreeTrade", false)
 
         val orderMealsRecyclerView = findViewById<RecyclerView>(R.id.order_details_rv)
         val orderMealsLinearLayoutManager = LinearLayoutManager(this@ConsumerOrderDetailsActivity)
-        getTicket(ticketid!!,orderMealsRecyclerView,orderMealsLinearLayoutManager)
+        getTicket(ticketid!!, orderMealsRecyclerView, orderMealsLinearLayoutManager)
 
-        if(isFreeTrade) {
+        if (isFreeTrade) {
             totalTv.text = getString(R.string.free)
-        }else {
+        } else {
             totalTv.text = "Total: ${ticketTotal}€"
         }
 
@@ -71,16 +69,16 @@ class ConsumerOrderDetailsActivity : AppCompatActivity() {
         }
 
         tradeBtn.setOnClickListener {
-            if(isMyOrder){
+            if (isMyOrder) {
                 val intent = Intent(this@ConsumerOrderDetailsActivity, ConsumerTradeActivity::class.java)
-                intent.putExtra("ticketId",ticketid)
+                intent.putExtra("ticketId", ticketid)
                 startActivity(intent)
-            }else{
+            } else {
                 val intent = Intent(this@ConsumerOrderDetailsActivity, TradePaymentActivity::class.java)
-                intent.putExtra("ticketid",ticketid)
-                intent.putExtra("generaltradeid",generaltradeid)
-                intent.putExtra("price",ticketTotal)
-                intent.putExtra("isfree",isFreeTrade)
+                intent.putExtra("ticketid", ticketid)
+                intent.putExtra("generaltradeid", generaltradeid)
+                intent.putExtra("price", ticketTotal)
+                intent.putExtra("isfree", isFreeTrade)
                 startActivity(intent)
             }
 
@@ -89,20 +87,20 @@ class ConsumerOrderDetailsActivity : AppCompatActivity() {
 
 
     private fun getTicket(
-        ticketid:String,
-        orderMealsRecyclerView:RecyclerView,
-        orderMealsLinearLayoutManager:LayoutManager
-    ){
+        ticketid: String,
+        orderMealsRecyclerView: RecyclerView,
+        orderMealsLinearLayoutManager: LayoutManager
+    ) {
         val retrofit = SmartCanteenRequests().retrofit
 
         val service = retrofit.create(OrdersService::class.java)
 
         val sp = SharedPreferencesHelper.getSharedPreferences(this@ConsumerOrderDetailsActivity)
         val token = sp.getString("token", null)
-        detailsRv.visibility=View.INVISIBLE
-        loadingBar.visibility=View.VISIBLE
-        loadingText.visibility=View.VISIBLE
-        service.getTicketDetails(ticketid,"Bearer $token").enqueue(object :
+        detailsRv.visibility = View.INVISIBLE
+        loadingBar.visibility = View.VISIBLE
+        loadingText.visibility = View.VISIBLE
+        service.getTicketDetails(ticketid, "Bearer $token").enqueue(object :
             Callback<List<RetroTicketMeal>> {
             override fun onResponse(
                 call: Call<List<RetroTicketMeal>>,
@@ -122,20 +120,20 @@ class ConsumerOrderDetailsActivity : AppCompatActivity() {
 
                         }
                     }
-                    detailsRv.visibility=View.VISIBLE
-                    loadingBar.visibility=View.GONE
-                    loadingText.visibility=View.GONE
+                    detailsRv.visibility = View.VISIBLE
+                    loadingBar.visibility = View.GONE
+                    loadingText.visibility = View.GONE
 
-                }else if(response.code()==401){
+                } else if (response.code() == 401) {
                     AuthHelper().newSessionToken(this@ConsumerOrderDetailsActivity)
-                    getTicket(ticketid,orderMealsRecyclerView,orderMealsLinearLayoutManager)
+                    getTicket(ticketid, orderMealsRecyclerView, orderMealsLinearLayoutManager)
                 }
             }
 
             override fun onFailure(call: Call<List<RetroTicketMeal>>, t: Throwable) {
-                detailsRv.visibility=View.VISIBLE
-                loadingBar.visibility=View.GONE
-                loadingText.visibility=View.GONE
+                detailsRv.visibility = View.VISIBLE
+                loadingBar.visibility = View.GONE
+                loadingText.visibility = View.GONE
             }
 
         })

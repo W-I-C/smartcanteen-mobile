@@ -9,9 +9,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.ipca.smartcanteen.R
-import pt.ipca.smartcanteen.models.RetroTicketMeal
 import pt.ipca.smartcanteen.models.adapters.ConsumerAvailableTradeMealsAdapterRec
-import pt.ipca.smartcanteen.models.adapters.OrderDetailsMealsChangesAdapterRec
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTicketMeal
 
 class ConsumerAvailableTradesRecViewHolder(inflater: LayoutInflater, private val context: Context, val parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.layout_trades_menu_card, parent, false)) {
@@ -24,11 +23,11 @@ class ConsumerAvailableTradesRecViewHolder(inflater: LayoutInflater, private val
         consumerNameTv.text = owner
         priceTv.text = price
         stateTv.text = state
-        if(state == "Não Iniciado" || state == "Atraso"){
+        if (state == "Não Iniciado" || state == "Atraso") {
             stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.redLogout))
-        } else if(state == "Pronto" || state == "Entregue"){
+        } else if (state == "Pronto" || state == "Entregue") {
             stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.background_color))
-        } else if(state == "Em Preparação") {
+        } else if (state == "Em Preparação") {
             stateTv.setTextColor(ContextCompat.getColor(itemView.context, R.color.orange))
         }
 

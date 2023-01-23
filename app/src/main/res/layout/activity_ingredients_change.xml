@@ -15,7 +15,7 @@
         android:layout_marginTop="20dp"
         android:textColor="@color/background_color"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/ingredients_change_arrow"
@@ -27,8 +27,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="25dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ingredients_change_recycler_view"
@@ -38,8 +37,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         app:layout_constraintEnd_toEndOf="@id/ingredients_change_save"
-        app:layout_constraintTop_toBottomOf="@id/ingredients_change_title"
-        />
+        app:layout_constraintTop_toBottomOf="@id/ingredients_change_title" />
 
     <TextView
         android:id="@+id/ingredients_change_text_error"
@@ -52,7 +50,7 @@
         android:layout_marginTop="20dp"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@id/ingredients_change_save"
-        app:layout_constraintTop_toBottomOf="@id/ingredients_change_title"/>
+        app:layout_constraintTop_toBottomOf="@id/ingredients_change_title" />
 
     <Button
         android:id="@+id/ingredients_change_save"
@@ -68,8 +66,7 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/rounded_button_style"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ingredients_change_cancel"
@@ -83,7 +80,6 @@
         android:layout_marginBottom="30dp"
         android:background="@drawable/button_grey"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
