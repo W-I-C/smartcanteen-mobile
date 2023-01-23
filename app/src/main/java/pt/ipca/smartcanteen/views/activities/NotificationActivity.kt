@@ -2,7 +2,9 @@ package pt.ipca.smartcanteen.views.activities
 
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +25,7 @@ class NotificationActivity : AppCompatActivity() {
 
     private val notification: RecyclerView by lazy { findViewById<RecyclerView>(R.id.Recycler_notification) as RecyclerView }
     private val backBtn: ImageView by lazy { findViewById<ImageView>(R.id.notification_arrow) as ImageView }
+    private val errorMessage: TextView by lazy { findViewById<ImageView>(R.id.error_notification) as TextView }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +34,8 @@ class NotificationActivity : AppCompatActivity() {
         backBtn.setOnClickListener {
             finish()
         }
+
+        getNotification()
     }
 
     fun getNotification() {
@@ -50,12 +55,17 @@ class NotificationActivity : AppCompatActivity() {
                     if (response.code() == 200) {
                         val retroFit2 = response.body()
 
+                        println("Aqui")
+                        println(retroFit2)
+
                         if (retroFit2 != null)
                             if (retroFit2.isEmpty()) {
-
+                                notification.visibility = View.GONE
+                                errorMessage.visibility = View.VISIBLE
                             } else {
-
-                                rebuildlist(NotificationAdapterRec(retroFit2))
+                                notification.visibility = View.VISIBLE
+                                errorMessage.visibility = View.GONE
+                                rebuildlist(NotificationAdapterRec(retroFit2, this@NotificationActivity))
                             }
                     } else if (response.code() == 401) {
                         AuthHelper().newSessionToken(this@NotificationActivity)
