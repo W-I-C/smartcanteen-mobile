@@ -28,7 +28,7 @@ import retrofit2.Response
 class MyOrdersCartFragment : Fragment() {
     private val Finalizar: Button by lazy { requireView().findViewById<Button>(R.id.pay_button) as Button }
     private val total: TextView by lazy { requireView().findViewById<TextView>(R.id.numeric) as TextView }
-    private val cartMeals: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.myorders_cart_recycler_view) as RecyclerView }
+    private val cartAdapterRec: RecyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.myorders_cart_recycler_view) as RecyclerView }
 
     val linearLayoutManager = LinearLayoutManager(activity)
 
@@ -72,7 +72,7 @@ class MyOrdersCartFragment : Fragment() {
                         if (!retroFit2.isEmpty()) {
                             if (isAdded) {
 
-                                rebuildlist(MyOrdersCartRec(retroFit2, requireActivity(), linearLayoutManager, cartMeals))
+                                rebuildlist(MyOrdersCartRec(retroFit2, requireActivity(), linearLayoutManager, cartAdapterRec))
                                 if (retroFit2.size >= 1)
                                     total.text = "${retroFit2[0].cartTotal} €"
                             }
@@ -82,6 +82,7 @@ class MyOrdersCartFragment : Fragment() {
                     AuthHelper().newSessionToken(requireActivity())
                     getMyOrders()
                 }
+
             }
 
             override fun onFailure(calll: Call<List<RetroCartMeals>>, t: Throwable) {
@@ -91,9 +92,9 @@ class MyOrdersCartFragment : Fragment() {
     }
 
     fun rebuildlist(adapter: MyOrdersCartRec) {
-        cartMeals.layoutManager = linearLayoutManager
-        cartMeals.itemAnimator = DefaultItemAnimator()
-        cartMeals.adapter = adapter
+        cartAdapterRec.layoutManager = linearLayoutManager
+        cartAdapterRec.itemAnimator = DefaultItemAnimator()
+        cartAdapterRec.adapter = adapter
 
     }
 }
