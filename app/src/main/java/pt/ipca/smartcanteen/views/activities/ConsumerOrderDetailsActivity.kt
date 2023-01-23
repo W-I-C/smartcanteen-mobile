@@ -81,7 +81,6 @@ class ConsumerOrderDetailsActivity : AppCompatActivity() {
                 intent.putExtra("isfree", isFreeTrade)
                 startActivity(intent)
             }
-
         }
     }
 

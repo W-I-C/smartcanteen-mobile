@@ -81,6 +81,8 @@ class EditMealActivity : AppCompatActivity() {
     private lateinit var alertDialogManager: AlertDialogManager
     val retrofit = SmartCanteenRequests().retrofit
 
+    private var editing: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_meal)
@@ -192,19 +194,24 @@ class EditMealActivity : AppCompatActivity() {
                 ImagesHelper().getImageFromDevice(data.data as Uri, this@EditMealActivity, mealImage, false)
                 sendImage(data.data as Uri)
             }
-
-        } else {
-            getAllowedChangesEdit(mealId, allowedChangesEditRecyclerView, allowedChangesEditLayoutManager, textError)
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        if(editing){
+            getAllowedChangesEdit(mealId, allowedChangesEditRecyclerView, allowedChangesEditLayoutManager, textErrorEdit)
+        }
+
+        textErrorEdit.visibility = View.GONE
+    }
 
     private fun pickImageGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, ProfileFragment.IMAGE_REQUEST_CODE)
     }
-
 
     private fun sendImage(file: Uri) {
 
@@ -257,6 +264,9 @@ class EditMealActivity : AppCompatActivity() {
 
 
         pencilWhite.setOnClickListener {
+
+            editing = true
+
             mealEditImage.setOnClickListener {
                 pickImageGallery()
             }
@@ -495,7 +505,7 @@ class EditMealActivity : AppCompatActivity() {
         mealId: String,
         allowedChangesEditRecyclerView: RecyclerView,
         allowedChangesEditLayoutManager: LinearLayoutManager,
-        textError: TextView
+        textErrorEdit: TextView
     ) {
 
         val service = retrofit.create(MealsService::class.java)
@@ -558,7 +568,7 @@ class EditMealActivity : AppCompatActivity() {
                     textError.visibility = View.GONE
 
                     AuthHelper().newSessionToken(this@EditMealActivity)
-                    getAllowedChangesEdit(mealId, allowedChangesEditRecyclerView, allowedChangesEditLayoutManager, textError)
+                    getAllowedChangesEdit(mealId, allowedChangesEditRecyclerView, allowedChangesEditLayoutManager, textErrorEdit)
                 }
             }
 
