@@ -11,12 +11,11 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import pt.ipca.smartcanteen.R
 import pt.ipca.smartcanteen.models.adapters.BarMenuMealsAdapterRec
-import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
-import pt.ipca.smartcanteen.models.helpers.AuthHelper
-import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
-import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.helpers.*
 import pt.ipca.smartcanteen.models.retrofit.response.RetroBar
 import pt.ipca.smartcanteen.models.retrofit.response.RetroMeal
 import pt.ipca.smartcanteen.services.CampusService
@@ -39,7 +38,6 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
 
     private val listRetroMeals= mutableListOf<RetroMeal>()
 
-    private lateinit var alertDialogManager: AlertDialogManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,14 +52,36 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
                 }
             }
         }
-        alertDialogManager = AlertDialogManager(layoutInflater, this@ConsumerBarMenuActivity)
-        alertDialogManager.createLoadingAlertDialog()
 
         backArrow.setOnClickListener{
             finish()
         }
 
-
+        val db = SmartCanteenDBHelper.getInstance(applicationContext)
+        GlobalScope.launch {
+            val mealsData = db.mealsDao().getAllMeals()
+            if (mealsData.isNotEmpty()) {
+                Log.d("MAIN", "MEALS NOT EMPTY")
+                mealsData.forEach { meal ->
+                    run {
+                        listRetroMeals.add(
+                            RetroMeal(
+                                meal.mealId,
+                                meal.barId,
+                                meal.name,
+                                meal.preparationTime,
+                                meal.description,
+                                meal.canTakeAway,
+                                meal.price,
+                                meal.canBeMade,
+                                meal.isFavorite
+                            )
+                        )
+                    }
+                }
+                buildMeals(listRetroMeals)
+            }
+        }
         getBarInfo()
     }
     private var cameFromOtherScreen = false
@@ -84,7 +104,7 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
         val sp = SharedPreferencesHelper.getSharedPreferences(this@ConsumerBarMenuActivity)
         val token = sp.getString("token", null)
 
-        alertDialogManager.dialog.show()
+
 
         service.getCampusBars("Bearer $token").enqueue(object :
             Callback<List<RetroBar>> {
@@ -94,7 +114,7 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
             ) {
                 if (response.code() == 200) {
 
-                    alertDialogManager.dialog.dismiss()
+
                     val body = response.body()
 
                     if (body != null) {
@@ -139,7 +159,7 @@ class ConsumerBarMenuActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<List<RetroBar>>, t: Throwable) {
-                alertDialogManager.dialog.dismiss()
+
             }
         })
     }

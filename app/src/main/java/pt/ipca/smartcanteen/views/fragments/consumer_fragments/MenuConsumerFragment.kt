@@ -55,7 +55,7 @@ class MenuConsumerFragment : Fragment() {
     private var localTickets = mutableListOf<RetroTicket>()
 
     private lateinit var alertDialogManager: AlertDialogManager
-    private val searchBar: EditText by lazy{requireView().findViewById<EditText>(R.id.consumer_menu_search_et)}
+    private val searchBar: EditText by lazy { requireView().findViewById<EditText>(R.id.consumer_menu_search_et) }
 
     override fun onCreateView(
         inflater: LayoutInflater, parent: ViewGroup?,
@@ -64,12 +64,14 @@ class MenuConsumerFragment : Fragment() {
     ): View {
         return inflater.inflate(R.layout.fragment_consumer_menu, parent, false)
     }
-         fun goToMenu(){
-             searchBar.setOnClickListener{
-                 val intent= Intent(requireActivity(), ConsumerBarMenuActivity::class.java)
-                 startActivity(intent)
-             }
-         }
+
+    fun goToMenu() {
+        searchBar.setOnClickListener {
+            val intent = Intent(requireActivity(), ConsumerBarMenuActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val retrofit = SmartCanteenRequests().retrofit
@@ -139,67 +141,67 @@ class MenuConsumerFragment : Fragment() {
                 }
                 val barMealsAdapter = MealsAdapterRec(localMeals, requireActivity(), layoutInflater)
                 buildMealsList(barMealsAdapter)
-
-                val ticketsData = db.ticketsDao().getAllTickets()
-                if (ticketsData.isNotEmpty()) {
-                    Log.d("MAIN", "Tickets NOT EMPTY")
-                    ticketsData.forEach { ticket ->
-                        run {
-                            var ticketMeals = mutableListOf<RetroTicketMeal>()
-                            var cartData = db.cartDao().getCart(ticket.cartId)
-                            if (cartData != null) {
-                                var cartMealsData = db.cartMealsDao().getAllCartMeals(ticket.cartId)
-                                if (cartMealsData.isNotEmpty()) {
-                                    cartMealsData.forEach { cartMeal ->
-                                        var mealChanges = mutableListOf<RetroMealChange>()
-                                        var cartMealsChangesData = db.cartMealsChangesDao().getAllMealChanges(cartMeal.cartMealId)
-                                        cartMealsChangesData.forEach { change ->
-                                            mealChanges.add(
-                                                RetroMealChange(
-                                                    change.cartChangeId,
-                                                    change.cartMealId,
-                                                    change.ingName,
-                                                    change.ingAmount,
-                                                    change.isRemoveOnly,
-                                                    change.canBeIncremented,
-                                                    change.canBeDecremented
-                                                )
-                                            )
-                                        }
-                                        ticketMeals.add(
-                                            RetroTicketMeal(
-                                                cartMeal.cartMealId,
-                                                cartMeal.mealId,
-                                                cartMeal.amount,
-                                                cartMeal.mealPrice,
-                                                cartMeal.name,
-                                                cartMeal.description,
-                                                cartMeal.canTakeaway,
-                                                mealChanges
+            }
+            val ticketsData = db.ticketsDao().getAllTickets()
+            if (ticketsData.isNotEmpty()) {
+                Log.d("MAIN", "Tickets NOT EMPTY")
+                ticketsData.forEach { ticket ->
+                    run {
+                        var ticketMeals = mutableListOf<RetroTicketMeal>()
+                        var cartData = db.cartDao().getCart(ticket.cartId)
+                        if (cartData != null) {
+                            var cartMealsData = db.cartMealsDao().getAllCartMeals(ticket.cartId)
+                            if (cartMealsData.isNotEmpty()) {
+                                cartMealsData.forEach { cartMeal ->
+                                    var mealChanges = mutableListOf<RetroMealChange>()
+                                    var cartMealsChangesData = db.cartMealsChangesDao().getAllMealChanges(cartMeal.cartMealId)
+                                    cartMealsChangesData.forEach { change ->
+                                        mealChanges.add(
+                                            RetroMealChange(
+                                                change.cartChangeId,
+                                                change.cartMealId,
+                                                change.ingName,
+                                                change.ingAmount,
+                                                change.isRemoveOnly,
+                                                change.canBeIncremented,
+                                                change.canBeDecremented
                                             )
                                         )
                                     }
-
+                                    ticketMeals.add(
+                                        RetroTicketMeal(
+                                            cartMeal.cartMealId,
+                                            cartMeal.mealId,
+                                            cartMeal.amount,
+                                            cartMeal.mealPrice,
+                                            cartMeal.name,
+                                            cartMeal.description,
+                                            cartMeal.canTakeaway,
+                                            mealChanges
+                                        )
+                                    )
                                 }
+
                             }
-                            localTickets.add(
-                                RetroTicket(
-                                    ticket.barname,
-                                    ticket.ticketid,
-                                    ticket.ownername,
-                                    ticket.stateName,
-                                    ticket.cartId,
-                                    ticket.emissionDate,
-                                    ticket.pickupTime,
-                                    ticket.ticketAmount,
-                                    ticket.total,
-                                    ticket.nEncomenda,
-                                    ticket.isFree,
-                                    ticketMeals
-                                )
-                            )
                         }
+                        localTickets.add(
+                            RetroTicket(
+                                ticket.barname,
+                                ticket.ticketid,
+                                ticket.ownername,
+                                ticket.stateName,
+                                ticket.cartId,
+                                ticket.emissionDate,
+                                ticket.pickupTime,
+                                ticket.ticketAmount,
+                                ticket.total,
+                                ticket.nEncomenda,
+                                ticket.isFree,
+                                ticketMeals
+                            )
+                        )
                     }
+
                 }
                 var ordersAdapter =
                     MenuOrdersAdapterRec(requireActivity(), getString(R.string.qty), getString(R.string.ordernum), localTickets)
