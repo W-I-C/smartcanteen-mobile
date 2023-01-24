@@ -96,8 +96,7 @@ class OrderActivity : AppCompatActivity() {
 
             Toast.makeText(this, "Carrinho finalizado. Aguarda confirmação de pagamento", Toast.LENGTH_SHORT).show()
 
-            val intent = Intent(this@OrderActivity, MenuConsumerFragment::class.java)
-            startActivity(intent)
+            finish()
         }
     }
 }

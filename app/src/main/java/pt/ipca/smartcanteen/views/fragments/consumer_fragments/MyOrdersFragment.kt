@@ -1,6 +1,7 @@
 package pt.ipca.smartcanteen.views.fragments.consumer_fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,14 +15,16 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import es.dmoral.toasty.Toasty
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import pt.ipca.smartcanteen.R
+import pt.ipca.smartcanteen.models.adapters.MenuOrdersAdapterRec
 import pt.ipca.smartcanteen.models.adapters.OrdersAdapterRec
 import pt.ipca.smartcanteen.models.adapters.TradesAdapterRec
-import pt.ipca.smartcanteen.models.helpers.AlertDialogManager
-import pt.ipca.smartcanteen.models.helpers.AuthHelper
-import pt.ipca.smartcanteen.models.helpers.SharedPreferencesHelper
-import pt.ipca.smartcanteen.models.helpers.SmartCanteenRequests
+import pt.ipca.smartcanteen.models.helpers.*
+import pt.ipca.smartcanteen.models.retrofit.response.RetroMealChange
 import pt.ipca.smartcanteen.models.retrofit.response.RetroTicket
+import pt.ipca.smartcanteen.models.retrofit.response.RetroTicketMeal
 import pt.ipca.smartcanteen.models.retrofit.response.RetroTrade
 import pt.ipca.smartcanteen.services.OrdersService
 import pt.ipca.smartcanteen.services.TradesService
@@ -43,7 +46,8 @@ class MyOrdersFragment : Fragment() {
     var orders = ArrayList<RetroTicket>()
     val linearLayoutManager = LinearLayoutManager(activity)
     val linearLayoutTradeManager = LinearLayoutManager(activity)
-    private lateinit var loadingAlertDialog: AlertDialog
+
+    private var localTickets = mutableListOf<RetroTicket>()
 
     private lateinit var alertDialogManager: AlertDialogManager
 
@@ -60,7 +64,7 @@ class MyOrdersFragment : Fragment() {
         alertDialogManager = AlertDialogManager(layoutInflater, requireActivity())
         alertDialogManager.createLoadingAlertDialog()
 
-        myOrders()
+
 
         buttonMyOrders.setOnClickListener {
             myOrders()
@@ -69,6 +73,87 @@ class MyOrdersFragment : Fragment() {
         buttonMyTrades.setOnClickListener {
             myTrades()
         }
+        /*val db = SmartCanteenDBHelper.getInstance(requireContext().applicationContext)
+        GlobalScope.launch {
+            val ticketsData = db.ticketsDao().getAllTickets()
+            if (ticketsData.isNotEmpty()) {
+                Log.d("MAIN", "Tickets NOT EMPTY")
+                ticketsData.forEach { ticket ->
+                    run {
+                        var ticketMeals = mutableListOf<RetroTicketMeal>()
+                        var cartData = db.cartDao().getCart(ticket.cartId)
+                        if (cartData != null) {
+                            var cartMealsData = db.cartMealsDao().getAllCartMeals(ticket.cartId)
+                            if (cartMealsData.isNotEmpty()) {
+                                cartMealsData.forEach { cartMeal ->
+                                    var mealChanges = mutableListOf<RetroMealChange>()
+                                    var cartMealsChangesData = db.cartMealsChangesDao().getAllMealChanges(cartMeal.cartMealId)
+                                    cartMealsChangesData.forEach { change ->
+                                        mealChanges.add(
+                                            RetroMealChange(
+                                                change.cartChangeId,
+                                                change.cartMealId,
+                                                change.ingName,
+                                                change.ingAmount,
+                                                change.isRemoveOnly,
+                                                change.canBeIncremented,
+                                                change.canBeDecremented
+                                            )
+                                        )
+                                    }
+                                    ticketMeals.add(
+                                        RetroTicketMeal(
+                                            cartMeal.cartMealId,
+                                            cartMeal.mealId,
+                                            cartMeal.amount,
+                                            cartMeal.mealPrice,
+                                            cartMeal.name,
+                                            cartMeal.description,
+                                            cartMeal.canTakeaway,
+                                            mealChanges
+                                        )
+                                    )
+                                }
+
+                            }
+                        }
+                        localTickets.add(
+                            RetroTicket(
+                                ticket.barname,
+                                ticket.ticketid,
+                                ticket.ownername,
+                                ticket.stateName,
+                                ticket.cartId,
+                                ticket.emissionDate,
+                                ticket.pickupTime,
+                                ticket.ticketAmount,
+                                ticket.total,
+                                ticket.nEncomenda,
+                                ticket.isFree,
+                                ticketMeals
+                            )
+                        )
+                    }
+
+                }
+                val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
+                var ordersAdapter =
+                    OrdersAdapterRec(
+                        progressBar,
+                        textProgress,
+                        linearLayoutManager,
+                        sp,
+                        myOrdersAdater,
+                        orders,
+                        requireActivity(),
+                        requireContext()
+                    )
+                rebuildlistOrders(ordersAdapter)
+
+            }
+        }*/
+        myOrders()
+
     }
 
     fun rebuildlistOrders(adapter: OrdersAdapterRec) {
@@ -84,9 +169,12 @@ class MyOrdersFragment : Fragment() {
     }
 
     private fun myOrders() {
-        tradesTextError.visibility = View.GONE
-        myTradesAdater.visibility = View.GONE
+        progressBar.visibility = View.GONE
+        textProgress.visibility = View.GONE
 
+        myTradesAdater.visibility = View.GONE
+        progressBar.visibility = View.VISIBLE
+        textProgress.visibility = View.VISIBLE
         textTittle.text = getString(R.string.my_orders)
 
         val retrofit = SmartCanteenRequests().retrofit
@@ -96,9 +184,6 @@ class MyOrdersFragment : Fragment() {
         val sp = SharedPreferencesHelper.getSharedPreferences(requireContext())
         val token = sp.getString("token", null)
 
-        myOrdersAdater.visibility = View.GONE
-        progressBar.visibility = View.VISIBLE
-        textProgress.visibility = View.VISIBLE
 
         var call =
             service.seeMyOrders("Bearer $token").enqueue(object :
@@ -108,10 +193,10 @@ class MyOrdersFragment : Fragment() {
                     response: Response<List<RetroTicket>>
                 ) {
                     if (response.code() == 200) {
+                        progressBar.visibility = View.GONE
+                        textProgress.visibility = View.GONE
                         if (isAdded) {
-                            myOrdersAdater.visibility = View.VISIBLE
-                            progressBar.visibility = View.GONE
-                            textProgress.visibility = View.GONE
+
                             val retroFit2 = response.body()
 
                             if (retroFit2 != null)
@@ -139,22 +224,21 @@ class MyOrdersFragment : Fragment() {
                                 }
                         }
                     } else if (response.code() == 500) {
-                        myOrdersAdater.visibility = View.VISIBLE
                         progressBar.visibility = View.GONE
                         textProgress.visibility = View.GONE
 
                         Toasty.error(requireActivity(), getString(R.string.no_orders), Toast.LENGTH_LONG).show()
                     } else if (response.code() == 401) {
+                        progressBar.visibility = View.GONE
+                        textProgress.visibility = View.GONE
                         AuthHelper().newSessionToken(requireActivity())
                         myOrders()
                     }
                 }
 
                 override fun onFailure(calll: Call<List<RetroTicket>>, t: Throwable) {
-                    myOrdersAdater.visibility = View.VISIBLE
                     progressBar.visibility = View.GONE
                     textProgress.visibility = View.GONE
-
                     Toasty.error(requireActivity(), getString(R.string.error), Toast.LENGTH_LONG).show()
                 }
             })
